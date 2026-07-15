@@ -313,6 +313,7 @@
       margin-block-start: var(--typeset-flow);
       margin-block-end: 0;
       margin-inline: 0;
+      font-size: 14px;
     }
 
     /* Dividers. */

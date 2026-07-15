@@ -58,6 +58,7 @@
   --shadow-offset-y: 1px;
   --letter-spacing: 0em;
   --spacing: 0.25rem;
+  --card-spacing: 0.5rem;
   --shadow-2xs: 0 1px 2px 0px hsl(0 0% 0% / 0.04);
   --shadow-xs: 0 1px 2px 0px hsl(0 0% 0% / 0.04);
   --shadow-sm:
@@ -82,13 +83,13 @@
   --popover: oklch(0.1822 0 0);
   --popover-foreground: oklch(0.9612 0 0);
   --primary: oklch(0.6996 0.202 44.4414);
-  --primary-foreground: oklch(0 0 0);
+  --primary-foreground: oklch(0.9612 0 0);
   --secondary: oklch(0.3211 0 0);
   --secondary-foreground: oklch(0.9612 0 0);
   --muted: oklch(0.2686 0 0);
   --muted-foreground: oklch(0.7252 0 0);
   --accent: oklch(0.7512 0.168 52.0772);
-  --accent-foreground: oklch(0 0 0);
+  --accent-foreground: oklch(0.9612 0 0);
   --destructive: oklch(0.628 0.2577 29.2339);
   --destructive-foreground: oklch(0.9612 0 0);
   --border: oklch(0.3715 0 0);
@@ -116,6 +117,7 @@
   --shadow-offset-y: 1px;
   --letter-spacing: 0em;
   --spacing: 0.25rem;
+  --card-spacing: 0.5rem;
   --shadow-2xs: 0 1px 2px 0px hsl(0 0% 0% / 0.04);
   --shadow-xs: 0 1px 2px 0px hsl(0 0% 0% / 0.04);
   --shadow-sm:
@@ -276,8 +278,8 @@ pre > code {
 blockquote {
   border-left: 4px solid var(--accent);
   padding: 0 0 0 20px;
-  margin: 0;
-  font-size: 1.333em;
+  margin: 20px 0;
+  font-size: 1rem;
 }
 hr {
   border: none;

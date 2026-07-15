@@ -1,0 +1,26 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content"
+import Layout from "#/layouts/Layout.astro"
+
+export async function getStaticPaths() {
+  const projects = await getCollection("projects")
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: project,
+  }))
+}
+type Props = CollectionEntry<"projects">
+
+const project = Astro.props
+const { Content } = await render(project)
+---
+
+<Layout>
+  <main class="typeset typeset-docs">
+    <h1 class="text-primary underline">
+      <a href={project.data.href} target="_blank">{project.data.title}</a>
+    </h1>
+    <blockquote>{project.data.description}</blockquote>
+    <Content />
+  </main>
+</Layout>

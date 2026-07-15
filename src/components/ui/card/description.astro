@@ -1,0 +1,16 @@
+---
+type Props = HTMLAttributes<"div">
+
+import { cn } from "#/lib/utils"
+import type { HTMLAttributes } from "astro/types"
+
+const { class: className, ...props } = Astro.props
+---
+
+<div
+  data-slot="card-description"
+  class={cn("text-sm text-muted-foreground", className)}
+  {...props}
+>
+  <slot />
+</div>

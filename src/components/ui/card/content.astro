@@ -1,0 +1,19 @@
+---
+type Props = HTMLAttributes<"div">
+
+import { cn } from "#/lib/utils"
+import type { HTMLAttributes } from "astro/types"
+
+const { class: className, ...props } = Astro.props
+---
+
+<div
+  data-slot="card-content"
+  class={cn(
+    "px-(--card-spacing) py-[calc(var(--card-spacing)/2)] text-secondary-foreground",
+    className
+  )}
+  {...props}
+>
+  <slot />
+</div>
