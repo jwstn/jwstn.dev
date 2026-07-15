@@ -5,15 +5,21 @@ import Header from "#/components/Header.astro"
 import { SITE_DESCRIPTION, SITE_TITLE } from "#/consts"
 ---
 
-<!doctype html>
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body>
+  <body class="bg-background text-foreground">
     <Header />
-    <main>
-      <h1>Hey, I'm JW!</h1>
+    <main class="typeset">
+      <h1 class="text-4xl">
+        Hey, I'm <span>JW</span>! a Frontend Devloper from Cologne, Germany
+      </h1>
+      <p>
+        I'm focusing on building web applications with the
+        <a href="https://tanstack.com/" target="_blank"> Tanstack </a> and every chance
+        I get to learn a new technology.
+      </p>
     </main>
     <Footer />
   </body>

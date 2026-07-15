@@ -3,7 +3,9 @@ const today = new Date()
 ---
 
 <footer>
-  &copy; {today.getFullYear()} jwstn. All rights reserved.
+  <p class="text-foreground">
+    &copy; {today.getFullYear()} jwstn. All rights reserved.
+  </p>
   <div class="social-links">
     <a href="https://github.com/jwstn" target="_blank">
       <span class="sr-only">My GitHub</span>
@@ -26,8 +28,6 @@ const today = new Date()
 <style>
   footer {
     padding: 2em 1em 6em 1em;
-    background: linear-gradient(var(--gray-gradient)) no-repeat;
-    color: rgb(var(--gray));
     text-align: center;
   }
   .social-links {
@@ -38,9 +38,5 @@ const today = new Date()
   }
   .social-links a {
     text-decoration: none;
-    color: rgb(var(--gray));
-  }
-  .social-links a:hover {
-    color: rgb(var(--gray-dark));
   }
 </style>

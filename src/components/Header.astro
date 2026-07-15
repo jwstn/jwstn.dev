@@ -3,17 +3,17 @@ import { SITE_TITLE } from "../consts"
 import HeaderLink from "./HeaderLink.astro"
 ---
 
-<header>
-  <nav>
-    <h2>
+<header class="max-w-[calc(100%-2em)] mx-auto px-[1em] py-4">
+  <nav class="inline-flex w-full">
+    <h2 class="sm:block hidden">
       <a href="/">{SITE_TITLE}</a>
     </h2>
-    <div>
+    <div class="inline-flex space-x-2">
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
       <HeaderLink href="/images">Images</HeaderLink>
     </div>
-    <div class="social-links">
+    <div class="ml-auto flex space-x-2">
       <a href="https://bsky.app/profile/jwstn.bsky.social" target="_blank">
         <span class="sr-only">Follow Me on Bluesky</span>
         <svg
@@ -40,44 +40,3 @@ import HeaderLink from "./HeaderLink.astro"
     </div>
   </nav>
 </header>
-<style>
-  header {
-    margin: 0;
-    padding: 0 1em;
-    background: white;
-    box-shadow: 0 2px 8px rgba(var(--black), 5%);
-  }
-  h2 {
-    margin: 0;
-    font-size: 1em;
-  }
-
-  h2 a,
-  h2 a.active {
-    text-decoration: none;
-  }
-  nav {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  nav a {
-    padding: 1em 0.5em;
-    color: var(--black);
-    border-bottom: 4px solid transparent;
-    text-decoration: none;
-  }
-  nav a.active {
-    text-decoration: none;
-    border-bottom-color: var(--accent);
-  }
-  .social-links,
-  .social-links a {
-    display: flex;
-  }
-  @media (max-width: 720px) {
-    .social-links {
-      display: none;
-    }
-  }
-</style>
