@@ -1,5 +1,43 @@
 ---
 import Layout from "#/layouts/Layout.astro"
+import { getCollection } from "astro:content"
+
+const gallery = (await getCollection("gallery")).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+)
 ---
 
-<Layout>Images</Layout>
+<Layout>
+  <main class="typeset w-full max-w-7xl">
+    <h1 class="text-primary">Pictures of JW</h1>
+    <h4>
+      On my trip to Japan in March, 2026 I bought a camera since I wanted to for
+      some years now. Here are some pictures I took with it.
+    </h4>
+    {
+      gallery.map((entry) => (
+        <section>
+          <h2>{entry.data.title}</h2>
+          <div class="space-y-8 flex flex-row flex-wrap flex-1 gap-4">
+            {entry.data.photos.map((photo) => (
+              <figure
+                style="margin-block-start: unset;"
+                class="max-w-sm max-h-8/12 h-auto"
+              >
+                <img
+                  src={photo.image.src}
+                  alt={photo.title}
+                  class="w-full rounded-lg"
+                />
+                <figcaption>
+                  <strong>{photo.title}</strong>
+                  {photo.caption && <p>{photo.caption}</p>}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </main>
+</Layout>

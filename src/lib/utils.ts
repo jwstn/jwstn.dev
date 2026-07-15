@@ -1,4 +1,4 @@
-import { clsx as type, type ClassValue } from "cnfast"
+import { type ClassValue } from "cnfast"
 import { clsx } from "cnfast"
 import { twMerge } from "cnfast"
 

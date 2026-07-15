@@ -32,4 +32,20 @@ const projects = defineCollection({
     }),
 })
 
-export const collections = { blog, projects }
+const gallery = defineCollection({
+  loader: glob({ pattern: "**/*.json", base: "./src/content/gallery" }),
+  schema: ({ image }) =>
+    z.object({
+      title: z.string(),
+      pubDate: z.coerce.date(),
+      photos: z.array(
+        z.object({
+          image: image(),
+          title: z.string(),
+          caption: z.string().optional(),
+        })
+      ),
+    }),
+})
+
+export const collections = { blog, projects, gallery }
