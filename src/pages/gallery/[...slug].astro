@@ -1,7 +1,7 @@
 ---
-import { type CollectionEntry, getCollection, render } from "astro:content"
+import { Image } from "astro:assets"
+import { type CollectionEntry, getCollection } from "astro:content"
 import Layout from "#/layouts/Layout.astro"
-import { cn } from "#/lib/utils"
 
 export async function getStaticPaths() {
   const gallery = await getCollection("gallery")
@@ -16,9 +16,9 @@ const collection = Astro.props
 ---
 
 <Layout>
-  <main class="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+  <main class="mx-auto w-full max-w-7xl px-4 py-8">
     <div
-      class="grid grid-flow-dense auto-rows-[16rem] grid-cols-1 gap-4 sm:grid-cols-2 sm:auto-rows-[15rem] lg:grid-cols-3 lg:auto-rows-[17rem]"
+      class="grid grid-flow-dense auto-rows-[13rem] grid-cols-2 gap-3 md:auto-rows-[16rem] md:grid-cols-3"
     >
       {
         collection.data.photos.map((photo) => {
@@ -27,27 +27,30 @@ const collection = Astro.props
           const isWide = ratio > 1.6
           return (
             <figure
-              class={cn(
-                "group m-0 overflow-hidden rounded-xl",
+              class:list={[
+                "group relative overflow-hidden rounded-lg",
+                isWide && "col-span-2",
                 isPortrait && "row-span-2",
-                isWide && "col-span-2"
-              )}
+              ]}
             >
-              <img
+              <Image
                 transition:name={photo.title}
-                src={photo.image.src}
+                src={photo.image}
+                widths={[480, 800, 1200, 1600]}
+                sizes={
+                  isWide
+                    ? "(min-width: 80rem) 54rem, (min-width: 48rem) 66vw, 100vw"
+                    : "(min-width: 80rem) 27rem, (min-width: 48rem) 33vw, 50vw"
+                }
                 loading="lazy"
+                decoding="async"
                 alt={photo.title}
-                class="h-full w-full rounded-xl object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                class="h-full w-full object-cover"
               />
-              <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 bg-linear-to-t from-black/75 via-black/40 to-transparent p-4 pt-10 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
-                <h3 class="text-sm font-semibold text-white sm:text-base">
-                  {photo.title}
-                </h3>
+              <figcaption class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent p-3 pt-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-coarse:hidden">
+                <h3 class="text-sm font-medium text-white">{photo.title}</h3>
                 {photo.caption && (
-                  <p class="mt-1 line-clamp-2 text-xs text-gray-200 sm:text-sm">
-                    {photo.caption}
-                  </p>
+                  <p class="text-xs text-white/80">{photo.caption}</p>
                 )}
               </figcaption>
             </figure>
