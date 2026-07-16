@@ -26,13 +26,12 @@ export function MobileMenu({}: Props) {
 
       <DrawerContent className={"p-10"}>
         <DrawerHeader>
-          <DrawerTitle className="text-6xl text-left mb-10">
+          <DrawerTitle className="text-5xl text-left mb-10">
             <a href="/">{SITE_TITLE}</a>
           </DrawerTitle>
         </DrawerHeader>
         <div className="flex-1 scroll-fade overflow-y-auto p-4 mb-10">
-          <div className="flex text-4xl flex-col items-start justify-center gap-y-8">
-            <a href="/">Home</a>
+          <div className="flex text-3xl flex-col items-start justify-center gap-y-8">
             <a href="/projects">Projects</a>
             <a href="/gallery">Gallery</a>
           </div>
