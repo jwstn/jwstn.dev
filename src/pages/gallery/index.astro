@@ -10,15 +10,15 @@ const gallery = (await getCollection("gallery")).sort(
 <Layout>
   <main class="typeset w-full max-w-7xl">
     <h1 class="text-primary">Pictures of JW</h1>
-    <h4>
+    <p class="text-pretty">
       On my trip to Japan in March, 2026 I bought a camera since I wanted to for
       some years now. Here are some pictures I took with it.
-    </h4>
+    </p>
     {
       gallery.map((entry) => (
         <section>
           <a class="no-underline" href={`/gallery/${entry.data.slug}/`}>
-            <h2>{entry.data.title}</h2>
+            <h2 class="text-primary">{entry.data.title}</h2>
             <div class="space-y-8 flex flex-row flex-wrap flex-1 gap-4">
               <figure
                 style="margin-block-start: unset;"
@@ -33,7 +33,7 @@ const gallery = (await getCollection("gallery")).sort(
                 <figcaption>
                   <strong>{entry.data.photos[0].title}</strong>
                   {entry.data.photos[0].caption && (
-                    <p>{entry.data.photos[0].caption}</p>
+                    <p class="text-pretty">{entry.data.photos[0].caption}</p>
                   )}
                 </figcaption>
               </figure>

@@ -18,14 +18,14 @@ const { Content } = await render(project)
 
 <Layout>
   <main class="typeset typeset-docs">
-    <div class="flex item-center">
+    <div class="flex item-center flex-col sm:flex-row">
       <h1
         transition:name={`${project.id}-title`}
-        class="text-primary underline"
+        class="text-primary text-3xl underline break-keep"
       >
         <a href={project.data.href} target="_blank">{project.data.title}</a>
       </h1>
-      <span class="ml-auto" transition:name={`${project.id}-date`}>
+      <span class="sm:ml-auto" transition:name={`${project.id}-date`}>
         <FormattedDate date={project.data.pubDate} />
       </span>
     </div>

@@ -26,11 +26,8 @@ const projects = await getCollection("projects")
                 <CardTitle transition:name={`${project.id}-title`}>
                   {project.data.title}
                 </CardTitle>
-                <CardDescription>
-                  <FormattedDate
-                    transition:name={`${project.id}-date`}
-                    date={project.data.pubDate}
-                  />
+                <CardDescription transition:name={`${project.id}-date`}>
+                  <FormattedDate date={project.data.pubDate} />
                 </CardDescription>
               </CardHeader>
               <CardContent transition:name={`${project.id}-description`}>
