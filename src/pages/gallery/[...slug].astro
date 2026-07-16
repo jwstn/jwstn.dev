@@ -1,0 +1,207 @@
+---
+import { type CollectionEntry, getCollection, render } from "astro:content"
+import Layout from "#/layouts/Layout.astro"
+import { Debug } from "astro:components"
+
+export async function getStaticPaths() {
+  const gallery = await getCollection("gallery")
+  return gallery.map((entry) => ({
+    params: { slug: entry.data.slug },
+    props: entry,
+  }))
+}
+type Props = CollectionEntry<"gallery">
+
+const collection = Astro.props
+---
+
+<Layout>
+  <main class="mx-auto w-full max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+    <div
+      class="grid grid-flow-dense auto-rows-[16rem] grid-cols-1 gap-4 sm:grid-cols-2 sm:auto-rows-[15rem] lg:grid-cols-3 lg:auto-rows-[17rem]"
+    >
+      {
+        collection.data.photos.map((photo) => {
+          const ratio = photo.image.width / photo.image.height
+          const isPortrait = ratio < 0.9
+          const isWide = ratio > 1.6
+          return (
+            <figure
+              class:list={[
+                "group relative m-0 overflow-hidden rounded-xl bg-gray-100",
+                isPortrait && "row-span-2",
+                isWide && "col-span-2",
+              ]}
+            >
+              <button
+                type="button"
+                class="absolute inset-0 h-full w-full cursor-zoom-in overflow-hidden rounded-xl"
+                data-lightbox-trigger
+                data-src={photo.image.src}
+                data-title={photo.title}
+                data-caption={photo.caption ?? ""}
+                aria-label={`View ${photo.title} in full size`}
+              >
+                <img
+                  transition:name={photo.title}
+                  src={photo.image.src}
+                  loading="lazy"
+                  alt={photo.title}
+                  class="absolute inset-0 h-full w-full rounded-xl object-cover object-center transition-transform duration-500 group-hover:scale-105"
+                />
+              </button>
+              <figcaption class="pointer-events-none absolute inset-x-0 bottom-0 translate-y-2 bg-gradient-to-t from-black/75 via-black/40 to-transparent p-4 pt-10 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+                <h3 class="text-sm font-semibold text-white sm:text-base">
+                  {photo.title}
+                </h3>
+                {photo.caption && (
+                  <p class="mt-1 line-clamp-2 text-xs text-gray-200 sm:text-sm">
+                    {photo.caption}
+                  </p>
+                )}
+              </figcaption>
+            </figure>
+          )
+        })
+      }
+    </div>
+  </main>
+
+  <dialog
+    id="lightbox"
+    class="m-auto max-h-[90vh] max-w-[90vw] bg-transparent p-0 backdrop:bg-black/80 backdrop:backdrop-blur-sm"
+  >
+    <figure class="relative m-0 overflow-hidden rounded-xl">
+      <img
+        id="lightbox-image"
+        src=""
+        alt=""
+        class="block max-h-[85vh] max-w-[90vw] object-contain"
+      />
+      <figcaption
+        class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/75 via-black/40 to-transparent p-4 pt-10"
+      >
+        <h3 id="lightbox-title" class="text-base font-semibold text-white"></h3>
+        <p id="lightbox-caption" class="mt-1 text-sm text-gray-200"></p>
+      </figcaption>
+      <button
+        type="button"
+        id="lightbox-close"
+        class="absolute right-3 top-3 flex h-9 w-9 items-center justify-center rounded-full bg-black/50 text-white transition-colors hover:bg-black/75"
+        aria-label="Close"
+      >
+        &#10005;
+      </button>
+    </figure>
+  </dialog>
+
+  <style is:global>
+    /*
+      Smooth morph between the grid thumbnail and the lightbox image.
+      Without this, the browser crossfades two stretched snapshots with
+      different aspect ratios, which looks wonky. Letting the group morph
+      while both snapshots cover the box keeps the image stable.
+    */
+    ::view-transition-group(lightbox-photo) {
+      animation-duration: 300ms;
+      animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    ::view-transition-image-pair(lightbox-photo) {
+      isolation: none;
+    }
+    ::view-transition-old(lightbox-photo),
+    ::view-transition-new(lightbox-photo) {
+      animation: none;
+      mix-blend-mode: normal;
+      height: 100%;
+      width: 100%;
+      object-fit: cover;
+      overflow: clip;
+    }
+  </style>
+
+  <script>
+    function setupLightbox() {
+      const dialog = document.getElementById(
+        "lightbox"
+      ) as HTMLDialogElement | null
+      if (!dialog) return
+
+      const image = document.getElementById(
+        "lightbox-image"
+      ) as HTMLImageElement
+      const title = document.getElementById("lightbox-title")!
+      const caption = document.getElementById("lightbox-caption")!
+      const close = document.getElementById("lightbox-close")!
+
+      let activeThumb: HTMLImageElement | null = null
+
+      async function withViewTransition(update: () => void) {
+        if (document.startViewTransition) {
+          await document.startViewTransition(update).finished
+        } else {
+          update()
+        }
+      }
+
+      async function openLightbox(trigger: HTMLElement) {
+        const thumb = trigger.querySelector("img")!
+        activeThumb = thumb
+        thumb.style.viewTransitionName = "lightbox-photo"
+
+        // make sure the modal image is decoded before transitioning,
+        // otherwise the snapshot is empty and the morph flickers
+        image.src = trigger.dataset.src ?? ""
+        try {
+          await image.decode()
+        } catch {
+          /* ignore decode errors, transition anyway */
+        }
+
+        await withViewTransition(() => {
+          thumb.style.viewTransitionName = ""
+          image.style.viewTransitionName = "lightbox-photo"
+          image.alt = trigger.dataset.title ?? ""
+          title.textContent = trigger.dataset.title ?? ""
+          caption.textContent = trigger.dataset.caption ?? ""
+          caption.classList.toggle("hidden", !trigger.dataset.caption)
+          dialog.showModal()
+        })
+      }
+
+      async function closeLightbox() {
+        await withViewTransition(() => {
+          image.style.viewTransitionName = ""
+          activeThumb?.style.setProperty(
+            "view-transition-name",
+            "lightbox-photo"
+          )
+          dialog.close()
+        })
+        activeThumb?.style.removeProperty("view-transition-name")
+        activeThumb = null
+      }
+
+      for (const trigger of document.querySelectorAll<HTMLElement>(
+        "[data-lightbox-trigger]"
+      )) {
+        trigger.addEventListener("click", () => openLightbox(trigger))
+      }
+
+      close.addEventListener("click", closeLightbox)
+
+      dialog.addEventListener("click", (event) => {
+        if (event.target === dialog) closeLightbox()
+      })
+
+      // intercept Esc so the closing transition also plays
+      dialog.addEventListener("cancel", (event) => {
+        event.preventDefault()
+        closeLightbox()
+      })
+    }
+
+    // runs on first load and after every ClientRouter navigation
+    document.addEventListener("astro:page-load", setupLightbox)
+  </script>
+</Layout>

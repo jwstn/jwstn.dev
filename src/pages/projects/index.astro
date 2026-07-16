@@ -16,19 +16,26 @@ const projects = await getCollection("projects")
 ---
 
 <Layout>
-  <main class="typeset">
+  <main class="typeset max-w-2xl md:max-w-5xl lg:max-w-7xl mx-auto">
     <section class="space-y-8">
       {
         projects.map((project) => (
           <Card>
             <a href={`/projects/${project.id}/`} class="no-underline">
               <CardHeader>
-                <CardTitle>{project.data.title}</CardTitle>
+                <CardTitle transition:name={`${project.id}-title`}>
+                  {project.data.title}
+                </CardTitle>
                 <CardDescription>
-                  <FormattedDate date={project.data.pubDate} />
+                  <FormattedDate
+                    transition:name={`${project.id}-date`}
+                    date={project.data.pubDate}
+                  />
                 </CardDescription>
               </CardHeader>
-              <CardContent>{project.data.description}</CardContent>
+              <CardContent transition:name={`${project.id}-description`}>
+                {project.data.description}
+              </CardContent>
               <CardFooter class="flex-wrap">
                 {project.data.tags.map((tag, index) => (
                   <p class="inline-flex items-center justify-center text-left mt-0 whitespace-normal">

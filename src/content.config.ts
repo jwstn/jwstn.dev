@@ -38,6 +38,7 @@ const gallery = defineCollection({
     z.object({
       title: z.string(),
       pubDate: z.coerce.date(),
+      slug: z.string(),
       photos: z.array(
         z.object({
           image: image(),

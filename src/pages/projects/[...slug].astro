@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content"
 import Layout from "#/layouts/Layout.astro"
+import FormattedDate from "#/components/FormattedDate.astro"
 
 export async function getStaticPaths() {
   const projects = await getCollection("projects")
@@ -17,10 +18,20 @@ const { Content } = await render(project)
 
 <Layout>
   <main class="typeset typeset-docs">
-    <h1 class="text-primary underline">
-      <a href={project.data.href} target="_blank">{project.data.title}</a>
-    </h1>
-    <blockquote>{project.data.description}</blockquote>
+    <div class="flex item-center">
+      <h1
+        transition:name={`${project.id}-title`}
+        class="text-primary underline"
+      >
+        <a href={project.data.href} target="_blank">{project.data.title}</a>
+      </h1>
+      <span class="ml-auto" transition:name={`${project.id}-date`}>
+        <FormattedDate date={project.data.pubDate} />
+      </span>
+    </div>
+    <blockquote transition:name={`${project.id}-description`}>
+      {project.data.description}
+    </blockquote>
     <Content />
   </main>
 </Layout>

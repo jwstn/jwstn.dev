@@ -1,6 +1,7 @@
 {
   "title": "Spring 2026",
-  "pubDate": "2026-03-01",
+  "slug": "spring-2026",
+  "pubDate": "2026-06-15",
   "photos": [
     {
       "image": "../../assets/cologne-garden-bridge.JPG",
@@ -9,18 +10,33 @@
     },
     {
       "image": "../../assets/cow.JPG",
-      "title": "The Moon by Day",
-      "caption": "A autobahn bridge in the middle of cologne after a nice day in the park."
-    },
-    {
-      "image": "../../assets/eddy.JPG",
-      "title": "The Moon by Day",
-      "caption": "A autobahn bridge in the middle of cologne after a nice day in the park."
+      "title": "Some hightland cow's in a village",
+      "caption": "seen them for the first time"
     },
     {
       "image": "../../assets/cherry-flowers-1.JPG",
-      "title": "The Moon by Day",
-      "caption": "A autobahn bridge in the middle of cologne after a nice day in the park."
+      "title": "Cherry Blossoms",
+      "caption": "cute flowers in the light of day"
+    },
+    {
+      "image": "../../assets/eddy.JPG",
+      "title": "Eddy - My Dog",
+      "caption": "the best boy"
+    },
+    {
+      "image": "../../assets/cherry-flowers-2.JPG",
+      "title": "Cherry Blossoms",
+      "caption": ""
+    },
+    {
+      "image": "../../assets/wind-flowers.JPG",
+      "title": "Cherry Blossoms",
+      "caption": ""
+    },
+    {
+      "image": "../../assets/himmel-flowers.JPG",
+      "title": "Cherry Blossoms",
+      "caption": ""
     }
   ]
 }

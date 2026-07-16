@@ -6,13 +6,13 @@ import HeaderLink from "./HeaderLink.astro"
 <header class="max-w-[calc(100%-2em)] mx-auto px-[1em] py-4">
   <nav class="inline-flex w-full">
     <h2 class="sm:block hidden">
-      <a href="/">{SITE_TITLE}</a>
+      <a class="font-bold" href="/">{SITE_TITLE}</a>
     </h2>
-    <div class="inline-flex space-x-2">
+    <div class="inline-flex space-x-2 ml-4">
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/projects">Projects</HeaderLink>
       <!-- <HeaderLink href="/blog">Blog</HeaderLink> -->
-      <HeaderLink href="/images">Images</HeaderLink>
+      <HeaderLink href="/gallery">Gallery</HeaderLink>
     </div>
     <div class="ml-auto flex space-x-2">
       <a href="https://bsky.app/profile/jwstn.bsky.social" target="_blank">
