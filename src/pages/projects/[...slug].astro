@@ -22,18 +22,27 @@ const { Content } = await render(project)
       <div class="flex item-center flex-col sm:flex-row">
         <h1
           transition:name={`${project.id}-title`}
-          class="text-primary text-3xl underline break-keep"
+          class="text-primary underline break-keep"
         >
-          <a href={project.data.href} target="_blank">{project.data.title}</a>
+          <a
+            class="md:text-2xl lg:text-4xl"
+            href={project.data.href}
+            target="_blank">{project.data.title}</a
+          >
         </h1>
-        <span class="sm:ml-auto" transition:name={`${project.id}-date`}>
+        <span
+          class="sm:ml-auto md:text-md lg:text-xl"
+          transition:name={`${project.id}-date`}
+        >
           <FormattedDate date={project.data.pubDate} />
         </span>
       </div>
       <blockquote transition:name={`${project.id}-description`}>
         {project.data.description}
       </blockquote>
-      <Content />
+      <div class="md:text-lg lg:text-2xl">
+        <Content />
+      </div>
     </div>
   </main>
 </Layout>
