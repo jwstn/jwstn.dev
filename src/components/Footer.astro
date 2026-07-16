@@ -2,7 +2,7 @@
 const today = new Date()
 ---
 
-<footer class="mb-0">
+<footer>
   <p class="text-foreground">
     &copy; {today.getFullYear()} jwstn. All rights reserved.
   </p>
@@ -29,6 +29,11 @@ const today = new Date()
   footer {
     padding: 2em 1em 6em 1em;
     text-align: center;
+    /* Sticky footer trick: clamps to the bottom edge of the body
+       (which is min-h-dvh) when the page content is short, but stays
+       in normal flow after the content on long pages. */
+    position: sticky;
+    top: 100dvh;
   }
   .social-links {
     display: flex;

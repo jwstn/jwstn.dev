@@ -1,5 +1,6 @@
 ---
 import type { HTMLAttributes } from "astro/types"
+import { buttonVariants } from "./ui/button/variants"
 
 type Props = HTMLAttributes<"a">
 
@@ -10,7 +11,7 @@ const isActive = href === pathname || href === "/" + (subpath?.[0] || "")
 ---
 
 <a
-  class="inline-block no-underline data-[active=true]:font-bold data-[active=true]:underline data-[active=true]:decoration-accent"
+  class={buttonVariants({ variant: "link", className: "text-xl md:text-2xl" })}
   href={href}
   class:list={[className]}
   data-active={isActive}

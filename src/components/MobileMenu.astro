@@ -1,0 +1,14 @@
+---
+import Button from "#/components/ui/button/index.astro"
+import { MenuIcon } from "@lucide/astro"
+
+type Props = {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<Button class={className} variant="secondary" size={"icon-lg"}>
+  <MenuIcon />
+</Button>

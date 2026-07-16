@@ -9,14 +9,14 @@
       "caption": "A autobahn bridge in the middle of cologne after a nice day in the park."
     },
     {
-      "image": "../../assets/cow.JPG",
-      "title": "Some hightland cow's in a village",
-      "caption": "seen them for the first time"
-    },
-    {
       "image": "../../assets/cherry-flowers-1.JPG",
       "title": "Cherry Blossoms",
-      "caption": "cute flowers in the light of day"
+      "caption": "I love cherry blossoms"
+    },
+    {
+      "image": "../../assets/cow.JPG",
+      "title": "Some hightland cow's in a village",
+      "caption": "Seen them for the first time"
     },
     {
       "image": "../../assets/eddy.JPG",
@@ -25,18 +25,23 @@
     },
     {
       "image": "../../assets/cherry-flowers-2.JPG",
-      "title": "Cherry Blossoms",
-      "caption": ""
-    },
-    {
-      "image": "../../assets/wind-flowers.JPG",
-      "title": "Cherry Blossoms",
-      "caption": ""
+      "title": "'Purple Elegance' tulips",
+      "caption": "They typically bloom in late spring and reach a height of 18 to 20 inches"
     },
     {
       "image": "../../assets/himmel-flowers.JPG",
-      "title": "Cherry Blossoms",
-      "caption": ""
+      "title": "Forget-Me-Nots",
+      "caption": "They are said do symbolize remembrance and unspoken love"
+    },
+    {
+      "image": "../../assets/wind-flowers.JPG",
+      "title": "Mothers Day - 2026",
+      "caption": "We went to a park in a nearby city. All the flowers were on the verge of wilting."
+    },
+    {
+      "image": "../../assets/lady-bug.JPG",
+      "title": "Lady Bug",
+      "caption": "on the rooftop of my most recent work"
     }
   ]
 }

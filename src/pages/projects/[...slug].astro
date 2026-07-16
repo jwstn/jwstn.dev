@@ -17,21 +17,23 @@ const { Content } = await render(project)
 ---
 
 <Layout>
-  <main class="typeset typeset-docs">
-    <div class="flex item-center flex-col sm:flex-row">
-      <h1
-        transition:name={`${project.id}-title`}
-        class="text-primary text-3xl underline break-keep"
-      >
-        <a href={project.data.href} target="_blank">{project.data.title}</a>
-      </h1>
-      <span class="sm:ml-auto" transition:name={`${project.id}-date`}>
-        <FormattedDate date={project.data.pubDate} />
-      </span>
+  <main class="typeset typeset-docs max-w-[calc(100%-2em)] mx-auto">
+    <div class="max-w-xl lg:max-w-3xl">
+      <div class="flex item-center flex-col sm:flex-row">
+        <h1
+          transition:name={`${project.id}-title`}
+          class="text-primary text-3xl underline break-keep"
+        >
+          <a href={project.data.href} target="_blank">{project.data.title}</a>
+        </h1>
+        <span class="sm:ml-auto" transition:name={`${project.id}-date`}>
+          <FormattedDate date={project.data.pubDate} />
+        </span>
+      </div>
+      <blockquote transition:name={`${project.id}-description`}>
+        {project.data.description}
+      </blockquote>
+      <Content />
     </div>
-    <blockquote transition:name={`${project.id}-description`}>
-      {project.data.description}
-    </blockquote>
-    <Content />
   </main>
 </Layout>

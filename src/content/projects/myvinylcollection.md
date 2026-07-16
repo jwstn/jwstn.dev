@@ -7,10 +7,10 @@ tags: ['Tanstack Query','Tanstack Table','Tanstack Start', 'EffectTs', 'Sentry',
 ---
 
 
-I got a vinyl player for my 17 or 18 birthday and also all of the older vinyl's my dad still had with him. Some AC/DC from the late '80 and early '90 he traded himself with friends and some other bands I didn't really know who they were and what kind of music they made.
+I got a record player for my 17th or 18th birthday, as well as all the old records my dad still had. There was some AC/DC from the late '80s and early '90s that he had traded with friends, as well as some other bands whose names and music I didn't recognise.
 
-I wasn't until short after I started to get my own vinyl's. Queen best-of's, some new AC/DC, Iron Maden and so on. I heared them while doing shool work, or just hanging around in my room, either alone or with friends. It became kind of a ritual to listen to physical media of music. Nowdays I'm mostly getting a vinyl if I like the album or just EP if it's just one song.
+It wasn't until shortly after that I started buying my own vinyls. I started with Queen's greatest hits, then moved on to some new AC/DC and Iron Maiden albums, and so on. I would listen to them while doing schoolwork or just hanging around in my room, either alone or with friends. Listening to physical music media became kind of a ritual for me. Nowadays, I mostly buy a vinyl if I like the album, or just an EP if it's only one song.
 
-My Collection is quite large by now and my friends started to collect aswell. One evening we were talking online and talked about our collections, send links of what we wanted to get next or of announcements we were exited for. Not long into the discussion, we asked ourself, if there isn't a easier way to share all of this. We talked about what a site could look like. 
+My collection has grown quite large by now, and some of my friends have started collecting as well. One evening, we were talking online about our collections and sharing links to items we wanted to buy or announcements we were excited about. After a while, we asked ourselves if there wasn't an easier way to share all of this. We discussed what such a site could look like.
 
-Soon after I started building on this project and have been since. I wanted to test out some new technologies for some time now and with Tanstack Start getting pretty stable, I set myself a goal to create a website that could be used by everyone who had the same conversion as we did this one evening.
+I started working on this project soon after and have continued to do so ever since. I have wanted to test out some new technologies for a while, and now that Tanstack Start is pretty stable, I have set myself the goal of creating a website that everyone who experienced the same conversion as us one evening could use.
