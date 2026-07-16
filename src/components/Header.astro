@@ -1,15 +1,17 @@
 ---
 import { SITE_TITLE } from "../consts"
-import MobileMenu from "#/components/MobileMenu.astro"
+import { MobileMenu } from "#/components/MobileMenu.tsx"
 import HeaderLink from "./HeaderLink.astro"
 ---
 
 <header class="max-w-[calc(100%-2em)] mx-auto p-4">
-  <nav class="inline-flex w-full">
-    <h2 class="sm:block hidden">
-      <a class="font-bold text-xl md:text-2xl" href="/">{SITE_TITLE}</a>
+  <nav class="inline-flex w-full items-center justify-center">
+    <h2 class="md:block hidden">
+      <a class="font-bold text-xl md:text-2xl lg:text-3xl xl:text-4xl" href="/">
+        {SITE_TITLE}
+      </a>
     </h2>
-    <MobileMenu class="md:hidden" />
+    <MobileMenu client:load />
     <div class="md:inline-flex space-x-2 sm:ml-4 hidden">
       <HeaderLink href="/">Home</HeaderLink>
       <HeaderLink href="/projects">Projects</HeaderLink>

@@ -6,10 +6,11 @@ import tailwindcss from "@tailwindcss/vite"
 
 import vercel from "@astrojs/vercel"
 
-// https://astro.build/config
+import react from "@astrojs/react"
+
 export default defineConfig({
-  site: "https://jwstn.dev",
-  integrations: [mdx(), sitemap()],
+  site: "https://www.jwstn.dev",
+  integrations: [mdx(), sitemap(), react()],
 
   vite: {
     plugins: [tailwindcss()],
