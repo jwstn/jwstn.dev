@@ -1,12 +1,12 @@
 ---
 type Props = {
-  size?: "default" | "sm"
-} & HTMLAttributes<"div">
+  size?: "default" | "sm";
+} & HTMLAttributes<"div">;
 
-import { cn } from "#/lib/utils"
-import type { HTMLAttributes } from "astro/types"
+import type { HTMLAttributes } from "astro/types";
+import { cn } from "#/lib/utils";
 
-const { size, class: className, ...props } = Astro.props
+const { size, class: className, ...props } = Astro.props;
 ---
 
 <div

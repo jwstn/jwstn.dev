@@ -13,4 +13,4 @@ It wasn't until shortly after that I started buying my own vinyls. I started wit
 
 My collection has grown quite large by now, and some of my friends have started collecting as well. One evening, we were talking online about our collections and sharing links to items we wanted to buy or announcements we were excited about. After a while, we asked ourselves if there wasn't an easier way to share all of this. We discussed what such a site could look like.
 
-I started working on this project soon after and have continued to do so ever since. I have wanted to test out some new technologies for a while, and now that Tanstack Start is pretty stable, I have set myself the goal of creating a website that everyone who experienced the same conversion as us one evening could use.
+I started working on this project soon after and have continued to do so ever since. I have wanted to test out some new technologies for a while, and now that Tanstack Start is pretty stable, I set myself the goal of creating a website, that everyone who experienced the same conversion as us this one evening, could use.

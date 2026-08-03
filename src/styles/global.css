@@ -1,6 +1,7 @@
 @import "@fontsource-variable/geist-mono";
 @import "tailwindcss";
 @import "./typeset.css";
+@import "tw-animate-css";
 
 .typeset-docs {
   --typeset-font-body: var(--font-geist-mono);
@@ -10,8 +11,6 @@
   --typeset-leading: 1.75;
   --typeset-flow: 1.25em;
 }
-
-@import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
 
