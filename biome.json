@@ -7,19 +7,7 @@
     "lineWidth": 120
   },
   "files": {
-    "includes": [
-      "**",
-      "!**/.opencode",
-      "!**/.agents",
-      "!**/.storybook",
-      "!**/.vscode",
-      "!**/.tanstack",
-      "!**/dist",
-      "!**/node_modules",
-      "!**/drizzle/meta",
-      "!**/routeTree.gen.ts",
-      "!**/*.css"
-    ]
+    "includes": ["**", "!**/dist", "!**/node_modules", "!**/drizzle/meta", "!**/routeTree.gen.ts", "!**/*.css"]
   },
   "linter": {
     "enabled": true,
@@ -48,6 +36,17 @@
     }
   },
   "overrides": [
+    {
+      "includes": ["**/*.astro"],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedImports": "off",
+            "noUnusedVariables": "off"
+          }
+        }
+      }
+    },
     {
       "includes": ["src/components/ui/**"],
       "linter": {
