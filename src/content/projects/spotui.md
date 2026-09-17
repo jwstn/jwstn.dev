@@ -10,4 +10,4 @@ I have always been fascinated by cool looking terminal UIs. Whether I saw them i
 
 This is also a great opportunity for me to learn something new. Designing an application like this is kind of similar to a desktop application. Nearly everything should and is happening on the backend, and only exposed via a bridge, which the frontend can use.
 
-EffectTS approach to this are (Atoms): [https://effect.website/docs/v4/api/effect/unstable/reactivity/Atom]. Yet unstable, but great for reactivity. Most of this is new to me, learning a lot about system design and building proper interfaces.
+EffectTS approach to this are [Atoms](https://effect.website/docs/v4/api/effect/unstable/reactivity/Atom). Yet unstable, but great for reactivity. Most of this is new to me, learning a lot about system design and building proper interfaces.
