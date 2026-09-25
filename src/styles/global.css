@@ -226,12 +226,6 @@ main {
   padding: 3em 1em;
 }
 
-a {
-  color: var(--accent);
-}
-a:hover {
-  color: var(--accent);
-}
 p {
   margin-bottom: 1em;
 }

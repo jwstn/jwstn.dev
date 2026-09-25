@@ -1,16 +1,16 @@
 ---
-type Props = HTMLAttributes<"div">;
+type Props = HTMLAttributes<"div">
 
-import type { HTMLAttributes } from "astro/types";
-import { cn } from "#/lib/utils";
+import type { HTMLAttributes } from "astro/types"
+import { cn } from "#/lib/utils"
 
-const { class: className, ...props } = Astro.props;
+const { class: className, ...props } = Astro.props
 ---
 
 <div
   data-slot="card-title"
   class={cn(
-    "cn-font-heading text-xl leading-snug font-medium group-data-[size=sm]/card:text-sm",
+    "cn-font-heading text-primary text-xl leading-snug font-medium group-data-[size=sm]/card:text-sm",
     className
   )}
   {...props}

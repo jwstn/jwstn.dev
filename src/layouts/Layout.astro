@@ -1,15 +1,15 @@
 ---
-import Footer from "#/components/Footer.astro";
-import BaseHead from "#/components/Head.astro";
-import Header from "#/components/Header.astro";
-import { SITE_DESCRIPTION, SITE_TITLE } from "#/consts";
+import Footer from "#/components/Footer.astro"
+import BaseHead from "#/components/Head.astro"
+import Header from "#/components/Header.astro"
+import { SITE_DESCRIPTION, SITE_TITLE } from "#/consts"
 ---
 
 <html lang="en">
   <head>
     <BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
   </head>
-  <body class="bg-background text-foreground w-dvw min-h-dvh">
+  <body class="bg-background w-dvw min-h-dvh">
     <Header />
 
     <slot />
