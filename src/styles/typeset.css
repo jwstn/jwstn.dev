@@ -3,6 +3,8 @@
  * https://ui.shadcn.com/docs/typeset.
  */
 
+:root { --typeset-external-icon: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M21 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h6'/%3E%3Cpath d='m21 3-9 9'/%3E%3Cpath d='M15 3h6v6'/%3E%3C/svg%3E");}
+
 @layer components {
   .typeset {
     --typeset-font-body: inherit;
@@ -442,4 +444,20 @@
     ):not(:where(.not-typeset, [data-not-typeset], .not-typeset *, [data-not-typeset] *)) {
     margin-block-start: 0;
   }
+}
+
+@layer components {
+    .typeset-external-link {
+         :where(a)::after {
+          content: "";
+          display: inline-block;
+          inline-size: 0.75em;
+          block-size: 0.75em;
+          margin-inline-start: 0.2em;
+          vertical-align: -0.05em;
+          background-color: currentColor;
+          -webkit-mask: var(--typeset-external-icon) center / contain no-repeat;
+          mask: var(--typeset-external-icon) center / contain no-repeat;
+        }
+    }
 }

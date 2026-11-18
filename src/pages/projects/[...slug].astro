@@ -1,24 +1,24 @@
 ---
-import { type CollectionEntry, getCollection, render } from "astro:content";
-import FormattedDate from "#/components/FormattedDate.astro";
-import Layout from "#/layouts/Layout.astro";
+import { type CollectionEntry, getCollection, render } from "astro:content"
+import FormattedDate from "#/components/FormattedDate.astro"
+import Layout from "#/layouts/Layout.astro"
 
 export async function getStaticPaths() {
-  const projects = await getCollection("projects");
+  const projects = await getCollection("projects")
   return projects.map((project) => ({
     params: { slug: project.id },
     props: project,
-  }));
+  }))
 }
-type Props = CollectionEntry<"projects">;
+type Props = CollectionEntry<"projects">
 
-const project = Astro.props;
-const { Content } = await render(project);
+const project = Astro.props
+const { Content } = await render(project)
 ---
 
 <Layout>
   <main class="typeset typeset-docs max-w-[calc(100%-2em)] mx-auto">
-    <div class="max-w-xl lg:max-w-3xl">
+    <div class="max-w-2xl lg:max-w-4xl">
       <div class="flex item-center flex-col sm:flex-row">
         <h1
           transition:name={`${project.id}-title`}
@@ -27,8 +27,10 @@ const { Content } = await render(project);
           <a
             class="md:text-2xl lg:text-4xl"
             href={project.data.href}
-            target="_blank">{project.data.title}</a
+            target="_blank"
           >
+            {project.data.title}
+          </a>
         </h1>
         <span
           class="sm:ml-auto md:text-md lg:text-xl"
@@ -40,7 +42,7 @@ const { Content } = await render(project);
       <blockquote transition:name={`${project.id}-description`}>
         {project.data.description}
       </blockquote>
-      <div class="md:text-lg lg:text-2xl">
+      <div class="md:text-lg lg:text-2xl typeset-external-link">
         <Content />
       </div>
     </div>
