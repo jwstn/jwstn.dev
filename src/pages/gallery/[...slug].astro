@@ -1,62 +1,60 @@
 ---
-import { Image } from "astro:assets";
-import { type CollectionEntry, getCollection } from "astro:content";
-import Layout from "#/layouts/Layout.astro";
+import { Image } from "astro:assets"
+import { type CollectionEntry, getCollection } from "astro:content"
+import Layout from "#/layouts/Layout.astro"
 
 export async function getStaticPaths() {
-  const gallery = await getCollection("gallery");
+  const gallery = await getCollection("gallery")
   return gallery.map((entry) => ({
     params: { slug: entry.data.slug },
     props: entry,
-  }));
+  }))
 }
-type Props = CollectionEntry<"gallery">;
+type Props = CollectionEntry<"gallery">
 
-const collection = Astro.props;
+const collection = Astro.props
 ---
 
 <Layout>
   <main class="max-w-[calc(100%-2em)] mx-auto">
-    <div
-      class="grid grid-flow-dense auto-rows-[13rem] sm:grid-cols-2 gap-3 md:auto-rows-[23rem] md:grid-cols-3 xl:grid-cols-4 xl:auto-rows-[30rem]"
-    >
-      {
-        collection.data.photos.map((photo) => {
-          const ratio = photo.image.width / photo.image.height
-          const isPortrait = ratio < 0.9
-          const isWide = ratio > 1.6
-          return (
-            <figure
-              class:list={[
-                "group relative overflow-hidden rounded-lg",
-                isWide && "col-span-2",
-                isPortrait && "row-span-2",
-              ]}
-            >
-              <Image
-                transition:name={photo.title}
-                src={photo.image}
-                widths={[480, 800, 1200, 1600]}
-                sizes={
-                  isWide
-                    ? "(min-width: 80rem) 54rem, (min-width: 48rem) 66vw, 100vw"
-                    : "(min-width: 80rem) 27rem, (min-width: 48rem) 33vw, 50vw"
-                }
-                loading="lazy"
-                decoding="async"
-                alt={photo.title}
-                class="h-full w-full object-cover"
-              />
-              <figcaption class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent p-3 pt-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-coarse:hidden">
-                <h3 class="text-sm font-medium text-white">{photo.title}</h3>
-                {photo.caption && (
-                  <p class="text-xs text-muted-foreground">{photo.caption}</p>
-                )}
-              </figcaption>
-            </figure>
-          )
-        })
-      }
+    <div class="grid grid-flow-dense auto-rows-[13rem] sm:grid-cols-2 gap-3 md:auto-rows-[23rem] md:grid-cols-3 xl:grid-cols-4 xl:auto-rows-[30rem]">
+      {collection.data.photos.map((photo) => {
+        const ratio = photo.image.width / photo.image.height
+        const isPortrait = ratio < 0.9
+        const isWide = ratio > 1.6
+        return (
+          <figure
+            class:list={[
+              "group relative overflow-hidden rounded-lg",
+              isWide && "col-span-2",
+              isPortrait && "row-span-2",
+            ]}
+          >
+            <Image
+              transition:name={photo.title}
+              src={photo.image}
+              widths={[480, 800, 1200, 1600]}
+              sizes={
+                isWide
+                  ? "(min-width: 80rem) 54rem, (min-width: 48rem) 66vw, 100vw"
+                  : "(min-width: 80rem) 27rem, (min-width: 48rem) 33vw, 50vw"
+              }
+              loading="lazy"
+              decoding="async"
+              alt={photo.title}
+              class="h-full w-full object-cover"
+            />
+            <figcaption class="absolute inset-x-0 bottom-0 bg-linear-to-t from-black/70 to-transparent p-3 pt-8 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-coarse:hidden">
+              <h3 class="text-base font-bold text-foreground underline mb-2">
+                {photo.title}
+              </h3>
+              {photo.caption && (
+                <p class="text-xs text-foreground">{photo.caption}</p>
+              )}
+            </figcaption>
+          </figure>
+        )
+      })}
     </div>
   </main>
 </Layout>
