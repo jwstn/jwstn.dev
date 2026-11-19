@@ -1,0 +1,25 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout title="Blog | jwstn.dev" description="Occasional writing by JW.">
+  <h1>Blog</h1>
+  <ul class="stub-list">
+    {
+      posts.map((post) => (
+        <li>
+          <a href={`/blog/${post.id}/`}>
+            <strong>{post.data.title}</strong>
+          </a>
+          <p class="stub-muted">
+            <FormattedDate date={post.data.pubDate} /> — {post.data.description}
+          </p>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

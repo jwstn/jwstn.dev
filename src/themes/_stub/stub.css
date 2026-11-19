@@ -1,0 +1,149 @@
+/* Scoped to html.theme-stub so this never leaks into real themes' pages. */
+
+html.theme-stub {
+  --stub-fg: #1c1c1c;
+  --stub-bg: #fafafa;
+  --stub-muted: #6b6b6b;
+  --stub-border: #e4e4e4;
+  --stub-accent: #5b4fc4;
+}
+
+html.theme-stub.dark {
+  --stub-fg: #ededed;
+  --stub-bg: #141414;
+  --stub-muted: #9a9a9a;
+  --stub-border: #2e2e2e;
+  --stub-accent: #9d8fff;
+}
+
+html.theme-stub body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--stub-bg);
+  color: var(--stub-fg);
+  font-family: system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+html.theme-stub .stub-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--stub-border);
+}
+
+html.theme-stub .stub-logo {
+  font-weight: 700;
+  color: var(--stub-accent);
+  text-decoration: none;
+  font-size: 1.25rem;
+}
+
+html.theme-stub nav {
+  display: flex;
+  gap: 1rem;
+}
+
+html.theme-stub nav a,
+html.theme-stub footer a {
+  color: var(--stub-fg);
+  text-decoration: none;
+}
+
+html.theme-stub nav a:hover {
+  color: var(--stub-accent);
+}
+
+html.theme-stub main {
+  flex: 1;
+  width: min(64rem, 100% - 2rem);
+  margin: 2rem auto 4rem;
+}
+
+html.theme-stub a {
+  color: var(--stub-accent);
+}
+
+html.theme-stub main a {
+  text-decoration: none;
+}
+
+html.theme-stub main a:hover {
+  text-decoration: underline;
+}
+
+html.theme-stub h1 {
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  line-height: 1.15;
+}
+
+html.theme-stub .stub-muted {
+  color: var(--stub-muted);
+  font-size: 0.9rem;
+}
+
+html.theme-stub .stub-list {
+  display: grid;
+  gap: 1.5rem;
+  padding: 0;
+  margin: 2rem 0 0;
+  list-style: none;
+}
+
+html.theme-stub .stub-list li {
+  border-bottom: 1px solid var(--stub-border);
+  padding-bottom: 1.5rem;
+}
+
+html.theme-stub .stub-tag {
+  display: inline-block;
+  margin: 0.25rem 0.5rem 0 0;
+  padding: 0.1rem 0.6rem;
+  border: 1px solid var(--stub-border);
+  border-radius: 999px;
+  font-size: 0.8rem;
+  color: var(--stub-muted);
+}
+
+html.theme-stub .stub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+html.theme-stub .stub-grid img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+html.theme-stub .stub-prose {
+  max-width: 42rem;
+}
+
+html.theme-stub .stub-prose img {
+  max-width: 100%;
+  margin: 1.5rem auto;
+  display: block;
+}
+
+html.theme-stub footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--stub-border);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  color: var(--stub-muted);
+  font-size: 0.9rem;
+}
+
+html.theme-stub footer p {
+  margin: 0;
+}

@@ -1,0 +1,25 @@
+---
+import { Image } from "astro:assets";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, photos } = album.data;
+---
+
+<Layout title={`${title} | jwstn.dev`}>
+  <h1>{title}</h1>
+  <div class="stub-grid">
+    {
+      photos.map((photo) => (
+        <figure>
+          <Image src={photo.image} alt={photo.title} widths={[480, 800, 1200]} sizes="(min-width: 64rem) 24rem, 90vw" loading="lazy" />
+          <figcaption class="stub-muted">
+            {photo.title}
+            {photo.caption && <span> — {photo.caption}</span>}
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</Layout>

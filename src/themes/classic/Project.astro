@@ -1,0 +1,32 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <main class="typeset typeset-docs max-w-[calc(100%-2em)] mx-auto">
+    <div class="max-w-2xl lg:max-w-4xl">
+      <div class="flex item-center flex-col sm:flex-row">
+        <h1 transition:name={`${project.id}-title`} class="text-primary underline break-keep">
+          <a class="md:text-2xl lg:text-4xl" href={href} target="_blank">
+            {title}
+          </a>
+        </h1>
+        <span class="sm:ml-auto md:text-md lg:text-xl" transition:name={`${project.id}-date`}>
+          <FormattedDate date={pubDate} />
+        </span>
+      </div>
+      <blockquote transition:name={`${project.id}-description`}>{description}</blockquote>
+      <div class="md:text-lg lg:text-2xl typeset-external-link">
+        <Content />
+      </div>
+      {tags.map((tag) => (
+        <span class="hidden">{tag}</span>
+      ))}
+    </div>
+  </main>
+</Layout>

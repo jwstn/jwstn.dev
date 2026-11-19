@@ -1,50 +1,16 @@
 ---
-import { type CollectionEntry, getCollection, render } from "astro:content"
-import FormattedDate from "#/components/FormattedDate.astro"
-import Layout from "#/layouts/Layout.astro"
+import { getProject, renderEntry } from "#/lib/content";
+import { themeModule } from "#/themes/manifest";
 
-export async function getStaticPaths() {
-  const projects = await getCollection("projects")
-  return projects.map((project) => ({
-    params: { slug: project.id },
-    props: project,
-  }))
+const slug = Astro.params.slug as string;
+const project = await getProject(slug);
+if (!project) {
+  return new Response("Not found", { status: 404 });
 }
-type Props = CollectionEntry<"projects">
-
-const project = Astro.props
-const { Content } = await render(project)
+const { Content } = await renderEntry(project);
+const T = themeModule(Astro.locals.theme);
 ---
 
-<Layout>
-  <main class="typeset typeset-docs max-w-[calc(100%-2em)] mx-auto">
-    <div class="max-w-2xl lg:max-w-4xl">
-      <div class="flex item-center flex-col sm:flex-row">
-        <h1
-          transition:name={`${project.id}-title`}
-          class="text-primary underline break-keep"
-        >
-          <a
-            class="md:text-2xl lg:text-4xl"
-            href={project.data.href}
-            target="_blank"
-          >
-            {project.data.title}
-          </a>
-        </h1>
-        <span
-          class="sm:ml-auto md:text-md lg:text-xl"
-          transition:name={`${project.id}-date`}
-        >
-          <FormattedDate date={project.data.pubDate} />
-        </span>
-      </div>
-      <blockquote transition:name={`${project.id}-description`}>
-        {project.data.description}
-      </blockquote>
-      <div class="md:text-lg lg:text-2xl typeset-external-link">
-        <Content />
-      </div>
-    </div>
-  </main>
-</Layout>
+<T.Layout title={`${project.data.title} | jwstn.dev`} description={project.data.description}>
+  <T.Project project={project} Content={Content} />
+</T.Layout>

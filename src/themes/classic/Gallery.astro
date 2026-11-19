@@ -1,0 +1,48 @@
+---
+import { Image } from "astro:assets";
+import type { GalleryProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { albums } = Astro.props as GalleryProps;
+---
+
+<Layout title="Gallery | jwstn.dev" description="Pictures JW took.">
+  <main class="typeset typeset-docs max-w-[calc(100%-2em)] mx-auto">
+    <div class="max-w-xl lg:max-w-3xl">
+      <h1 class="text-primary font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl">Pictures of JW</h1>
+      <p class="text-pretty font-bold text-md md:text-lg lg:text-xl xl:text-2xl">
+        On my trip to Japan in March, 2026 I bought a camera since I wanted to for some years now. Here are some
+        pictures I took with it.
+      </p>
+    </div>
+    <section class="w-full md:flex md:flex-wrap gap-4">
+      {
+        albums.map((entry) => (
+          <a class="no-underline" href={`/gallery/${entry.data.slug}/`}>
+            <h2 class="text-primary font-bold text-lg md:text-xl lg:text-2xl xl:text-3xl">{entry.data.title}</h2>
+            <div class="space-y-8 flex flex-row flex-wrap flex-1 gap-4">
+              <figure style="margin-block-start: unset;" class="max-w-sm max-h-8/12 h-auto">
+                <Image
+                  transition:name={entry.data.photos[0].title}
+                  src={entry.data.photos[0].image}
+                  widths={[480, 800]}
+                  sizes="(min-width: 28rem) 24rem, 100vw"
+                  loading="lazy"
+                  decoding="async"
+                  alt={entry.data.photos[0].title}
+                  class="w-full rounded-lg"
+                />
+                <figcaption>
+                  <strong class="font-bold text-foreground text-lg">{entry.data.photos[0].title}</strong>
+                  {entry.data.photos[0].caption && (
+                    <p class="text-pretty text-muted-foreground">{entry.data.photos[0].caption}</p>
+                  )}
+                </figcaption>
+              </figure>
+            </div>
+          </a>
+        ))
+      }
+    </section>
+  </main>
+</Layout>

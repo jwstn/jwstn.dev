@@ -7,7 +7,9 @@ import { defineConfig } from "astro/config";
 
 export default defineConfig({
   site: "https://www.jwstn.dev",
+  output: "server",
   integrations: [mdx(), sitemap(), react()],
+
 
   vite: {
     plugins: [tailwindcss()],

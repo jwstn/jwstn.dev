@@ -1,0 +1,28 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout title="Projects | jwstn.dev" description="Things JW has built.">
+  <h1>Projects</h1>
+  <ul class="stub-list">
+    {
+      projects.map((project) => (
+        <li>
+          <a href={`/projects/${project.id}/`}>
+            <strong>{project.data.title}</strong>
+          </a>
+          <p class="stub-muted">
+            <FormattedDate date={project.data.pubDate} /> — {project.data.description}
+          </p>
+          {project.data.tags.map((tag) => (
+            <span class="stub-tag">{tag}</span>
+          ))}
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

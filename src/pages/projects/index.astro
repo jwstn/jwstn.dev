@@ -1,48 +1,11 @@
 ---
-import { getCollection } from "astro:content"
-import FormattedDate from "#/components/FormattedDate.astro"
-import Layout from "#/layouts/Layout.astro"
-import { cn } from "#/lib/utils"
+import { getProjects } from "#/lib/content";
+import { themeModule } from "#/themes/manifest";
 
-const projects = await getCollection("projects")
+const projects = await getProjects();
+const T = themeModule(Astro.locals.theme);
 ---
 
-<Layout>
-  <main class="max-w-[calc(100%-2em)]">
-    <div class="mx-auto max-w-2xl">
-      {projects.map((project) => (
-        <a href={`/projects/${project.id}/`} class="my-2">
-          <span class="text-foreground text-xs">
-            <FormattedDate date={project.data.pubDate} />
-          </span>
-          <div
-            class="text-2xl text-primary mb-2"
-            transition:name={`${project.id}-title`}
-          >
-            {project.data.title}
-          </div>
-          <p
-            class="text-foreground text-sm"
-            transition:name={`${project.id}-description`}
-          >
-            {project.data.description}
-          </p>
-          <div class="flex flex-wrap items-center [&>p]:p-0! border-border border-b-2 mb-8">
-            {project.data.tags.map((tag, index) => (
-              <p class="text-foreground inline-flex items-center justify-centertext-left whitespace-normal md:text-md lg:text-xl">
-                {tag}
-                <span
-                  class={cn("whitespace-break-spaces", {
-                    hidden: index === project.data.tags.length - 1,
-                  })}
-                >
-                  {", "}
-                </span>
-              </p>
-            ))}
-          </div>
-        </a>
-      ))}
-    </div>
-  </main>
-</Layout>
+<T.Layout title="Projects | jwstn.dev" description="Projects JW has built.">
+  <T.Projects projects={projects} />
+</T.Layout>

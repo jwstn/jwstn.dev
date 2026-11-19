@@ -1,0 +1,27 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { PostProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="stub-prose">
+    <h1>{title}</h1>
+    <p class="stub-muted">
+      <FormattedDate date={pubDate} />
+      {
+        updatedDate && (
+          <span>
+            — last updated <FormattedDate date={updatedDate} />
+          </span>
+        )
+      }
+    </p>
+    {heroImage && <Image src={heroImage} alt="" width={1020} height={510} />}
+    <Content />
+  </article>
+</Layout>

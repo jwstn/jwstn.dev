@@ -1,0 +1,26 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="stub-prose">
+    <h1>
+      <a href={href} target="_blank" rel="noopener noreferrer">
+        {title}
+      </a>
+    </h1>
+    <p class="stub-muted">
+      <FormattedDate date={pubDate} />
+    </p>
+    <blockquote>{description}</blockquote>
+    {tags.map((tag) => (
+      <span class="stub-tag">{tag}</span>
+    ))}
+    <Content />
+  </article>
+</Layout>
