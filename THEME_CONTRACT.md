@@ -7,7 +7,10 @@ Read it fully before writing any code.
 
 - The site runs in SSR mode. `src/middleware.ts` reads the `site-theme` cookie into `Astro.locals.theme`.
 - Route pages in `src/pages/**` are thin dispatchers: they load data, pick the theme module from
-  `src/themes/manifest.ts`, and render `<T.Layout><T.SomePage /></T.Layout>`.
+  `src/themes/manifest.ts`, and render **only your page component** (e.g. `<T.Projects projects={…} />`).
+- **Your page components MUST self-wrap**: each renders its own `<Layout title={…} description={…}>`
+  from your theme directory around its content — exactly like `src/themes/classic/Home.astro` and
+  `src/themes/_stub/*.astro` do. The dispatcher never wraps `Layout` for you.
 - Each theme lives in `src/themes/<id>/` and is completely self-contained: it must never import from
   another theme's directory, from `src/layouts/**`, or from `src/components/ui/**` (those belong to `classic`).
 - The visitor switches themes via the shared floating picker (`src/themes/shared/ThemeSwitcher.astro`) and

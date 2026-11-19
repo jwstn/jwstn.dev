@@ -6,6 +6,4 @@ const albums = await getAlbums();
 const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Layout title="Gallery | jwstn.dev" description="Pictures JW took with a camera bought in Japan.">
-  <T.Gallery albums={albums} />
-</T.Layout>
+<T.Gallery albums={albums} />

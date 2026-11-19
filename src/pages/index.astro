@@ -1,10 +1,7 @@
 ---
-import { SITE_DESCRIPTION, SITE_TITLE } from "#/consts";
 import { themeModule } from "#/themes/manifest";
 
 const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Layout title={SITE_TITLE} description={SITE_DESCRIPTION}>
-  <T.Home />
-</T.Layout>
+<T.Home />

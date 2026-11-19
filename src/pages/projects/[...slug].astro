@@ -11,6 +11,4 @@ const { Content } = await renderEntry(project);
 const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Layout title={`${project.data.title} | jwstn.dev`} description={project.data.description}>
-  <T.Project project={project} Content={Content} />
-</T.Layout>
+<T.Project project={project} Content={Content} />

@@ -6,6 +6,4 @@ const projects = await getProjects();
 const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Layout title="Projects | jwstn.dev" description="Projects JW has built.">
-  <T.Projects projects={projects} />
-</T.Layout>
+<T.Projects projects={projects} />

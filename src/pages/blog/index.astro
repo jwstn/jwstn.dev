@@ -6,6 +6,4 @@ const posts = await getPosts();
 const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Layout title="Blog | jwstn.dev" description="Occasional writing by JW.">
-  <T.Blog posts={posts} />
-</T.Layout>
+<T.Blog posts={posts} />
