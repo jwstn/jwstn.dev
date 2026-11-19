@@ -1,0 +1,943 @@
+/* ==========================================================================
+   editorial — Swiss magazine
+   Light: gallery-wall white, international orange ink, one-pixel rules.
+   Dark:  ink black, warmed paper type — designed, not inverted.
+   Everything is scoped under html.theme-editorial (.dark for night).
+   ========================================================================== */
+
+@import "@fontsource-variable/newsreader/opsz.css";
+@import "@fontsource-variable/newsreader/opsz-italic.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/geist-mono";
+
+/* --------------------------------------------------------------------------
+   Palette — light
+   -------------------------------------------------------------------------- */
+html.theme-editorial {
+  color-scheme: light;
+  --background: #faf9f6;
+  --foreground: #1b1a17;
+  --card: #f1efe8;
+  --card-foreground: #1b1a17;
+  --primary: #ff4f00;
+  --primary-foreground: #1b0c02;
+  --secondary: #f0eee6;
+  --secondary-foreground: #1b1a17;
+  --muted: #e9e7de;
+  --muted-foreground: #5f5e56;
+  --accent: #ff4f00;
+  --accent-foreground: #1b0c02;
+  --border: #d8d5ca;
+  --ring: #bf4000;
+
+  /* editorial customs */
+  --rule: #d8d5ca;          /* faint hairline (row separators, frames)   */
+  --rule-strong: #1b1a17;   /* ink hairline (sections, masthead rules)   */
+  --ink-soft: #45443d;      /* standfirst / lede ink                     */
+  --accent-text: #bf4000;   /* AA-safe orange for small text (5.0:1)     */
+  --ed-pad: clamp(1.05rem, 4vw, 2.75rem);
+
+  --font-display: "Newsreader Variable", "Newsreader", Georgia, serif;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+/* --------------------------------------------------------------------------
+   Palette — dark (ink black, warm paper type)
+   -------------------------------------------------------------------------- */
+html.theme-editorial.dark {
+  color-scheme: dark;
+  --background: #0e0d0b;
+  --foreground: #e9e6de;
+  --card: #161512;
+  --card-foreground: #e9e6de;
+  --primary: #ff5a1f;
+  --primary-foreground: #0e0d0b;
+  --secondary: #171612;
+  --secondary-foreground: #e9e6de;
+  --muted: #1d1c17;
+  --muted-foreground: #a19d92;
+  --accent: #ff5a1f;
+  --accent-foreground: #0e0d0b;
+  --border: #2c2a25;
+  --ring: #ff6f38;
+
+  --rule: #2c2a25;
+  --rule-strong: #dcd9d0;
+  --ink-soft: #b6b2a6;
+  --accent-text: #ff6f38; /* 7:1 on ink — AA even at small sizes */
+}
+
+/* --------------------------------------------------------------------------
+   Base
+   -------------------------------------------------------------------------- */
+html.theme-editorial body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html.theme-editorial ::selection {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+html.theme-editorial a:focus-visible,
+html.theme-editorial button:focus-visible,
+html.theme-editorial select:focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+}
+
+/* Skip link — off-canvas until focused */
+html.theme-editorial .ed-skip {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 300;
+  padding: 0.8rem 1.1rem;
+  background: var(--foreground);
+  color: var(--background);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transform: translateY(-300%);
+}
+html.theme-editorial .ed-skip:focus {
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   The sheet — framed page (visible grid: vertical hairlines both sides)
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-sheet {
+  max-width: 76rem;
+  margin-inline: auto;
+  border-inline: 1px solid var(--rule);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+}
+html.theme-editorial .ed-main {
+  flex: 1 0 auto;
+}
+html.theme-editorial .ed-page {
+  padding-inline: var(--ed-pad);
+  padding-block: clamp(2.2rem, 6vw, 3.8rem) clamp(3rem, 8vw, 5.5rem);
+}
+
+/* Horizontal rules — hairlines that draw in on load */
+html.theme-editorial .ed-rule {
+  height: 1px;
+  background: var(--rule-strong);
+  border: 0;
+  margin: 0;
+  padding: 0;
+}
+html.theme-editorial .ed-rule-thin {
+  background: var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+   Masthead
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-header {
+  border-bottom: 1px solid var(--rule-strong);
+}
+
+html.theme-editorial .ed-masthead-top {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.15rem 1rem;
+  padding: 0.55rem var(--ed-pad) 0.5rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+html.theme-editorial .ed-masthead-top a {
+  color: inherit;
+  text-decoration: none;
+}
+html.theme-editorial .ed-masthead-top a:hover {
+  color: var(--accent-text);
+}
+
+html.theme-editorial .ed-masthead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.6rem 1rem;
+  padding: 1.1rem var(--ed-pad) 1rem;
+  /* the 2px ink rule below is drawn by the animated ::after in the motion section */
+}
+html.theme-editorial .ed-wordmark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.7rem, 8vw, 3.9rem);
+  line-height: 0.82;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+  text-decoration: none;
+}
+html.theme-editorial .ed-wordmark-dot {
+  color: var(--accent);
+}
+html.theme-editorial .ed-issue {
+  text-align: right;
+  display: grid;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+html.theme-editorial .ed-issue-no {
+  color: var(--foreground);
+  font-weight: 600;
+}
+html.theme-editorial .ed-issue-meta {
+  color: var(--muted-foreground);
+}
+
+/* --------------------------------------------------------------------------
+   Nav — newspaper rule bar; wraps to two designed rows at 375px
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  padding-inline: var(--ed-pad);
+  row-gap: 0;
+}
+html.theme-editorial .ed-nav-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55em;
+  min-height: 44px;
+  padding-inline: 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted-foreground);
+}
+html.theme-editorial .ed-nav > .ed-nav-link:first-child,
+html.theme-editorial .ed-nav-social .ed-nav-link:first-child {
+  padding-left: 0;
+}
+html.theme-editorial .ed-nav-no {
+  color: var(--accent-text);
+  font-size: 0.6rem;
+}
+html.theme-editorial .ed-nav-link:hover {
+  color: var(--foreground);
+}
+html.theme-editorial .ed-nav-link[aria-current="page"] {
+  color: var(--foreground);
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+html.theme-editorial .ed-nav-social {
+  margin-left: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+@media (max-width: 30rem) {
+  html.theme-editorial .ed-nav-social {
+    margin-left: 0;
+  }
+  html.theme-editorial .ed-nav-social .ed-nav-link:first-child {
+    padding-left: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Microtype / kickers
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-mono {
+  font-family: var(--font-mono);
+}
+
+html.theme-editorial .ed-kicker {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin: 0 0 1.5rem;
+}
+html.theme-editorial .ed-kicker-no {
+  color: var(--accent-text);
+  white-space: nowrap;
+}
+html.theme-editorial .ed-kicker-right {
+  margin-left: auto;
+  white-space: nowrap;
+}
+
+html.theme-editorial .ed-section-label {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  margin: 0 0 0.9rem;
+}
+
+/* --------------------------------------------------------------------------
+   Display type — huge serif, tight tracking, optical sizing
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-display {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 620;
+  font-size: clamp(2.55rem, 8vw, 5.3rem);
+  line-height: 1.0;
+  letter-spacing: -0.025em;
+  margin: 0 0 1.7rem;
+  max-width: 24ch;
+  text-wrap: balance;
+  color: var(--foreground);
+}
+html.theme-editorial .ed-display em {
+  font-style: italic;
+  color: var(--accent);
+}
+html.theme-editorial .ed-display-page {
+  font-size: clamp(2.15rem, 5.5vw, 3.45rem);
+  line-height: 1.04;
+  margin-bottom: 1.4rem;
+}
+
+/* Standfirst — the lede, italic serif with an orange drop cap on the cover */
+html.theme-editorial .ed-standfirst {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 430;
+  font-size: clamp(1.12rem, 2.4vw, 1.42rem);
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin: 0;
+}
+html.theme-editorial .ed-standfirst a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+html.theme-editorial .ed-standfirst a:hover {
+  color: var(--foreground);
+}
+html.theme-editorial .ed-cover .ed-standfirst::first-letter {
+  font-family: var(--font-display);
+  float: left;
+  font-size: 3.05em;
+  line-height: 0.8;
+  margin: 0.07em 0.12em 0 0;
+  color: var(--accent-text);
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------------------------
+   Credit / dateline rows
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-credit {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4em 1.4em;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin-top: 1.9rem;
+}
+html.theme-editorial .ed-credit-link {
+  margin-left: auto;
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+html.theme-editorial .ed-credit-link:hover {
+  color: var(--foreground);
+}
+@media (max-width: 40rem) {
+  html.theme-editorial .ed-credit-link {
+    margin-left: 0;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Index rows — hanging indents, hairline separators
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-index {
+  list-style: none;
+  margin: 2.6rem 0 0;
+  padding: 0;
+}
+html.theme-editorial .ed-index-row {
+  border-top: 1px solid var(--rule);
+}
+html.theme-editorial .ed-index-row:last-child {
+  border-bottom: 1px solid var(--rule);
+}
+html.theme-editorial .ed-index-link {
+  display: grid;
+  grid-template-columns: 3.4rem minmax(0, 1fr) auto;
+  gap: 0.2rem 1.2rem;
+  align-items: baseline;
+  padding-block: 1.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+/* hover tint reaches the sheet frame */
+html.theme-editorial .ed-toc-row,
+html.theme-editorial .ed-index-link {
+  margin-inline: calc(var(--ed-pad) * -1);
+  padding-inline: var(--ed-pad);
+}
+html.theme-editorial .ed-index-link:hover {
+  background: var(--secondary);
+}
+html.theme-editorial .ed-index-no {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+  letter-spacing: 0.1em;
+}
+html.theme-editorial .ed-index-link:hover .ed-index-no {
+  color: var(--accent-text);
+}
+html.theme-editorial .ed-index-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.3rem, 3vw, 1.6rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  color: var(--foreground);
+}
+html.theme-editorial .ed-index-link:hover .ed-index-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--accent);
+}
+html.theme-editorial .ed-index-desc {
+  display: block;
+  margin-top: 0.45rem;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  max-width: 62ch;
+}
+html.theme-editorial .ed-index-tags {
+  display: block;
+  margin-top: 0.7rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+html.theme-editorial .ed-index-date {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+@media (max-width: 40rem) {
+  html.theme-editorial .ed-index-link {
+    grid-template-columns: 2.2rem minmax(0, 1fr);
+  }
+  html.theme-editorial .ed-index-date {
+    grid-column: 2;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Table of contents (home, "in this issue")
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-toc {
+  margin-top: 3rem;
+}
+html.theme-editorial .ed-toc-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+html.theme-editorial .ed-toc-row {
+  display: grid;
+  grid-template-columns: 2.9rem minmax(0, 1fr) auto;
+  gap: 0.2rem 1rem;
+  align-items: baseline;
+  padding-block: 1.25rem;
+  border-top: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+}
+html.theme-editorial .ed-toc-list li:last-child .ed-toc-row {
+  border-bottom: 1px solid var(--rule);
+}
+html.theme-editorial .ed-toc-row:hover {
+  background: var(--secondary);
+}
+html.theme-editorial .ed-toc-no {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--accent-text);
+}
+html.theme-editorial .ed-toc-title {
+  display: block;
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.2rem, 2.6vw, 1.4rem);
+  line-height: 1.15;
+  color: var(--foreground);
+}
+html.theme-editorial .ed-toc-row:hover .ed-toc-title {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--accent);
+}
+html.theme-editorial .ed-toc-desc {
+  display: block;
+  margin-top: 0.35rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  max-width: 60ch;
+}
+html.theme-editorial .ed-toc-page {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+/* --------------------------------------------------------------------------
+   The Back Pages — designed empty state
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-empty {
+  margin-top: 2.6rem;
+  border-block: 1px solid var(--rule-strong);
+  padding: clamp(3.2rem, 9vw, 5.5rem) 1rem;
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+  text-align: center;
+}
+html.theme-editorial .ed-empty-stamp {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  border: 1px solid currentColor;
+  padding: 0.45rem 1rem;
+  transform: rotate(-1.5deg);
+  margin: 0;
+}
+html.theme-editorial .ed-empty-title {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.7rem, 4.5vw, 2.4rem);
+  line-height: 1.1;
+  margin: 0.4rem 0 0;
+  color: var(--foreground);
+}
+html.theme-editorial .ed-empty-text {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+  max-width: 48ch;
+  margin: 0;
+}
+html.theme-editorial .ed-empty-meta {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  margin: 0.6rem 0 0;
+}
+
+/* --------------------------------------------------------------------------
+   Gallery — contact-sheet rows
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-contact {
+  display: flex;
+  gap: 3px;
+  max-width: 21.5rem; /* fits exactly 6 frames + gutters, never crops mid-frame */
+  overflow: hidden;
+  align-self: center;
+}
+html.theme-editorial .ed-contact-frame {
+  display: block;
+  width: 3.4rem;
+  height: 3.4rem;
+  object-fit: cover;
+  border: 1px solid var(--rule);
+}
+@media (max-width: 40rem) {
+  html.theme-editorial .ed-contact {
+    grid-column: 2;
+    max-width: 14.2rem;
+  }
+  html.theme-editorial .ed-contact-frame {
+    width: 2.2rem;
+    height: 2.2rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Album — figure listings, generous gutters
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-frames {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: clamp(1.2rem, 3vw, 2.4rem);
+  row-gap: clamp(3rem, 7vw, 5rem);
+  margin-top: clamp(2.2rem, 6vw, 3.4rem);
+}
+html.theme-editorial .ed-figure {
+  margin: 0;
+}
+/* Zigzag plates — every row of the 12-column grid fills exactly */
+html.theme-editorial .ed-fig-wide-left {
+  grid-column: 1 / 8;
+}
+html.theme-editorial .ed-fig-narrow-right {
+  grid-column: 8 / 13;
+}
+html.theme-editorial .ed-fig-narrow-left {
+  grid-column: 1 / 6;
+}
+html.theme-editorial .ed-fig-wide-right {
+  grid-column: 6 / 13;
+}
+@media (max-width: 48rem) {
+  html.theme-editorial .ed-fig-wide-left,
+  html.theme-editorial .ed-fig-narrow-right,
+  html.theme-editorial .ed-fig-narrow-left,
+  html.theme-editorial .ed-fig-wide-right {
+    grid-column: 1 / -1;
+  }
+}
+html.theme-editorial .ed-figure img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--rule);
+}
+html.theme-editorial .ed-figcaption {
+  margin-top: 0.85rem;
+  display: grid;
+  gap: 0.3rem;
+}
+html.theme-editorial .ed-fig-head {
+  display: flex;
+  gap: 0.7em;
+  align-items: baseline;
+}
+html.theme-editorial .ed-fig-no {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent-text);
+  white-space: nowrap;
+}
+html.theme-editorial .ed-fig-title {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.25;
+  color: var(--foreground);
+}
+html.theme-editorial .ed-fig-caption {
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  max-width: 48ch;
+}
+
+/* Hero figure (post) */
+html.theme-editorial .ed-hero {
+  margin: 2.6rem 0 0;
+}
+html.theme-editorial .ed-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 1px solid var(--rule);
+}
+
+/* --------------------------------------------------------------------------
+   Back links — 44px hit area
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-backlink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--muted-foreground);
+  margin-top: 2.8rem;
+}
+html.theme-editorial .ed-backlink:hover {
+  color: var(--accent-text);
+}
+
+/* --------------------------------------------------------------------------
+   Colophon — the footer
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-colophon {
+  border-top: 2px solid var(--rule-strong);
+  padding: clamp(1.8rem, 4vw, 2.6rem) var(--ed-pad) 1.6rem;
+}
+html.theme-editorial .ed-colophon-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+@media (max-width: 48rem) {
+  html.theme-editorial .ed-colophon-grid {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+}
+html.theme-editorial .ed-colophon-text {
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+  max-width: 34ch;
+  margin: 0;
+}
+html.theme-editorial .ed-colophon-list {
+  list-style: none;
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+}
+html.theme-editorial .ed-colophon-list a {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+}
+html.theme-editorial .ed-colophon-list a:hover {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+html.theme-editorial .ed-fin {
+  margin: 2.2rem 0 0;
+  padding-top: 1.3rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* --------------------------------------------------------------------------
+   Long-form prose (markdown bodies)
+   -------------------------------------------------------------------------- */
+html.theme-editorial .ed-prose {
+  font-size: 1.04rem;
+  line-height: 1.75;
+  color: var(--foreground);
+  margin-top: 2.4rem;
+}
+html.theme-editorial .ed-prose p {
+  margin: 1.15em 0;
+  max-width: 68ch;
+}
+html.theme-editorial .ed-prose > p:first-of-type::first-letter {
+  font-family: var(--font-display);
+  float: left;
+  font-size: 3.3em;
+  line-height: 0.8;
+  margin: 0.06em 0.12em 0 0;
+  color: var(--foreground);
+  font-weight: 600;
+}
+html.theme-editorial .ed-prose h2 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.7rem;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+  margin: 2.6em 0 0.5em;
+  padding-top: 1.4em;
+  border-top: 1px solid var(--rule);
+  max-width: 30ch;
+}
+html.theme-editorial .ed-prose h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.25rem;
+  margin: 2.2em 0 0.4em;
+}
+html.theme-editorial .ed-prose h4 {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 1rem;
+  margin: 2em 0 0.3em;
+}
+html.theme-editorial .ed-prose a {
+  color: var(--accent-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+html.theme-editorial .ed-prose a:hover {
+  color: var(--foreground);
+}
+html.theme-editorial .ed-prose strong {
+  font-weight: 700;
+}
+html.theme-editorial .ed-prose blockquote {
+  margin: 2em 0;
+  padding: 0.2em 0 0.2em 1.5em;
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15em;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  max-width: 58ch;
+}
+html.theme-editorial .ed-prose ul,
+html.theme-editorial .ed-prose ol {
+  margin: 1.3em 0;
+  padding-left: 1.6em;
+  max-width: 64ch;
+}
+html.theme-editorial .ed-prose li {
+  margin: 0.45em 0;
+}
+html.theme-editorial .ed-prose ul li::marker {
+  content: "— ";
+  color: var(--accent-text);
+}
+html.theme-editorial .ed-prose ol li::marker {
+  color: var(--accent-text);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+}
+html.theme-editorial .ed-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--muted);
+  border: 1px solid var(--rule);
+  padding: 0.12em 0.35em;
+}
+html.theme-editorial .ed-prose pre {
+  background: var(--card);
+  border: 1px solid var(--rule);
+  padding: 1.1rem 1.2rem;
+  overflow-x: auto;
+  margin: 1.8em 0;
+}
+html.theme-editorial .ed-prose pre code {
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.82em;
+  line-height: 1.6;
+}
+html.theme-editorial .ed-prose img {
+  max-width: 100%;
+  height: auto;
+  border: 1px solid var(--rule);
+}
+html.theme-editorial .ed-prose hr {
+  border: none;
+  border-top: 1px solid var(--rule);
+  margin: 3em 0;
+}
+
+/* --------------------------------------------------------------------------
+   Motion — restrained: hairlines draw, headlines rise, staggered
+   -------------------------------------------------------------------------- */
+@keyframes ed-rule-in {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes ed-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.55em);
+  }
+}
+html.theme-editorial .ed-anim-rule {
+  transform-origin: 0 50%;
+  animation: ed-rule-in 0.9s cubic-bezier(0.3, 0.7, 0.2, 1) both;
+}
+html.theme-editorial .ed-anim-rise {
+  animation: ed-rise 0.65s cubic-bezier(0.25, 0.7, 0.25, 1)
+    calc(0.1s + var(--ed-i, 0) * 85ms) both;
+}
+html.theme-editorial .ed-masthead-top,
+html.theme-editorial .ed-masthead,
+html.theme-editorial .ed-nav {
+  position: relative;
+}
+html.theme-editorial .ed-masthead::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--rule-strong);
+  transform-origin: 0 50%;
+  animation: ed-rule-in 1s cubic-bezier(0.3, 0.7, 0.2, 1) 0.05s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-editorial .ed-anim-rule,
+  html.theme-editorial .ed-anim-rise,
+  html.theme-editorial .ed-masthead::after {
+    animation: none;
+  }
+  html.theme-editorial *,
+  html.theme-editorial *::before,
+  html.theme-editorial *::after {
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,109 @@
+---
+import Divider from "./Divider.astro";
+import Layout from "./Layout.astro";
+import Window from "./Window.astro";
+
+// Boot sequence timing (all animations vanish under prefers-reduced-motion):
+//   0.20s  type "whoami"
+//   1.05s  whoami output (h1)
+//   1.40s  next prompt line prints, 1.60s type "cat about.txt"
+//   2.75s+ bio lines print one by one
+//   3.90s  prompt prints, 4.15s type "ls sections/"
+//   5.05s  section listing prints
+//   5.45s  idle prompt + blinking cursor
+const ascii = [
+  "┌───────────────┐",
+  "│ ░░░░░░░░░░░░░ │",
+  "│ ░ jwstn.dev ░ │",
+  "│ ░░░░░░░░░░░░░ │",
+  "│  ───────────  │",
+  "│   ●  ●  ●     │",
+  "└───────────────┘",
+].join("\n");
+
+const info: Array<[string, string]> = [
+  ["user", "jw"],
+  ["location", "Cologne, Germany"],
+  ["role", "full-stack developer"],
+  ["shell", "TanStack"],
+  ["packages", "Effect, Hono, Elysia"],
+  ["extra_bins", "Rust, GPUI, TUIs"],
+  ["peripherals", "one camera (bought in Japan, March 2026)"],
+  ["resolution", "80×24"],
+];
+---
+
+<Layout
+  title="jwstn.dev — jw@dev:~"
+  description="JW is a full-stack developer from Cologne: TanStack apps, Effect/Hono/Elysia experiments, and photos from the Japan 2026 camera trip — rendered on a CRT."
+>
+  <section class="term-boot" aria-label="Boot sequence — who JW is">
+    <p class="term-cmdline">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span class="term-type" style="--n: 6; --dur: 0.6s; --t: 0.2s">whoami</span>
+    </p>
+    <h1 class="term-boot-h1 term-reveal" style="--d: 1.05s">jw — full-stack developer, Cologne (Germany)</h1>
+
+    <p class="term-cmdline term-reveal" style="--d: 1.4s">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span class="term-type" style="--n: 13; --dur: 1s; --t: 1.6s">cat about.txt</span>
+    </p>
+    <div class="term-out">
+      <p class="term-reveal" style="--d: 2.75s">I build web applications with TanStack as my daily driver,</p>
+      <p class="term-reveal" style="--d: 2.95s">and run experiments with Effect, Hono and Elysia on the side.</p>
+      <p class="term-reveal" style="--d: 3.15s">After hours: Rust and GPUI, a terminal UI for Spotify,</p>
+      <p class="term-reveal" style="--d: 3.35s">and a note app that refuses to stay dead.</p>
+      <p class="term-reveal" style="--d: 3.55s">In March 2026 I bought a camera in Japan — the evidence lives in ~/gallery.</p>
+    </div>
+
+    <p class="term-cmdline term-reveal" style="--d: 3.9s">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span class="term-type" style="--n: 13; --dur: 0.8s; --t: 4.15s">ls sections/</span>
+    </p>
+    <ul class="term-ls term-reveal" style="--d: 5.05s" aria-label="Site sections">
+      <li>
+        <a class="term-ls-link" href="/projects/">
+          <span class="term-ls-name">projects/</span>
+          <span class="term-ls-desc">4 builds — tanstack, rust &amp; a spotify tui</span>
+        </a>
+      </li>
+      <li>
+        <a class="term-ls-link" href="/blog/">
+          <span class="term-ls-name">blog/</span>
+          <span class="term-ls-desc">0 posts — drafts still compiling</span>
+        </a>
+      </li>
+      <li>
+        <a class="term-ls-link" href="/gallery/">
+          <span class="term-ls-name">gallery/</span>
+          <span class="term-ls-desc">3 albums — japan, spring &amp; summer 2026</span>
+        </a>
+      </li>
+    </ul>
+
+    <p class="term-cmdline term-reveal" style="--d: 5.45s" aria-hidden="true">
+      <span class="term-ps1">jwstn@dev:~$</span>
+      <span class="term-cursor"></span>
+    </p>
+
+    <Divider count={42} />
+  </section>
+
+  <div class="term-reveal" style="--d: 6s">
+    <Window name="neofetch">
+      <div class="term-neofetch">
+        <pre class="term-neofetch-art" aria-hidden="true">{ascii}</pre>
+        <dl class="term-neofetch-info">
+          {
+            info.map(([key, value]) => (
+              <div>
+                <dt>{key}</dt>
+                <dd>{value}</dd>
+              </div>
+            ))
+          }
+        </dl>
+      </div>
+    </Window>
+  </div>
+</Layout>

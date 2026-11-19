@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+
+const photoCount = `${photos.length} photograph${photos.length === 1 ? "" : "s"}`;
+---
+
+<Layout
+  title={`${title} — jwstn.dev`}
+  description={`Photographs from ${title} — by JW.`}
+>
+  <p class="luxe-backrow luxe-fade">
+    <a class="luxe-back" href="/gallery">&larr; Gallery</a>
+  </p>
+
+  <header class="luxe-fade">
+    <p class="luxe-kicker">Album</p>
+    <h1 class="luxe-display">{title}</h1>
+    <p class="luxe-meta">
+      <FormattedDate date={pubDate} />
+      <span aria-hidden="true"> · </span>
+      {photoCount}
+    </p>
+  </header>
+
+  <div class="luxe-orn" aria-hidden="true"><span class="luxe-orn-diamond"></span></div>
+
+  <div class="luxe-plates luxe-fade luxe-fade-2">
+    {
+      photos.map((photo) => (
+        <figure class="luxe-plate">
+          <Image
+            src={photo.image}
+            alt={photo.title}
+            widths={[480, 800, 1200, 1600]}
+            sizes="(min-width: 81rem) 74rem, (min-width: 40rem) 90vw, calc(100vw - 2.5rem)"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption class="luxe-plate-caption">
+            <span class="luxe-plate-title">{photo.title}</span>
+            {photo.caption && <span class="luxe-plate-note">{photo.caption}</span>}
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</Layout>

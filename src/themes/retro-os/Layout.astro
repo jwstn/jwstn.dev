@@ -1,0 +1,96 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const navItems = [
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Gallery", href: "/gallery" },
+];
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+
+// Server-rendered first tick; the script below replaces it with the
+// visitor's real local time immediately on load.
+const clock = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+---
+
+<html lang="en" class="theme-retro-os">
+  <head>
+    <MetaTags title={title} description={description} transitions={false} />
+  </head>
+
+  <body>
+    <a class="os-skip" href="#os-main">Skip to content</a>
+
+    <main id="os-main" class="os-main">
+      <div class="os-shell os-stack">
+        <slot />
+      </div>
+    </main>
+
+    <footer class="os-footer">
+      <div class="os-shell os-footer-bar">
+        <span class="os-panel">&copy; {year} jwstn</span>
+        <span class="os-panel os-panel-grow">C:\users\jwstn — Cologne, Germany</span>
+        {
+          SOCIALS.map((s) => (
+            <a class="os-panel os-panel-link" href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label} ↗
+            </a>
+          ))
+        }
+      </div>
+    </footer>
+
+    <header class="os-taskbar">
+      <a class="os-start" href="/" aria-current={path === "/" ? "page" : undefined}>
+        <span class="os-flag" aria-hidden="true"></span>
+        jwstn.dev
+      </a>
+      <nav class="os-tasks" aria-label="Main navigation">
+        {
+          navItems.map((item) => (
+            <a class="os-task" href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+      <div class="os-tray">
+        {
+          SOCIALS.map((s) => (
+            <a class="os-tray-link" href={s.href} target="_blank" rel="noopener noreferrer" title={s.label}>
+              {s.label}
+            </a>
+          ))
+        }
+        <span class="os-clock" id="os-clock" aria-label="Local time">{clock}</span>
+      </div>
+    </header>
+
+    <ThemeSwitcher />
+  </body>
+</html>
+
+<script is:inline>
+  // Systray clock: real visitor time, refreshed every 20s.
+  // The page guard keeps full page loads from stacking intervals.
+  (() => {
+    const paint = () => {
+      const el = document.getElementById("os-clock");
+      if (el) el.textContent = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+    };
+    paint();
+    if (!window.__osClock) {
+      window.__osClock = true;
+      setInterval(paint, 20000);
+    }
+  })();
+</script>

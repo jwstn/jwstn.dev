@@ -1,0 +1,59 @@
+---
+import Divider from "./Divider.astro";
+import Layout from "./Layout.astro";
+import Window from "./Window.astro";
+import type { ProjectsProps } from "#/themes/types";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="Things JW has built — cat'd from ~/projects, newest first: TanStack, Rust/GPUI, a Spotify TUI and a note app."
+>
+  <section aria-label="Projects">
+    <p class="term-cmdline">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span>cat ~/projects.txt</span>
+      <span class="term-cmt" aria-hidden="true"># sorted by mtime, newest first</span>
+    </p>
+    <h1 class="term-pagetitle">
+      ~/projects <span class="term-cmt term-pagetitle-count">{projects.length} files</span>
+    </h1>
+    <Divider />
+
+    <div class="term-stack">
+      {
+        projects.map((project, i) => (
+          <article class="term-reveal" style={`--d: ${0.15 + i * 0.12}s`}>
+            <Window name={`${project.id}.md`} date={project.data.pubDate}>
+              <p class="term-lslong" aria-hidden="true">
+                -rw-r--r-- 1 jwstn jwstn /home/jwstn/projects/{project.id}.md
+              </p>
+              <h2 class="term-project-title">
+                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+              </h2>
+              <p class="term-project-desc">{project.data.description}</p>
+              <ul class="term-tags" aria-label={`Tags for ${project.data.title}`}>
+                {project.data.tags.map((tag) => (
+                  <li>{tag}</li>
+                ))}
+              </ul>
+              <p class="term-project-links">
+                <a class="term-btn" href={`/projects/${project.id}/`}>view readme →</a>
+                <a
+                  class="term-btn term-btn-ghost"
+                  href={project.data.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  open source ↗
+                </a>
+              </p>
+            </Window>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+</Layout>

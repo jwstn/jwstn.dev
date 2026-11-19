@@ -1,0 +1,47 @@
+---
+import Divider from "./Divider.astro";
+import Layout from "./Layout.astro";
+import Window from "./Window.astro";
+import type { ProjectProps } from "#/themes/types";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article aria-label={title}>
+    <p class="term-cmdline">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span>cat ~/projects/{project.id}.md</span>
+    </p>
+    <h1 class="term-pagetitle">{title}</h1>
+
+    <Window name={`${project.id}.md`} date={pubDate}>
+      <p class="term-cmdline-inline">
+        <span class="term-cmt"># {description}</span>
+      </p>
+      <ul class="term-tags" aria-label="Tags">
+        {tags.map((tag) => (
+          <li>{tag}</li>
+        ))}
+      </ul>
+      <p class="term-project-links">
+        <a class="term-btn" href={href} target="_blank" rel="noopener noreferrer">
+          open source ↗
+        </a>
+      </p>
+    </Window>
+
+    <Divider count={42} />
+
+    <div class="term-prose">
+      <Content />
+    </div>
+
+    <p class="term-back">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <a href="/projects/">cd ../</a>
+      <span class="term-cmt" aria-hidden="true"># back to ~/projects</span>
+    </p>
+  </article>
+</Layout>

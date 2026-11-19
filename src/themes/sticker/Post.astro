@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import Blob from "./Blob.astro";
+import Layout from "./Layout.astro";
+import type { PostProps } from "#/themes/types";
+
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="stk-article">
+    <a class="stk-back" href="/blog">← back to the blog</a>
+
+    <header>
+      <p class="stk-kicker">from the blog</p>
+      <h1 class="stk-article-title">
+        <span class="stk-blobhead">
+          <Blob variant={3} class="stk-blob-bg c-pink" />
+          <span>{title}</span>
+        </span>
+      </h1>
+      <div class="stk-article-meta">
+        <span class="stk-datepill">
+          <FormattedDate date={pubDate} />
+        </span>
+        {
+          updatedDate && (
+            <span class="stk-datepill">
+              updated <FormattedDate date={updatedDate} />
+            </span>
+          )
+        }
+      </div>
+      <p class="stk-lede">{description}</p>
+    </header>
+
+    {heroImage && (
+      <figure class="stk-heroimg">
+        <Image src={heroImage} alt="" width={1020} height={510} />
+      </figure>
+    )}
+
+    <div class="stk-prose">
+      <Content />
+    </div>
+
+    <p class="stk-fin">end of post</p>
+  </article>
+</Layout>

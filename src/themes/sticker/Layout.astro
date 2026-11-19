@@ -1,0 +1,75 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+const nav = [
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
+];
+---
+
+<html lang="en" class="theme-sticker">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <a class="stk-skip" href="#stk-main">Skip to content</a>
+
+    <header class="stk-header">
+      <a class="stk-logo" href="/">jwstn.dev</a>
+      <nav class="stk-nav" aria-label="Main">
+        {
+          nav.map((item) => (
+            <a
+              class="stk-nav-link"
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        {
+          SOCIALS.map((s) => (
+            <a class="stk-nav-link stk-nav-social" href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main class="stk-main" id="stk-main">
+      <slot />
+    </main>
+
+    <footer class="stk-footer">
+      <p class="stk-footer-copy">
+        © {year} jwstn
+        <span class="stk-footer-note">stuck down with care in cologne</span>
+      </p>
+      <ul class="stk-footer-list">
+        {
+          SOCIALS.map((s) => (
+            <li>
+              <a class="stk-nav-link" href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

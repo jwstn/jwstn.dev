@@ -1,0 +1,74 @@
+---
+import Divider from "./Divider.astro";
+import FormattedDate from "#/components/FormattedDate.astro";
+import Layout from "./Layout.astro";
+import Window from "./Window.astro";
+import type { BlogProps } from "#/themes/types";
+
+const { posts } = Astro.props as BlogProps;
+const emptyListing = [
+  "total 0",
+  "drwxr-xr-x  2  jwstn  jwstn  4096  ./",
+  "drwxr-xr-x  2  jwstn  jwstn  4096  ../",
+].join("\n");
+---
+
+<Layout
+  title="Blog | jwstn.dev"
+  description="Words by JW — occasionally, when the drafts finish compiling. Currently 0 posts."
+>
+  <section aria-label="Blog">
+    <p class="term-cmdline">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span>ls -la ~/blog</span>
+    </p>
+    <h1 class="term-pagetitle">
+      ~/blog <span class="term-cmt term-pagetitle-count">{posts.length} entries</span>
+    </h1>
+    <Divider />
+
+    {
+      posts.length === 0 ? (
+        <div class="term-reveal" style="--d: 0.2s">
+          <Window name="~/blog — empty directory">
+            <pre class="term-pre" aria-hidden="true">{emptyListing}</pre>
+            <p class="term-err">cat: ~/blog/*.md: No such file or directory</p>
+            <h2 class="term-empty-title">0 posts — nothing written to disk yet</h2>
+            <p class="term-empty-text">
+              The blog partition is formatted and mounted, but no post has been written to it so far. There
+              are drafts — they are still compiling. When one finishes, it appears in this directory
+              listing, newest first.
+            </p>
+            <ul class="term-suggest">
+              <li>
+                <a class="term-suggest-link" href="/projects/">
+                  cd ../projects
+                </a>
+                <span class="term-cmt" aria-hidden="true"># read code instead</span>
+              </li>
+              <li>
+                <a class="term-suggest-link" href="/gallery/">
+                  cd ../gallery
+                </a>
+                <span class="term-cmt" aria-hidden="true"># or look at pictures</span>
+              </li>
+            </ul>
+          </Window>
+        </div>
+      ) : (
+        <ul class="term-postlist">
+          {posts.map((post) => (
+            <li class="term-window">
+              <a class="term-postlist-link" href={`/blog/${post.id}/`}>
+                <h2 class="term-postlist-title">{post.data.title}</h2>
+                <p class="term-cmt">
+                  <FormattedDate date={post.data.pubDate} /> — {post.data.description}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</Layout>

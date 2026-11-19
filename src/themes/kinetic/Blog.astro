@@ -1,0 +1,76 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Marquee from "./Marquee.astro";
+
+const { posts } = Astro.props as BlogProps;
+const count = String(posts.length).padStart(2, "0");
+---
+
+<Layout title="Blog | jwstn.dev" description="Occasional writing by JW — when the presses cooperate.">
+  <section class="kn-hero kn-hero--page">
+    <p class="kn-kicker">The blog — {count} posts</p>
+    <h1 class="kn-hl kn-hl--page">
+      <span class="kn-line kn-line--slide"><span>Words.</span></span>
+    </h1>
+  </section>
+
+  {
+    posts.length === 0 ? (
+      <>
+        <Marquee text="Nothing published yet /// presses warming up /// first dispatch in production" variant="ghost" speed={28} />
+
+        <section class="kn-empty">
+          <p class="kn-num" aria-hidden="true">
+            00
+          </p>
+          <h2 class="kn-hl kn-hl--empty">Nothing here yet.</h2>
+          <p class="kn-lede">
+            The ink is mixed and the presses are warm — no dispatch has cleared the room so far.
+            While the first post is in production, the rest of the site is very much alive.
+          </p>
+          <div class="kn-ctas">
+            <a class="kn-cta" href="/projects/">
+              See the work <span class="kn-ext" aria-hidden="true">→</span>
+            </a>
+            <a class="kn-cta kn-cta--ghost" href="/gallery/">
+              Camera roll <span class="kn-ext" aria-hidden="true">→</span>
+            </a>
+            <a class="kn-cta kn-cta--ghost" href="/rss.xml">
+              RSS feed <span class="kn-ext" aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </section>
+      </>
+    ) : (
+      <section class="kn-section">
+        <ol class="kn-rows">
+          {posts.map((post, i) => (
+            <li class="kn-reveal">
+              <a class="kn-row" href={`/blog/${post.id}/`}>
+                <span class="kn-num" aria-hidden="true">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <span class="kn-row-body">
+                  <span class="kn-row-title">{post.data.title}</span>
+                  <span class="kn-row-sub">{post.data.description}</span>
+                </span>
+                <span class="kn-row-side">
+                  <span class="kn-date">
+                    <FormattedDate date={post.data.pubDate} />
+                  </span>
+                  <span class="kn-arrow" aria-hidden="true">
+                    →
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </section>
+    )
+  }
+
+  <Marquee text="Words in progress /// JWSTN.DEV" variant="fill" speed={26} />
+</Layout>

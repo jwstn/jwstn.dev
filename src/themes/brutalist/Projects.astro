@@ -1,0 +1,52 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="Web apps, terminal toys and one very stubborn note app — the projects of JW."
+>
+  <div class="brut-bar">
+    <div class="brut-bar-inner">
+      <h1 class="brut-bar-title">Projects</h1>
+      <span class="brut-bar-meta">{projects.length} units — no filler</span>
+    </div>
+  </div>
+
+  <section class="brut-shell brut-stack" aria-label="Project list">
+    {
+      projects.map((project, i) => (
+        <article class="brut-project brut-card">
+          <div class="brut-project-num" aria-hidden="true">
+            {String(i + 1).padStart(2, "0")}
+          </div>
+          <div>
+            <h2 class="brut-project-title">
+              <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+            </h2>
+            <p class="brut-muted">
+              <FormattedDate date={project.data.pubDate} /> — {project.data.description}
+            </p>
+            <ul class="brut-tags" aria-label="Technologies used">
+              {project.data.tags.map((tag) => (
+                <li class="brut-sticker">{tag}</li>
+              ))}
+            </ul>
+            <div class="brut-project-actions">
+              <a class="brut-btn brut-press" href={`/projects/${project.id}/`}>
+                The story →
+              </a>
+              <a class="brut-btn brut-btn-ghost brut-press" href={project.data.href} target="_blank" rel="noopener noreferrer">
+                Live ↗
+              </a>
+            </div>
+          </div>
+        </article>
+      ))
+    }
+  </section>
+</Layout>

@@ -1,0 +1,36 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Win95Window from "./Win95Window.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <Win95Window title={`${title} — Notepad`}>
+    <div class="os-menubar" aria-hidden="true">
+      <span>File</span><span>Edit</span><span>Search</span><span>Help</span>
+    </div>
+    <div class="os-content">
+      <p><a class="os-up" href="/projects/">&larr; Up one level — C:\projects</a></p>
+      <h1 class="os-h1">{title}</h1>
+      <p class="os-meta">
+        <span>Modified <FormattedDate date={pubDate} /></span>
+        {tags.map((tag) => <span class="os-tag">{tag}</span>)}
+      </p>
+      <div class="os-prose">
+        <Content />
+      </div>
+      <div class="os-actions">
+        <a class="os-btn" href={href} target="_blank" rel="noopener noreferrer">Open project ↗</a>
+        <a class="os-btn" href="/projects/">Up one level</a>
+      </div>
+    </div>
+    <div class="os-statusbar">
+      <span class="os-panel os-panel-grow">C:\projects\{project.id}</span>
+      <span class="os-panel">{tags.length} tag(s)</span>
+    </div>
+  </Win95Window>
+</Layout>

@@ -1,0 +1,78 @@
+---
+// editorial — Album.astro
+// One contact sheet: magazine plates with generous gutters and captions set
+// like figure listings (Fig. 01 — Title, then the note).
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import { getAlbums } from "#/lib/content";
+import Layout from "./Layout.astro";
+import type { AlbumProps } from "#/themes/types";
+
+const { album } = Astro.props as AlbumProps;
+const { title, photos, pubDate } = album.data;
+
+// Real numbering, matching the gallery index (same sort as getAlbums).
+const all = await getAlbums();
+const sheetNo = all.findIndex((a) => a.data.slug === album.data.slug) + 1;
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+
+<Layout
+  title={`${title} | jwstn.dev`}
+  description={`Contact sheet — ${title}: ${photos.length} frames photographed by JW.`}
+>
+  <div class="ed-page">
+  <header>
+    <p class="ed-kicker ed-anim-rise" style="--ed-i: 0">
+      <span class="ed-kicker-no">№03</span>
+      <span>
+        Contact Sheet {pad(sheetNo)} of {pad(all.length)}
+      </span>
+      <span class="ed-kicker-right" aria-hidden="true">Page 04</span>
+    </p>
+    <h1 class="ed-display ed-display-page ed-anim-rise" style="--ed-i: 1">{title}</h1>
+
+    <div class="ed-credit ed-anim-rise" style="--ed-i: 2">
+      <span>{photos.length} frames</span>
+      <span>Filed <FormattedDate date={pubDate} /></span>
+    </div>
+  </header>
+
+  <div class="ed-frames">
+    {
+      photos.map((photo, i) => {
+        // Zigzag plates: wide-left / narrow-right / narrow-left / wide-right
+        const m = i % 4;
+        const wide = m === 0 || m === 3;
+        const place =
+          m === 0 ? "ed-fig-wide-left" : m === 1 ? "ed-fig-narrow-right" : m === 2 ? "ed-fig-narrow-left" : "ed-fig-wide-right";
+        return (
+          <figure class:list={["ed-figure ed-anim-rise", place]} style={`--ed-i: ${Math.min(i, 8) + 3}`}>
+            <Image
+              src={photo.image}
+              alt={photo.title}
+              widths={[480, 800, 1200, 1600]}
+              sizes={
+                wide
+                  ? "(min-width: 70rem) 40rem, (min-width: 48rem) 56vw, 94vw"
+                  : "(min-width: 70rem) 28rem, (min-width: 48rem) 38vw, 94vw"
+              }
+              loading={i === 0 ? "eager" : "lazy"}
+              decoding="async"
+            />
+            <figcaption class="ed-figcaption">
+              <span class="ed-fig-head">
+                <span class="ed-fig-no" aria-hidden="true">Fig. {pad(i + 1)}</span>
+                <span class="ed-fig-title">{photo.title}</span>
+              </span>
+              {photo.caption && <span class="ed-fig-caption">{photo.caption}</span>}
+            </figcaption>
+          </figure>
+        );
+      })
+    }
+  </div>
+
+  <a class="ed-backlink" href="/gallery/">← All contact sheets</a>
+  </div>
+</Layout>

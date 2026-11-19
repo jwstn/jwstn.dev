@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import Divider from "./Divider.astro";
+import FormattedDate from "#/components/FormattedDate.astro";
+import Layout from "./Layout.astro";
+import type { AlbumProps } from "#/themes/types";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+---
+
+<Layout
+  title={`${title} | jwstn.dev`}
+  description={`${title} — ${photos.length} photos taken by JW.`}
+>
+  <section aria-label={title}>
+    <p class="term-cmdline">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span>cd ~/gallery/{album.data.slug} && ls -1</span>
+    </p>
+    <h1 class="term-pagetitle">{title}</h1>
+    <p class="term-cmdline-inline">
+      <span class="term-cmt">
+        # {photos.length} files · <FormattedDate date={pubDate} />
+      </span>
+    </p>
+    <Divider />
+
+    <div class="term-photos">
+      {
+        photos.map((photo, i) => {
+          const ratio = photo.image.width / photo.image.height;
+          const isWide = ratio > 1.6;
+          return (
+            <figure class:list={["term-photo", isWide && "term-photo-wide"]}>
+              <Image
+                src={photo.image}
+                alt={photo.title}
+                widths={[480, 800, 1200, 1600]}
+                sizes={
+                  isWide
+                    ? "(min-width: 74rem) 32rem, (min-width: 48rem) 66vw, 92vw"
+                    : "(min-width: 74rem) 16rem, (min-width: 48rem) 33vw, 46vw"
+                }
+                loading={i < 2 ? "eager" : "lazy"}
+                decoding="async"
+              />
+              <figcaption class="term-photo-cap">
+                <span class="term-cmt" aria-hidden="true">$</span> {photo.title}
+                {photo.caption && <span> — {photo.caption}</span>}
+              </figcaption>
+            </figure>
+          );
+        })
+      }
+    </div>
+
+    <p class="term-back">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <a href="/gallery/">cd ../</a>
+      <span class="term-cmt" aria-hidden="true"># back to ~/gallery</span>
+    </p>
+  </section>
+</Layout>

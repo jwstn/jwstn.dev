@@ -1,0 +1,66 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import PixelIcon from "./PixelIcon.astro";
+import Win95Window from "./Win95Window.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="C:\projects — things JW has built with TanStack, Rust, GPUI and Effect. Four objects, no service packs required."
+>
+  <Win95Window title="Exploring — C:\projects">
+    <div class="os-toolbar">
+      <span class="os-toolbar-label">Address</span>
+      <span class="os-address">
+        <PixelIcon name="folder" size={18} />
+        C:\projects
+      </span>
+    </div>
+    <div class="os-content">
+      <div class="os-content-head">
+        <h1 class="os-h1">Projects</h1>
+        <p class="os-sub">
+          {projects.length} object(s) — one click opens. It's a website, not a real double-click.
+        </p>
+      </div>
+      <div class="os-cols" aria-hidden="true">
+        <span></span>
+        <span>Name</span>
+        <span>Modified</span>
+      </div>
+      <ul class="os-list">
+        {
+          projects.map((project) => (
+            <li>
+              <a class="os-row" href={`/projects/${project.id}/`}>
+                <span class="os-row-icon">
+                  <PixelIcon name="note" size={28} />
+                </span>
+                <span class="os-row-main">
+                  <span class="os-row-name">{project.data.title}</span>
+                  <span class="os-row-desc">{project.data.description}</span>
+                  <span class="os-row-tags">
+                    {project.data.tags.map((tag) => (
+                      <span class="os-tag">{tag}</span>
+                    ))}
+                  </span>
+                </span>
+                <span class="os-row-date">
+                  <FormattedDate date={project.data.pubDate} />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="os-statusbar">
+      <span class="os-panel os-panel-grow">{projects.length} object(s)</span>
+      <span class="os-panel">C:\projects</span>
+    </div>
+  </Win95Window>
+</Layout>

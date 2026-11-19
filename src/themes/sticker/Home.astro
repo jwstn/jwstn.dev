@@ -1,0 +1,93 @@
+---
+import Blob from "./Blob.astro";
+import Starburst from "./Starburst.astro";
+import Layout from "./Layout.astro";
+---
+
+<Layout
+  title="jwstn.dev — JW's sticker book"
+  description="Full-stack developer in Cologne sticking web apps together with TanStack — plus projects, photos, and one very empty blog."
+>
+  <article class="stk-home">
+    <div class="stk-deco" aria-hidden="true">
+      <Blob variant={2} class="stk-deco-blob b1 c-pink" />
+      <Blob variant={3} class="stk-deco-blob b2 c-mint" />
+      <Blob variant={1} class="stk-deco-blob b3 c-blue" />
+    </div>
+
+    <p class="stk-kicker stk-pop">✶ jw's sticker book — collect them all ✶</p>
+
+    <div class="stk-hero stk-pop d1">
+      <Starburst text="COLOGNE" class="stk-hero-burst" />
+      <h1 class="stk-hero-title">
+        <span class="stk-blobhead">
+          <Blob variant={1} class="stk-blob-bg c-yellow" />
+          <span>Hey! I'm JW.</span>
+        </span>
+      </h1>
+      <p class="stk-hero-sub">I build web things and stick them on the internet.</p>
+    </div>
+
+    <section class="stk-bio stk-pop d2" aria-labelledby="stk-bio-label">
+      <h2 id="stk-bio-label" class="stk-label">hi, I'm the bio sticker</h2>
+      <p>
+        Full-stack developer from Cologne, Germany. Day to day I'm deep in
+        <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — it hands
+        you most of what a web app needs, server actions and middleware included, so I still haven't found
+        my excuse to take backend frameworks like
+        <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> or
+        <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> for a proper
+        spin. The backend rabbit hole I <em>did</em> fall down is
+        <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> — amazing
+        fun so far, and a genuinely new way to think about programs.
+      </p>
+    </section>
+
+    <section class="stk-pop d3" aria-labelledby="stk-inside-heading">
+      <h2 id="stk-inside-heading" class="stk-heading">inside the book</h2>
+      <ul class="stk-home-cards">
+        <li class="stk-home-card">
+          <h3>
+            <span class="stk-blobhead">
+              <Blob variant={3} class="stk-blob-bg c-pink" />
+              <span>Projects</span>
+            </span>
+          </h3>
+          <p>
+            Four trading cards fresh from the binder: vinyl collections, terminal music players, sign
+            language and one very personal todo app.
+          </p>
+          <a href="/projects">flip through the binder</a>
+        </li>
+        <li class="stk-home-card">
+          <h3>
+            <span class="stk-blobhead">
+              <Blob variant={2} class="stk-blob-bg c-blue" />
+              <span>Blog</span>
+            </span>
+          </h3>
+          <p>Still in shrink-wrap — no posts yet. The sticker sheet is printed and waiting, though.</p>
+          <a href="/blog">peek at the empty sheet</a>
+        </li>
+        <li class="stk-home-card">
+          <h3>
+            <span class="stk-blobhead">
+              <Blob variant={1} class="stk-blob-bg c-mint" />
+              <span>Gallery</span>
+            </span>
+          </h3>
+          <p>
+            Photo stickers from Cologne walks and beyond — taken with a camera that came home from Japan
+            and hasn't left my bag since.
+          </p>
+          <a href="/gallery">open the photo album</a>
+        </li>
+      </ul>
+    </section>
+
+    <p class="stk-hand stk-pop d4">
+      psst — japan 2026: the camera I picked up on the trip is hungry for more film. new photo stickers
+      land in <a href="/gallery">the gallery</a> the moment they're developed.
+    </p>
+  </article>
+</Layout>

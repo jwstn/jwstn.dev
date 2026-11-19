@@ -1,0 +1,60 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { GalleryProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { albums } = Astro.props as GalleryProps;
+
+const photoCount = (n: number) => `${n} photograph${n === 1 ? "" : "s"}`;
+---
+
+<Layout
+  title="Gallery — jwstn.dev"
+  description="Photographs by JW — Japan 2026, a German summer, and the spring at home."
+>
+  <header class="luxe-fade">
+    <p class="luxe-kicker">Photographs</p>
+    <h1 class="luxe-display">Gallery</h1>
+    <p class="luxe-lede">
+      In 2026 a camera travelled with me to Japan — and never really went back in the bag. Three
+      albums, kept like rooms: the Japan trip, a German summer, and the spring that opened the
+      year.
+    </p>
+  </header>
+
+  <div class="luxe-orn" aria-hidden="true"><span class="luxe-orn-diamond"></span></div>
+
+  <ul class="luxe-albums luxe-fade luxe-fade-2">
+    {
+      albums.map((album) => (
+        <li>
+          <a class="luxe-album-link" href={`/gallery/${album.data.slug}/`}>
+            <figure class="luxe-album-figure">
+              {album.data.photos[0] && (
+                <div class="luxe-cover">
+                  <Image
+                    src={album.data.photos[0].image}
+                    alt={`Opening photograph of the album ${album.data.title}`}
+                    widths={[480, 800, 1200, 1600]}
+                    sizes="(min-width: 81rem) 74rem, (min-width: 40rem) 90vw, calc(100vw - 2.5rem)"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )}
+              <figcaption class="luxe-cover-caption">
+                <span class="luxe-cover-title">{album.data.title}</span>
+                <span class="luxe-cover-meta">
+                  <FormattedDate date={album.data.pubDate} />
+                  <span aria-hidden="true"> · </span>
+                  {photoCount(album.data.photos.length)}
+                </span>
+              </figcaption>
+            </figure>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

@@ -1,0 +1,69 @@
+---
+import type { BlogProps } from "#/themes/types";
+import Arrow from "./Arrow.astro";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout
+  title="Blog | jwstn.dev"
+  description="Occasional notes from JW — set in two inks whenever the words are ready."
+>
+  <article>
+    <p class="riso-kicker riso-rise">
+      the writing page · <span class="riso-kicker-ink">essays, notes, post-hoc excuses</span>
+    </p>
+    <h1 class="riso-shout riso-shout-big riso-rise d1">
+      Bl<span class="riso-shout-ink">og</span>
+    </h1>
+
+    {
+      posts.length > 0 ? (
+        <>
+          <p class="riso-hand riso-rise d2">
+            fresh from the print shop — {posts.length}{" "}
+            {posts.length === 1 ? "sheet" : "sheets"} of words
+          </p>
+          <ul class="riso-postlist riso-index-lead">
+            {posts.map((post) => (
+              <li class="riso-rise d2">
+                <h2>
+                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                </h2>
+                <p class="riso-meta">
+                  {post.data.pubDate.toLocaleDateString("en-us", {
+                    year: "numeric",
+                    month: "short",
+                    day: "numeric",
+                  })}
+                  {post.data.updatedDate && " · updated"}
+                </p>
+                <p class="riso-index-desc">{post.data.description}</p>
+              </li>
+            ))}
+          </ul>
+        </>
+      ) : (
+        <section class="riso-blank" aria-label="No posts yet">
+          <div class="riso-blank-frame">
+            <span class="riso-stamp riso-stamp-solid riso-stamp-in riso-blank-stamp">
+              ink status: nothing set yet
+            </span>
+            <p class="riso-blank-big">
+              this page is <em>almost</em> left blank
+            </p>
+            <p class="riso-hand riso-blank-hand">
+              the words are still at the print shop. when they're set, they land here first — promise.
+            </p>
+            <Arrow />
+            <p class="riso-meta">0 posts · 0 sheets · 0 grams of ink</p>
+            <a class="riso-blank-link" href="/gallery">
+              meanwhile, the gallery has actual pictures →
+            </a>
+          </div>
+        </section>
+      )
+    }
+  </article>
+</Layout>

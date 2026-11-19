@@ -1,0 +1,62 @@
+---
+import type { ProjectsProps } from "#/themes/types";
+import Arrow from "./Arrow.astro";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="Build stories from a full-stack developer in Cologne: TanStack apps, terminal UIs, and things that are proudly WIP."
+>
+  <article>
+    <p class="riso-kicker riso-rise">
+      the good stuff · <span class="riso-kicker-ink">filed under: things i actually shipped (or will)</span>
+    </p>
+    <h1 class="riso-shout riso-shout-big riso-rise d1">
+      Pro<span class="riso-shout-ink">jects</span>
+    </h1>
+    <p class="riso-hand riso-rise d2">
+      four builds, all alive, some even breathing
+      <Arrow />
+    </p>
+
+    <ol class="riso-index riso-index-lead">
+      {
+        projects.map((project, index) => (
+          <li class="riso-index-item riso-rise d2">
+            <span class="riso-index-no" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div class="riso-index-head">
+              <h2 class="riso-index-title">
+                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+              </h2>
+              <span class="riso-meta">
+                {project.data.pubDate.toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                })}
+              </span>
+            </div>
+            <div class="riso-index-body">
+              <p class="riso-index-desc">{project.data.description}</p>
+              <ul class="riso-tags" aria-label="Tags">
+                {project.data.tags.map((tag) => (
+                  <li>
+                    <span class="riso-tag">{tag}</span>
+                  </li>
+                ))}
+              </ul>
+              <p>
+                <a class="riso-index-read" href={`/projects/${project.id}/`}>read the story →</a>
+              </p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</Layout>

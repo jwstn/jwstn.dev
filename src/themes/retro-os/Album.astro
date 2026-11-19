@@ -1,0 +1,62 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import PixelIcon from "./PixelIcon.astro";
+import Win95Window from "./Win95Window.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, photos, pubDate, slug } = album.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} photos by JW.`}>
+  <Win95Window title={`${title} — Imaging`}>
+    <div class="os-toolbar">
+      <a class="os-btn" href="/gallery/">&larr; Up one level</a>
+      <span class="os-toolbar-label">Address</span>
+      <span class="os-address">
+        <PixelIcon name="folder" size={18} />
+        C:\gallery\{slug}
+      </span>
+    </div>
+    <div class="os-content">
+      <div class="os-content-head">
+        <h1 class="os-h1">{title}</h1>
+        <p class="os-meta">
+          <span>
+            <FormattedDate date={pubDate} /> — {photos.length} object(s)
+          </span>
+        </p>
+      </div>
+      <div class="os-photos">
+        {
+          photos.map((photo) => {
+            const ratio = photo.image.width / photo.image.height;
+            const isWide = ratio >= 1.6;
+            return (
+              <figure class:list={["os-photo", isWide && "os-photo-wide"]}>
+                <Image
+                  src={photo.image}
+                  alt={photo.title}
+                  widths={[480, 800, 1200]}
+                  sizes="(min-width: 62rem) 28rem, (min-width: 40rem) 44vw, 92vw"
+                  loading="lazy"
+                  decoding="async"
+                />
+                <figcaption class="os-photo-cap">
+                  <span class="os-photo-title">{photo.title}</span>
+                  {photo.caption && <span class="os-photo-caption">{photo.caption}</span>}
+                </figcaption>
+              </figure>
+            );
+          })
+        }
+      </div>
+    </div>
+    <div class="os-statusbar">
+      <span class="os-panel os-panel-grow">C:\gallery\{slug}</span>
+      <span class="os-panel">{photos.length} object(s)</span>
+    </div>
+  </Win95Window>
+</Layout>

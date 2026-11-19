@@ -1,0 +1,114 @@
+---
+// editorial — Layout.astro
+// Full document: masthead with issue numbering, newspaper nav rule bar,
+// colophon footer, shared MetaTags + ThemeSwitcher.
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title = "jwstn.dev", description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+const path = Astro.url.pathname;
+const isHome = path === "/" || path === "";
+
+const navItems = [
+  { href: "/projects/", label: "Projects", no: "01", match: "/projects" },
+  { href: "/blog/", label: "Blog", no: "02", match: "/blog" },
+  { href: "/gallery/", label: "Gallery", no: "03", match: "/gallery" },
+];
+const isActive = (match: string) => !isHome && path.startsWith(match);
+---
+
+<html lang="en" class="theme-editorial">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body class="bg-background text-foreground">
+    <a class="ed-skip" href="#ed-main">Skip to content</a>
+
+    <div class="ed-sheet">
+      <header class="ed-header">
+        <div class="ed-masthead-top">
+          <a href="/">jwstn.dev</a>
+          <span>Cologne, Germany — 50.938° N, 6.960° E</span>
+        </div>
+
+        <div class="ed-masthead">
+          <a class="ed-wordmark" href="/" aria-label="jwstn.dev — cover page">JW<span class="ed-wordmark-dot">.</span></a>
+          <p class="ed-issue">
+            <span class="ed-issue-no">JW — Issue №04</span>
+            <span class="ed-issue-meta">Winter 2026 · Published from Cologne</span>
+          </p>
+        </div>
+
+        <nav class="ed-nav" aria-label="Primary">
+          {
+            navItems.map((item) => (
+              <a
+                class="ed-nav-link"
+                href={item.href}
+                aria-current={isActive(item.match) ? "page" : undefined}
+              >
+                <span class="ed-nav-no" aria-hidden="true">
+                  {item.no}
+                </span>
+                <span>{item.label}</span>
+              </a>
+            ))
+          }
+          <span class="ed-nav-social">
+            {
+              SOCIALS.map((s) => (
+                <a class="ed-nav-link" href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label}
+                  <span aria-hidden="true">↗</span>
+                </a>
+              ))
+            }
+          </span>
+        </nav>
+      </header>
+
+      <main id="ed-main" class="ed-main">
+        <slot />
+      </main>
+
+      <footer class="ed-colophon">
+        <div class="ed-colophon-grid">
+          <div>
+            <p class="ed-section-label">Colophon</p>
+            <p class="ed-colophon-text">
+              Set in Newsreader &amp; Inter on a one-pixel hairline grid, with international orange for
+              ink. Published from Cologne, Germany.
+            </p>
+          </div>
+          <div>
+            <p class="ed-section-label">Distribution</p>
+            <ul class="ed-colophon-list">
+              {
+                SOCIALS.map((s) => (
+                  <li>
+                    <a href={s.href} target="_blank" rel="noopener noreferrer">
+                      {s.label} <span aria-hidden="true">↗</span>
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <p class="ed-section-label">Imprint</p>
+            <p class="ed-colophon-text">
+              © {year} jwstn — Issue №04. All experiments his own; all errors the printer’s.
+            </p>
+          </div>
+        </div>
+        <p class="ed-fin">· end of issue №04 ·</p>
+      </footer>
+    </div>
+
+    <ThemeSwitcher />
+  </body>
+</html>

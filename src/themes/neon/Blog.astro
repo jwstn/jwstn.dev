@@ -1,0 +1,68 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import { SOCIALS } from "#/lib/content";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+const github = SOCIALS.find((s) => s.label === "GitHub");
+const bluesky = SOCIALS.find((s) => s.label === "Bluesky");
+---
+
+<Layout title="Blog | jwstn.dev" description="Occasional writing by JW.">
+  <main class="n-main">
+    <header class="n-page-head">
+      <p class="n-kicker n-rise" style="--d: 0s">// sector_02 &middot; transmissions</p>
+      <h1 class="n-page-title n-rise" style="--d: 0.08s">Blog</h1>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <section class="n-panel n-nosignal n-rise" style="--d: 0.16s" aria-label="No posts published yet">
+          <div class="n-eq" aria-hidden="true">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <p class="n-nosignal-title">no signal on this frequency</p>
+          <p class="n-nosignal-copy">
+            The transmission log is dark &mdash; nothing has been broadcast here yet. But the antenna&rsquo;s up and
+            the meters are warm. When the first post goes out, it lands here, bright and blinking.
+          </p>
+          <p class="n-nosignal-copy">
+            Until then, watch the wires:{" "}
+            {github && (
+              <a href={github.href} target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            )}{" "}
+            &middot;{" "}
+            {bluesky && (
+              <a href={bluesky.href} target="_blank" rel="noopener noreferrer">
+                Bluesky
+              </a>
+            )}
+          </p>
+        </section>
+      ) : (
+        <ul class="n-project-grid">
+          {posts.map((post) => (
+            <li>
+              <a class="n-panel n-card" href={`/blog/${post.id}/`}>
+                <h2 class="n-card-title n-aberr">{post.data.title}</h2>
+                <p class="n-card-blurb">{post.data.description}</p>
+                <p class="n-project-meta">
+                  <FormattedDate date={post.data.pubDate} />
+                  <span class="n-project-cta">tune in &rarr;</span>
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </main>
+</Layout>

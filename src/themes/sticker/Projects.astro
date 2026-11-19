@@ -1,0 +1,57 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import Blob from "./Blob.astro";
+import Layout from "./Layout.astro";
+import type { ProjectsProps } from "#/themes/types";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="JW's project trading cards — vinyl forums, terminal UIs, sign language apps and one stubborn todo app."
+>
+  <article>
+    <p class="stk-kicker stk-pop">the project binder</p>
+    <h1 class="stk-page-title stk-pop d1">
+      <span class="stk-blobhead">
+        <Blob variant={2} class="stk-blob-bg c-lilac" />
+        <span>Trading cards!</span>
+      </span>
+    </h1>
+    <p class="stk-page-lede stk-pop d2">
+      Four cards, no filler. Peel one up to read the story behind it.
+    </p>
+
+    <ul class="stk-cards">
+      {
+        projects.map((project, i) => (
+          <li class="stk-card">
+            <article>
+              <div class="stk-card-top">
+                <span class="stk-card-no" aria-hidden="true">
+                  №{i + 1}
+                </span>
+                <span class="stk-datepill">
+                  <FormattedDate date={project.data.pubDate} />
+                </span>
+              </div>
+              <h2 class="stk-card-title">
+                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+              </h2>
+              <p class="stk-card-desc">{project.data.description}</p>
+              <ul class="stk-chips" aria-label="Tags">
+                {project.data.tags.map((tag) => (
+                  <li class="stk-chip">{tag}</li>
+                ))}
+              </ul>
+              <a class="stk-card-open" href={`/projects/${project.id}/`}>
+                open the card
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Layout>

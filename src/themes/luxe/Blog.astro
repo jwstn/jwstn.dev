@@ -1,0 +1,77 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+
+const roman = (n: number) => ["I", "II", "III", "IV", "V", "VI"][n - 1];
+---
+
+<Layout
+  title="Journal — jwstn.dev"
+  description="Occasional essays by JW — written slowly, and only when something is worth keeping."
+>
+  <header class="luxe-fade">
+    <p class="luxe-kicker">Written Slowly</p>
+    <h1 class="luxe-display">Journal</h1>
+  </header>
+
+  <div class="luxe-orn" aria-hidden="true"><span class="luxe-orn-diamond"></span></div>
+
+  {
+    posts.length === 0 ? (
+      <section class="luxe-empty luxe-fade luxe-fade-2" aria-label="No essays published yet">
+        <h2 class="luxe-empty-title">Forthcoming</h2>
+        <p class="luxe-lede">
+          Nothing has been set in type yet. Notes on building with Effect, photographs from a
+          camera that travelled to Japan, and a few lessons the workbench taught me the hard way
+          are being written — slowly, and only when they are worth keeping.
+        </p>
+        <ul class="luxe-forth">
+          <li>
+            <p class="luxe-toc-row">
+              <span class="luxe-toc-title">On Effect, and relearning how a program is written</span>
+              <span class="luxe-leader" aria-hidden="true" />
+              <span class="luxe-toc-note">In preparation</span>
+            </p>
+          </li>
+          <li>
+            <p class="luxe-toc-row">
+              <span class="luxe-toc-title">A camera in Japan, 2026</span>
+              <span class="luxe-leader" aria-hidden="true" />
+              <span class="luxe-toc-note">In preparation</span>
+            </p>
+          </li>
+        </ul>
+        <p class="luxe-empty-note">
+          When an essay is ready, it will appear here first — quietly, like a light coming on in a
+          gallery room.
+        </p>
+      </section>
+    ) : (
+      <ol class="luxe-toc luxe-index luxe-fade luxe-fade-2">
+        {posts.map((post, i) => (
+          <li>
+            <a class="luxe-toc-row" href={`/blog/${post.id}/`}>
+              <span class="luxe-toc-num" aria-hidden="true">
+                {roman(i + 1)}
+              </span>
+              <span class="luxe-toc-title">{post.data.title}</span>
+              <span class="luxe-leader" aria-hidden="true" />
+              <span class="luxe-toc-note">
+                <FormattedDate date={post.data.pubDate} />
+              </span>
+            </a>
+            <p class="luxe-index-desc">{post.data.description}</p>
+            {post.data.updatedDate && (
+              <p class="luxe-index-tags">
+                Revised <FormattedDate date={post.data.updatedDate} />
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+    )
+  }
+</Layout>

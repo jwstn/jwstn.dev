@@ -1,0 +1,63 @@
+---
+import { Image } from "astro:assets";
+import type { PostProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="riso-article">
+    <a class="riso-back" href="/blog">← back to the writing page</a>
+
+    <p class="riso-kicker" style="margin-top: 1.5rem;">
+      from the blog · <span class="riso-kicker-ink">one sheet, two inks</span>
+    </p>
+    <h1 class="riso-article-title">{title}</h1>
+
+    <div class="riso-article-meta">
+      <span class="riso-meta">
+        {pubDate.toLocaleDateString("en-us", { year: "numeric", month: "short", day: "numeric" })}
+      </span>
+      {
+        updatedDate && (
+          <span class="riso-meta">
+            · reprinted{" "}
+            {updatedDate.toLocaleDateString("en-us", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            })}
+          </span>
+        )
+      }
+    </div>
+
+    <p class="riso-lede">{description}</p>
+
+    {
+      heroImage && (
+        <figure class="riso-print" style="margin: 0 0 2rem;">
+          <Image
+            src={heroImage}
+            widths={[480, 800, 1200]}
+            sizes="(min-width: 48rem) 44rem, 92vw"
+            alt={title}
+          />
+        </figure>
+      )
+    }
+
+    <div class="riso-prose">
+      <Content />
+    </div>
+
+    <hr class="riso-rule" />
+
+    <p class="riso-fin">fin — thanks for reading</p>
+    <p class="riso-hand" style="margin-top: 0.5rem;">
+      p.s. more sheets live at <a class="riso-index-read" href="/blog">the writing page</a>
+    </p>
+  </article>
+</Layout>

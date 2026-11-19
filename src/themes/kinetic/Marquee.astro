@@ -1,0 +1,23 @@
+---
+// Infinite scrolling text band — the kinetic signature between sections.
+// Purely decorative: the real information lives in the page copy, so the
+// whole band (including the duplicated half) is aria-hidden.
+interface Props {
+  text: string;
+  /** plain = ink on paper, fill = accent band, ghost = outlined type */
+  variant?: "plain" | "fill" | "ghost";
+  /** Seconds for one full loop. Bump it for longer text. */
+  speed?: number;
+}
+
+const { text, variant = "plain", speed = 26 } = Astro.props;
+const unit = `${text} /// `;
+const half = Array.from({ length: 8 }, () => unit).join("");
+---
+
+<div class:list={["kn-marquee", variant !== "plain" && `kn-marquee--${variant}`]} aria-hidden="true">
+  <div class="kn-marquee-track" style={`--kn-speed: ${speed}s`}>
+    <span class="kn-marquee-half">{half}</span>
+    <span class="kn-marquee-half">{half}</span>
+  </div>
+</div>

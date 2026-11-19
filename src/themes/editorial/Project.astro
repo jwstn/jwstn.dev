@@ -1,0 +1,52 @@
+---
+// editorial — Project.astro
+// Single entry: kicker with real index number, huge serif headline, italic
+// standfirst, credit line, then the markdown body with a drop cap.
+import FormattedDate from "#/components/FormattedDate.astro";
+import { getProjects } from "#/lib/content";
+import Layout from "./Layout.astro";
+import type { ProjectProps } from "#/themes/types";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+
+// Real numbering, matching the index page (same sort as getProjects).
+const all = await getProjects();
+const entryNo = all.findIndex((p) => p.id === project.id) + 1;
+const pad = (n: number) => String(n).padStart(2, "0");
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <div class="ed-page">
+  <article>
+    <header>
+      <p class="ed-kicker ed-anim-rise" style="--ed-i: 0">
+        <span class="ed-kicker-no">№01</span>
+        <span>The Index — Entry {pad(entryNo)} of {pad(all.length)}</span>
+        <span class="ed-kicker-right" aria-hidden="true">Page 02</span>
+      </p>
+
+      <h1 class="ed-display ed-display-page ed-anim-rise" style="--ed-i: 1">{title}</h1>
+
+      <p class="ed-standfirst ed-anim-rise" style="--ed-i: 2">{description}</p>
+
+      <div class="ed-credit ed-anim-rise" style="--ed-i: 3">
+        <span>Filed <FormattedDate date={pubDate} /></span>
+        <span>Stack — {tags.join(" · ")}</span>
+        <a class="ed-credit-link" href={href} target="_blank" rel="noopener noreferrer">
+          View the work <span aria-hidden="true">↗</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="ed-rule ed-anim-rule" style="margin-top: 1.8rem"></div>
+
+    <div class="ed-prose ed-anim-rise" style="--ed-i: 4">
+      <Content />
+    </div>
+
+    <div class="ed-rule ed-anim-rule"></div>
+    <a class="ed-backlink" href="/projects/">← Back to the index</a>
+  </article>
+  </div>
+</Layout>

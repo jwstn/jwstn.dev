@@ -1,0 +1,54 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import Blob from "./Blob.astro";
+import Layout from "./Layout.astro";
+import type { AlbumProps } from "#/themes/types";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+---
+
+<Layout
+  title={`${title} | jwstn.dev`}
+  description={`${title} — a sticker sheet of ${photos.length} photos by JW.`}
+>
+  <article>
+    <a class="stk-back" href="/gallery">← back to the album</a>
+
+    <header>
+      <p class="stk-kicker stk-pop">sticker sheet · {photos.length} photos</p>
+      <h1 class="stk-page-title stk-pop d1">
+        <span class="stk-blobhead">
+          <Blob variant={2} class="stk-blob-bg c-yellow" />
+          <span>{title}</span>
+        </span>
+      </h1>
+      <p class="stk-page-lede stk-pop d2">
+        Shot and stuck down <FormattedDate date={pubDate} /> — hover a sticker to peel it flat.
+      </p>
+    </header>
+
+    <ul class="stk-photos">
+      {
+        photos.map((photo) => (
+          <li class="stk-photo">
+            <figure>
+              <Image
+                src={photo.image}
+                alt={photo.title}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 64rem) 24rem, (min-width: 40rem) 45vw, 90vw"
+                loading="lazy"
+              />
+              <figcaption>
+                <span class="stk-photo-title">{photo.title}</span>
+                {photo.caption && <span class="stk-photo-cap">{photo.caption}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </article>
+</Layout>

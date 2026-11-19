@@ -1,0 +1,77 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" || path === "" : path.startsWith(href));
+
+const nav = [
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
+];
+---
+
+<html lang="en" class="theme-aurora">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <div class="aurora-sky" aria-hidden="true">
+      <div class="aurora-orb aurora-orb-1"></div>
+      <div class="aurora-orb aurora-orb-2"></div>
+      <div class="aurora-orb aurora-orb-3"></div>
+      <div class="aurora-orb aurora-orb-4"></div>
+      <div class="aurora-stars"></div>
+    </div>
+
+    <header class="aurora-header">
+      <nav class="glass aurora-nav" aria-label="Primary">
+        <a class="aurora-brand" href="/">jwstn.dev</a>
+        <span class="aurora-nav-sep" aria-hidden="true"></span>
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+        <span class="aurora-nav-sep" aria-hidden="true"></span>
+        {
+          SOCIALS.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="aurora-footer">
+      <div class="glass aurora-footer-panel">
+        <p>&copy; {year} jwstn — Cologne, Germany</p>
+        <p class="aurora-footer-links">
+          {
+            SOCIALS.map((s) => (
+              <a href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+              </a>
+            ))
+          }
+        </p>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

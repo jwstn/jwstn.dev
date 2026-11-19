@@ -1,0 +1,104 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout title="Blog | jwstn.dev" description="Occasional writing by JW — when something is worth keeping.">
+  <section class="aurora-article">
+    <p class="aurora-kicker rise d1">Words</p>
+    <h1 class="aurora-h1 rise d2">Blog</h1>
+    <p class="aurora-lede rise d3">
+      Notes from the workbench and the road — written slowly, and only when something is worth keeping.
+    </p>
+  </section>
+
+  {
+    posts.length === 0 ? (
+      <section class="glass aurora-empty rise d3" aria-label="No posts yet">
+        <svg class="aurora-empty-art" viewBox="0 0 320 180" fill="none" aria-hidden="true">
+          <circle class="aurora-art-star" cx="40" cy="28" r="1.6" />
+          <circle class="aurora-art-star" cx="70" cy="52" r="1.2" />
+          <circle class="aurora-art-star" cx="200" cy="20" r="1.5" />
+          <circle class="aurora-art-star" cx="290" cy="70" r="1.6" />
+          <circle class="aurora-art-star" cx="30" cy="96" r="1.2" />
+          <circle class="aurora-art-star" cx="262" cy="30" r="1.1" />
+          <path
+            class="aurora-art-ribbon"
+            d="M104 26 C 92 62, 120 98, 106 150"
+            stroke-width="14"
+            opacity="0.5"
+          />
+          <path
+            class="aurora-art-ribbon"
+            d="M146 18 C 136 58, 164 102, 148 156"
+            stroke-width="10"
+            opacity="0.35"
+          />
+          <path
+            class="aurora-art-ribbon"
+            d="M184 34 C 176 66, 200 104, 186 146"
+            stroke-width="7"
+            opacity="0.25"
+          />
+          <circle class="aurora-art-moon" cx="248" cy="46" r="13" opacity="0.9" />
+          <path
+            class="aurora-art-hill"
+            d="M0 132 C 40 116, 84 150, 140 138 C 200 126, 240 152, 320 136 L 320 180 L 0 180 Z"
+          />
+          <path
+            class="aurora-art-hill"
+            d="M0 156 C 60 144, 120 168, 200 158 C 260 152, 300 164, 320 158 L 320 180 L 0 180 Z"
+          />
+        </svg>
+        <h2>Nothing here yet — the sky is quiet.</h2>
+        <p>
+          I write when something is worth keeping: notes from the Effect experiments, stories from the
+          Japan trip, the occasional lesson a project taught me the hard way. The first post is
+          somewhere above that horizon. When it lands, it will appear here — quietly, like a light
+          coming on.
+        </p>
+        <div class="aurora-empty-actions">
+          <a class="aurora-btn aurora-btn-primary" href="/projects">See what I'm building</a>
+          <a class="aurora-btn" href="/gallery">Browse the gallery instead</a>
+        </div>
+      </section>
+    ) : (
+      <ul class="aurora-grid">
+        {posts.map((post, i) => (
+          <li class="glass lift aurora-card rise" class:list={["d1", "d2", "d3", "d4"][i % 4]}>
+            {post.data.heroImage && (
+              <div class="glass aurora-heroimg">
+                <Image
+                  src={post.data.heroImage}
+                  alt=""
+                  width={1020}
+                  height={510}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <h2>
+              <a class="aurora-card-link" href={`/blog/${post.id}/`}>
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="aurora-card-desc">{post.data.description}</p>
+            <p class="aurora-meta">
+              <FormattedDate date={post.data.pubDate} />
+              {post.data.updatedDate && (
+                <span>
+                  updated <FormattedDate date={post.data.updatedDate} />
+                </span>
+              )}
+            </p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Layout>

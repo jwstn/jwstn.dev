@@ -1,0 +1,51 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+---
+
+<Layout title={`${title} | jwstn.dev`}>
+  <main class="n-main">
+    <p class="n-back">
+      <a class="n-btn" href="/gallery/">&larr; sector_03 &middot; all albums</a>
+    </p>
+
+    <header class="n-page-head">
+      <p class="n-kicker n-rise" style="--d: 0s">// album</p>
+      <h1 class="n-page-title n-rise" style="--d: 0.08s">{title}</h1>
+      <p class="n-project-meta" style="margin-top: 0.8rem;">
+        <FormattedDate date={pubDate} />
+        <span>{photos.length} frames</span>
+      </p>
+      <div class="n-beam" aria-hidden="true"></div>
+    </header>
+
+    <ul class="n-photo-grid">
+      {
+        photos.map((photo) => (
+          <li>
+            <figure class="n-panel n-photo">
+              <Image
+                class="n-photo-img"
+                src={photo.image}
+                alt={photo.title}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 72rem) 22rem, (min-width: 48rem) 30vw, 92vw"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="n-photo-cap">
+                <span class="n-photo-title">{photo.title}</span>
+                {photo.caption && <span class="n-photo-caption">{photo.caption}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>

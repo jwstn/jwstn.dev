@@ -1,0 +1,58 @@
+---
+import { Image } from "astro:assets";
+import Divider from "./Divider.astro";
+import FormattedDate from "#/components/FormattedDate.astro";
+import Layout from "./Layout.astro";
+import Window from "./Window.astro";
+import type { PostProps } from "#/themes/types";
+
+// Unreachable for now (the blog collection is empty), but kept complete:
+// this is exactly how a published post would render.
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article aria-label={title}>
+    <p class="term-cmdline">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <span>cat ~/blog/{post.id}.md</span>
+    </p>
+    <h1 class="term-pagetitle">{title}</h1>
+
+    <Window name={`${post.id}.md`} date={pubDate}>
+      <p class="term-cmdline-inline">
+        <span class="term-cmt">
+          # published <FormattedDate date={pubDate} />
+          {updatedDate && <span> — last write <FormattedDate date={updatedDate} /></span>}
+        </span>
+      </p>
+      <p class="term-cmdline-inline">
+        <span class="term-cmt"># {description}</span>
+      </p>
+      {
+        heroImage && (
+          <Image
+            src={heroImage}
+            alt=""
+            widths={[800, 1200, 1600]}
+            sizes="(min-width: 74rem) 46rem, 92vw"
+            class="term-heroimg"
+          />
+        )
+      }
+    </Window>
+
+    <Divider count={42} />
+
+    <div class="term-prose">
+      <Content />
+    </div>
+
+    <p class="term-back">
+      <span class="term-ps1" aria-hidden="true">jwstn@dev:~$</span>
+      <a href="/blog/">cd ../</a>
+      <span class="term-cmt" aria-hidden="true"># back to ~/blog</span>
+    </p>
+  </article>
+</Layout>

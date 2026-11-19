@@ -1,0 +1,25 @@
+---
+// A framed "window" panel: title bar with window controls + body slot.
+// Pure chrome — the title bar and controls are decorative (aria-hidden),
+// real content lives in the slot.
+import FormattedDate from "#/components/FormattedDate.astro";
+
+interface Props {
+  /** shown in the window's title bar, e.g. "spotui.md" */
+  name: string;
+  /** optional right-aligned date in the title bar */
+  date?: Date;
+}
+
+const { name, date } = Astro.props;
+---
+<div class="term-window">
+  <div class="term-titlebar">
+    <span class="term-winctl" aria-hidden="true">● ● ●</span>
+    <span class="term-winname">{name}</span>
+    {date && <span class="term-windate"><FormattedDate date={date} /></span>}
+  </div>
+  <div class="term-winbody">
+    <slot />
+  </div>
+</div>

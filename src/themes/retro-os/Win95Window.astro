@@ -1,0 +1,26 @@
+---
+// A Win95-style window shell: beveled frame, gradient title bar with
+// min/max/close chrome (decorative only). Pages compose their own
+// menubar / toolbar / content / status bar inside the frame slot.
+interface Props {
+  title: string;
+  /** Gray "inactive" title bar (dialogs, secondary windows). */
+  inactive?: boolean;
+}
+
+const { title, inactive = false } = Astro.props;
+---
+
+<section class:list={["os-window", inactive && "is-inactive"]} aria-label={title}>
+  <div class="os-titlebar">
+    <span class="os-titlebar-text">{title}</span>
+    <span class="os-titlebar-btns" aria-hidden="true">
+      <span class="os-tbtn">–</span>
+      <span class="os-tbtn">▫</span>
+      <span class="os-tbtn">×</span>
+    </span>
+  </div>
+  <div class="os-window-frame">
+    <slot />
+  </div>
+</section>

@@ -1,0 +1,92 @@
+---
+import Layout from "./Layout.astro";
+
+const tickerItems = ["Full-stack", "TanStack", "Effect", "TypeScript", "Rust", "GPUI", "Vinyl", "Cologne", "Cameras"];
+// duplicated inside each run so the band is wider than any viewport
+const tickerRun = [...tickerItems, ...tickerItems];
+---
+
+<Layout
+  title="jwstn.dev — full-stack, loud"
+  description="JW builds web apps in Cologne: TanStack, Effect, Rust toys, and photos from the Japan 2026 camera trip."
+>
+  <section class="brut-shell brut-hero">
+    <p class="brut-hero-kicker">
+      <span class="brut-sticker">Full-stack dev</span>
+      <span class="brut-sticker">Cologne, Germany</span>
+    </p>
+    <h1 class="brut-hero-title">
+      Hey, I'm JW.<br />
+      I build <span class="brut-hl brut-hl-lime">web apps</span><br />
+      that go <span class="brut-hl brut-hl-pink">bang.</span>
+    </h1>
+    <p class="brut-hero-copy">
+      Full-stack developer from Cologne, Germany. TanStack is my daily driver, Effect is my idea of fun, and Rust keeps
+      the weekends noisy. When I'm not shipping, I'm pointing a camera at things — most recently at everything Japan let
+      me shoot in March 2026.
+    </p>
+    <div class="brut-hero-actions">
+      <a class="brut-btn brut-press" href="/projects/">See the projects →</a>
+      <a class="brut-btn brut-btn-pink brut-press" href="/gallery/">Photos, not promises →</a>
+    </div>
+  </section>
+
+  <div class="brut-ticker" aria-label="Things JW is into">
+    <div class="brut-ticker-track">
+      <div class="brut-ticker-run">
+        {
+          tickerRun.map((item) => (
+            <>
+              <span>{item}</span>
+              <span class="brut-ticker-star" aria-hidden="true">★</span>
+            </>
+          ))
+        }
+      </div>
+      <div class="brut-ticker-run" aria-hidden="true">
+        {
+          tickerRun.map((item) => (
+            <>
+              <span>{item}</span>
+              <span class="brut-ticker-star">★</span>
+            </>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+
+  <div class="brut-bar">
+    <div class="brut-bar-inner">
+      <h2 class="brut-bar-title">Pick a door</h2>
+      <span class="brut-bar-meta">03 routes</span>
+    </div>
+  </div>
+
+  <section class="brut-shell brut-doors" aria-label="Site sections">
+    <a class="brut-door brut-card brut-press" href="/projects/">
+      <span class="brut-door-num">01</span>
+      <span class="brut-door-name">Projects</span>
+      <span class="brut-door-desc">
+        Four builds with real commit history: TanStack, Rust, a terminal Spotify. Zero lorem ipsum.
+      </span>
+      <span class="brut-door-cta">Open →</span>
+    </a>
+    <a class="brut-door brut-card brut-press" href="/blog/">
+      <span class="brut-door-num">02</span>
+      <span class="brut-door-name">Blog</span>
+      <span class="brut-door-desc">
+        Empty on purpose. The drafts are fighting back. Come back when the words win.
+      </span>
+      <span class="brut-door-cta">Open →</span>
+    </a>
+    <a class="brut-door brut-card brut-press" href="/gallery/">
+      <span class="brut-door-num">03</span>
+      <span class="brut-door-name">Gallery</span>
+      <span class="brut-door-desc">
+        March 2026, Japan: I bought a camera. Flowers, dogs, bridges — the evidence is inside.
+      </span>
+      <span class="brut-door-cta">Open →</span>
+    </a>
+  </section>
+</Layout>

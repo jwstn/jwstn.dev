@@ -1,0 +1,96 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+const nav = [
+  { href: "/projects", label: "Projects", no: "01" },
+  { href: "/blog", label: "Blog", no: "02" },
+  { href: "/gallery", label: "Gallery", no: "03" },
+];
+---
+
+<html lang="en" class="theme-riso">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <a class="riso-skip" href="#riso-content">Skip to content</a>
+
+    <!-- print sheet furniture: grain + crop + registration marks -->
+    <div class="riso-grain" aria-hidden="true"></div>
+    <div class="riso-marks" aria-hidden="true">
+      <span class="riso-mark riso-mark-tl"></span>
+      <span class="riso-mark riso-mark-tr"></span>
+      <span class="riso-mark riso-mark-bl"></span>
+      <span class="riso-mark riso-mark-br"></span>
+      <span class="riso-reg"></span>
+    </div>
+
+    <header class="riso-header">
+      <div class="riso-masthead">
+        <a class="riso-logo" href="/">jwstn.dev</a>
+        <p class="riso-issue">
+          vol.<strong>01</strong> no.<strong>05</strong> — printed in cologne
+        </p>
+      </div>
+      <nav class="riso-nav" aria-label="Main">
+        {
+          nav.map((item) => (
+            <a
+              class="riso-nav-link"
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              <span class="riso-nav-no">{item.no}</span>
+              {item.label}
+            </a>
+          ))
+        }
+        {
+          SOCIALS.map((s) => (
+            <a
+              class="riso-nav-link external"
+              href={s.href}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {s.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main class="riso-main" id="riso-content">
+      <slot />
+    </main>
+
+    <footer class="riso-footer">
+      <div class="riso-footer-inner">
+        <p class="riso-footer-copy">&copy; {year} jwstn — cologne, de</p>
+        <p class="riso-footer-hand">set &amp; printed in two inks — grain included, free of charge</p>
+        <ul class="riso-footer-list">
+          {
+            SOCIALS.map((s) => (
+              <li>
+                <a href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>
