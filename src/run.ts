@@ -1,4 +1,4 @@
-import { airspace } from "./notes.ts";
+import { airspace } from "#/notes.ts";
 
 await airspace.notes.create({
   title: "Hello",
