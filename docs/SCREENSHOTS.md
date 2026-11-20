@@ -11,7 +11,7 @@ Routes per theme: Home · Projects · Project detail (`spotui`) · Blog (empty s
 detail (`spring-2026`), each in desktop (1440 px) and mobile (375 px), plus a dark-mode Home capture.
 The blog currently has zero posts, so Blog pages show each theme's designed empty state.
 
-An overview contact sheet of all theme homes: [`_overview.png`](_overview.png)
+An overview contact sheet of all theme homes: [`_overview.png`](screenshots/_overview.png)
 
 ---
 
@@ -21,24 +21,24 @@ The baseline, kept selectable for comparison. Geist Mono, quiet purple accents.
 
 | | | |
 |---|---|---|
-| ![classic home desktop](classic/home-desktop.png) | ![classic projects desktop](classic/projects-desktop.png) | ![classic gallery desktop](classic/gallery-desktop.png) |
+| ![classic home desktop](screenshots/classic/home-desktop.png) | ![classic projects desktop](screenshots/classic/projects-desktop.png) | ![classic gallery desktop](screenshots/classic/gallery-desktop.png) |
 
 <details>
 <summary>All classic captures</summary>
 
-![home desktop](classic/home-desktop.png)
-![home mobile](classic/home-mobile.png)
-![home dark](classic/home-dark.png)
-![projects desktop](classic/projects-desktop.png)
-![projects mobile](classic/projects-mobile.png)
-![project desktop](classic/project-desktop.png)
-![project mobile](classic/project-mobile.png)
-![blog desktop](classic/blog-desktop.png)
-![blog mobile](classic/blog-mobile.png)
-![gallery desktop](classic/gallery-desktop.png)
-![gallery mobile](classic/gallery-mobile.png)
-![album desktop](classic/album-desktop.png)
-![album mobile](classic/album-mobile.png)
+![home desktop](screenshots/classic/home-desktop.png)
+![home mobile](screenshots/classic/home-mobile.png)
+![home dark](screenshots/classic/home-dark.png)
+![projects desktop](screenshots/classic/projects-desktop.png)
+![projects mobile](screenshots/classic/projects-mobile.png)
+![project desktop](screenshots/classic/project-desktop.png)
+![project mobile](screenshots/classic/project-mobile.png)
+![blog desktop](screenshots/classic/blog-desktop.png)
+![blog mobile](screenshots/classic/blog-mobile.png)
+![gallery desktop](screenshots/classic/gallery-desktop.png)
+![gallery mobile](screenshots/classic/gallery-mobile.png)
+![album desktop](screenshots/classic/album-desktop.png)
+![album mobile](screenshots/classic/album-mobile.png)
 
 </details>
 
@@ -51,25 +51,25 @@ masthead with issue numbering, colophon footer.
 
 | | | |
 |---|---|---|
-| ![editorial home](editorial/home-desktop.png) | ![editorial projects](editorial/projects-desktop.png) | ![editorial album](editorial/album-desktop.png) |
-| ![editorial dark](editorial/home-dark.png) | ![editorial blog](editorial/blog-desktop.png) | ![editorial mobile](editorial/home-mobile.png) |
+| ![editorial home](screenshots/editorial/home-desktop.png) | ![editorial projects](screenshots/editorial/projects-desktop.png) | ![editorial album](screenshots/editorial/album-desktop.png) |
+| ![editorial dark](screenshots/editorial/home-dark.png) | ![editorial blog](screenshots/editorial/blog-desktop.png) | ![editorial mobile](screenshots/editorial/home-mobile.png) |
 
 <details>
 <summary>All editorial captures</summary>
 
-![home desktop](editorial/home-desktop.png)
-![home mobile](editorial/home-mobile.png)
-![home dark](editorial/home-dark.png)
-![projects desktop](editorial/projects-desktop.png)
-![projects mobile](editorial/projects-mobile.png)
-![project desktop](editorial/project-desktop.png)
-![project mobile](editorial/project-mobile.png)
-![blog desktop](editorial/blog-desktop.png)
-![blog mobile](editorial/blog-mobile.png)
-![gallery desktop](editorial/gallery-desktop.png)
-![gallery mobile](editorial/gallery-mobile.png)
-![album desktop](editorial/album-desktop.png)
-![album mobile](editorial/album-mobile.png)
+![home desktop](screenshots/editorial/home-desktop.png)
+![home mobile](screenshots/editorial/home-mobile.png)
+![home dark](screenshots/editorial/home-dark.png)
+![projects desktop](screenshots/editorial/projects-desktop.png)
+![projects mobile](screenshots/editorial/projects-mobile.png)
+![project desktop](screenshots/editorial/project-desktop.png)
+![project mobile](screenshots/editorial/project-mobile.png)
+![blog desktop](screenshots/editorial/blog-desktop.png)
+![blog mobile](screenshots/editorial/blog-mobile.png)
+![gallery desktop](screenshots/editorial/gallery-desktop.png)
+![gallery mobile](screenshots/editorial/gallery-mobile.png)
+![album desktop](screenshots/editorial/album-desktop.png)
+![album mobile](screenshots/editorial/album-mobile.png)
 
 </details>
 
@@ -82,25 +82,25 @@ hard step easings — no soft fades anywhere.
 
 | | | |
 |---|---|---|
-| ![brutalist home](brutalist/home-desktop.png) | ![brutalist projects](brutalist/projects-desktop.png) | ![brutalist album](brutalist/album-desktop.png) |
-| ![brutalist dark](brutalist/home-dark.png) | ![brutalist blog](brutalist/blog-desktop.png) | ![brutalist mobile](brutalist/home-mobile.png) |
+| ![brutalist home](screenshots/brutalist/home-desktop.png) | ![brutalist projects](screenshots/brutalist/projects-desktop.png) | ![brutalist album](screenshots/brutalist/album-desktop.png) |
+| ![brutalist dark](screenshots/brutalist/home-dark.png) | ![brutalist blog](screenshots/brutalist/blog-desktop.png) | ![brutalist mobile](screenshots/brutalist/home-mobile.png) |
 
 <details>
 <summary>All brutalist captures</summary>
 
-![home desktop](brutalist/home-desktop.png)
-![home mobile](brutalist/home-mobile.png)
-![home dark](brutalist/home-dark.png)
-![projects desktop](brutalist/projects-desktop.png)
-![projects mobile](brutalist/projects-mobile.png)
-![project desktop](brutalist/project-desktop.png)
-![project mobile](brutalist/project-mobile.png)
-![blog desktop](brutalist/blog-desktop.png)
-![blog mobile](brutalist/blog-mobile.png)
-![gallery desktop](brutalist/gallery-desktop.png)
-![gallery mobile](brutalist/gallery-mobile.png)
-![album desktop](brutalist/album-desktop.png)
-![album mobile](brutalist/album-mobile.png)
+![home desktop](screenshots/brutalist/home-desktop.png)
+![home mobile](screenshots/brutalist/home-mobile.png)
+![home dark](screenshots/brutalist/home-dark.png)
+![projects desktop](screenshots/brutalist/projects-desktop.png)
+![projects mobile](screenshots/brutalist/projects-mobile.png)
+![project desktop](screenshots/brutalist/project-desktop.png)
+![project mobile](screenshots/brutalist/project-mobile.png)
+![blog desktop](screenshots/brutalist/blog-desktop.png)
+![blog mobile](screenshots/brutalist/blog-mobile.png)
+![gallery desktop](screenshots/brutalist/gallery-desktop.png)
+![gallery mobile](screenshots/brutalist/gallery-mobile.png)
+![album desktop](screenshots/brutalist/album-desktop.png)
+![album mobile](screenshots/brutalist/album-mobile.png)
 
 </details>
 
@@ -113,25 +113,25 @@ boot-sequence home page, projects as `cat ~/projects.txt` output, taskbar-free c
 
 | | | |
 |---|---|---|
-| ![terminal home](terminal/home-desktop.png) | ![terminal projects](terminal/projects-desktop.png) | ![terminal album](terminal/album-desktop.png) |
-| ![terminal dark](terminal/home-dark.png) | ![terminal blog](terminal/blog-desktop.png) | ![terminal mobile](terminal/home-mobile.png) |
+| ![terminal home](screenshots/terminal/home-desktop.png) | ![terminal projects](screenshots/terminal/projects-desktop.png) | ![terminal album](screenshots/terminal/album-desktop.png) |
+| ![terminal dark](screenshots/terminal/home-dark.png) | ![terminal blog](screenshots/terminal/blog-desktop.png) | ![terminal mobile](screenshots/terminal/home-mobile.png) |
 
 <details>
 <summary>All terminal captures</summary>
 
-![home desktop](terminal/home-desktop.png)
-![home mobile](terminal/home-mobile.png)
-![home dark](terminal/home-dark.png)
-![projects desktop](terminal/projects-desktop.png)
-![projects mobile](terminal/projects-mobile.png)
-![project desktop](terminal/project-desktop.png)
-![project mobile](terminal/project-mobile.png)
-![blog desktop](terminal/blog-desktop.png)
-![blog mobile](terminal/blog-mobile.png)
-![gallery desktop](terminal/gallery-desktop.png)
-![gallery mobile](terminal/gallery-mobile.png)
-![album desktop](terminal/album-desktop.png)
-![album mobile](terminal/album-mobile.png)
+![home desktop](screenshots/terminal/home-desktop.png)
+![home mobile](screenshots/terminal/home-mobile.png)
+![home dark](screenshots/terminal/home-dark.png)
+![projects desktop](screenshots/terminal/projects-desktop.png)
+![projects mobile](screenshots/terminal/projects-mobile.png)
+![project desktop](screenshots/terminal/project-desktop.png)
+![project mobile](screenshots/terminal/project-mobile.png)
+![blog desktop](screenshots/terminal/blog-desktop.png)
+![blog mobile](screenshots/terminal/blog-mobile.png)
+![gallery desktop](screenshots/terminal/gallery-desktop.png)
+![gallery mobile](screenshots/terminal/gallery-mobile.png)
+![album desktop](screenshots/terminal/album-desktop.png)
+![album mobile](screenshots/terminal/album-mobile.png)
 
 </details>
 
@@ -144,25 +144,25 @@ translucent panels with 1 px neon edges, chromatic-aberration title hovers, EQ-b
 
 | | | |
 |---|---|---|
-| ![neon home](neon/home-desktop.png) | ![neon projects](neon/projects-desktop.png) | ![neon album](neon/album-desktop.png) |
-| ![neon dark](neon/home-dark.png) | ![neon blog](neon/blog-desktop.png) | ![neon mobile](neon/home-mobile.png) |
+| ![neon home](screenshots/neon/home-desktop.png) | ![neon projects](screenshots/neon/projects-desktop.png) | ![neon album](screenshots/neon/album-desktop.png) |
+| ![neon dark](screenshots/neon/home-dark.png) | ![neon blog](screenshots/neon/blog-desktop.png) | ![neon mobile](screenshots/neon/home-mobile.png) |
 
 <details>
 <summary>All neon captures</summary>
 
-![home desktop](neon/home-desktop.png)
-![home mobile](neon/home-mobile.png)
-![home dark](neon/home-dark.png)
-![projects desktop](neon/projects-desktop.png)
-![projects mobile](neon/projects-mobile.png)
-![project desktop](neon/project-desktop.png)
-![project mobile](neon/project-mobile.png)
-![blog desktop](neon/blog-desktop.png)
-![blog mobile](neon/blog-mobile.png)
-![gallery desktop](neon/gallery-desktop.png)
-![gallery mobile](neon/gallery-mobile.png)
-![album desktop](neon/album-desktop.png)
-![album mobile](neon/album-mobile.png)
+![home desktop](screenshots/neon/home-desktop.png)
+![home mobile](screenshots/neon/home-mobile.png)
+![home dark](screenshots/neon/home-dark.png)
+![projects desktop](screenshots/neon/projects-desktop.png)
+![projects mobile](screenshots/neon/projects-mobile.png)
+![project desktop](screenshots/neon/project-desktop.png)
+![project mobile](screenshots/neon/project-mobile.png)
+![blog desktop](screenshots/neon/blog-desktop.png)
+![blog mobile](screenshots/neon/blog-mobile.png)
+![gallery desktop](screenshots/neon/gallery-desktop.png)
+![gallery mobile](screenshots/neon/gallery-mobile.png)
+![album desktop](screenshots/neon/album-desktop.png)
+![album mobile](screenshots/neon/album-mobile.png)
 
 </details>
 
@@ -175,25 +175,25 @@ misregistered headline offsets, Caveat margin notes and hand arrows, taped album
 
 | | | |
 |---|---|---|
-| ![riso home](riso/home-desktop.png) | ![riso projects](riso/projects-desktop.png) | ![riso album](riso/album-desktop.png) |
-| ![riso dark](riso/home-dark.png) | ![riso blog](riso/blog-desktop.png) | ![riso mobile](riso/home-mobile.png) |
+| ![riso home](screenshots/riso/home-desktop.png) | ![riso projects](screenshots/riso/projects-desktop.png) | ![riso album](screenshots/riso/album-desktop.png) |
+| ![riso dark](screenshots/riso/home-dark.png) | ![riso blog](screenshots/riso/blog-desktop.png) | ![riso mobile](screenshots/riso/home-mobile.png) |
 
 <details>
 <summary>All riso captures</summary>
 
-![home desktop](riso/home-desktop.png)
-![home mobile](riso/home-mobile.png)
-![home dark](riso/home-dark.png)
-![projects desktop](riso/projects-desktop.png)
-![projects mobile](riso/projects-mobile.png)
-![project desktop](riso/project-desktop.png)
-![project mobile](riso/project-mobile.png)
-![blog desktop](riso/blog-desktop.png)
-![blog mobile](riso/blog-mobile.png)
-![gallery desktop](riso/gallery-desktop.png)
-![gallery mobile](riso/gallery-mobile.png)
-![album desktop](riso/album-desktop.png)
-![album mobile](riso/album-mobile.png)
+![home desktop](screenshots/riso/home-desktop.png)
+![home mobile](screenshots/riso/home-mobile.png)
+![home dark](screenshots/riso/home-dark.png)
+![projects desktop](screenshots/riso/projects-desktop.png)
+![projects mobile](screenshots/riso/projects-mobile.png)
+![project desktop](screenshots/riso/project-desktop.png)
+![project mobile](screenshots/riso/project-mobile.png)
+![blog desktop](screenshots/riso/blog-desktop.png)
+![blog mobile](screenshots/riso/blog-mobile.png)
+![gallery desktop](screenshots/riso/gallery-desktop.png)
+![gallery mobile](screenshots/riso/gallery-mobile.png)
+![album desktop](screenshots/riso/album-desktop.png)
+![album mobile](screenshots/riso/album-mobile.png)
 
 </details>
 
@@ -206,25 +206,25 @@ cards with white borders, wobbling starbursts, trading-card projects with holo s
 
 | | | |
 |---|---|---|
-| ![sticker home](sticker/home-desktop.png) | ![sticker projects](sticker/projects-desktop.png) | ![sticker album](sticker/album-desktop.png) |
-| ![sticker dark](sticker/home-dark.png) | ![sticker blog](sticker/blog-desktop.png) | ![sticker mobile](sticker/home-mobile.png) |
+| ![sticker home](screenshots/sticker/home-desktop.png) | ![sticker projects](screenshots/sticker/projects-desktop.png) | ![sticker album](screenshots/sticker/album-desktop.png) |
+| ![sticker dark](screenshots/sticker/home-dark.png) | ![sticker blog](screenshots/sticker/blog-desktop.png) | ![sticker mobile](screenshots/sticker/home-mobile.png) |
 
 <details>
 <summary>All sticker captures</summary>
 
-![home desktop](sticker/home-desktop.png)
-![home mobile](sticker/home-mobile.png)
-![home dark](sticker/home-dark.png)
-![projects desktop](sticker/projects-desktop.png)
-![projects mobile](sticker/projects-mobile.png)
-![project desktop](sticker/project-desktop.png)
-![project mobile](sticker/project-mobile.png)
-![blog desktop](sticker/blog-desktop.png)
-![blog mobile](sticker/blog-mobile.png)
-![gallery desktop](sticker/gallery-desktop.png)
-![gallery mobile](sticker/gallery-mobile.png)
-![album desktop](sticker/album-desktop.png)
-![album mobile](sticker/album-mobile.png)
+![home desktop](screenshots/sticker/home-desktop.png)
+![home mobile](screenshots/sticker/home-mobile.png)
+![home dark](screenshots/sticker/home-dark.png)
+![projects desktop](screenshots/sticker/projects-desktop.png)
+![projects mobile](screenshots/sticker/projects-mobile.png)
+![project desktop](screenshots/sticker/project-desktop.png)
+![project mobile](screenshots/sticker/project-mobile.png)
+![blog desktop](screenshots/sticker/blog-desktop.png)
+![blog mobile](screenshots/sticker/blog-mobile.png)
+![gallery desktop](screenshots/sticker/gallery-desktop.png)
+![gallery mobile](screenshots/sticker/gallery-mobile.png)
+![album desktop](screenshots/sticker/album-desktop.png)
+![album mobile](screenshots/sticker/album-mobile.png)
 
 </details>
 
@@ -237,25 +237,25 @@ frosted glass cards and floating nav pill, soft lift hovers.
 
 | | | |
 |---|---|---|
-| ![aurora home](aurora/home-desktop.png) | ![aurora projects](aurora/projects-desktop.png) | ![aurora album](aurora/album-desktop.png) |
-| ![aurora dark](aurora/home-dark.png) | ![aurora blog](aurora/blog-desktop.png) | ![aurora mobile](aurora/home-mobile.png) |
+| ![aurora home](screenshots/aurora/home-desktop.png) | ![aurora projects](screenshots/aurora/projects-desktop.png) | ![aurora album](screenshots/aurora/album-desktop.png) |
+| ![aurora dark](screenshots/aurora/home-dark.png) | ![aurora blog](screenshots/aurora/blog-desktop.png) | ![aurora mobile](screenshots/aurora/home-mobile.png) |
 
 <details>
 <summary>All aurora captures</summary>
 
-![home desktop](aurora/home-desktop.png)
-![home mobile](aurora/home-mobile.png)
-![home dark](aurora/home-dark.png)
-![projects desktop](aurora/projects-desktop.png)
-![projects mobile](aurora/projects-mobile.png)
-![project desktop](aurora/project-desktop.png)
-![project mobile](aurora/project-mobile.png)
-![blog desktop](aurora/blog-desktop.png)
-![blog mobile](aurora/blog-mobile.png)
-![gallery desktop](aurora/gallery-desktop.png)
-![gallery mobile](aurora/gallery-mobile.png)
-![album desktop](aurora/album-desktop.png)
-![album mobile](aurora/album-mobile.png)
+![home desktop](screenshots/aurora/home-desktop.png)
+![home mobile](screenshots/aurora/home-mobile.png)
+![home dark](screenshots/aurora/home-dark.png)
+![projects desktop](screenshots/aurora/projects-desktop.png)
+![projects mobile](screenshots/aurora/projects-mobile.png)
+![project desktop](screenshots/aurora/project-desktop.png)
+![project mobile](screenshots/aurora/project-mobile.png)
+![blog desktop](screenshots/aurora/blog-desktop.png)
+![blog mobile](screenshots/aurora/blog-mobile.png)
+![gallery desktop](screenshots/aurora/gallery-desktop.png)
+![gallery mobile](screenshots/aurora/gallery-mobile.png)
+![album desktop](screenshots/aurora/album-desktop.png)
+![album mobile](screenshots/aurora/album-mobile.png)
 
 </details>
 
@@ -268,25 +268,25 @@ hairlines, leader-dot table-of-contents projects, full-bleed cinematic gallery p
 
 | | | |
 |---|---|---|
-| ![luxe home](luxe/home-desktop.png) | ![luxe projects](luxe/projects-desktop.png) | ![luxe album](luxe/album-desktop.png) |
-| ![luxe dark](luxe/home-dark.png) | ![luxe blog](luxe/blog-desktop.png) | ![luxe mobile](luxe/home-mobile.png) |
+| ![luxe home](screenshots/luxe/home-desktop.png) | ![luxe projects](screenshots/luxe/projects-desktop.png) | ![luxe album](screenshots/luxe/album-desktop.png) |
+| ![luxe dark](screenshots/luxe/home-dark.png) | ![luxe blog](screenshots/luxe/blog-desktop.png) | ![luxe mobile](screenshots/luxe/home-mobile.png) |
 
 <details>
 <summary>All luxe captures</summary>
 
-![home desktop](luxe/home-desktop.png)
-![home mobile](luxe/home-mobile.png)
-![home dark](luxe/home-dark.png)
-![projects desktop](luxe/projects-desktop.png)
-![projects mobile](luxe/projects-mobile.png)
-![project desktop](luxe/project-desktop.png)
-![project mobile](luxe/project-mobile.png)
-![blog desktop](luxe/blog-desktop.png)
-![blog mobile](luxe/blog-mobile.png)
-![gallery desktop](luxe/gallery-desktop.png)
-![gallery mobile](luxe/gallery-mobile.png)
-![album desktop](luxe/album-desktop.png)
-![album mobile](luxe/album-mobile.png)
+![home desktop](screenshots/luxe/home-desktop.png)
+![home mobile](screenshots/luxe/home-mobile.png)
+![home dark](screenshots/luxe/home-dark.png)
+![projects desktop](screenshots/luxe/projects-desktop.png)
+![projects mobile](screenshots/luxe/projects-mobile.png)
+![project desktop](screenshots/luxe/project-desktop.png)
+![project mobile](screenshots/luxe/project-mobile.png)
+![blog desktop](screenshots/luxe/blog-desktop.png)
+![blog mobile](screenshots/luxe/blog-mobile.png)
+![gallery desktop](screenshots/luxe/gallery-desktop.png)
+![gallery mobile](screenshots/luxe/gallery-mobile.png)
+![album desktop](screenshots/luxe/album-desktop.png)
+![album mobile](screenshots/luxe/album-mobile.png)
 
 </details>
 
@@ -300,25 +300,25 @@ Dark mode is "Windows 98 night".
 
 | | | |
 |---|---|---|
-| ![retro-os home](retro-os/home-desktop.png) | ![retro-os projects](retro-os/projects-desktop.png) | ![retro-os album](retro-os/album-desktop.png) |
-| ![retro-os dark](retro-os/home-dark.png) | ![retro-os blog](retro-os/blog-desktop.png) | ![retro-os mobile](retro-os/home-mobile.png) |
+| ![retro-os home](screenshots/retro-os/home-desktop.png) | ![retro-os projects](screenshots/retro-os/projects-desktop.png) | ![retro-os album](screenshots/retro-os/album-desktop.png) |
+| ![retro-os dark](screenshots/retro-os/home-dark.png) | ![retro-os blog](screenshots/retro-os/blog-desktop.png) | ![retro-os mobile](screenshots/retro-os/home-mobile.png) |
 
 <details>
 <summary>All retro-os captures</summary>
 
-![home desktop](retro-os/home-desktop.png)
-![home mobile](retro-os/home-mobile.png)
-![home dark](retro-os/home-dark.png)
-![projects desktop](retro-os/projects-desktop.png)
-![projects mobile](retro-os/projects-mobile.png)
-![project desktop](retro-os/project-desktop.png)
-![project mobile](retro-os/project-mobile.png)
-![blog desktop](retro-os/blog-desktop.png)
-![blog mobile](retro-os/blog-mobile.png)
-![gallery desktop](retro-os/gallery-desktop.png)
-![gallery mobile](retro-os/gallery-mobile.png)
-![album desktop](retro-os/album-desktop.png)
-![album mobile](retro-os/album-mobile.png)
+![home desktop](screenshots/retro-os/home-desktop.png)
+![home mobile](screenshots/retro-os/home-mobile.png)
+![home dark](screenshots/retro-os/home-dark.png)
+![projects desktop](screenshots/retro-os/projects-desktop.png)
+![projects mobile](screenshots/retro-os/projects-mobile.png)
+![project desktop](screenshots/retro-os/project-desktop.png)
+![project mobile](screenshots/retro-os/project-mobile.png)
+![blog desktop](screenshots/retro-os/blog-desktop.png)
+![blog mobile](screenshots/retro-os/blog-mobile.png)
+![gallery desktop](screenshots/retro-os/gallery-desktop.png)
+![gallery mobile](screenshots/retro-os/gallery-mobile.png)
+![album desktop](screenshots/retro-os/album-desktop.png)
+![album mobile](screenshots/retro-os/album-mobile.png)
 
 </details>
 
@@ -332,25 +332,25 @@ Marquees, reveals and slides all stop under `prefers-reduced-motion`.
 
 | | | |
 |---|---|---|
-| ![kinetic home](kinetic/home-desktop.png) | ![kinetic projects](kinetic/projects-desktop.png) | ![kinetic album](kinetic/album-desktop.png) |
-| ![kinetic dark](kinetic/home-dark.png) | ![kinetic blog](kinetic/blog-desktop.png) | ![kinetic mobile](kinetic/home-mobile.png) |
+| ![kinetic home](screenshots/kinetic/home-desktop.png) | ![kinetic projects](screenshots/kinetic/projects-desktop.png) | ![kinetic album](screenshots/kinetic/album-desktop.png) |
+| ![kinetic dark](screenshots/kinetic/home-dark.png) | ![kinetic blog](screenshots/kinetic/blog-desktop.png) | ![kinetic mobile](screenshots/kinetic/home-mobile.png) |
 
 <details>
 <summary>All kinetic captures</summary>
 
-![home desktop](kinetic/home-desktop.png)
-![home mobile](kinetic/home-mobile.png)
-![home dark](kinetic/home-dark.png)
-![projects desktop](kinetic/projects-desktop.png)
-![projects mobile](kinetic/projects-mobile.png)
-![project desktop](kinetic/project-desktop.png)
-![project mobile](kinetic/project-mobile.png)
-![blog desktop](kinetic/blog-desktop.png)
-![blog mobile](kinetic/blog-mobile.png)
-![gallery desktop](kinetic/gallery-desktop.png)
-![gallery mobile](kinetic/gallery-mobile.png)
-![album desktop](kinetic/album-desktop.png)
-![album mobile](kinetic/album-mobile.png)
+![home desktop](screenshots/kinetic/home-desktop.png)
+![home mobile](screenshots/kinetic/home-mobile.png)
+![home dark](screenshots/kinetic/home-dark.png)
+![projects desktop](screenshots/kinetic/projects-desktop.png)
+![projects mobile](screenshots/kinetic/projects-mobile.png)
+![project desktop](screenshots/kinetic/project-desktop.png)
+![project mobile](screenshots/kinetic/project-mobile.png)
+![blog desktop](screenshots/kinetic/blog-desktop.png)
+![blog mobile](screenshots/kinetic/blog-mobile.png)
+![gallery desktop](screenshots/kinetic/gallery-desktop.png)
+![gallery mobile](screenshots/kinetic/gallery-mobile.png)
+![album desktop](screenshots/kinetic/album-desktop.png)
+![album mobile](screenshots/kinetic/album-mobile.png)
 
 </details>
 
