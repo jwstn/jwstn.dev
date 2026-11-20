@@ -35,6 +35,9 @@ importers:
       '@fontsource-variable/cormorant-garamond':
         specifier: ^5.3.0
         version: 5.3.0
+      '@fontsource-variable/dm-sans':
+        specifier: ^5.3.0
+        version: 5.3.0
       '@fontsource-variable/geist-mono':
         specifier: ^5.2.8
         version: 5.2.8
@@ -60,6 +63,12 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/orbitron':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/press-start-2p':
+        specifier: ^5.3.0
+        version: 5.3.0
+      '@fontsource/space-mono':
         specifier: ^5.3.0
         version: 5.3.0
       '@fontsource/vt323':
@@ -798,6 +807,9 @@ packages:
   '@fontsource-variable/cormorant-garamond@5.3.0':
     resolution: {integrity: sha512-rgZJ/5w3hi60swAPnrOXpZf5wEH6NTrvm4H8D9Y4b1QIFUqlX14eM3QTMU/eAznjfh0eXpO1QUqsFhiy58aoMg==}
 
+  '@fontsource-variable/dm-sans@5.3.0':
+    resolution: {integrity: sha512-BpUG5bqePiDFMBM4ZtLSlPdAIOM990uB1dlXzIf4aw21yQR7BmykedLXXXMqGWsR18aMLOsbWccwJNh3ztTQaA==}
+
   '@fontsource-variable/geist-mono@5.2.8':
     resolution: {integrity: sha512-KI5bj+hkkRiHttYHmccotUZ80ZuZyai+RwI1d7UId0clkx/jXxlo8qYK8j54WzmpBjtMoEMPyllV7faDcj+6RA==}
 
@@ -824,6 +836,12 @@ packages:
 
   '@fontsource/orbitron@5.3.0':
     resolution: {integrity: sha512-+BhPsbUAo/AF7sRcf+TEexm+EWWkgTiR9Zwb7AhYIPkc5oplfvw0C45Oc2xlKPhwVEmxG8hHuA6/Ansbl+Bc6w==}
+
+  '@fontsource/press-start-2p@5.3.0':
+    resolution: {integrity: sha512-gxWFxdeDglPhEYSwEeooomcaFK8kSQYLQwVxfnOJeYRj2sPEHXjpVtFgEaYfqzOjuAJGrIcJOipu2KY5YkbyuQ==}
+
+  '@fontsource/space-mono@5.3.0':
+    resolution: {integrity: sha512-FrpBMOVWn3PRdRHlrZWC55X3kZG/2BTH7SM5ZyS/bky3iKya2BturI5lk+t0RoDQL2JyHzURsVq/EisCsxpI5A==}
 
   '@fontsource/vt323@5.3.0':
     resolution: {integrity: sha512-3w33Rg/0+R1587HQfz4t7Q7e0GGeCqr3wmzIwqdGInUnrGEwMA5eX39GP4Z9wpTQnwfhVOhYuxuRwRUeIcicbw==}
@@ -4593,6 +4611,8 @@ snapshots:
 
   '@fontsource-variable/cormorant-garamond@5.3.0': {}
 
+  '@fontsource-variable/dm-sans@5.3.0': {}
+
   '@fontsource-variable/geist-mono@5.2.8': {}
 
   '@fontsource-variable/inter@5.3.0': {}
@@ -4610,6 +4630,10 @@ snapshots:
   '@fontsource/caveat@5.3.0': {}
 
   '@fontsource/orbitron@5.3.0': {}
+
+  '@fontsource/press-start-2p@5.3.0': {}
+
+  '@fontsource/space-mono@5.3.0': {}
 
   '@fontsource/vt323@5.3.0': {}
 

@@ -126,6 +126,9 @@ Do not invent achievements, jobs, or awards.
 | `@fontsource-variable/outfit`        | Outfit (geometric)     |
 | `@fontsource/vt323`                  | VT323 (pixel)          |
 | `@fontsource-variable/geist-mono`    | Geist Mono (already used by classic) |
+| `@fontsource/press-start-2p`         | Press Start 2P (8-bit pixel display) |
+| `@fontsource/space-mono`             | Space Mono (retro mono)              |
+| `@fontsource-variable/dm-sans`       | DM Sans (retro-clean body)           |
 
 Reference as `font-family: var(--font-display)` etc. by setting `--font-display/--font-body/--font-mono`
 to the imported font families in your theme vars, e.g.
@@ -180,7 +183,7 @@ Signature ideas are mandatory; everything else is your craft.
 - **Motion:** hard snaps (steps easing), no soft fades.
 - **Dark:** same energy, neon-on-black borders.
 
-## 3. terminal — CRT console
+## 3. terminal — CRT console (reworked with 8bitcn/ui patterns)
 - **Fonts:** Geist Mono everywhere (already installed).
 - **Feel:** phosphor green-on-black (light mode = "paper white/amber terminal" e.g. amber-on-cream —
   still terminal, not a normal light theme). Scanline overlay, subtle text glow.
@@ -190,6 +193,13 @@ Signature ideas are mandatory; everything else is your craft.
 - **Motion:** typing/cursor blink, line-by-line reveal. Use `transitions={false}` if view transitions
   break the boot effect.
 - **Dark is the hero mode; light is the "old paper terminal".**
+- **8bitcn rework direction:** keep the phosphor-CRT identity (scanlines, boot
+  sequence, green-on-black hero mode). Upgrade the chrome using 8bitcn/ui patterns
+  from `docs/reference/8bitcn/`: rebuild your window frames, buttons, badges, tables
+  and the blog empty-state dialog with their radius-0 chunky-border recipe, adopt
+  their token-pairing discipline (see retro-globals.css), and consider Press Start
+  2P for headings with Space Mono for prose if it reads better than Geist Mono.
+  Attribution comment in theme.css required.
 
 ## 4. neon — cyberpunk night city
 - **Fonts:** Orbitron display, Space Grotesk body.
@@ -235,7 +245,7 @@ Signature ideas are mandatory; everything else is your craft.
   table-of-contents with leader dots, images full-bleed with generous margins. No cards, no shadows.
 - **Motion:** near-none — 150 ms opacity fades at most. Quiet confidence.
 
-## 9. retro-os — Windows 95 desktop
+## 9. retro-os — Windows 95 desktop (reworked with 8bitcn/ui patterns)
 - **Fonts:** VT323 for in-window UI text (or Space Grotesk if VT323 hurts readability at small sizes —
   your call, maybe VT323 for chrome/headings, Inter for long prose).
 - **Feel:** teal desktop (light = classic teal, dark = "windows 98 plus! night" dark grey/teal),
@@ -245,6 +255,14 @@ Signature ideas are mandatory; everything else is your craft.
   projects as desktop icons or Explorer list view; blog empty state = empty folder with a "no files
   found" dialog; footer as status bar with sunken panels.
 - **Motion:** near-none. Instant. This theme's charm is chrome, not motion.
+- **8bitcn rework direction:** keep the Win95 desktop structure (taskbar, Explorer,
+  Notepad windows, status bars, systray clock) but rebuild the chrome with 8bitcn/ui
+  patterns from `docs/reference/8bitcn/`: swap subtle 2px bevels for their radius-0
+  thick-border + hard-shadow recipe, use their retro token palettes as light/dark
+  pairs (retro-globals.css has several proven sets), Press Start 2P for title bars
+  and menu labels + VT323 for body, and study `retro-mode-switcher.tsx` +
+  `dialog.tsx` + `alert.tsx` for the blog empty-state and window-chrome structure.
+  Attribution comment in theme.css required.
 
 ## 10. kinetic — motion-first poster site
 - **Fonts:** Anton for oversized display, Space Grotesk body.
