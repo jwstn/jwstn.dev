@@ -15,6 +15,38 @@ An overview contact sheet of all theme homes: [`_overview.png`](screenshots/_ove
 
 ---
 
+## 0b. Isometric — 2.5D drafting table
+
+Space Grotesk + Geist Mono, drafting-paper grid (dark: night drafting desk with a glowing grid), pure-CSS
+bobbing cubes by the hero, exploded-view project slabs with grid references, dimension-line furniture,
+gallery photos tilted onto isometric planes that straighten on hover.
+
+| | | |
+|---|---|---|
+| ![isometric home](screenshots/isometric/home-desktop.png) | ![isometric projects](screenshots/isometric/projects-desktop.png) | ![isometric album](screenshots/isometric/album-desktop.png) |
+| ![isometric dark](screenshots/isometric/home-dark.png) | ![isometric blog](screenshots/isometric/blog-desktop.png) | ![isometric mobile](screenshots/isometric/home-mobile.png) |
+
+<details>
+<summary>All isometric captures</summary>
+
+![home desktop](screenshots/isometric/home-desktop.png)
+![home mobile](screenshots/isometric/home-mobile.png)
+![home dark](screenshots/isometric/home-dark.png)
+![projects desktop](screenshots/isometric/projects-desktop.png)
+![projects mobile](screenshots/isometric/projects-mobile.png)
+![project desktop](screenshots/isometric/project-desktop.png)
+![project mobile](screenshots/isometric/project-mobile.png)
+![blog desktop](screenshots/isometric/blog-desktop.png)
+![blog mobile](screenshots/isometric/blog-mobile.png)
+![gallery desktop](screenshots/isometric/gallery-desktop.png)
+![gallery mobile](screenshots/isometric/gallery-mobile.png)
+![album desktop](screenshots/isometric/album-desktop.png)
+![album mobile](screenshots/isometric/album-mobile.png)
+
+</details>
+
+---
+
 ## 0. Classic — your current design (default)
 
 The baseline, kept selectable for comparison. Geist Mono, quiet purple accents.
@@ -106,10 +138,11 @@ hard step easings — no soft fades anywhere.
 
 ---
 
-## 3. Terminal — CRT console
+## 3. Terminal — CRT console *(reworked with [8bitcn/ui](https://www.8bitcn.com/) patterns)*
 
-Geist Mono, phosphor green on black (light mode is an amber "paper terminal"), scanlines, typed
-boot-sequence home page, projects as `cat ~/projects.txt` output, taskbar-free command-bar nav.
+Phosphor green on black (light mode is an amber "paper terminal"), scanlines, typed boot-sequence home
+page, `cat ~/projects.txt` output blocks — now with 8bitcn chrome: radius-0 slab shadows, press-physics
+buttons, pixel window controls, and a Press Start 2P + Space Mono pairing (MIT-attributed port).
 
 | | | |
 |---|---|---|
@@ -292,10 +325,11 @@ hairlines, leader-dot table-of-contents projects, full-bleed cinematic gallery p
 
 ---
 
-## 9. Retro OS — Windows 95 desktop
+## 9. Retro OS — Windows 95 desktop *(reworked with [8bitcn/ui](https://www.8bitcn.com/) patterns)*
 
-VT323 chrome, teal desktop with taskbar nav and live systray clock, every section a beveled window
-with title bar, projects in Explorer details view, blog as an empty folder + "No files found" dialog.
+The Win95 desktop kept — taskbar nav with live systray clock, Explorer details view, Notepad windows,
+"No files found" blog dialog — rebuilt with 8bitcn chrome: thick ink borders with hard offset shadows,
+Press Start 2P title bars + VT323 body, rect-grid pixel window controls (MIT-attributed port).
 Dark mode is "Windows 98 night".
 
 | | | |
