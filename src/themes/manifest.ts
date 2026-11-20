@@ -19,6 +19,7 @@ import * as aurora from "./aurora";
 import * as brutalist from "./brutalist";
 import * as classic from "./classic";
 import * as editorial from "./editorial";
+import * as isometric from "./isometric";
 import * as kinetic from "./kinetic";
 import * as luxe from "./luxe";
 import * as neon from "./neon";
@@ -39,6 +40,7 @@ const modules: Record<ThemeId, ThemeModule> = {
   luxe: luxe as ThemeModule,
   "retro-os": retro_os as ThemeModule,
   kinetic: kinetic as ThemeModule,
+  isometric: isometric as ThemeModule,
 };
 
 export function themeModule(id: string): ThemeModule {

@@ -22,6 +22,7 @@ export const THEMES: ThemeMeta[] = [
   { id: "luxe", label: "Minimal Luxe", blurb: "Huge whitespace, elegant serif, whisper-quiet." },
   { id: "retro-os", label: "Retro OS", blurb: "Windows-95 window chrome, taskbar, bevels." },
   { id: "kinetic", label: "Kinetic", blurb: "Marquees, oversized sliding type, scroll-driven reveals." },
+  { id: "isometric", label: "Isometric", blurb: "2.5D cubes, extruded panels, drafting-table grid." },
 ];
 
 export const THEME_IDS = THEMES.map((t) => t.id);
