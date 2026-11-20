@@ -3,6 +3,7 @@ import { SOCIALS } from "#/lib/content";
 import MetaTags from "#/themes/shared/MetaTags.astro";
 import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
 import type { LayoutProps } from "#/themes/types";
+import PixelIcon from "./PixelIcon.astro";
 import "./theme.css";
 
 const { title, description } = Astro.props as LayoutProps;
@@ -42,7 +43,8 @@ const clock = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-di
         {
           SOCIALS.map((s) => (
             <a class="os-panel os-panel-link" href={s.href} target="_blank" rel="noopener noreferrer">
-              {s.label} ↗
+              {s.label}
+              <PixelIcon name="arrow-ext" size={10} />
             </a>
           ))
         }

@@ -2,6 +2,7 @@
 import FormattedDate from "#/components/FormattedDate.astro";
 import type { ProjectProps } from "#/themes/types";
 import Layout from "./Layout.astro";
+import PixelIcon from "./PixelIcon.astro";
 import Win95Window from "./Win95Window.astro";
 
 const { project, Content } = Astro.props as ProjectProps;
@@ -14,7 +15,12 @@ const { title, description, pubDate, href, tags } = project.data;
       <span>File</span><span>Edit</span><span>Search</span><span>Help</span>
     </div>
     <div class="os-content">
-      <p><a class="os-up" href="/projects/">&larr; Up one level — C:\projects</a></p>
+      <p>
+        <a class="os-up" href="/projects/">
+          <PixelIcon name="arrow-left" size={14} />
+          Up one level — C:\projects
+        </a>
+      </p>
       <h1 class="os-h1">{title}</h1>
       <p class="os-meta">
         <span>Modified <FormattedDate date={pubDate} /></span>
@@ -24,7 +30,10 @@ const { title, description, pubDate, href, tags } = project.data;
         <Content />
       </div>
       <div class="os-actions">
-        <a class="os-btn" href={href} target="_blank" rel="noopener noreferrer">Open project ↗</a>
+        <a class="os-btn" href={href} target="_blank" rel="noopener noreferrer">
+          Open project
+          <PixelIcon name="arrow-ext" size={10} />
+        </a>
         <a class="os-btn" href="/projects/">Up one level</a>
       </div>
     </div>

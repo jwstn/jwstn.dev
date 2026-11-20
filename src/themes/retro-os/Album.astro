@@ -13,7 +13,10 @@ const { title, photos, pubDate, slug } = album.data;
 <Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} photos by JW.`}>
   <Win95Window title={`${title} — Imaging`}>
     <div class="os-toolbar">
-      <a class="os-btn" href="/gallery/">&larr; Up one level</a>
+      <a class="os-btn" href="/gallery/">
+        <PixelIcon name="arrow-left" size={12} />
+        Up one level
+      </a>
       <span class="os-toolbar-label">Address</span>
       <span class="os-address">
         <PixelIcon name="folder" size={18} />

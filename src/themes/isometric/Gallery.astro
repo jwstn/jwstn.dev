@@ -1,0 +1,55 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { GalleryProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { albums } = Astro.props as GalleryProps;
+---
+
+<Layout
+  title="Gallery | jwstn.dev"
+  description="Photographic plates by JW — Japan 2026, a German summer, and a spring full of blossoms."
+>
+  <div class="iso-shell iso-stack">
+    <div class="iso-pagehead iso-slab iso-rise">
+      <h1 class="iso-pagehead-title">Gallery</h1>
+      <p class="iso-pagehead-meta">{albums.length} plate{albums.length === 1 ? "" : "s"} on file</p>
+    </div>
+
+    <p class="iso-lede iso-rise iso-rise--2">
+      In March 2026 I went to Japan and came home with a camera. These are the plates it has produced since —
+      Cologne parks, German summers, and the occasional very good boy, all resting on the drafting desk.
+    </p>
+
+    <ul class="iso-albums" aria-label="Albums">
+      {
+        albums.map((album, i) => (
+          <li class="iso-rise" class:list={[i === 1 && "iso-rise--2", i === 2 && "iso-rise--3"]}>
+            <a class="iso-slab iso-album" href={`/gallery/${album.data.slug}/`}>
+              <div class="iso-strip" aria-hidden="true">
+                {album.data.photos.slice(0, 4).map((photo) => (
+                  <img src={photo.image.src} alt={photo.title} width={photo.image.width} height={photo.image.height} loading="lazy" decoding="async" />
+                ))}
+              </div>
+              <div class="iso-album-info">
+                <h2 class="iso-album-title">{album.data.title}</h2>
+                <p class="iso-album-meta">
+                  <FormattedDate date={album.data.pubDate} /> · {album.data.photos.length} exposures
+                </p>
+                <span class="iso-album-cta">Open plate →</span>
+              </div>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="iso-dim" aria-hidden="true">
+      <span class="iso-dim-arrow iso-dim-arrow--l"></span>
+      <span class="iso-dim-rule"></span>
+      <span>Filing order: newest first</span>
+      <span class="iso-dim-rule"></span>
+      <span class="iso-dim-arrow iso-dim-arrow--r"></span>
+    </p>
+  </div>
+</Layout>

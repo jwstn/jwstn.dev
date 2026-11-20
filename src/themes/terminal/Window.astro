@@ -15,7 +15,7 @@ const { name, date } = Astro.props;
 ---
 <div class="term-window">
   <div class="term-titlebar">
-    <span class="term-winctl" aria-hidden="true">● ● ●</span>
+    <span class="term-winctl" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="term-winname">{name}</span>
     {date && <span class="term-windate"><FormattedDate date={date} /></span>}
   </div>

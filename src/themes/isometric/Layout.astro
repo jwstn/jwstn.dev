@@ -1,0 +1,84 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const navItems = [
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Gallery", href: "/gallery" },
+];
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<html lang="en" class="theme-isometric">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body class="bg-background text-foreground font-body">
+    <a class="iso-skip" href="#iso-main">Skip to content</a>
+
+    <header class="iso-header">
+      <div class="iso-shell">
+        <div class="iso-plate iso-slab iso-rise">
+          <a class="iso-key iso-key--logo" href="/" aria-current={path === "/" ? "page" : undefined}>
+            jwstn.dev
+          </a>
+          <nav class="iso-keys" aria-label="Main navigation">
+            {
+              navItems.map((item) => (
+                <a
+                  class="iso-key"
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+          <nav class="iso-keys" aria-label="Social links">
+            {
+              SOCIALS.map((s) => (
+                <a class="iso-key iso-key--ghost" href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label} ↗
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main id="iso-main" class="iso-main">
+      <slot />
+    </main>
+
+    <footer class="iso-footer">
+      <div class="iso-shell">
+        <div class="iso-titleblock">
+          <p class="iso-tb-cell iso-tb-strong">&copy; {year} jwstn</p>
+          <p class="iso-tb-cell">Sheet 01 &mdash; drawn in Cologne</p>
+          <p class="iso-tb-cell">Scale 1:1</p>
+          <nav class="iso-tb-cell iso-tb-socials" aria-label="Social links">
+            {
+              SOCIALS.map((s) => (
+                <a class="iso-tb-link" href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label} ↗
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

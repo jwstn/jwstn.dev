@@ -1,16 +1,32 @@
 /*
- * retro-os — Windows 95 desktop theme.
+ * retro-os — Windows 95 desktop, reworked with 8bitcn/ui chrome patterns.
  * Everything scoped under html.theme-retro-os (plus .dark).
- * Fonts: VT323 (chrome/headings), Inter (long prose), Geist Mono (code).
- * Motion: near-none by design — the charm is the chrome, not the animation.
+ * Fonts: Press Start 2P (chrome/labels/headers), VT323 (body prose),
+ * Geist Mono (code). Press Start 2P is a heavy display face — it is
+ * never used for long prose.
+ * Motion: near-none by design — the charm is the chrome, not animation.
+ *
+ * 8bitcn/ui attribution (MIT License — https://github.com/TheOrcDev/8bitcn-ui):
+ * the chrome in this file ports visual patterns from the mirrored reference
+ * files in docs/reference/8bitcn/: the radius-0 thick-border + hard-offset-
+ * shadow recipe, the Press Start 2P token pairing from retro-globals.css
+ * (.theme-pacman: --radius: 0rem, --tracking-normal: 0.05rem, full-contrast
+ * borders, flat "no bevel" inputs/panels from input.tsx), and the rect-grid
+ * pixel window-control glyphs from dialog.tsx. No 8bitcn code is imported —
+ * all CSS below is written for this theme and scoped to it.
  */
 
+@import "@fontsource/press-start-2p";
 @import "@fontsource/vt323";
-@import "@fontsource-variable/inter";
 @import "@fontsource-variable/geist-mono";
 
 /* ------------------------------------------------------------------ */
 /* Design tokens                                                        */
+/*                                                                      */
+/* Light = classic teal desktop hero; dark = "Windows 98 Plus! night".  */
+/* Both pairs follow 8bitcn's token discipline (retro-globals.css):     */
+/* radius 0, generous tracking on the pixel display face, ink-colored   */
+/* borders at full contrast, hard solid shadows.                        */
 /* ------------------------------------------------------------------ */
 
 html.theme-retro-os {
@@ -31,22 +47,26 @@ html.theme-retro-os {
   --border: #0a0a0a;
   --ring: #000080;
 
-  --font-display: "VT323", "Courier New", monospace;
-  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-display: "Press Start 2P", "VT323", monospace;
+  --font-body: "VT323", "Courier New", monospace;
   --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+
+  /* 8bitcn Press Start 2P pairing: radius 0 + 0.05rem tracking */
+  --radius: 0rem;
+  --ps-tracking: 0.05rem;
 
   /* chrome */
   --os-face: #c0c0c0;
   --os-fg: #101010;
+  --os-ink: #0a0a0a;
+  --os-ink-soft: rgb(0 0 0 / 0.32);
+  --os-shadow-ink: #000000;
   --os-hi: #ffffff;
-  --os-hi2: #dfdfdf;
-  --os-lo: #808080;
-  --os-frame: #0a0a0a;
   --os-title-a: #000080;
   --os-title-b: #1084d0;
   --os-title-fg: #ffffff;
-  --os-title-i-a: #6a6d70;
-  --os-title-i-b: #a0a3a6;
+  --os-title-i: #a7adb3;
+  --os-title-i-fg: #26292c;
   --os-content: #ffffff;
   --os-content-fg: #101010;
   --os-link: #0000ee;
@@ -56,13 +76,12 @@ html.theme-retro-os {
   --os-select-fg: #ffffff;
   --os-focus: #101010;
 
-  /* classic 2px double bevels (Win95 raised / sunken) */
-  --os-raised:
-    inset 1px 1px 0 0 var(--os-hi), inset -1px -1px 0 0 var(--os-lo),
-    inset 2px 2px 0 0 var(--os-hi2), inset -2px -2px 0 0 var(--os-frame);
-  --os-sunken:
-    inset 1px 1px 0 0 var(--os-lo), inset -1px -1px 0 0 var(--os-hi),
-    inset 2px 2px 0 0 var(--os-frame), inset -2px -2px 0 0 var(--os-hi2);
+  /* 8bitcn hard-shadow recipe: solid offset blocks, no blur */
+  --os-hard-lg: 8px 8px 0 0 var(--os-shadow-ink);
+  --os-hard: 4px 4px 0 0 var(--os-shadow-ink);
+  --os-hard-sm: 3px 3px 0 0 var(--os-shadow-ink);
+  /* sunken panels: flat 2px ink border + hard inset (no bevel) */
+  --os-inset: inset 3px 3px 0 0 var(--os-ink-soft);
 
   /* shared switcher hooks */
   --sw-bg: #c0c0c0;
@@ -75,44 +94,44 @@ html.theme-retro-os.dark {
   color-scheme: dark;
 
   /* "Windows 98 Plus! night" — dark grey/teal desktop, navy chrome */
-  --background: #101a20;
+  --background: #1b2630;
   --foreground: #e6e9ec;
-  --card: #454b52;
+  --card: #434a52;
   --card-foreground: #e6e9ec;
   --primary: #6ea8e0;
   --primary-foreground: #0b0e12;
   --secondary: #3a86d8;
   --secondary-foreground: #0b0e12;
   --muted: #32373d;
-  --muted-foreground: #b3bac1;
+  --muted-foreground: #b6bdc4;
   --accent: #3a86d8;
   --accent-foreground: #0b0e12;
-  --border: #0a0a0a;
+  --border: #05070a;
   --ring: #6ea8e0;
 
-  --os-face: #454b52;
+  --os-face: #434a52;
   --os-fg: #e6e9ec;
-  --os-hi: #6e757e;
-  --os-hi2: #575e66;
-  --os-lo: #23262b;
-  --os-frame: #0a0a0a;
+  --os-ink: #05070a;
+  --os-ink-soft: rgb(0 0 0 / 0.55);
+  --os-shadow-ink: #000000;
+  --os-hi: #9aa3ac;
   --os-title-a: #1c2f6e;
   --os-title-b: #3a6fb0;
   --os-title-fg: #ffffff;
-  --os-title-i-a: #3a3f45;
-  --os-title-i-b: #565c63;
+  --os-title-i: #383e45;
+  --os-title-i-fg: #c7cdd3;
   --os-content: #1a1f24;
   --os-content-fg: #dfe3e7;
   --os-link: #86b6ff;
-  --os-desktop: #101a20;
-  --os-desktop-2: #0c141a;
+  --os-desktop: #1b2630;
+  --os-desktop-2: #141d25;
   --os-select: #1c2f6e;
   --os-select-fg: #ffffff;
   --os-focus: #ffffff;
 
-  --sw-bg: #454b52;
+  --sw-bg: #434a52;
   --sw-fg: #e6e9ec;
-  --sw-border: #0a0a0a;
+  --sw-border: #05070a;
   --sw-accent: #6ea8e0;
 }
 
@@ -126,12 +145,13 @@ html.theme-retro-os body {
   display: flex;
   flex-direction: column;
   font-family: var(--font-body);
+  font-size: 1.15rem;
   color: var(--os-fg);
   background-color: var(--os-desktop);
   /* faint dithered checkerboard desktop */
   background-image: repeating-conic-gradient(var(--os-desktop-2) 0% 25%, var(--os-desktop) 0% 50%);
   background-size: 8px 8px;
-  padding-bottom: calc(3.25rem + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
 }
 
 html.theme-retro-os ::selection {
@@ -140,7 +160,7 @@ html.theme-retro-os ::selection {
 }
 
 html.theme-retro-os :focus-visible {
-  outline: 2px dotted var(--os-focus);
+  outline: 3px solid var(--os-focus);
   outline-offset: 2px;
 }
 
@@ -153,9 +173,11 @@ html.theme-retro-os .os-skip {
   color: var(--os-fg);
   padding: 0.5rem 0.8rem;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.625rem;
+  letter-spacing: var(--ps-tracking);
   text-decoration: none;
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard-sm);
   transform: translateY(-300%);
 }
 html.theme-retro-os .os-skip:focus {
@@ -173,8 +195,8 @@ html.theme-retro-os .os-shell {
 
 html.theme-retro-os .os-stack {
   display: grid;
-  gap: 1.25rem;
-  padding-block: 1rem 0.5rem;
+  gap: 1.4rem;
+  padding-block: 1.1rem 0.5rem;
 }
 
 html.theme-retro-os .os-icon {
@@ -199,19 +221,19 @@ html.theme-retro-os .os-desktop-icons {
 html.theme-retro-os .os-dicon {
   display: grid;
   justify-items: center;
-  gap: 0.3rem;
+  gap: 0.35rem;
   width: 4.8rem;
   padding: 0.5rem 0.2rem;
   text-decoration: none;
 }
 
 html.theme-retro-os .os-dicon-label {
-  font-family: var(--font-display);
-  font-size: 1.1rem;
+  font-family: var(--font-body);
+  font-size: 1.35rem;
   line-height: 1.02;
   color: #ffffff;
   text-align: center;
-  text-shadow: 1px 1px 0 var(--os-frame);
+  text-shadow: 2px 2px 0 #000000;
 }
 
 html.theme-retro-os .os-dicon:hover .os-dicon-label,
@@ -224,33 +246,38 @@ html.theme-retro-os .os-dicon:focus-visible {
 }
 
 /* ------------------------------------------------------------------ */
-/* Windows                                                              */
+/* Windows — 8bitcn recipe: radius 0, 2px ink border, hard offset       */
+/* shadow. No bevels; depth is a solid block, not a gradient edge.       */
 /* ------------------------------------------------------------------ */
 
 html.theme-retro-os .os-window {
   background: var(--os-face);
   color: var(--os-fg);
-  box-shadow:
-    inset 1px 1px 0 0 var(--os-hi), inset -1px -1px 0 0 var(--os-lo),
-    inset 2px 2px 0 0 var(--os-hi2), inset -2px -2px 0 0 var(--os-frame),
-    3px 3px 0 0 rgb(0 0 0 / 0.22);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard-lg);
+}
+
+html.theme-retro-os .os-window.is-inactive {
+  box-shadow: var(--os-hard);
 }
 
 html.theme-retro-os .os-titlebar {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  margin: 2px 2px 0;
-  padding: 0.16rem 0.25rem 0.2rem 0.45rem;
+  padding: 0.35rem 0.45rem 0.35rem 0.6rem;
   background: linear-gradient(90deg, var(--os-title-a), var(--os-title-b));
   color: var(--os-title-fg);
   font-family: var(--font-display);
-  font-size: 1.2rem;
-  line-height: 1.05;
+  font-size: 0.625rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.5;
+  border-bottom: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-window.is-inactive .os-titlebar {
-  background: linear-gradient(90deg, var(--os-title-i-a), var(--os-title-i-b));
+  background: var(--os-title-i);
+  color: var(--os-title-i-fg);
 }
 
 html.theme-retro-os .os-titlebar-text {
@@ -259,29 +286,32 @@ html.theme-retro-os .os-titlebar-text {
 
 html.theme-retro-os .os-titlebar-btns {
   display: flex;
-  gap: 2px;
+  gap: 3px;
   margin-left: auto;
   flex-shrink: 0;
 }
 
+/* rect-grid pixel window controls (port of the 8bitcn dialog glyphs) */
 html.theme-retro-os .os-tbtn {
   display: grid;
   place-items: center;
-  width: 1.25rem;
-  height: 1.1rem;
+  width: 1.4rem;
+  height: 1.3rem;
   background: var(--os-face);
   color: var(--os-fg);
-  font-family: var(--font-display);
-  font-size: 0.95rem;
-  line-height: 1;
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: 2px 2px 0 0 var(--os-shadow-ink);
+}
+
+html.theme-retro-os .os-tbtn:last-child:hover {
+  background: #d40000;
+  color: #ffffff;
 }
 
 html.theme-retro-os .os-window-frame {
   display: grid;
-  gap: 3px;
-  margin: 0 2px 2px;
-  padding: 3px;
+  gap: 6px;
+  padding: 6px;
 }
 
 /* ------------------------------------------------------------------ */
@@ -290,10 +320,11 @@ html.theme-retro-os .os-window-frame {
 
 html.theme-retro-os .os-menubar {
   display: flex;
-  gap: 1.1rem;
-  padding: 0 0.25rem 0.15rem;
+  gap: 1.2rem;
+  padding: 0.2rem 0.3rem;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
   color: var(--os-fg);
 }
 
@@ -301,46 +332,57 @@ html.theme-retro-os .os-toolbar {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
-  gap: 0.4rem 0.5rem;
+  gap: 0.5rem 0.6rem;
   padding: 0.1rem 0.1rem 0.2rem;
 }
 
 html.theme-retro-os .os-toolbar-label {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
   color: var(--os-fg);
 }
 
+/* flat 8bitcn input look: 2px ink border, hard inset, no bevel */
 html.theme-retro-os .os-address {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   flex: 1 1 12rem;
   min-width: 0;
-  padding: 0.12rem 0.45rem;
+  padding: 0.35rem 0.5rem;
   background: var(--os-content);
   color: var(--os-content-fg);
   font-family: var(--font-display);
-  font-size: 1.05rem;
-  box-shadow: var(--os-sunken);
+  font-size: 0.625rem;
+  letter-spacing: var(--ps-tracking);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-inset);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 html.theme-retro-os .os-statusbar {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  gap: 3px;
+  gap: 4px;
 }
 
 html.theme-retro-os .os-panel {
   display: inline-flex;
   align-items: center;
-  padding: 0.12rem 0.5rem;
-  box-shadow: var(--os-sunken);
-  font-family: var(--font-display);
-  font-size: 1rem;
-  line-height: 1.1;
+  gap: 0.4rem;
+  padding: 0.3rem 0.5rem;
+  background: var(--os-face);
   color: var(--os-fg);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-inset);
+  font-family: var(--font-display);
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.4;
 }
 
 html.theme-retro-os .os-panel-grow {
@@ -364,28 +406,29 @@ html.theme-retro-os .os-content {
   background: var(--os-content);
   color: var(--os-content-fg);
   font-family: var(--font-body);
-  box-shadow: var(--os-sunken);
+  border: 2px solid var(--os-ink);
   padding: clamp(0.9rem, 3vw, 1.3rem);
 }
 
 html.theme-retro-os .os-content-head {
-  margin-block-end: 1rem;
+  margin-block-end: 1.1rem;
 }
 
 html.theme-retro-os .os-h1 {
-  margin: 0 0 0.3rem;
+  margin: 0 0 0.5rem;
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: clamp(1.9rem, 6vw, 2.7rem);
-  line-height: 1.02;
+  font-size: clamp(0.95rem, 3.5vw, 1.3rem);
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.5;
   color: var(--os-content-fg);
 }
 
 html.theme-retro-os .os-sub {
   margin: 0;
-  font-family: var(--font-display);
-  font-size: 1.15rem;
-  line-height: 1.15;
+  font-family: var(--font-body);
+  font-size: 1.35rem;
+  line-height: 1.2;
   color: var(--muted-foreground);
 }
 
@@ -393,31 +436,34 @@ html.theme-retro-os .os-meta {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0.4rem 0.6rem;
-  margin: 0 0 1.1rem;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
+  gap: 0.5rem 0.7rem;
+  margin: 0 0 1.2rem;
+  font-family: var(--font-body);
+  font-size: 1.25rem;
+  line-height: 1.2;
   color: var(--muted-foreground);
 }
 
 html.theme-retro-os .os-tag {
   display: inline-flex;
   align-items: center;
-  padding: 0.08rem 0.45rem;
+  padding: 0.22rem 0.4rem;
   background: var(--os-face);
   color: var(--os-fg);
   font-family: var(--font-display);
-  font-size: 0.98rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
   line-height: 1.2;
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-up {
   display: inline-flex;
   align-items: center;
+  gap: 0.4rem;
   min-height: 44px;
-  font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-family: var(--font-body);
+  font-size: 1.35rem;
   color: var(--os-link);
   text-decoration: none;
 }
@@ -428,28 +474,29 @@ html.theme-retro-os .os-up:hover {
 html.theme-retro-os .os-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-block-start: 1.4rem;
+  gap: 0.7rem;
+  margin-block-start: 1.5rem;
 }
 
-/* Win95 buttons */
+/* Buttons: 8bitcn hard-shadow press — translate into the shadow on click */
 
 html.theme-retro-os .os-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
+  gap: 0.5rem;
   min-height: 44px;
-  padding: 0.25rem 0.9rem;
+  padding: 0.6rem 0.9rem;
   background: var(--os-face);
   color: var(--os-fg);
   font-family: var(--font-display);
-  font-size: 1.1rem;
-  line-height: 1;
+  font-size: 0.625rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.4;
   text-decoration: none;
-  border: 0;
+  border: 2px solid var(--os-ink);
   cursor: pointer;
-  box-shadow: var(--os-raised);
+  box-shadow: var(--os-hard-sm);
 }
 
 html.theme-retro-os .os-btn:hover {
@@ -457,8 +504,8 @@ html.theme-retro-os .os-btn:hover {
 }
 
 html.theme-retro-os .os-btn:active {
-  box-shadow: var(--os-sunken);
-  transform: translate(1px, 1px);
+  transform: translate(3px, 3px);
+  box-shadow: none;
 }
 
 /* ------------------------------------------------------------------ */
@@ -469,12 +516,15 @@ html.theme-retro-os .os-cols {
   display: grid;
   grid-template-columns: 2.1rem 1fr auto;
   gap: 0.5rem;
-  padding: 0.2rem 0.5rem;
+  padding: 0.4rem 0.5rem;
   background: var(--os-face);
   color: var(--os-fg);
   font-family: var(--font-display);
-  font-size: 1.02rem;
-  line-height: 1.1;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
+  text-transform: uppercase;
+  line-height: 1.4;
+  border-bottom: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-cols span:first-child {
@@ -493,9 +543,14 @@ html.theme-retro-os .os-row {
   grid-template-columns: 2.1rem 1fr auto;
   gap: 0.5rem;
   align-items: center;
-  padding: 0.45rem 0.5rem;
+  padding: 0.5rem 0.5rem;
   color: inherit;
   text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--os-ink) 28%, transparent);
+}
+
+html.theme-retro-os .os-row:last-child {
+  border-bottom: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-row-icon {
@@ -512,15 +567,16 @@ html.theme-retro-os .os-row-main {
 html.theme-retro-os .os-row-name {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  line-height: 1.05;
+  font-size: 0.7rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.5;
 }
 
 html.theme-retro-os .os-row-desc {
   display: block;
-  margin-top: 0.12rem;
-  font-size: 0.92rem;
-  line-height: 1.4;
+  margin-top: 0.15rem;
+  font-size: 1.25rem;
+  line-height: 1.2;
   color: var(--muted-foreground);
 }
 
@@ -528,12 +584,13 @@ html.theme-retro-os .os-row-tags {
   display: flex;
   flex-wrap: wrap;
   gap: 0.35rem;
-  margin-top: 0.45rem;
+  margin-top: 0.5rem;
 }
 
 html.theme-retro-os .os-row-date {
   font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
   color: var(--muted-foreground);
   white-space: nowrap;
 }
@@ -563,6 +620,8 @@ html.theme-retro-os .os-row:focus-visible {
 
 /* ------------------------------------------------------------------ */
 /* Blog empty state: empty folder + "no files found" dialog             */
+/* (structure per 8bitcn dialog.tsx: bordered card, icon column,        */
+/*  pixel-X close in the title bar, centered actions)                   */
 /* ------------------------------------------------------------------ */
 
 html.theme-retro-os .os-empty-folder {
@@ -570,12 +629,12 @@ html.theme-retro-os .os-empty-folder {
   margin-top: 0.4rem;
   display: grid;
   place-items: center;
-  gap: 0.5rem;
+  gap: 0.6rem;
   text-align: center;
-  padding: 1.2rem 1rem;
-  border: 1px dotted var(--os-lo);
+  padding: 1.4rem 1rem;
+  border: 2px dashed var(--os-ink);
   color: var(--muted-foreground);
-  font-size: 0.95rem;
+  font-size: 1.3rem;
 }
 
 html.theme-retro-os .os-empty-folder .os-icon {
@@ -584,29 +643,30 @@ html.theme-retro-os .os-empty-folder .os-icon {
 
 html.theme-retro-os .os-dialog-wrap {
   width: 100%;
-  max-width: 24rem;
+  max-width: 26rem;
   margin-inline: auto;
 }
 
 html.theme-retro-os .os-dialog-body {
   display: flex;
   align-items: flex-start;
-  gap: 0.8rem;
-  padding: 0.9rem 0.9rem 0.4rem;
+  gap: 0.9rem;
+  padding: 1rem 1rem 0.5rem;
 }
 
 html.theme-retro-os .os-dialog-title {
   margin: 0;
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  line-height: 1.05;
+  font-size: 0.7rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.5;
   color: var(--os-fg);
 }
 
 html.theme-retro-os .os-dialog-text p {
-  margin: 0.25rem 0 0;
-  font-size: 0.92rem;
-  line-height: 1.45;
+  margin: 0.35rem 0 0;
+  font-size: 1.3rem;
+  line-height: 1.25;
   color: var(--os-fg);
 }
 
@@ -614,8 +674,8 @@ html.theme-retro-os .os-dialog-actions {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.6rem;
-  padding: 0.4rem 0.9rem 0.9rem;
+  gap: 0.7rem;
+  padding: 0.5rem 1rem 1rem;
 }
 
 /* ------------------------------------------------------------------ */
@@ -628,7 +688,7 @@ html.theme-retro-os .os-folders {
   padding: 0;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(13.5rem, 1fr));
-  gap: 0.75rem;
+  gap: 0.9rem;
 }
 
 html.theme-retro-os .os-folder {
@@ -636,22 +696,29 @@ html.theme-retro-os .os-folder {
   grid-template-columns: 3rem 1fr;
   gap: 0.6rem;
   align-items: center;
-  padding: 0.7rem;
+  padding: 0.75rem;
   text-decoration: none;
   color: inherit;
   background: var(--os-face);
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard-sm);
 }
 
 html.theme-retro-os .os-folder:hover {
   background: color-mix(in oklab, var(--os-face) 88%, var(--os-hi));
 }
 
+html.theme-retro-os .os-folder:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
 html.theme-retro-os .os-folder-name {
   display: block;
   font-family: var(--font-display);
-  font-size: 1.25rem;
-  line-height: 1.05;
+  font-size: 0.7rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.5;
   color: var(--os-fg);
 }
 
@@ -666,25 +733,26 @@ html.theme-retro-os .os-folder:hover .os-folder-name {
 
 html.theme-retro-os .os-folder-meta {
   display: block;
-  margin-top: 0.15rem;
-  font-family: var(--font-display);
-  font-size: 0.98rem;
+  margin-top: 0.2rem;
+  font-family: var(--font-body);
+  font-size: 1.2rem;
   color: var(--muted-foreground);
 }
 
 html.theme-retro-os .os-photos {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr));
-  gap: 1rem;
+  gap: 1.2rem;
   margin-top: 1.2rem;
 }
 
 html.theme-retro-os .os-photo {
   margin: 0;
-  padding: 0.4rem 0.4rem 0.45rem;
+  padding: 0.5rem 0.5rem 0.55rem;
   background: var(--os-face);
   color: var(--os-fg);
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard-sm);
 }
 
 @media (min-width: 40rem) {
@@ -697,24 +765,25 @@ html.theme-retro-os .os-photo img {
   display: block;
   width: 100%;
   height: auto;
-  box-shadow: var(--os-sunken);
+  border: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-photo-cap {
   display: grid;
-  gap: 0.1rem;
+  gap: 0.15rem;
   padding: 0.5rem 0.3rem 0.1rem;
 }
 
 html.theme-retro-os .os-photo-title {
   font-family: var(--font-display);
-  font-size: 1.12rem;
-  line-height: 1.05;
+  font-size: 0.625rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.5;
 }
 
 html.theme-retro-os .os-photo-caption {
-  font-size: 0.88rem;
-  line-height: 1.35;
+  font-size: 1.2rem;
+  line-height: 1.2;
   color: var(--muted-foreground);
 }
 
@@ -724,40 +793,43 @@ html.theme-retro-os .os-photo-caption {
 
 html.theme-retro-os .os-group {
   position: relative;
-  margin: 0.6rem 0 0;
-  padding: 1.2rem 0.9rem 0.9rem;
-  border: 1px solid;
-  border-color: var(--os-lo) var(--os-hi2) var(--os-hi2) var(--os-lo);
+  margin: 0.8rem 0 0;
+  padding: 1.3rem 1rem 1rem;
+  border: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-group-label {
   position: absolute;
-  top: -0.8em;
-  left: 0.6rem;
-  padding: 0 0.3rem;
+  top: -0.75em;
+  left: 0.75rem;
+  padding: 0.15rem 0.45rem;
   background: var(--os-face);
+  border: 2px solid var(--os-ink);
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
   color: var(--os-fg);
 }
 
 html.theme-retro-os .os-sys {
   display: grid;
   grid-template-columns: max-content 1fr;
-  gap: 0.4rem 0.9rem;
+  gap: 0.5rem 1rem;
   margin: 0;
 }
 
 html.theme-retro-os .os-sys dt {
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.8;
   color: var(--muted-foreground);
 }
 
 html.theme-retro-os .os-sys dd {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.45;
+  font-size: 1.3rem;
+  line-height: 1.25;
   color: var(--os-fg);
 }
 
@@ -771,13 +843,14 @@ html.theme-retro-os .os-sys a:hover {
 }
 
 /* ------------------------------------------------------------------ */
-/* Markdown prose (readable Inter, not the pixel font)                   */
+/* Markdown prose — VT323 body, Press Start 2P headings, Geist code.     */
+/* Press Start 2P is confined to headings/labels; prose stays VT323.    */
 /* ------------------------------------------------------------------ */
 
 html.theme-retro-os .os-prose {
   max-width: 46rem;
-  font-size: 1rem;
-  line-height: 1.65;
+  font-size: 1.3rem;
+  line-height: 1.45;
 }
 
 html.theme-retro-os .os-prose > :first-child {
@@ -785,7 +858,7 @@ html.theme-retro-os .os-prose > :first-child {
 }
 
 html.theme-retro-os .os-prose p {
-  margin-block: 1em;
+  margin-block: 0.8em;
 }
 
 html.theme-retro-os .os-prose a {
@@ -799,25 +872,27 @@ html.theme-retro-os .os-prose a:hover {
 
 html.theme-retro-os .os-prose h2,
 html.theme-retro-os .os-prose h3 {
-  margin: 1.9em 0 0.6em;
-  padding-bottom: 0.15em;
-  border-bottom: 2px solid var(--os-lo);
+  margin: 1.8em 0 0.7em;
   font-family: var(--font-display);
   font-weight: 400;
-  line-height: 1.1;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.5;
+  color: var(--os-content-fg);
 }
 
 html.theme-retro-os .os-prose h2 {
-  font-size: 1.6rem;
+  font-size: 0.95rem;
+  padding-bottom: 0.3em;
+  border-bottom: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-prose h3 {
-  font-size: 1.35rem;
+  font-size: 0.75rem;
 }
 
 html.theme-retro-os .os-prose ul,
 html.theme-retro-os .os-prose ol {
-  margin-block: 1em;
+  margin-block: 0.8em;
   padding-inline-start: 1.5em;
 }
 
@@ -826,11 +901,12 @@ html.theme-retro-os .os-prose li::marker {
 }
 
 html.theme-retro-os .os-prose blockquote {
-  margin: 1.4em 0;
-  padding: 0.7em 1em;
+  margin: 1.2em 0;
+  padding: 0.6em 0.9em;
   background: var(--muted);
   color: var(--os-content-fg);
-  box-shadow: var(--os-sunken);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-inset);
 }
 
 html.theme-retro-os .os-prose blockquote p {
@@ -839,40 +915,42 @@ html.theme-retro-os .os-prose blockquote p {
 
 html.theme-retro-os .os-prose code {
   font-family: var(--font-mono);
-  font-size: 0.88em;
+  font-size: 0.7em;
   background: var(--muted);
   padding: 0.1em 0.3em;
+  border: 1px solid color-mix(in oklab, var(--os-ink) 35%, transparent);
 }
 
 html.theme-retro-os .os-prose pre {
-  margin: 1.4em 0;
+  margin: 1.2em 0;
   padding: 0.9em 1em;
   overflow-x: auto;
   background: var(--os-content);
   color: var(--os-content-fg);
-  border: 1px solid var(--os-lo);
-  box-shadow: var(--os-sunken);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-inset);
   font-family: var(--font-mono);
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   line-height: 1.6;
 }
 
 html.theme-retro-os .os-prose pre code {
   background: transparent;
   padding: 0;
+  border: 0;
   font-size: inherit;
 }
 
 html.theme-retro-os .os-prose img {
   max-width: 100%;
   height: auto;
-  border: 1px solid var(--os-frame);
+  border: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-prose hr {
   margin: 2em 0;
   border: 0;
-  border-block-start: 1px solid var(--os-lo);
+  border-block-start: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-prose table {
@@ -882,7 +960,7 @@ html.theme-retro-os .os-prose table {
 
 html.theme-retro-os .os-prose th,
 html.theme-retro-os .os-prose td {
-  border: 1px solid var(--os-lo);
+  border: 1px solid color-mix(in oklab, var(--os-ink) 45%, transparent);
   padding: 0.4em 0.6em;
   text-align: left;
 }
@@ -890,9 +968,11 @@ html.theme-retro-os .os-prose td {
 html.theme-retro-os .os-prose th {
   background: var(--os-face);
   color: var(--os-fg);
+  border: 2px solid var(--os-ink);
   font-family: var(--font-display);
   font-weight: 400;
-  font-size: 1rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
 }
 
 /* ------------------------------------------------------------------ */
@@ -900,17 +980,18 @@ html.theme-retro-os .os-prose th {
 /* ------------------------------------------------------------------ */
 
 html.theme-retro-os .os-footer {
-  margin-block: 0.5rem 1.25rem;
+  margin-block: 0.6rem 1.4rem;
 }
 
 html.theme-retro-os .os-footer-bar {
   display: flex;
   flex-wrap: wrap;
   align-items: stretch;
-  gap: 3px;
-  padding: 3px;
+  gap: 4px;
+  padding: 4px;
   background: var(--os-face);
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard);
 }
 
 /* ------------------------------------------------------------------ */
@@ -924,25 +1005,27 @@ html.theme-retro-os .os-taskbar {
   z-index: 200;
   display: flex;
   align-items: stretch;
-  gap: 3px;
-  height: calc(3rem + env(safe-area-inset-bottom, 0px));
-  padding: 2px 3px;
+  gap: 4px;
+  height: calc(3.25rem + env(safe-area-inset-bottom, 0px));
+  padding: 4px;
   background: var(--os-face);
-  border-top: 1px solid var(--os-hi);
+  border-top: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-start {
   display: inline-flex;
   align-items: center;
-  gap: 0.45rem;
-  padding: 0 0.8rem;
+  gap: 0.5rem;
+  padding: 0 0.7rem;
   background: var(--os-face);
   color: var(--os-fg);
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  line-height: 1;
+  font-size: 0.625rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.4;
   text-decoration: none;
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard-sm);
   white-space: nowrap;
 }
 
@@ -953,11 +1036,17 @@ html.theme-retro-os .os-folder:hover {
 }
 
 html.theme-retro-os .os-start:active,
+html.theme-retro-os .os-task:active {
+  transform: translate(2px, 2px);
+  box-shadow: none;
+}
+
+/* the pressed-in "open window" state */
 html.theme-retro-os .os-start[aria-current="page"],
-html.theme-retro-os .os-task:active,
 html.theme-retro-os .os-task[aria-current="page"] {
-  box-shadow: var(--os-sunken);
-  background: color-mix(in oklab, var(--os-face) 72%, var(--os-lo));
+  transform: translate(2px, 2px);
+  box-shadow: none;
+  background: color-mix(in oklab, var(--os-face) 74%, var(--primary));
 }
 
 html.theme-retro-os .os-flag {
@@ -965,12 +1054,13 @@ html.theme-retro-os .os-flag {
   width: 0.95rem;
   height: 0.95rem;
   background: conic-gradient(#d40000 0 90deg, #23a34a 90deg 180deg, #1360ad 180deg 270deg, #f2c400 270deg);
+  border: 2px solid var(--os-ink);
 }
 
 html.theme-retro-os .os-tasks {
   display: flex;
   align-items: stretch;
-  gap: 3px;
+  gap: 4px;
   flex: 1 1 auto;
   min-width: 0;
   overflow-x: auto;
@@ -979,24 +1069,28 @@ html.theme-retro-os .os-tasks {
 html.theme-retro-os .os-task {
   display: inline-flex;
   align-items: center;
-  padding: 0 0.7rem;
+  padding: 0 0.6rem;
   background: var(--os-face);
   color: var(--os-fg);
   font-family: var(--font-display);
-  font-size: 1.15rem;
-  line-height: 1;
+  font-size: 0.625rem;
+  letter-spacing: var(--ps-tracking);
+  line-height: 1.4;
   text-decoration: none;
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard-sm);
   white-space: nowrap;
 }
 
 html.theme-retro-os .os-tray {
   display: flex;
   align-items: center;
-  gap: 2px;
+  gap: 4px;
   margin-left: auto;
   padding: 2px 4px;
-  box-shadow: var(--os-sunken);
+  background: var(--os-face);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-inset);
 }
 
 html.theme-retro-os .os-tray-link {
@@ -1005,7 +1099,8 @@ html.theme-retro-os .os-tray-link {
   align-self: stretch;
   padding: 0 0.45rem;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
   line-height: 1;
   color: var(--os-fg);
   text-decoration: none;
@@ -1020,7 +1115,8 @@ html.theme-retro-os .os-clock {
   align-items: center;
   padding: 0 0.45rem;
   font-family: var(--font-display);
-  font-size: 1.05rem;
+  font-size: 0.5625rem;
+  letter-spacing: var(--ps-tracking);
   line-height: 1;
   color: var(--os-fg);
 }
@@ -1031,19 +1127,18 @@ html.theme-retro-os .os-clock {
   }
 
   html.theme-retro-os .os-start {
-    gap: 0.35rem;
-    padding: 0 0.4rem;
-    font-size: 1rem;
+    gap: 0.4rem;
+    padding: 0 0.45rem;
+    font-size: 0.5625rem;
   }
 
   html.theme-retro-os .os-task {
-    padding: 0 0.3rem;
-    font-size: 1rem;
+    padding: 0 0.35rem;
+    font-size: 0.5625rem;
   }
 
   html.theme-retro-os .os-clock {
     padding: 0 0.25rem;
-    font-size: 1rem;
   }
 }
 
@@ -1056,26 +1151,28 @@ html.theme-retro-os .os-clock {
 }
 
 /* ------------------------------------------------------------------ */
-/* Shared theme switcher: square it off into OS chrome, float it above  */
-/* the taskbar so it never covers the tray clock.                       */
+/* Shared theme switcher: square it off into 8bitcn-style OS chrome     */
+/* (radius 0, ink border, hard offset shadow — retro-mode-switcher      */
+/* lives in a chunky square button, so the pill becomes a panel) and   */
+/* float it above the taskbar so it never covers the tray clock.       */
 /* ------------------------------------------------------------------ */
 
 html.theme-retro-os #theme-switcher {
   border-radius: 0;
   right: 0.75rem;
-  bottom: calc(3.5rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(3.9rem + env(safe-area-inset-bottom, 0px));
   background: var(--os-face);
-  border: 1px solid var(--os-frame);
-  box-shadow: var(--os-raised);
+  border: 2px solid var(--os-ink);
+  box-shadow: var(--os-hard-sm);
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
-  font-family: var(--font-display);
+  font-family: var(--font-body);
 }
 
 html.theme-retro-os #theme-switcher select,
 html.theme-retro-os #theme-switcher button {
-  font-family: var(--font-display);
-  font-size: 1.02rem;
+  font-family: var(--font-body);
+  font-size: 1.1rem;
 }
 
 /* ------------------------------------------------------------------ */

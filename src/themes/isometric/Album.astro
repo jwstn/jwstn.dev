@@ -1,0 +1,66 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, photos, pubDate } = album.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} photographic plates by JW.`}>
+  <div class="iso-shell iso-stack">
+    <p class="iso-backrow">
+      <a class="iso-btn iso-btn--ghost" href="/gallery/">← All plates</a>
+    </p>
+
+    <div class="iso-pagehead iso-slab iso-rise">
+      <h1 class="iso-pagehead-title">{title}</h1>
+      <p class="iso-pagehead-meta">
+        <FormattedDate date={pubDate} /> · {photos.length} exposures
+      </p>
+    </div>
+
+    <p class="iso-dim iso-rise iso-rise--2" aria-hidden="true">
+      <span class="iso-dim-arrow iso-dim-arrow--l"></span>
+      <span class="iso-dim-rule"></span>
+      <span>Plates straighten on approach &mdash; scale 1:1</span>
+      <span class="iso-dim-rule"></span>
+      <span class="iso-dim-arrow iso-dim-arrow--r"></span>
+    </p>
+
+    <ul class="iso-wall" aria-label="Photographs">
+      {
+        photos.map((photo, i) => {
+          const ratio = photo.image.width / photo.image.height;
+          const isWide = ratio >= 1.6;
+          return (
+            <li class:list={["iso-plate", isWide && "iso-plate--wide"]}>
+              <figure class="iso-platefig">
+                <div class="iso-plane">
+                  <Image
+                    src={photo.image}
+                    alt={photo.title}
+                    widths={[480, 800, 1200]}
+                    sizes="(min-width: 80rem) 26rem, (min-width: 40rem) 40vw, 88vw"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <figcaption class="iso-plate-cap">
+                  <span class="iso-plate-ref">EXP {String(i + 1).padStart(2, "0")}</span>
+                  <span class="iso-plate-title">{photo.title}</span>
+                  {photo.caption && <span class="iso-plate-note">{photo.caption}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          );
+        })
+      }
+    </ul>
+
+    <p class="iso-backrow">
+      <a class="iso-btn iso-btn--ghost" href="/gallery/">← Back to the filing cabinet</a>
+    </p>
+  </div>
+</Layout>

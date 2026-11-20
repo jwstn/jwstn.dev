@@ -1,9 +1,16 @@
 #!/usr/bin/env bash
 # Screenshot farm for all themes. Requires the dev server on :4322.
+# Usage: bash docs/screenshots.sh [theme ...]   (no args = all themes)
 set -euo pipefail
 
 BASE="http://localhost:4322"
-THEMES=(classic editorial brutalist terminal neon riso sticker aurora luxe retro-os kinetic)
+ALL_THEMES=(classic editorial brutalist terminal neon riso sticker aurora luxe retro-os kinetic isometric)
+
+if [ $# -gt 0 ]; then
+  THEMES=("$@")
+else
+  THEMES=("${ALL_THEMES[@]}")
+fi
 
 declare -A ROUTES
 ROUTES[home]=""
@@ -37,4 +44,5 @@ for t in "${THEMES[@]}"; do
   echo "done $t/home-dark"
 done
 
+montage docs/screenshots/*/home-desktop.png -tile '4x3' -geometry 480x320+10+10 -background '#111' -label '%d' docs/screenshots/_overview.png
 echo "ALL DONE"

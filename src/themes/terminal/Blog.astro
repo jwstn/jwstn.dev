@@ -32,27 +32,26 @@ const emptyListing = [
         <div class="term-reveal" style="--d: 0.2s">
           <Window name="~/blog — empty directory">
             <pre class="term-pre" aria-hidden="true">{emptyListing}</pre>
-            <p class="term-err">cat: ~/blog/*.md: No such file or directory</p>
+            <p class="term-err" role="alert">
+              cat: ~/blog/*.md: No such file or directory
+            </p>
             <h2 class="term-empty-title">0 posts — nothing written to disk yet</h2>
             <p class="term-empty-text">
               The blog partition is formatted and mounted, but no post has been written to it so far. There
               are drafts — they are still compiling. When one finishes, it appears in this directory
               listing, newest first.
             </p>
-            <ul class="term-suggest">
-              <li>
-                <a class="term-suggest-link" href="/projects/">
-                  cd ../projects
-                </a>
-                <span class="term-cmt" aria-hidden="true"># read code instead</span>
-              </li>
-              <li>
-                <a class="term-suggest-link" href="/gallery/">
-                  cd ../gallery
-                </a>
-                <span class="term-cmt" aria-hidden="true"># or look at pictures</span>
-              </li>
-            </ul>
+            <div class="term-dialog-footer">
+              <a class="term-btn" href="/projects/">
+                cd ../projects
+              </a>
+              <a class="term-btn term-btn-ghost" href="/gallery/">
+                cd ../gallery
+              </a>
+            </div>
+            <p class="term-cmt" aria-hidden="true">
+              # read code instead — or look at pictures
+            </p>
           </Window>
         </div>
       ) : (

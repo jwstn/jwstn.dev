@@ -1,0 +1,64 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { PostProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <div class="iso-shell iso-stack">
+    <p class="iso-backrow">
+      <a class="iso-btn iso-btn--ghost" href="/blog/">← All sheets</a>
+    </p>
+
+    <article class="iso-article">
+      <header>
+        <p class="iso-kicker">Blog &mdash; sheet {post.id}</p>
+        <h1 class="iso-article-title">{title}</h1>
+        <div class="iso-meta-row">
+          <span class="iso-chip">
+            Plotted <FormattedDate date={pubDate} />
+          </span>
+          {
+            updatedDate && (
+              <span class="iso-chip">
+                Revised <FormattedDate date={updatedDate} />
+              </span>
+            )
+          }
+        </div>
+        {
+          description && (
+            <p class="iso-note iso-note--margin">
+              <span class="iso-note-label">Abstract</span>
+              {description}
+            </p>
+          )
+        }
+      </header>
+
+      {
+        heroImage && (
+          <Image
+            class="iso-heroimg"
+            src={heroImage}
+            alt={`Cover image for ${title}`}
+            widths={[800, 1024, 1280]}
+            sizes="(min-width: 72rem) 46rem, 92vw"
+          />
+        )
+      }
+
+      <div class="iso-prose">
+        <Content />
+      </div>
+
+      <div class="iso-block-actions">
+        <a class="iso-btn iso-btn--ghost" href="/blog/">← Back to the sheets</a>
+      </div>
+    </article>
+  </div>
+</Layout>

@@ -1,10 +1,13 @@
 ---
-// A Win95-style window shell: beveled frame, gradient title bar with
-// min/max/close chrome (decorative only). Pages compose their own
-// menubar / toolbar / content / status bar inside the frame slot.
+// A Win95-style window shell rebuilt with 8bitcn/ui chrome patterns:
+// radius-0, 2px ink borders, a hard offset shadow, and rect-grid pixel
+// window controls (min/max/close — decorative only). Pages compose
+// their own menubar / toolbar / content / status bar inside the frame.
+import PixelIcon from "./PixelIcon.astro";
+
 interface Props {
   title: string;
-  /** Gray "inactive" title bar (dialogs, secondary windows). */
+  /** Flat "inactive" title bar (dialogs, secondary windows). */
   inactive?: boolean;
 }
 
@@ -15,9 +18,9 @@ const { title, inactive = false } = Astro.props;
   <div class="os-titlebar">
     <span class="os-titlebar-text">{title}</span>
     <span class="os-titlebar-btns" aria-hidden="true">
-      <span class="os-tbtn">–</span>
-      <span class="os-tbtn">▫</span>
-      <span class="os-tbtn">×</span>
+      <span class="os-tbtn"><PixelIcon name="win-min" size={10} /></span>
+      <span class="os-tbtn"><PixelIcon name="win-max" size={10} /></span>
+      <span class="os-tbtn"><PixelIcon name="win-close" size={10} /></span>
     </span>
   </div>
   <div class="os-window-frame">

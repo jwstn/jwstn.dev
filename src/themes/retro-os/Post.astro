@@ -2,6 +2,7 @@
 import FormattedDate from "#/components/FormattedDate.astro";
 import type { PostProps } from "#/themes/types";
 import Layout from "./Layout.astro";
+import PixelIcon from "./PixelIcon.astro";
 import Win95Window from "./Win95Window.astro";
 
 // Unreachable for now (the blog collection is empty), but complete:
@@ -17,7 +18,12 @@ const updated = post.data.updatedDate as Date | undefined;
       <span>File</span><span>Edit</span><span>Search</span><span>Help</span>
     </div>
     <div class="os-content">
-      <p><a class="os-up" href="/blog/">&larr; Up one level — C:\blog</a></p>
+      <p>
+        <a class="os-up" href="/blog/">
+          <PixelIcon name="arrow-left" size={14} />
+          Up one level — C:\blog
+        </a>
+      </p>
       <h1 class="os-h1">{title}</h1>
       <p class="os-meta">
         <span>Written <FormattedDate date={pubDate} /></span>

@@ -1,0 +1,60 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout
+  title="Blog | jwstn.dev"
+  description="Words by JW, filed as sheets — measured twice, cut once, plotted when ready."
+>
+  <div class="iso-shell iso-stack">
+    <div class="iso-pagehead iso-slab iso-rise">
+      <h1 class="iso-pagehead-title">Blog</h1>
+      <p class="iso-pagehead-meta">{posts.length} sheet{posts.length === 1 ? "" : "s"} filed</p>
+    </div>
+
+    {
+      posts.length === 0 ? (
+        <div class="iso-slab iso-empty iso-rise iso-rise--2">
+          <ul class="iso-stamps" aria-label="Status">
+            <li class="iso-stamp">Status: blank sheet</li>
+            <li class="iso-stamp">Ink level: pending</li>
+          </ul>
+          <h2 class="iso-empty-title">Nothing has been plotted yet.</h2>
+          <p class="iso-empty-text">
+            The blog is an empty viewport — zero posts drawn, inked, or filed. The drafts are still flat on the
+            drafting table under tracing paper. When a piece has been measured twice and cut once, it appears
+            here first; until then, the code and the photographs carry the story.
+          </p>
+          <div class="iso-viewbox" aria-hidden="true">
+            <span class="iso-viewbox-label">No objects in view &mdash; scale 1:1</span>
+          </div>
+          <div class="iso-actions">
+            <a class="iso-btn" href="/projects/">
+              Inspect the projects →
+            </a>
+            <a class="iso-btn iso-btn--accent" href="/gallery/">
+              View the plates →
+            </a>
+          </div>
+        </div>
+      ) : (
+        <ul class="iso-postlist">
+          {posts.map((post) => (
+            <li class="iso-slab iso-rise">
+              <a class="iso-postlist-link" href={`/blog/${post.id}/`}>
+                <h2 class="iso-postlist-title">{post.data.title}</h2>
+                <p class="iso-muted">
+                  <FormattedDate date={post.data.pubDate} /> — {post.data.description}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</Layout>

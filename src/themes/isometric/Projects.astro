@@ -1,0 +1,71 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="Four assemblies exploded for inspection — web apps drawn with TanStack, Effect and stubborn amounts of care, by JW."
+>
+  <div class="iso-shell iso-stack">
+    <div class="iso-pagehead iso-slab iso-rise">
+      <h1 class="iso-pagehead-title">Projects</h1>
+      <p class="iso-pagehead-meta">Exploded view &mdash; {projects.length} assemblies</p>
+    </div>
+
+    <p class="iso-dim" aria-hidden="true">
+      <span class="iso-dim-arrow iso-dim-arrow--l"></span>
+      <span class="iso-dim-rule"></span>
+      <span>Assembly order: newest first</span>
+      <span class="iso-dim-rule"></span>
+      <span class="iso-dim-arrow iso-dim-arrow--r"></span>
+    </p>
+
+    <section class="iso-explode" aria-label="Project list">
+      {
+        projects.map((project, i) => (
+          <article class="iso-slab iso-block iso-rise">
+            <div class="iso-block-tab" aria-hidden="true">
+              <span class="iso-block-idx">B{i + 1}</span>
+              <span class="iso-block-ref">
+                N{i + 1} E12
+                <br />
+                REV A
+              </span>
+            </div>
+            <div class="iso-block-body">
+              <h2 class="iso-block-title">
+                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+              </h2>
+              <p class="iso-block-date">
+                <FormattedDate date={project.data.pubDate} />
+              </p>
+              <p class="iso-block-desc">{project.data.description}</p>
+              <ul class="iso-stamps" aria-label="Technologies used">
+                {project.data.tags.map((tag) => (
+                  <li class="iso-stamp">{tag}</li>
+                ))}
+              </ul>
+              <div class="iso-block-actions">
+                <a class="iso-btn" href={`/projects/${project.id}/`}>
+                  Drawing →
+                </a>
+                <a
+                  class="iso-btn iso-btn--ghost"
+                  href={project.data.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Live assembly ↗
+                </a>
+              </div>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+  </div>
+</Layout>
