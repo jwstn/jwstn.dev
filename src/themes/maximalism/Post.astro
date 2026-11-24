@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { PostProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Sparkle from "./Sparkle.astro";
+
+const { post, Content } = Astro.props as PostProps;
+---
+
+<Layout title={`${post.data.title} — jwstn.dev`} description={post.data.description}>
+  <section class="mx-band c-blue zz-b" aria-labelledby="mx-post-title">
+    <Sparkle class="mx-corner p-a" />
+    <Sparkle class="mx-corner p-b" />
+    <div class="mx-band-inner">
+      <a class="mx-btn b-ghost" href="/blog/">← Back to the ballroom!</a>
+      <p class="mx-eyebrow">
+        <Sparkle /> Fresh from the blog <Sparkle />
+      </p>
+      <h1 id="mx-post-title" class="mx-band-title">{post.data.title}</h1>
+      <div class="mx-meta-row">
+        <span class="mx-meta-chip">Published <FormattedDate date={post.data.pubDate} /></span>
+        {post.data.updatedDate && (
+          <span class="mx-meta-chip">Updated <FormattedDate date={post.data.updatedDate} /></span>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <article class="mx-article">
+    {
+      post.data.heroImage && (
+        <Image
+          src={post.data.heroImage}
+          alt=""
+          widths={[800, 1200, 1600]}
+          sizes="(min-width: 48rem) 46rem, 100vw"
+          loading="eager"
+          decoding="async"
+          class="mx-heroimg"
+        />
+      )
+    }
+    <p class="mx-lede">{post.data.description}</p>
+    <div class="mx-prose">
+      <Content />
+    </div>
+    <p class="mx-hand" style="rotate: -1.4deg">← you reached the end! the ballroom has more, whenever it opens.</p>
+    <div class="mx-meta-row">
+      <a class="mx-btn b-ghost" href="/blog/">← All the posts</a>
+    </div>
+  </article>
+</Layout>

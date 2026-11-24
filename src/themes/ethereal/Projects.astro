@@ -1,0 +1,43 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects — jwstn.dev"
+  description="Four works by JW, kept in slow progress — a vinyl collectors' forum, a terminal Spotify client, a sign-language trainer, and a very personal note app."
+>
+  <header class="eth-fade">
+    <p class="eth-kicker">Kept in slow progress</p>
+    <h1 class="eth-display">Projects</h1>
+    <p class="eth-lede">
+      Four works in various states of becoming: a home for vinyl collections, a terminal that plays
+      Spotify, an app for learning sign-language, and a note app tailored to no one but me. All of
+      them still moving — the way mist does, slowly and on purpose.
+    </p>
+  </header>
+
+  <ol class="eth-list eth-fade eth-fade-2">
+    {
+      projects.map((project) => (
+        <li>
+          <a class="eth-panel eth-row" href={`/projects/${project.id}/`}>
+            <span class="eth-row-title">{project.data.title}</span>
+            <p class="eth-row-desc">{project.data.description}</p>
+            <span class="eth-row-meta">
+              <FormattedDate date={project.data.pubDate} />
+              <span class="eth-chips" aria-label="Tags">
+                {project.data.tags.map((tag) => (
+                  <span class="eth-chip">{tag}</span>
+                ))}
+              </span>
+            </span>
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</Layout>

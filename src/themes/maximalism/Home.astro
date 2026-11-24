@@ -1,0 +1,120 @@
+---
+import Layout from "./Layout.astro";
+import Sparkle from "./Sparkle.astro";
+import Starburst from "./Starburst.astro";
+
+const tickerItems = [
+  "TANSTACK",
+  "EFFECT",
+  "RUST",
+  "GPUI",
+  "TYPESCRIPT",
+  "VINYL",
+  "COLOGNE",
+  "CAMERAS",
+  "EXCLAMATION!! POINTS",
+];
+const tickerRun = [...tickerItems, ...tickerItems, ...tickerItems];
+---
+
+<Layout
+  title="jwstn.dev — more is more!"
+  description="JW builds web apps in Cologne: TanStack, Effect, Rust experiments, and the photographic evidence of a Japan 2026 trip — all of it loud."
+>
+  <section class="mx-hero-inner" aria-labelledby="mx-hero-title">
+    <div>
+      <p class="mx-kickers">
+        <span class="mx-chip c-red">Full-stack developer!</span>
+        <span class="mx-chip c-yellow">Cologne, Germany!</span>
+        <span class="mx-chip c-pink">More is more!</span>
+      </p>
+      <h1 id="mx-hero-title" class="mx-hero-title">
+        Hey! I'm JW &amp; I build <span class="mx-hero-hl">web things</span> that refuse to whisper.
+      </h1>
+      <p class="mx-hero-serif">— full-stack developer, vinyl collector, camera carrier, professional tinkerer —</p>
+      <p class="mx-bio">
+        I'm a full-stack developer from Cologne, Germany. My daily driver is
+        <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a>
+        — it hands you most of what a web app needs, server actions and middleware included, so I still haven't found
+        my excuse to take backend frameworks like
+        <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> or
+        <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> for a proper spin. The
+        rabbit hole I <em class="mx-serif-i">did</em> fall down is
+        <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> — amazing fun so far,
+        and a genuinely new way to think about programs. Off-screen: a growing vinyl collection, a terminal Spotify
+        client, and a camera that came back from Japan in 2026 very, very full.
+      </p>
+      <p class="mx-hand mx-hand-note">← yes, the website looks like this on purpose. more is more!</p>
+      <div class="mx-hero-actions">
+        <a class="mx-btn b-red" href="/projects/">The projects →</a>
+        <a class="mx-btn b-blue" href="/gallery/">The photos →</a>
+      </div>
+    </div>
+    <div class="mx-hero-side">
+      <Starburst text="Made in Cologne!" class="lg mx-burst-yellow" />
+    </div>
+  </section>
+
+  <div class="mx-ticker" aria-hidden="true">
+    <div class="mx-ticker-track">
+      <div class="mx-ticker-run">
+        {tickerRun.map((item) => (
+          <>
+            <span>{item}</span>
+            <Sparkle class="mx-ticker-sep" />
+          </>
+        ))}
+      </div>
+      <div class="mx-ticker-run">
+        {tickerRun.map((item) => (
+          <>
+            <span>{item}</span>
+            <Sparkle class="mx-ticker-sep" />
+          </>
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <section class="mx-band c-violet zz-t zz-b" aria-labelledby="mx-doors-title">
+    <Sparkle class="mx-corner p-a" />
+    <Sparkle class="mx-corner p-b" />
+    <div class="mx-band-inner">
+      <p class="mx-eyebrow">
+        <Sparkle /> Pick a door, any door <Sparkle />
+      </p>
+      <h2 id="mx-doors-title" class="mx-band-title">Everything, all at once!</h2>
+      <p class="mx-band-serif">— three wings of this particular carnival, each one fully stocked —</p>
+    </div>
+  </section>
+
+  <section class="mx-doors" aria-label="Site sections">
+    <a class="mx-card mx-hover mx-door" href="/projects/">
+      <span class="mx-num" aria-hidden="true">№ 01</span>
+      <h3 class="mx-door-name">Projects!</h3>
+      <p class="mx-door-desc">
+        Four builds with real commit history: a vinyl-collection forum, a terminal Spotify client, an app for learning
+        sign language, and one very personal todo app. Zero lorem ipsum, all TanStack / Effect / Rust.
+      </p>
+      <span class="mx-door-cta">This way →</span>
+    </a>
+    <a class="mx-card mx-hover mx-door" href="/blog/">
+      <span class="mx-num" aria-hidden="true">№ 02</span>
+      <h3 class="mx-door-name">Blog!</h3>
+      <p class="mx-door-desc">
+        Currently a grand ballroom with the chandeliers on and not a single post on the dance floor. The drafts are
+        still backstage — come back when the words win.
+      </p>
+      <span class="mx-door-cta">Peek in anyway →</span>
+    </a>
+    <a class="mx-card mx-hover mx-door" href="/gallery/">
+      <span class="mx-num" aria-hidden="true">№ 03</span>
+      <h3 class="mx-door-name">Gallery!</h3>
+      <p class="mx-door-desc">
+        Spring flowers, summer forests, a very good dog, and a 2026 Japan trip that filled an entire memory card.
+        The evidence is inside.
+      </p>
+      <span class="mx-door-cta">See everything →</span>
+    </a>
+  </section>
+</Layout>

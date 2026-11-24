@@ -44,5 +44,5 @@ for t in "${THEMES[@]}"; do
   echo "done $t/home-dark"
 done
 
-montage docs/screenshots/*/home-desktop.png -tile '4x3' -geometry 480x320+10+10 -background '#111' -label '%d' docs/screenshots/_overview.png
+montage docs/screenshots/*/home-desktop.png -tile 4x -geometry 480x320+10+10 -background '#111' -label '%d' docs/screenshots/_overview.png
 echo "ALL DONE"

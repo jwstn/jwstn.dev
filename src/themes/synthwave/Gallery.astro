@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { GalleryProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { albums } = Astro.props as GalleryProps;
+---
+
+<Layout title="Gallery | jwstn.dev" description="Pictures JW took with a camera bought in Japan.">
+  <main class="sw-main">
+    <header class="sw-page-head">
+      <p class="sw-kicker sw-rise" style="--d: 0s">SIDE B &middot; THE VISUAL CHANNEL</p>
+      <h1 class="sw-page-title sw-rise" style="--d: 0.08s">Gallery</h1>
+      <p class="sw-page-lede sw-rise" style="--d: 0.16s">
+        On my trip to Japan in March 2026 I finally bought the camera I&rsquo;d been wanting for years. Every
+        frame since then lands in these albums.
+      </p>
+      <div class="sw-beam" aria-hidden="true"></div>
+    </header>
+
+    <ul class="sw-album-grid">
+      {
+        albums.map((album, index) => {
+          const cover = album.data.photos[0];
+          return (
+            <li>
+              <a class="sw-panel sw-album" href={`/gallery/${album.data.slug}/`}>
+                <span class="sw-album-frame">
+                  <Image
+                    class="sw-album-img"
+                    src={cover.image}
+                    alt={cover.title}
+                    widths={[480, 800]}
+                    sizes="(min-width: 24rem) 22rem, 92vw"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </span>
+                <span class="sw-album-body">
+                  <span class="sw-num">B{index + 1}</span>
+                  <span class="sw-card-title">{album.data.title}</span>
+                  <span class="sw-trackline">
+                    <FormattedDate date={album.data.pubDate} />
+                    <span class="sw-leader" aria-hidden="true" />
+                    <span>{album.data.photos.length} frames</span>
+                  </span>
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </main>
+</Layout>

@@ -1,0 +1,41 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="y2k-detail">
+    <a class="y2k-backlink" href="/projects" aria-label="Back to all projects">← all projects</a>
+
+    <h1 class="y2k-h1 y2k-chrome-text y2k-pop y2k-pop-1">{title}</h1>
+
+    <div class="y2k-detail-header">
+      <span class="y2k-chip">
+        <FormattedDate date={pubDate} />
+      </span>
+      <a class="y2k-btn" href={href} target="_blank" rel="noopener noreferrer">visit project ↗</a>
+    </div>
+
+    <div class="y2k-integrity" aria-hidden="true">
+      <span class="y2k-status-label">file integrity</span>
+      <div class="y2k-bar">
+        <div class="y2k-bar-fill" style="width: 100%"></div>
+      </div>
+      <span class="y2k-status-value">100%</span>
+    </div>
+
+    <blockquote class="y2k-blockquote">{description}</blockquote>
+
+    <div class="y2k-prose">
+      <Content />
+    </div>
+
+    <div class="y2k-tags" style="margin-top: 2rem;">
+      {tags.map((tag) => <span class="y2k-tag">{tag}</span>)}
+    </div>
+  </article>
+</Layout>

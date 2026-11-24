@@ -1,0 +1,84 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import PixelIcon from "./PixelIcon.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+
+// Deterministic per-quest XP reward — pure flavor furniture.
+const xpFor = (id: string) => {
+  let h = 7;
+  for (const ch of id) h = (h * 31 + ch.charCodeAt(0)) % 1000;
+  return 120 + (h % 39) * 10;
+};
+
+const statusOf = (rawTitle: string) => (rawTitle.trim().toLowerCase().startsWith("(wip)") ? "wip" : "active");
+
+const displayTitle = (rawTitle: string) => rawTitle.replace(/^\(WIP\)\s*/i, "");
+---
+
+<Layout
+  title="Quest Log | jwstn.dev"
+  description="JW's quest log — four active quests built with TanStack, Rust, GPUI and EffectTS. Open a briefing or embark straight to the source."
+>
+  <div class="px-shell px-stack">
+    <section class="px-window">
+      <div class="px-window-title">
+        <span>QUEST LOG — {projects.length} ENTRIES</span>
+        <span class="px-title-right">JW'S ADVENTURES</span>
+      </div>
+      <div class="px-window-body">
+        <h1 class="px-h1">Quest Log</h1>
+        <p class="px-sub">
+          Every quest JW has accepted so far. Open a briefing for the full story, or embark straight to the
+          source.
+        </p>
+        <ul class="px-quests">
+          {
+            projects.map((project) => {
+              const status = statusOf(project.data.title);
+              const title = displayTitle(project.data.title);
+              return (
+                <li>
+                  <article class="px-quest">
+                    <div class="px-quest-head">
+                      <span class={`px-stamp px-stamp--${status}`}>[{status === "wip" ? "WIP" : "ACTIVE"}]</span>
+                      <h2 class="px-quest-title">
+                        <a href={`/projects/${project.id}/`}>{title}</a>
+                      </h2>
+                      <span class="px-chip-xp">+{xpFor(project.id)} XP</span>
+                    </div>
+                    <div class="px-quest-body">
+                      <p class="px-quest-desc">{project.data.description}</p>
+                    </div>
+                    <div class="px-quest-foot">
+                      <span class="px-quest-tags">
+                        {project.data.tags.map((tag) => (
+                          <span class="px-chip">{tag}</span>
+                        ))}
+                      </span>
+                      <span class="px-quest-date">
+                        POSTED <FormattedDate date={project.data.pubDate} />
+                      </span>
+                      <span class="px-quest-actions">
+                        <a class="px-btn px-btn--primary" href={`/projects/${project.id}/`}>
+                          Briefing
+                          <PixelIcon name="cursor" size={10} />
+                        </a>
+                        <a class="px-btn px-btn--gold" href={project.data.href} target="_blank" rel="noopener noreferrer">
+                          Embark
+                          <PixelIcon name="ext" size={10} />
+                        </a>
+                      </span>
+                    </div>
+                  </article>
+                </li>
+              );
+            })
+          }
+        </ul>
+      </div>
+    </section>
+  </div>
+</Layout>

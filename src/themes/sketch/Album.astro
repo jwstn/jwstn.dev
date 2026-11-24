@@ -1,0 +1,53 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Doodle from "./Doodle.astro";
+import RefPrint from "./RefPrint.astro";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+---
+<Layout
+  title={`${title} | jwstn.dev`}
+  description={`${title} — ${photos.length} reference prints from JW's camera roll, clipped onto the sheet with tape and corner ticks.`}
+>
+  <article class="sk-album-page">
+    <a class="sk-back" href="/gallery">← back to the camera roll</a>
+
+    <header class="sk-album-head sk-woobble">
+      <p class="sk-margin-note" aria-hidden="true">handle by the edges</p>
+      <p class="sk-kicker">
+        album sheet · <FormattedDate date={pubDate} /> · {photos.length} prints
+      </p>
+      <h1 class="sk-title">{title}</h1>
+      <p class="sk-hand">
+        every print taped in by hand. if one sits crooked — that's the tape's fault, not mine.
+      </p>
+    </header>
+
+    <ul class="sk-spread">
+      {
+        photos.map((photo, i) => (
+          <li class="sk-spread-item">
+            <RefPrint
+              image={photo.image}
+              alt={photo.title}
+              refLabel={`REF ${String(i + 1).padStart(2, "0")}`}
+              title={photo.title}
+              caption={photo.caption}
+              tape={i % 2 === 0}
+              widths={[480, 800, 1200]}
+              sizes="(min-width: 72rem) 24rem, (min-width: 48rem) 45vw, 92vw"
+            />
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="sk-fin">
+      — end of the roll. the camera's already asking about the next one.
+      <Doodle name="star" class="sk-rednote-star" />
+    </p>
+  </article>
+</Layout>

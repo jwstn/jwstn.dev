@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+
+// The signature element: a photo clipped onto the sheet like concept-art
+// reference material — cream mat, corner ticks, a strip of tape, a mono
+// reference label and a handwritten caption. The mat keeps its paper-light
+// colors in BOTH modes (it's a physical clipping), so its inks are fixed
+// in theme.css and pass AA by construction.
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  /** handwritten title under the print */
+  title?: string;
+  /** second handwritten line under the print */
+  caption?: string;
+  /** mono reference label, e.g. "REF 03" */
+  refLabel?: string;
+  /** tape strip across the top edge */
+  tape?: boolean;
+  widths?: number[];
+  sizes?: string;
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+
+const {
+  image,
+  alt,
+  title,
+  caption,
+  refLabel,
+  tape = true,
+  widths = [480, 800, 1200],
+  sizes = "(min-width: 72rem) 24rem, (min-width: 48rem) 45vw, 92vw",
+  loading = "lazy",
+  class: className = "",
+} = Astro.props;
+---
+<figure class:list={["sk-print", className]}>
+  {tape && <span class="sk-print-tape" aria-hidden="true"></span>}
+  <Image src={image} alt={alt} widths={widths} sizes={sizes} loading={loading} decoding="async" />
+  {(refLabel || title || caption) && (
+    <figcaption class="sk-print-cap">
+      {refLabel && <span class="sk-print-ref">{refLabel}</span>}
+      {title && <span class="sk-print-title">{title}</span>}
+      {caption && <span class="sk-print-note">{caption}</span>}
+    </figcaption>
+  )}
+</figure>

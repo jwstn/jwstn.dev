@@ -1,0 +1,73 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import PixelIcon from "./PixelIcon.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+
+const status = project.data.title.trim().toLowerCase().startsWith("(wip)") ? "wip" : "active";
+const title = project.data.title.replace(/^\(WIP\)\s*/i, "");
+
+// Same deterministic flavor XP as the quest log index.
+let h = 7;
+for (const ch of project.id) h = (h * 31 + ch.charCodeAt(0)) % 1000;
+const xp = 120 + (h % 39) * 10;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={project.data.description}>
+  <div class="px-shell px-stack">
+    <section class="px-window">
+      <div class="px-window-title">
+        <span>QUEST BRIEFING</span>
+        <span class="px-title-right">FILE: {project.id}</span>
+      </div>
+      <div class="px-window-body">
+        <div class="px-h1-actions">
+          <span class={`px-stamp px-stamp--${status}`}>[{status === "wip" ? "WIP" : "ACTIVE"}]</span>
+          <span class="px-chip-xp">REWARD +{xp} XP</span>
+        </div>
+        <h1 class="px-h1">{title}</h1>
+        <p class="px-meta">
+          POSTED <FormattedDate date={project.data.pubDate} />
+        </p>
+
+        <div class="px-dlgbox">
+          <div class="px-dialogue">
+            <p>QUEST GIVER: JW —</p>
+            <p>{project.data.description}</p>
+            <span class="px-dlg-cursor" aria-hidden="true"></span>
+          </div>
+        </div>
+
+        {
+          project.data.tags.length > 0 && (
+            <>
+              <p class="px-label px-section-label">EQUIPPED SKILLS</p>
+              <div class="px-quest-tags">
+                {project.data.tags.map((tag) => (
+                  <span class="px-chip">{tag}</span>
+                ))}
+              </div>
+            </>
+          )
+        }
+
+        <p class="px-label px-section-label">SCROLL OF LORE</p>
+        <div class="px-prose">
+          <Content />
+        </div>
+      </div>
+      <div class="px-window-foot">
+        <a class="px-btn px-btn--ghost" href="/projects/">
+          <PixelIcon name="back" size={10} />
+          Quest log
+        </a>
+        <a class="px-btn px-btn--gold" href={project.data.href} target="_blank" rel="noopener noreferrer">
+          Embark on the quest
+          <PixelIcon name="ext" size={10} />
+        </a>
+      </div>
+    </section>
+  </div>
+</Layout>

@@ -1,0 +1,74 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" || path === "" : path.startsWith(href));
+
+const nav: { href: string; label: string; external?: boolean }[] = [
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
+];
+
+const socials = SOCIALS.map((s) => ({ href: s.href, label: s.label, external: true }));
+const items = [...nav, ...socials];
+---
+
+<html lang="en" class="theme-wabi-sabi">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <a class="wb-skip" href="#wb-main">Skip to content</a>
+
+    <header class="wb-header">
+      <a class="wb-brand" href="/">jwstn.dev<span class="wb-brand-mark" aria-hidden="true"></span></a>
+      <nav class="wb-nav" aria-label="Primary">
+        {
+          items.map((item) => (
+            <a
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main id="wb-main">
+      <slot />
+    </main>
+
+    <footer class="wb-footer">
+      <div class="wb-footer-rule" aria-hidden="true"></div>
+      <div class="wb-footer-inner">
+        <p class="wb-footer-copy">&copy; {year} jwstn — kept imperfect, on purpose, in Cologne</p>
+        <p class="wb-footer-socials">
+          {
+            SOCIALS.map((s, i) => (
+              <Fragment>
+                {i > 0 && <span class="wb-footer-sep" aria-hidden="true">·</span>}
+                <a href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label}
+                </a>
+              </Fragment>
+            ))
+          }
+        </p>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

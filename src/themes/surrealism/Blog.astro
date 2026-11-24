@@ -1,0 +1,68 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout
+  title="Blog | jwstn.dev"
+  description="Wing II of the museum — the empty room. Words by JW, hung the moment they finish waking up."
+>
+  <div class="sur-shell sur-stack">
+    <div class="sur-pagehead sur-rise">
+      <p class="sur-kicker">Wing II <em>— the empty room</em></p>
+      <h1 class="sur-pagehead-title">Blog</h1>
+      <p class="sur-pagehead-meta">
+        {posts.length}
+        {posts.length === 1 ? "work" : "works"} hung · echo included at no charge
+      </p>
+    </div>
+
+    {
+      posts.length === 0 ? (
+        <div class="sur-empty sur-rise sur-rise--2" aria-label="No posts yet">
+          <div class="sur-empty-frame" aria-hidden="true">
+            <div class="sur-empty-void">
+              <div class="sur-fish">
+                <div class="sur-fish-body sur-drift" style="--dur: 10s" />
+              </div>
+            </div>
+          </div>
+          <span class="sur-empty-plate">No works on display</span>
+          <h2 class="sur-empty-title">This room is still being dreamed.</h2>
+          <p class="sur-empty-text">
+            The blog is an empty gallery — zero posts hung, nothing on these walls but the frame you
+            just looked through. (A fish wandered in from another painting; it has decided to stay.)
+            Somewhere, drafts are drying on a line stretched between two dreams. When one wakes up
+            completely, it will appear here first; until then, the code and the photographs carry
+            the story.
+          </p>
+          <div class="sur-actions" style="justify-content: center; margin-top: 0.4rem">
+            <a class="sur-btn" href="/projects/">
+              Wander the exhibits →
+            </a>
+            <a class="sur-btn sur-btn--accent" href="/gallery/">
+              Step into the gallery →
+            </a>
+          </div>
+        </div>
+      ) : (
+        <ul class="sur-postlist" aria-label="Posts">
+          {posts.map((post) => (
+            <li>
+              <a class="sur-postlist-link" href={`/blog/${post.id}/`}>
+                <h2 class="sur-postlist-title">{post.data.title}</h2>
+                <p class="sur-postlist-meta">
+                  <FormattedDate date={post.data.pubDate} />
+                  {post.data.description ? ` — ${post.data.description}` : ""}
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </div>
+</Layout>

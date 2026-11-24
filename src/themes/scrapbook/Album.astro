@@ -1,0 +1,57 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Doodle from "./Doodle.astro";
+import Polaroid from "./Polaroid.astro";
+import Washi from "./Washi.astro";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+---
+
+<Layout
+  title={`${title} | jwstn.dev`}
+  description={`${title} — a scrapbook spread of ${photos.length} polaroids by JW, taped in by hand.`}
+>
+  <article class="sb-album-page">
+    <a class="sb-back" href="/gallery">← back to the album shelf</a>
+
+    <header class="sb-paper sb-album-head">
+      <Washi variant={2} class="pos-tl" />
+      <Washi variant={4} class="pos-tr" />
+      <p class="sb-stamp">
+        album spread · <FormattedDate date={pubDate} /> · {photos.length} photos
+      </p>
+      <h1 class="sb-title">
+        {title}
+        <Doodle name="underline" class="sb-doodle-underline" />
+      </h1>
+      <p class="sb-hand">every one taped in by hand. if a polaroid sits crooked — that's on purpose.</p>
+    </header>
+
+    <ul class="sb-spread">
+      {
+        photos.map((photo, i) => (
+          <li class="sb-spread-item">
+            <Polaroid
+              image={photo.image}
+              alt={photo.title}
+              title={photo.title}
+              caption={photo.caption}
+              tape={((i % 4) + 1) as 1 | 2 | 3 | 4}
+              tapeClass={i % 2 === 0 ? "pos-tr" : "pos-tl"}
+              widths={[480, 800, 1200]}
+              sizes="(min-width: 72rem) 24rem, (min-width: 48rem) 45vw, 92vw"
+            />
+            {(i + 1) % 5 === 0 && <Doodle name="star" class="sb-doodle-star sb-spread-star" />}
+          </li>
+        ))
+      }
+    </ul>
+
+    <p class="sb-fin">
+      — end of the spread. the camera's already hungry for the next roll. <Doodle name="heart" class="sb-doodle-heart" />
+    </p>
+  </article>
+</Layout>

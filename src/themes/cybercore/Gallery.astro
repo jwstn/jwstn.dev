@@ -1,0 +1,58 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import Layout from "./Layout.astro";
+import type { GalleryProps } from "#/themes/types";
+
+const { albums } = Astro.props as GalleryProps;
+---
+
+<Layout
+  title="Gallery | jwstn.dev"
+  description="Recon imagery by JW — camera acquired in Japan, March 2026. Three albums on file: Japan 2026, Spring 2026 and Summer 2026."
+>
+  <section class="cy-pagehead" aria-label="Gallery">
+    <p class="cy-kicker cy-reveal">// optical archive — camera acquired in japan, march 2026</p>
+    <h1 class="cy-title cy-bootglitch cy-glitch">Recon imagery</h1>
+    <p class="cy-count">{albums.length} albums on file</p>
+    <div class="cy-tape" aria-hidden="true"></div>
+  </section>
+
+  <div class="cy-stack">
+    {
+      albums.map((album, i) => (
+        <a
+          class="cy-frame cy-album cy-reveal"
+          style={`--d: ${0.12 + i * 0.1}s`}
+          href={`/gallery/${album.data.slug}/`}
+        >
+          <p class="cy-file-head">
+            <span>
+              album <span class="cy-file-no">{String(i + 1).padStart(2, "0")}</span> — {album.data.slug}
+            </span>
+            <span>
+              <FormattedDate date={album.data.pubDate} />
+            </span>
+          </p>
+          <div class="cy-strip" aria-hidden="true">
+            {album.data.photos.slice(0, 4).map((photo) => (
+              <Image
+                src={photo.image}
+                alt=""
+                widths={[160, 320]}
+                sizes="(min-width: 48rem) 9rem, 22vw"
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
+          <div class="cy-album-info">
+            <h2 class="cy-album-name">{album.data.title}</h2>
+            <p class="cy-album-meta">{album.data.photos.length} frames recorded</p>
+            <p class="cy-album-cta">open album →</p>
+          </div>
+        </a>
+      ))
+    }
+  </div>
+</Layout>

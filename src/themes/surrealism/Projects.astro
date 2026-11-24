@@ -1,0 +1,58 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+const exhibitNo = (i: number) => `Exhibit №${String(i + 1).padStart(2, "0")}`;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="Wing I of the museum — four exhibits on permanent loan: web applications built with TanStack, Effect and stubborn amounts of care, by JW in Cologne."
+>
+  <div class="sur-shell sur-stack">
+    <div class="sur-pagehead sur-rise">
+      <p class="sur-kicker">Wing I <em>— the exhibits</em></p>
+      <h1 class="sur-pagehead-title">Projects</h1>
+      <p class="sur-pagehead-meta">
+        {projects.length}
+        {projects.length === 1 ? "work" : "works"} on permanent loan · hung newest first
+      </p>
+    </div>
+
+    <section aria-label="The exhibits">
+      <ul class="sur-exhibits">
+        {
+          projects.map((project, i) => (
+            <li
+              class:list={["sur-exhibit", "sur-rise", i === 1 && "sur-rise--2", i === 2 && "sur-rise--3", i === 3 && "sur-rise--4"]}
+            >
+              <div class="sur-exhibit-label">
+                <span class="sur-plate sur-plate--accent">{exhibitNo(i)}</span>
+                <span class="sur-metaline">
+                  Hung <FormattedDate date={project.data.pubDate} />
+                </span>
+              </div>
+              <h2 class="sur-exhibit-title">
+                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+              </h2>
+              <p class="sur-exhibit-desc sur-exhibit-desc--last">{project.data.description}</p>
+              <ul class="sur-tags" aria-label="Materials">
+                {project.data.tags.map((tag) => (
+                  <li class="sur-tag">{tag}</li>
+                ))}
+              </ul>
+              <div class="sur-exhibit-actions" style="margin-top: 1.2rem">
+                <a class="sur-btn" href={`/projects/${project.id}/`}>Read the placard →</a>
+                <a class="sur-btn sur-btn--ghost" href={project.data.href} target="_blank" rel="noopener noreferrer">
+                  Visit the living thing ↗
+                </a>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+</Layout>

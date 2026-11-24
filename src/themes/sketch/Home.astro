@@ -1,0 +1,97 @@
+---
+import Doodle from "./Doodle.astro";
+import Layout from "./Layout.astro";
+---
+<Layout
+  title="jwstn.dev — JW's sketchbook"
+  description="Full-stack developer in Cologne, penciling web apps on graph paper — TanStack concepts, Effect experiments and taped-in reference prints."
+>
+  <article class="sk-home">
+    <!-- sheet 01: the concept hero -->
+    <section class="sk-hero sk-woobble" aria-labelledby="sk-hero-title">
+      <p class="sk-margin-note" aria-hidden="true">hero_v4_FINAL_final — don't erase!</p>
+
+      <p class="sk-kicker">sheet 01 · concept · jwstn.dev · cologne, de</p>
+      <h1 class="sk-hero-title" id="sk-hero-title">
+        Hey — <span class="sk-circled">I'm JW<Doodle name="circle" draw class="sk-circle" /></span>.
+      </h1>
+      <p class="sk-hero-sub">full-stack developer. i sketch web apps in pencil before i commit them to code.</p>
+
+      <div class="sk-hero-bio sk-ruled">
+        <p>
+          most days i'm deep in
+          <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — it hands
+          me most of what a web app needs, server actions and middleware included. which is exactly why
+          <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> and
+          <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> are still
+          sitting in the "someday" margin of this sheet. the rabbit hole i
+          <em>did</em> go down is <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> —
+          amazing fun so far, and a genuinely new way to think about programs.
+          <span class="sk-rednote">keep this bit<Doodle name="star" class="sk-rednote-star" /></span>
+        </p>
+        <p class="sk-hand">
+          ps — the camera i brought home from japan in 2026 hasn't left my bag since. the whole roll is
+          taped up in the <a href="/gallery">reference prints</a>.
+        </p>
+      </div>
+
+      <p class="sk-dim sk-hero-dim">100% HAND-DRAWN · NO PIXELS HARMED</p>
+    </section>
+
+    <!-- three wireframe boxes pointing at the rest of the site -->
+    <section aria-labelledby="sk-board-title">
+      <h2 class="sk-section-title" id="sk-board-title">
+        on the drawing board
+        <Doodle name="underline" draw class="sk-doodle-underline" />
+      </h2>
+      <ul class="sk-home-cards">
+        <li>
+          <div class="sk-card sk-woobble">
+            <p class="sk-fig">fig. 1 — the work</p>
+            <h3><a href="/projects">Concept sheets</a></h3>
+            <p>
+              four sheets so far: a vinyl collection forum, a terminal spotify client, an app for learning
+              sign language, and one very personal todo list.
+            </p>
+            <a class="sk-cardlink" href="/projects">open the sheets</a>
+          </div>
+        </li>
+        <li>
+          <div class="sk-card sk-woobble">
+            <p class="sk-fig">fig. 2 — the pin board</p>
+            <div class="sk-mini" aria-hidden="true">
+              <span class="sk-mini-bar"></span>
+              <span class="sk-mini-bar short"></span>
+              <p class="sk-mini-label">TBD</p>
+            </div>
+            <h3><a href="/blog">Notes</a></h3>
+            <p>
+              a fresh sheet, nothing pinned to it yet. the first note is somewhere between a rough sketch
+              and a napkin.
+            </p>
+            <a class="sk-cardlink" href="/blog">look at the empty board</a>
+          </div>
+        </li>
+        <li>
+          <div class="sk-card sk-woobble">
+            <p class="sk-fig">fig. 3 — the camera roll</p>
+            <div class="sk-mini-print" aria-hidden="true">
+              <svg viewBox="0 0 96 72" fill="none" stroke="#3a3f47" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="24" cy="16" r="7.5"></circle>
+                <path d="M4 60 C 18 46, 32 50, 44 58 C 56 48, 72 40, 92 58"></path>
+                <path d="M4 60 L 92 60" stroke-width="1.6" opacity="0.6"></path>
+                <path d="M14 34 l4 -6 4 6 M30 32 l3 -5 3 5" opacity="0.5"></path>
+              </svg>
+            </div>
+            <h3><a href="/gallery">Reference prints</a></h3>
+            <p>
+              cologne walks, spring blossoms, and a japan 2026 roll — printed and taped in as the film
+              comes back.
+            </p>
+            <a class="sk-cardlink" href="/gallery">flip through the prints</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </article>
+</Layout>

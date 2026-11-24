@@ -1,0 +1,67 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Doodle from "./Doodle.astro";
+import Washi from "./Washi.astro";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout
+  title="Blog | jwstn.dev"
+  description="JW's notebook — notes, half-thoughts and the occasional full idea, taped in as they're written."
+>
+  <article class="sb-page">
+    <header class="sb-page-head">
+      <p class="sb-stamp">scrapbook section · the notebook</p>
+      <h1 class="sb-title">
+        The notebook
+        <Doodle name="underline" class="sb-doodle-underline" />
+      </h1>
+      <p class="sb-hand sb-page-hand">notes, half-thoughts, and the occasional full idea.</p>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <section class="sb-notebook sb-empty" aria-labelledby="sb-empty-title">
+          <Washi variant={3} class="pos-top" />
+          <div class="sb-empty-inner">
+            <p class="sb-stamp">page 1 · nothing yet</p>
+            <h2 id="sb-empty-title" class="sb-empty-title">
+              This page is still blank.
+            </h2>
+            <p class="sb-hand sb-empty-hand">
+              no entries yet — the pen's warmed up, the pages are ruled, and the first note is being
+              drafted. come back soon?
+            </p>
+            <Doodle name="scribble" class="sb-doodle-scribble sb-empty-scribble" />
+          </div>
+        </section>
+      ) : (
+        <ol class="sb-posts">
+          {posts.map((post) => (
+            <li>
+              <article class="sb-postcard">
+                <h2>
+                  <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+                </h2>
+                <p class="sb-postcard-meta">
+                  <span class="sb-stamp">
+                    <FormattedDate date={post.data.pubDate} />
+                  </span>
+                  {post.data.updatedDate && (
+                    <span class="sb-meta">
+                      rewritten <FormattedDate date={post.data.updatedDate} />
+                    </span>
+                  )}
+                </p>
+                <p class="sb-postcard-desc">{post.data.description}</p>
+              </article>
+            </li>
+          ))}
+        </ol>
+      )
+    }
+  </article>
+</Layout>

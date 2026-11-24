@@ -1,0 +1,45 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Doodle from "./Doodle.astro";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+const wip = title.includes("(WIP)");
+---
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="sk-article">
+    <a class="sk-back" href="/projects">← back to the drawing board</a>
+
+    <header class="sk-article-head sk-woobble">
+      <p class="sk-margin-note" aria-hidden="true">rev A — v4 FINAL final</p>
+      <p class="sk-kicker">project concept sheet</p>
+      <h1 class="sk-title">{title}</h1>
+      <p class="sk-article-lede">{description}</p>
+
+      <dl class="sk-titleblock">
+        <div>
+          <dt>drawn</dt>
+          <dd><FormattedDate date={pubDate} /></dd>
+        </div>
+        <div>
+          <dt>status</dt>
+          <dd>{wip ? "wip — graphite pending" : "drawn"}</dd>
+        </div>
+        <div>
+          <dt>materials</dt>
+          <dd>{tags.join(" · ")}</dd>
+        </div>
+      </dl>
+
+      <a class="sk-visit" href={href} target="_blank" rel="noopener noreferrer">view the build</a>
+    </header>
+
+    <div class="sk-article-body sk-woobble sk-ruled sk-prose">
+      <Content />
+    </div>
+
+    <p class="sk-fin">— end of sheet. more graphite soon.</p>
+  </article>
+</Layout>

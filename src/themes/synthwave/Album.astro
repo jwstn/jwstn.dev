@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+---
+
+<Layout title={`${title} | jwstn.dev`}>
+  <main class="sw-main">
+    <p class="sw-back">
+      <a class="sw-btn" href="/gallery/">&#9664; ALL ALBUMS</a>
+    </p>
+
+    <header class="sw-page-head">
+      <p class="sw-kicker sw-rise" style="--d: 0s">ALBUM</p>
+      <h1 class="sw-page-title sw-rise" style="--d: 0.08s">{title}</h1>
+      <p class="sw-trackline" style="margin-top: 0.8rem;">
+        <FormattedDate date={pubDate} />
+        <span class="sw-leader" aria-hidden="true"></span>
+        <span>{photos.length} FRAMES</span>
+      </p>
+      <div class="sw-beam" aria-hidden="true"></div>
+    </header>
+
+    <ul class="sw-photo-grid">
+      {
+        photos.map((photo) => (
+          <li>
+            <figure class="sw-panel sw-photo">
+              <Image
+                class="sw-photo-img"
+                src={photo.image}
+                alt={photo.title}
+                widths={[480, 800, 1200]}
+                sizes="(min-width: 70rem) 22rem, (min-width: 48rem) 30vw, 92vw"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption class="sw-photo-cap">
+                <span class="sw-photo-title">{photo.title}</span>
+                {photo.caption && <span class="sw-photo-caption">{photo.caption}</span>}
+              </figcaption>
+            </figure>
+          </li>
+        ))
+      }
+    </ul>
+  </main>
+</Layout>

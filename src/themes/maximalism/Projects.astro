@@ -1,0 +1,68 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Sparkle from "./Sparkle.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects — jwstn.dev"
+  description="The grand index: four builds by JW — a vinyl-collection forum, a terminal Spotify client, a sign-language learning app, and one very personal todo app."
+>
+  <section class="mx-band c-violet zz-t zz-b" aria-labelledby="mx-projects-title">
+    <Sparkle class="mx-corner p-a" />
+    <Sparkle class="mx-corner p-b" />
+    <Sparkle class="mx-corner p-c" />
+    <div class="mx-band-inner">
+      <p class="mx-eyebrow">
+        <Sparkle /> The grand index <Sparkle />
+      </p>
+      <h1 id="mx-projects-title" class="mx-band-title">Projects!</h1>
+      <p class="mx-band-serif">
+        — four builds with real commit history, every single one of them mine —
+      </p>
+      <div class="mx-meta-row">
+        <span class="mx-meta-chip">! {String(projects.length).padStart(2, "0")} entries, zero filler !</span>
+      </div>
+    </div>
+  </section>
+
+  <ul class="mx-projects">
+    {
+      projects.map((project, i) => (
+        <li>
+          <article class="mx-card mx-hover mx-project">
+            <span class="mx-num" aria-hidden="true">
+              № {String(i + 1).padStart(2, "0")}
+            </span>
+            <h2 class="mx-project-title">
+              <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+            </h2>
+            <p class="mx-meta-row">
+              <span class="mx-meta-chip">
+                Started <FormattedDate date={project.data.pubDate} />
+              </span>
+              {project.data.title.includes("(WIP)") && <span class="mx-meta-chip">Work in progress!</span>}
+            </p>
+            <p class="mx-project-desc">{project.data.description}</p>
+            <ul class="mx-tags" aria-label="Technologies used">
+              {project.data.tags.map((tag) => (
+                <li class="mx-tag">{tag}!</li>
+              ))}
+            </ul>
+            <div class="mx-project-actions">
+              <a class="mx-btn b-red" href={`/projects/${project.id}/`}>
+                The full story →
+              </a>
+              <a class="mx-btn b-ghost" href={project.data.href} target="_blank" rel="noopener noreferrer">
+                Visit live ↗
+              </a>
+            </div>
+          </article>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

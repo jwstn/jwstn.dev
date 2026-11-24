@@ -1,0 +1,33 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="clay-article">
+    <a class="clay-back squish" href="/projects" aria-label="Back to all projects">← All projects</a>
+
+    <div class="clay clay-panel clay-rise clay-d1">
+      <p class="clay-stamp">project</p>
+      <h1 class="clay-h1">{title}</h1>
+      <p class="clay-lede">{description}</p>
+      <p class="clay-meta">
+        <FormattedDate date={pubDate} />
+        <a href={href} target="_blank" rel="noopener noreferrer">Visit the project ↗</a>
+      </p>
+      <ul class="clay-chips">
+        {tags.map((tag) => (
+          <li class="clay-chip">{tag}</li>
+        ))}
+      </ul>
+      <hr class="clay-groove" />
+      <div class="clay-prose">
+        <Content />
+      </div>
+    </div>
+  </article>
+</Layout>

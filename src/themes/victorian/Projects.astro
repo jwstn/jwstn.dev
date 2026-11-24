@@ -1,0 +1,51 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Fleuron from "./Fleuron.astro";
+import Layout from "./Layout.astro";
+import { catalogueLine, roman } from "./numerals";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects — jwstn.dev"
+  description="A catalogue of four works by JW, in active construction — a vinyl collectors' forum, a terminal Spotify client, a sign-language trainer, and one very personal note app."
+>
+  <header class="vic-pagehead">
+    <p class="vic-label">First Series</p>
+    <h1 class="vic-display">The Catalogue of Works</h1>
+    <p class="vic-lede">
+      Four works, kept in active construction: a collectors' forum for vinyl, a terminal
+      client for Spotify, an app for the learning of sign-language, and one note app
+      tailored to its author. Each entry may be examined in detail.
+    </p>
+  </header>
+
+  <Fleuron />
+
+  <ol class="vic-entries">
+    {
+      projects.map((project, i) => (
+        <li class="vic-entry">
+          <p class="vic-entry-no">Catalogue No. {roman(i + 1)}.</p>
+          <h2 class="vic-entry-title">
+            <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+          </h2>
+          <p class="vic-entry-cat">
+            {catalogueLine(project.id, project.data.description)}
+          </p>
+          <p class="vic-entry-meta">
+            Entered
+            <span class="vic-meta-date">
+              <FormattedDate date={project.data.pubDate} />
+            </span>
+          </p>
+          {project.data.tags.length > 0 && (
+            <p class="vic-entry-tags">{project.data.tags.join(" · ")}</p>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</Layout>

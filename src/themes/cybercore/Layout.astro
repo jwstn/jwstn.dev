@@ -1,0 +1,86 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const navItems = [
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Gallery", href: "/gallery" },
+];
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<html lang="en" class="theme-cybercore">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body class="bg-background text-foreground">
+    <a class="cy-skip" href="#cy-main">skip to main content</a>
+
+    <header class="cy-header">
+      <div class="cy-headwrap">
+        <p class="cy-sysbar">
+          <span class="cy-sys"><i class="cy-dot" aria-hidden="true"></i> sys.online — jw-os/2.6</span>
+          <span class="cy-coords" aria-hidden="true">lat 50.9375 n // lon 6.9603 e — cologne sector</span>
+        </p>
+        <nav class="cy-nav" aria-label="Main navigation">
+          <a class="cy-brand cy-glitch" href="/" aria-current={path === "/" ? "page" : undefined}>jwstn.dev</a>
+          <div class="cy-links">
+            {
+              navItems.map((item) => (
+                <a
+                  class="cy-link cy-glitch"
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+            {
+              SOCIALS.map((s) => (
+                <a class="cy-link cy-link--social" href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label} ↗
+                </a>
+              ))
+            }
+          </div>
+        </nav>
+      </div>
+      <div class="cy-tape" aria-hidden="true"></div>
+    </header>
+
+    <main id="cy-main" class="cy-main">
+      <slot />
+    </main>
+
+    <footer class="cy-footer">
+      <div class="cy-tape" aria-hidden="true"></div>
+      <div class="cy-footwrap">
+        <div class="cy-barcode-wrap" aria-hidden="true">
+          <span class="cy-barcode"></span>
+          <span class="cy-barcode-label">jw·cgn·{year}</span>
+        </div>
+        <p class="cy-copy">© {year} jwstn — end of transmission.</p>
+        <nav class="cy-foot-socials" aria-label="Social links">
+          {
+            SOCIALS.map((s) => (
+              <a class="cy-foot-link" href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label} ↗
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

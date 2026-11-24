@@ -1,0 +1,844 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   neumorphism — soft extruded UI (theme 19)
+   The mode IS the design: light = one soft gray-beige field, dark = one deep
+   graphite field. Every element is carved from that single surface with
+   paired shadows — raised (light top-left + dark bottom-right) and pressed
+   (the same pair inverted). Contrast is never traded for the effect: body ink
+   holds ≥ 4.5:1 against the field in both modes.
+   Scoped under html.theme-neumorphism (and .dark) so nothing leaks into the
+   other themes sharing this bundle.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@import "@fontsource-variable/outfit";
+@import "@fontsource-variable/geist-mono";
+
+/* ── Light: a single soft gray-beige field ──────────────────────────────── */
+html.theme-neumorphism {
+  --font-display: "Outfit Variable", "Outfit", system-ui, sans-serif;
+  --font-body: "Outfit Variable", "Outfit", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
+
+  --background: #e8e6e1;
+  --foreground: #34322d;
+  --card: #e8e6e1;
+  --card-foreground: #34322d;
+  --primary: #8f4e33;
+  --primary-foreground: #f7f4ee;
+  --secondary: #e0ddd6;
+  --secondary-foreground: #34322d;
+  --muted: #e0ddd6;
+  --muted-foreground: #5c5850;
+  --accent: #8f4e33;
+  --accent-foreground: #f7f4ee;
+  --border: rgba(52, 50, 45, 0.06);
+  --ring: #8f4e33;
+  --radius: 1.375rem;
+
+  /* the carving: one highlight, one shade, on the very same color */
+  --neu-hi: rgba(255, 253, 247, 0.95);
+  --neu-lo: rgba(157, 150, 138, 0.62);
+
+  --raise: -8px -8px 16px var(--neu-hi), 8px 8px 16px var(--neu-lo);
+  --raise-lg: -12px -12px 24px var(--neu-hi), 12px 12px 24px var(--neu-lo);
+  --raise-sm: -4px -4px 8px var(--neu-hi), 4px 4px 8px var(--neu-lo);
+  --press: inset -6px -6px 12px var(--neu-hi), inset 6px 6px 12px var(--neu-lo);
+  --press-sm: inset -3px -3px 7px var(--neu-hi), inset 3px 3px 7px var(--neu-lo);
+
+  /* shared floating switcher hooks */
+  --sw-bg: var(--background);
+  --sw-fg: var(--muted-foreground);
+  --sw-border: transparent;
+  --sw-accent: var(--accent);
+}
+
+/* ── Dark: a single deep graphite field ─────────────────────────────────── */
+html.theme-neumorphism.dark {
+  --background: #2b2d31;
+  --foreground: #e9e7e2;
+  --card: #2b2d31;
+  --card-foreground: #e9e7e2;
+  --primary: #d98e6d;
+  --primary-foreground: #2b1a12;
+  --secondary: #313438;
+  --secondary-foreground: #e9e7e2;
+  --muted: #313438;
+  --muted-foreground: #a8a49c;
+  --accent: #d98e6d;
+  --accent-foreground: #2b1a12;
+  --border: rgba(233, 231, 226, 0.07);
+  --ring: #d98e6d;
+
+  --neu-hi: rgba(240, 240, 246, 0.08);
+  --neu-lo: rgba(0, 0, 0, 0.6);
+}
+
+/* ── Foundation ─────────────────────────────────────────────────────────── */
+html.theme-neumorphism body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html.theme-neumorphism main {
+  flex: 1;
+  width: min(66rem, 100% - clamp(2.5rem, 8vw, 5rem));
+  margin-inline: auto;
+  padding-block: clamp(3rem, 8vh, 5rem) clamp(3.5rem, 10vh, 6rem);
+}
+
+html.theme-neumorphism ::selection {
+  background: color-mix(in oklab, var(--accent) 30%, transparent);
+}
+
+html.theme-neumorphism :is(a, button, select, input, textarea, summary):focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* skip link — raised into view only when focused */
+html.theme-neumorphism .neu-skip {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+html.theme-neumorphism .neu-skip:focus {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 200;
+  width: auto;
+  height: auto;
+  margin: 0;
+  clip: auto;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground);
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: var(--raise-sm);
+}
+
+/* ── Header: brand pill, social pills, raised nav bar ──────────────────── */
+html.theme-neumorphism .neu-header {
+  width: min(66rem, 100% - clamp(2.5rem, 8vw, 5rem));
+  margin-inline: auto;
+  padding-top: clamp(1.25rem, 4vh, 2.25rem);
+}
+
+html.theme-neumorphism .neu-topbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 1.1rem;
+}
+
+html.theme-neumorphism .neu-brand,
+html.theme-neumorphism .neu-socials a,
+html.theme-neumorphism .neu-pill,
+html.theme-neumorphism .neu-mini {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.55rem 1.05rem;
+  border-radius: 999px;
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.88rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: var(--raise-sm);
+  transition: box-shadow 180ms ease, transform 180ms ease, color 180ms ease;
+}
+
+html.theme-neumorphism .neu-brand {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+html.theme-neumorphism .neu-socials {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+}
+
+html.theme-neumorphism .neu-socials a {
+  color: var(--muted-foreground);
+}
+
+@media (hover: hover) {
+  html.theme-neumorphism .neu-brand:hover,
+  html.theme-neumorphism .neu-socials a:hover,
+  html.theme-neumorphism .neu-pill:hover,
+  html.theme-neumorphism .neu-mini:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--raise);
+    color: var(--foreground);
+  }
+}
+
+html.theme-neumorphism .neu-brand:active,
+html.theme-neumorphism .neu-socials a:active,
+html.theme-neumorphism .neu-pill:active,
+html.theme-neumorphism .neu-mini:active {
+  transform: none;
+  box-shadow: var(--press-sm);
+}
+
+/* the nav bar itself is extruded from the field */
+html.theme-neumorphism .neu-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.35rem;
+  padding: 0.45rem;
+  border-radius: 20px;
+  background: var(--background);
+  box-shadow: var(--raise);
+}
+
+html.theme-neumorphism .neu-nav-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 1.1rem;
+  border-radius: 14px;
+  color: var(--muted-foreground);
+  font-size: 0.92rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: box-shadow 180ms ease, color 180ms ease;
+}
+
+@media (hover: hover) {
+  html.theme-neumorphism .neu-nav-link:hover {
+    color: var(--foreground);
+    box-shadow: var(--raise-sm);
+  }
+}
+
+/* the current page is pressed into the bar */
+html.theme-neumorphism .neu-nav-link[aria-current="page"] {
+  color: var(--accent);
+  box-shadow: var(--press-sm);
+}
+
+@media (pointer: coarse) {
+  html.theme-neumorphism .neu-brand,
+  html.theme-neumorphism .neu-socials a,
+  html.theme-neumorphism .neu-nav-link,
+  html.theme-neumorphism .neu-pill,
+  html.theme-neumorphism .neu-mini {
+    min-height: 44px;
+  }
+}
+
+/* ── Footer: a strip pressed into the field ────────────────────────────── */
+html.theme-neumorphism .neu-footer {
+  width: min(66rem, 100% - clamp(2.5rem, 8vw, 5rem));
+  margin-inline: auto;
+  padding-bottom: clamp(1.5rem, 5vh, 3rem);
+}
+
+/* clearance for the fixed theme switcher on narrower viewports */
+@media (max-width: 64rem) {
+  html.theme-neumorphism .neu-footer {
+    padding-bottom: 5.5rem;
+  }
+}
+
+html.theme-neumorphism .neu-footer-panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.9rem 1.2rem;
+  padding: 1.1rem 1.5rem;
+  border-radius: 20px;
+  box-shadow: var(--press);
+}
+
+html.theme-neumorphism .neu-footer-copy {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+html.theme-neumorphism .neu-footer-socials {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+}
+
+html.theme-neumorphism .neu-mini {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.8rem;
+}
+
+/* ── Shared typography ─────────────────────────────────────────────────── */
+html.theme-neumorphism .neu-kicker {
+  margin: 0 0 1.4em;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+}
+
+html.theme-neumorphism .neu-display {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(2.5rem, 6vw, 4.1rem);
+  line-height: 1.07;
+  letter-spacing: -0.01em;
+  text-align: center;
+  text-wrap: balance;
+}
+
+html.theme-neumorphism .neu-display em {
+  font-style: normal;
+  color: var(--accent);
+}
+
+html.theme-neumorphism .neu-display-page {
+  font-size: clamp(1.9rem, 4.5vw, 2.9rem);
+}
+
+html.theme-neumorphism .neu-lede {
+  margin: 1.8em auto 0;
+  max-width: 36em;
+  font-size: 1.02rem;
+  text-align: center;
+  color: var(--muted-foreground);
+}
+
+html.theme-neumorphism .neu-lede a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 180ms ease;
+}
+
+html.theme-neumorphism .neu-lede a:hover {
+  text-decoration-color: var(--accent);
+}
+
+html.theme-neumorphism .neu-pagehead {
+  text-align: center;
+}
+
+/* ── Carved chips: dates, counts, tags set into the surface ─────────────── */
+html.theme-neumorphism .neu-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+html.theme-neumorphism .neu-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  box-shadow: var(--press-sm);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+html.theme-neumorphism .neu-head-chips {
+  justify-content: center;
+  margin-top: 1.8rem;
+}
+
+html.theme-neumorphism .neu-head-chips .neu-pill {
+  box-shadow: var(--raise-sm);
+}
+
+html.theme-neumorphism .neu-endtags {
+  justify-content: center;
+  margin-top: 2.8rem;
+}
+
+/* ── Decorative carved dots between sections ───────────────────────────── */
+html.theme-neumorphism .neu-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.7rem;
+  margin: clamp(2.2rem, 6vh, 3.4rem) 0;
+}
+
+html.theme-neumorphism .neu-dots span {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  box-shadow: var(--press-sm);
+}
+
+/* ── Raised cards ───────────────────────────────────────────────────────── */
+html.theme-neumorphism .neu-grid {
+  display: grid;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+html.theme-neumorphism .neu-grid--tiles {
+  grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+}
+
+html.theme-neumorphism .neu-grid--albums {
+  grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+}
+
+@media (min-width: 41rem) {
+  html.theme-neumorphism .neu-grid--projects {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+html.theme-neumorphism a.neu-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: clamp(1.4rem, 3vw, 2rem);
+  border-radius: 24px;
+  background: var(--background);
+  color: var(--foreground);
+  text-decoration: none;
+  box-shadow: var(--raise);
+  transition: box-shadow 200ms ease, transform 200ms ease;
+}
+
+@media (hover: hover) {
+  html.theme-neumorphism a.neu-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--raise-lg);
+  }
+}
+
+/* pressing a card pushes it back into the field */
+html.theme-neumorphism a.neu-card:active {
+  transform: none;
+  box-shadow: var(--press-sm);
+}
+
+html.theme-neumorphism .neu-card-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+  line-height: 1.2;
+  transition: color 200ms ease;
+}
+
+html.theme-neumorphism .neu-card-title::after {
+  content: "→";
+  margin-left: 0.4em;
+  color: var(--accent);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+@media (hover: hover) {
+  html.theme-neumorphism a.neu-card:hover .neu-card-title {
+    color: var(--accent);
+  }
+
+  html.theme-neumorphism a.neu-card:hover .neu-card-title::after {
+    opacity: 1;
+  }
+}
+
+html.theme-neumorphism .neu-card-desc {
+  margin: 0.7em 0 0;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-neumorphism .neu-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+html.theme-neumorphism .neu-card-tags {
+  margin-top: 0.6rem;
+}
+
+html.theme-neumorphism .neu-card-tags .neu-chip {
+  font-size: 0.66rem;
+  padding: 0.32rem 0.65rem;
+}
+
+/* home tiles */
+html.theme-neumorphism .neu-tile-go {
+  position: absolute;
+  top: 1.35rem;
+  right: 1.4rem;
+  color: var(--muted-foreground);
+  transition: color 200ms ease, transform 200ms ease;
+}
+
+@media (hover: hover) {
+  html.theme-neumorphism a.neu-card:hover .neu-tile-go {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+}
+
+html.theme-neumorphism .neu-tile-title {
+  margin: 0 0 0.5em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+}
+
+html.theme-neumorphism .neu-tile-note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+}
+
+/* ── Wells and frames: photos extruded, then set in ─────────────────────── */
+html.theme-neumorphism .neu-well {
+  border-radius: 16px;
+  padding: 0.55rem;
+  box-shadow: var(--press);
+}
+
+html.theme-neumorphism .neu-well img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 11px;
+}
+
+html.theme-neumorphism .neu-cover {
+  aspect-ratio: 16 / 10;
+  overflow: hidden;
+}
+
+html.theme-neumorphism .neu-cover img {
+  height: 100%;
+  object-fit: cover;
+}
+
+html.theme-neumorphism .neu-album-title {
+  margin: 1.1rem 0 0;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.35rem;
+}
+
+html.theme-neumorphism .neu-frame {
+  margin: 0;
+  padding: clamp(1rem, 2.5vw, 1.5rem);
+  border-radius: 24px;
+  background: var(--background);
+  box-shadow: var(--raise);
+}
+
+html.theme-neumorphism .neu-frame-cap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  padding: 1rem 0.4rem 0.4rem;
+  text-align: center;
+}
+
+/* photo titles as engraved little plates */
+html.theme-neumorphism .neu-frame-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--foreground);
+}
+
+html.theme-neumorphism .neu-frame-note {
+  max-width: 40em;
+  margin-inline: auto;
+  font-size: 0.88rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-neumorphism .neu-photos {
+  max-width: 58rem;
+  margin-inline: auto;
+  display: grid;
+  gap: clamp(2.4rem, 7vh, 3.5rem);
+}
+
+html.theme-neumorphism .neu-heroimg {
+  max-width: 42rem;
+  margin: 2.6rem auto 0;
+}
+
+/* ── Articles ──────────────────────────────────────────────────────────── */
+html.theme-neumorphism .neu-article {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+html.theme-neumorphism .neu-backrow {
+  margin: 0 0 2.2rem;
+  text-align: center;
+}
+
+/* ── Prose: headings flat, furniture carved ────────────────────────────── */
+html.theme-neumorphism .neu-prose {
+  max-width: 40rem;
+  margin: 2.6rem auto 0;
+  font-size: 1.02rem;
+}
+
+html.theme-neumorphism .neu-prose > :first-child {
+  margin-top: 0;
+}
+
+html.theme-neumorphism .neu-prose p {
+  margin: 1.4em 0;
+}
+
+html.theme-neumorphism .neu-prose strong {
+  font-weight: 600;
+}
+
+html.theme-neumorphism .neu-prose h2 {
+  margin: 2.4em 0 0.6em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.55rem;
+  line-height: 1.15;
+}
+
+html.theme-neumorphism .neu-prose h3 {
+  margin: 2em 0 0.5em;
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 1.25rem;
+  line-height: 1.2;
+}
+
+html.theme-neumorphism .neu-prose a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 55%, transparent);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 180ms ease;
+}
+
+html.theme-neumorphism .neu-prose a:hover {
+  text-decoration-color: var(--accent);
+}
+
+html.theme-neumorphism .neu-prose ul,
+html.theme-neumorphism .neu-prose ol {
+  margin: 1.4em 0;
+  padding-left: 1.3em;
+}
+
+html.theme-neumorphism .neu-prose li + li {
+  margin-top: 0.45em;
+}
+
+/* quotes sit in a shallow groove */
+html.theme-neumorphism .neu-prose blockquote {
+  margin: 2em 0;
+  padding: 1em 1.3em;
+  border-radius: 16px;
+  box-shadow: var(--press-sm);
+  color: var(--muted-foreground);
+}
+
+html.theme-neumorphism .neu-prose blockquote p {
+  margin: 0.3em 0;
+}
+
+html.theme-neumorphism .neu-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border-radius: 7px;
+  box-shadow: var(--press-sm);
+}
+
+/* code blocks: sunken panels */
+html.theme-neumorphism .neu-prose pre {
+  margin: 1.8em 0;
+  padding: 1.1em 1.3em;
+  overflow-x: auto;
+  border-radius: 16px;
+  box-shadow: var(--press);
+  background: var(--background);
+}
+
+html.theme-neumorphism .neu-prose pre code {
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  font-size: 0.82em;
+}
+
+/* images extruded from the field */
+html.theme-neumorphism .neu-prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2em auto;
+  border-radius: 16px;
+  box-shadow: var(--raise-sm);
+}
+
+/* a divider carved into the surface */
+html.theme-neumorphism .neu-prose hr {
+  width: 8rem;
+  height: 10px;
+  margin: 3em auto;
+  border: none;
+  border-radius: 999px;
+  box-shadow: var(--press-sm);
+}
+
+/* ── Blog: the empty state is a softly pressed-in blank card ──────────── */
+html.theme-neumorphism .neu-empty {
+  max-width: 40rem;
+  margin-inline: auto;
+  padding: clamp(2.5rem, 7vw, 4rem) clamp(1.5rem, 5vw, 3rem);
+  border-radius: 28px;
+  box-shadow: var(--press);
+  text-align: center;
+}
+
+html.theme-neumorphism .neu-empty-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: clamp(1.8rem, 4.5vw, 2.6rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+html.theme-neumorphism .neu-empty .neu-lede {
+  margin-top: 1.4em;
+}
+
+/* empty entry slots, pressed into the panel */
+html.theme-neumorphism .neu-grooves {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 24rem;
+  margin: 2.6rem auto 0;
+}
+
+html.theme-neumorphism .neu-groove {
+  display: block;
+  height: 13px;
+  border-radius: 999px;
+  box-shadow: var(--press-sm);
+}
+
+html.theme-neumorphism .neu-groove:nth-child(2) {
+  width: 78%;
+  margin-inline: auto;
+}
+
+html.theme-neumorphism .neu-groove:nth-child(3) {
+  width: 46%;
+  margin-inline: auto;
+}
+
+html.theme-neumorphism .neu-empty-note {
+  margin: 2.2rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+/* ready for real posts */
+html.theme-neumorphism .neu-postlist {
+  max-width: 42rem;
+  margin-inline: auto;
+  display: grid;
+  gap: 1.5rem;
+  list-style: none;
+  padding: 0;
+}
+
+/* ── Motion: subtle lifts only ─────────────────────────────────────────── */
+@keyframes neu-rise {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+
+html.theme-neumorphism .neu-rise {
+  animation: neu-rise 360ms ease-out both;
+}
+
+html.theme-neumorphism .neu-rise-2 {
+  animation-delay: 110ms;
+}
+
+html.theme-neumorphism .neu-rise-3 {
+  animation-delay: 220ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-neumorphism *,
+  html.theme-neumorphism *::before,
+  html.theme-neumorphism *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+/* ── Shared floating switcher: blend it into the field ─────────────────── */
+html.theme-neumorphism #theme-switcher {
+  --sw-bg: var(--background);
+  --sw-fg: var(--muted-foreground);
+  --sw-border: transparent;
+  --sw-accent: var(--accent);
+  box-shadow: var(--raise-sm);
+}

@@ -1,0 +1,56 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { PostProps } from "#/themes/types";
+import Doodle from "./Doodle.astro";
+import Polaroid from "./Polaroid.astro";
+import Washi from "./Washi.astro";
+import Layout from "./Layout.astro";
+
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <article class="sb-article">
+    <a class="sb-back" href="/blog">← back to the notebook</a>
+
+    <header class="sb-notebook sb-article-head">
+      <Washi variant={1} class="pos-tl" />
+      <Washi variant={3} class="pos-tr" />
+      <p class="sb-stamp">notebook entry</p>
+      <h1 class="sb-title">
+        {title}
+        <Doodle name="underline" class="sb-doodle-underline" />
+      </h1>
+      <p class="sb-hand sb-article-lede">{description}</p>
+      <div class="sb-article-meta">
+        <span class="sb-stamp">
+          <FormattedDate date={pubDate} />
+        </span>
+        {updatedDate && (
+          <span class="sb-meta">
+            rewritten <FormattedDate date={updatedDate} />
+          </span>
+        )}
+      </div>
+    </header>
+
+    {heroImage && (
+      <Polaroid
+        image={heroImage}
+        alt={title}
+        tape={4}
+        tapeClass="pos-top"
+        widths={[480, 800, 1200]}
+        sizes="(min-width: 48rem) 40rem, 92vw"
+        loading="eager"
+      />
+    )}
+
+    <div class="sb-paper sb-article-body sb-prose">
+      <Content />
+    </div>
+
+    <p class="sb-fin">— signed and taped in. ✂</p>
+  </article>
+</Layout>

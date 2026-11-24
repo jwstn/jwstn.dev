@@ -1,0 +1,52 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { PostProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <main class="sw-main">
+    <p class="sw-back">
+      <a class="sw-btn" href="/blog/">&#9664; REWIND &middot; ALL TRANSMISSIONS</a>
+    </p>
+
+    <header class="sw-page-head">
+      <p class="sw-kicker sw-rise" style="--d: 0s">TRANSMISSION</p>
+      <h1 class="sw-page-title sw-rise" style="--d: 0.08s">{title}</h1>
+      <p class="sw-trackline" style="margin-top: 0.8rem;">
+        <FormattedDate date={pubDate} />
+        {updatedDate && (
+          <span>
+            &middot; re-broadcast <FormattedDate date={updatedDate} />
+          </span>
+        )}
+        <span class="sw-leader" aria-hidden="true"></span>
+        <span>FIDELITY: STEREO</span>
+      </p>
+      <div class="sw-beam" aria-hidden="true"></div>
+    </header>
+
+    <article class="sw-panel sw-article">
+      {description && <p class="sw-lede">{description}</p>}
+      {
+        heroImage && (
+          <Image
+            class="sw-hero-img"
+            src={heroImage}
+            alt=""
+            widths={[800, 1024, 1280]}
+            sizes="(min-width: 70rem) 68rem, 92vw"
+          />
+        )
+      }
+
+      <div class="sw-prose">
+        <Content />
+      </div>
+    </article>
+  </main>
+</Layout>

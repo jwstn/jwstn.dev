@@ -1,0 +1,53 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Doodle from "./Doodle.astro";
+import Washi from "./Washi.astro";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="The project pages — four things JW has been taping together, from vinyl collections to terminal music players."
+>
+  <article class="sb-page">
+    <header class="sb-page-head">
+      <p class="sb-stamp">scrapbook section · the work</p>
+      <h1 class="sb-title">
+        The project pages
+        <Doodle name="underline" class="sb-doodle-underline" />
+      </h1>
+      <p class="sb-hand sb-page-hand">four things worth the tape — newest first, none of them dusted off.</p>
+    </header>
+
+    <ol class="sb-project-list">
+      {
+        projects.map((project, i) => (
+          <li class="sb-paper sb-project">
+            <Washi variant={((i % 4) + 1) as 1 | 2 | 3 | 4} class={i % 2 === 0 ? "pos-tl" : "pos-tr"} />
+            <p class="sb-stamp sb-project-no">Nº {String(i + 1).padStart(2, "0")}</p>
+            <h2 class="sb-project-title">
+              <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+            </h2>
+            <p class="sb-project-desc">{project.data.description}</p>
+            <p class="sb-project-meta">
+              <span class="sb-stamp">
+                <FormattedDate date={project.data.pubDate} />
+              </span>
+            </p>
+            <ul class="sb-chips">
+              {project.data.tags.map((tag) => (
+                <li class="sb-chip">{tag}</li>
+              ))}
+            </ul>
+            <a class="sb-cardlink" href={`/projects/${project.id}/`}>
+              open this page
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</Layout>

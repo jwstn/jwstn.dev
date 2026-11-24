@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import Layout from "./Layout.astro";
+import type { AlbumProps } from "#/themes/types";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+const frameNo = (i: number) => String(i + 1).padStart(2, "0");
+---
+
+<Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} photos taken by JW.`}>
+  <section aria-label={title}>
+    <div class="cy-pagehead">
+      <p class="cy-kicker cy-reveal">// optical archive — {album.data.slug}</p>
+      <h1 class="cy-title cy-bootglitch cy-glitch">{title}</h1>
+      <ul class="cy-readouts">
+        <li class="cy-readout">
+          <span class="cy-readout-key">frames recorded</span>
+          <span class="cy-readout-rule" aria-hidden="true"></span>
+          <span class="cy-readout-val">{photos.length}</span>
+        </li>
+        <li class="cy-readout">
+          <span class="cy-readout-key">logged</span>
+          <span class="cy-readout-rule" aria-hidden="true"></span>
+          <span class="cy-readout-val"><FormattedDate date={pubDate} /></span>
+        </li>
+      </ul>
+      <div class="cy-tape" aria-hidden="true"></div>
+    </div>
+
+    <div class="cy-photos">
+      {
+        photos.map((photo, i) => {
+          const ratio = photo.image.width / photo.image.height;
+          const isWide = ratio > 1.6;
+          return (
+            <figure class:list={["cy-frame", "cy-photo", isWide && "cy-photo--wide"]}>
+              <Image
+                src={photo.image}
+                alt={photo.title}
+                widths={[480, 800, 1200, 1600]}
+                sizes={
+                  isWide
+                    ? "(min-width: 72rem) 32rem, (min-width: 48rem) 66vw, 92vw"
+                    : "(min-width: 72rem) 16rem, (min-width: 48rem) 33vw, 46vw"
+                }
+                loading={i < 2 ? "eager" : "lazy"}
+                decoding="async"
+              />
+              <figcaption class="cy-photo-cap">
+                <b>frame {frameNo(i)}</b> — {photo.title}
+                {photo.caption && <span> // {photo.caption}</span>}
+              </figcaption>
+            </figure>
+          );
+        })
+      }
+    </div>
+
+    <p>
+      <a class="cy-backlink" href="/gallery/">← return to optical archive</a>
+    </p>
+  </section>
+</Layout>

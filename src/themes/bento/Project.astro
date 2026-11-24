@@ -1,0 +1,51 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <a class="bento-back" href="/projects" aria-label="Back to all projects">← All projects</a>
+
+  <section class="bento-pagehead">
+    <p class="bento-kicker">Project</p>
+    <h1 class="bento-h1">{title}</h1>
+    <p class="bento-lede">{description}</p>
+  </section>
+
+  <div class="bento-grid">
+    <article class="bento-card bento-c3">
+      <div class="bento-prose">
+        <Content />
+      </div>
+    </article>
+
+    <aside class="bento-card bento-c1 bento-aside" aria-label="Project details">
+      <p class="bento-kicker">Details</p>
+      <a class="bento-btn bento-btn-primary" href={href} target="_blank" rel="noopener noreferrer">
+        Visit the project ↗
+      </a>
+      <dl class="bento-facts">
+        <div class="bento-fact">
+          <dt>Published</dt>
+          <dd>
+            <FormattedDate date={pubDate} />
+          </dd>
+        </div>
+        <div class="bento-fact">
+          <dt>Stack</dt>
+          <dd>
+            <ul class="bento-chips">
+              {tags.map((tag) => (
+                <li class="bento-chip">{tag}</li>
+              ))}
+            </ul>
+          </dd>
+        </div>
+      </dl>
+    </aside>
+  </div>
+</Layout>

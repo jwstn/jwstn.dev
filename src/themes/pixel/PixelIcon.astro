@@ -1,0 +1,57 @@
+---
+// Tiny rect-grid SVG icons (shape-rendering: crispEdges) so arrows and
+// cursors stay pixel-sharp next to Press Start 2P text. Glyph coverage in
+// Press Start 2P / VT323 is unreliable for ▶ ↗ ◂, so these carry them.
+interface Props {
+  name: "cursor" | "ext" | "back";
+  size?: number;
+}
+
+const { name, size = 10 } = Astro.props;
+
+// [x, y, w, h] on an 8x8 grid
+const ICONS: Record<Props["name"], Array<[number, number, number, number]>> = {
+  cursor: [
+    [0, 0, 1, 1],
+    [0, 1, 2, 1],
+    [0, 2, 3, 1],
+    [0, 3, 4, 1],
+    [0, 4, 5, 1],
+    [0, 5, 4, 1],
+    [0, 6, 3, 1],
+    [0, 7, 2, 1],
+  ],
+  back: [
+    [7, 0, 1, 1],
+    [6, 1, 2, 1],
+    [5, 2, 3, 1],
+    [4, 3, 4, 1],
+    [3, 4, 5, 1],
+    [4, 5, 4, 1],
+    [5, 6, 3, 1],
+    [6, 7, 2, 1],
+  ],
+  ext: [
+    [5, 0, 3, 1],
+    [7, 1, 1, 2],
+    [1, 6, 1, 1],
+    [2, 5, 1, 1],
+    [3, 4, 1, 1],
+    [4, 3, 1, 1],
+    [5, 2, 1, 1],
+  ],
+};
+
+const rects = ICONS[name];
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 8 8"
+  fill="currentColor"
+  shape-rendering="crispEdges"
+  aria-hidden="true"
+>
+  {rects.map(([x, y, w, h]) => <rect x={x} y={y} width={w} height={h} />)}
+</svg>

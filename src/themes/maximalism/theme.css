@@ -1,0 +1,1526 @@
+/*
+ * maximalism — more is more.
+ * Light: saturated party on cream (confetti colors, patterns behind patterns).
+ * Dark: midnight carnival (rich jewel tones on deep aubergine night).
+ * Four deliberately clashing type voices:
+ *   Archivo Black (shouts) · Newsreader italic (interjections) ·
+ *   Caveat (annotations) · Inter (body) · Geist Mono (tiny labels).
+ * Everything is scoped under html.theme-maximalism (+ .dark) — eleven themes
+ * ship in one bundle and nothing may leak.
+ */
+
+@import "@fontsource/archivo-black";
+@import "@fontsource-variable/newsreader/opsz.css";
+@import "@fontsource-variable/newsreader/opsz-italic.css";
+@import "@fontsource/caveat/400.css";
+@import "@fontsource/caveat/700.css";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/geist-mono";
+
+/* ------------------------------------------------------------------ */
+/* Tokens — light: the cream party                                      */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism {
+  color-scheme: light;
+
+  --background: #fff6df;
+  --foreground: #241b2f;
+  --card: #fffbf0;
+  --card-foreground: #241b2f;
+  --primary: #ff5470;
+  --primary-foreground: #241b2f;
+  --secondary: #6d9bff;
+  --secondary-foreground: #241b2f;
+  --muted: #f3e3c0;
+  --muted-foreground: #5c4a6e;
+  --accent: #ffd23f;
+  --accent-foreground: #241b2f;
+  --border: #241b2f;
+  --ring: #d6336c;
+
+  --font-display: "Archivo Black", "Arial Black", sans-serif;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
+
+  /* customs — the confetti palette. Every color below is paired with
+     --mx-ink text and passes WCAG AA (≥ 4.5:1) in this mode. */
+  --mx-ink: #241b2f;
+  --mx-red: #ff5470; /* 5.3:1 vs ink */
+  --mx-yellow: #ffd23f; /* 11.5:1 */
+  --mx-blue: #6d9bff; /* 6.1:1 */
+  --mx-green: #3ecf8e; /* 8.3:1 */
+  --mx-violet: #a878ff; /* 5.4:1 */
+  --mx-pink: #ff4e8e; /* 5.3:1 */
+  --mx-code-bg: #241b2f;
+  --mx-code-fg: #f6efdd;
+
+  --mx-serif: "Newsreader Variable", "Newsreader", Georgia, serif;
+  --mx-hand: "Caveat", cursive;
+}
+
+/* ------------------------------------------------------------------ */
+/* Tokens — dark: the midnight carnival                                 */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism.dark {
+  color-scheme: dark;
+
+  --background: #170e2e;
+  --foreground: #f2e9d8;
+  --card: #221543;
+  --card-foreground: #f2e9d8;
+  --primary: #ff5d73;
+  --primary-foreground: #1c0f38;
+  --secondary: #5b8cff;
+  --secondary-foreground: #1c0f38;
+  --muted: #241845;
+  --muted-foreground: #c9bfe3;
+  --accent: #ffc53d;
+  --accent-foreground: #1c0f38;
+  --border: #f2e9d8;
+  --ring: #ffc53d;
+
+  /* jewel tones — each paired with the dark ink below at ≥ 5.7:1 */
+  --mx-ink: #1c0f38;
+  --mx-red: #ff5d73; /* garnet, 6.1:1 */
+  --mx-yellow: #ffc53d; /* gold, > 10:1 */
+  --mx-blue: #5b8cff; /* sapphire, 5.7:1 */
+  --mx-green: #3ddc97; /* emerald, > 10:1 */
+  --mx-violet: #a87bff; /* amethyst, 6.0:1 */
+  --mx-pink: #ff7fa9; /* rose, 7.6:1 */
+  --mx-code-bg: #0c0722;
+  --mx-code-fg: #f2e9d8;
+}
+
+/* ------------------------------------------------------------------ */
+/* Base                                                                 */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: clip;
+  background-color: var(--background);
+  /* confetti on cream: two dot layers + one faint diagonal weave */
+  background-image:
+    radial-gradient(color-mix(in srgb, var(--mx-pink) 16%, transparent) 1.6px, transparent 1.7px),
+    radial-gradient(color-mix(in srgb, var(--mx-blue) 15%, transparent) 1.3px, transparent 1.4px),
+    repeating-linear-gradient(
+      -45deg,
+      color-mix(in srgb, var(--mx-ink) 4%, transparent) 0 2px,
+      transparent 2px 18px
+    );
+  background-size:
+    190px 190px,
+    130px 130px,
+    auto;
+  background-position:
+    12px 24px,
+    74px 66px,
+    0 0;
+  color: var(--foreground);
+  font-family: var(--font-body);
+  line-height: 1.6;
+}
+
+html.theme-maximalism ::selection {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+
+html.theme-maximalism :focus-visible {
+  outline: 3px solid var(--ring);
+  outline-offset: 3px;
+}
+
+html.theme-maximalism .mx-skip {
+  position: fixed;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 300;
+  transform: translateY(-300%);
+  background: var(--mx-yellow);
+  color: var(--mx-ink);
+  border: 3px solid var(--border);
+  border-radius: 0.6rem;
+  box-shadow: 4px 4px 0 var(--border);
+  padding: 0.55rem 0.95rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+html.theme-maximalism .mx-skip:focus {
+  transform: none;
+}
+
+html.theme-maximalism .mx-main {
+  flex: 1;
+}
+
+html.theme-maximalism .mx-shell {
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+}
+
+/* type voices */
+html.theme-maximalism .mx-serif-i {
+  font-family: var(--mx-serif);
+  font-style: italic;
+  font-weight: 500;
+}
+html.theme-maximalism .mx-hand {
+  font-family: var(--mx-hand);
+  font-size: 1.35rem;
+  line-height: 1.3;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------ */
+/* Accent color utilities — set fill + the zigzag ink for bands         */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .c-red {
+  background-color: var(--mx-red);
+  --band-c: var(--mx-red);
+}
+html.theme-maximalism .c-yellow {
+  background-color: var(--mx-yellow);
+  --band-c: var(--mx-yellow);
+}
+html.theme-maximalism .c-blue {
+  background-color: var(--mx-blue);
+  --band-c: var(--mx-blue);
+}
+html.theme-maximalism .c-green {
+  background-color: var(--mx-green);
+  --band-c: var(--mx-green);
+}
+html.theme-maximalism .c-violet {
+  background-color: var(--mx-violet);
+  --band-c: var(--mx-violet);
+}
+html.theme-maximalism .c-pink {
+  background-color: var(--mx-pink);
+  --band-c: var(--mx-pink);
+}
+html.theme-maximalism .c-card {
+  background-color: var(--card);
+  color: var(--card-foreground);
+}
+
+/* ------------------------------------------------------------------ */
+/* Bands: patterned full-bleed sections with zigzag edges               */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-band {
+  position: relative;
+  color: var(--mx-ink);
+  background-image: repeating-linear-gradient(
+    45deg,
+    color-mix(in srgb, var(--mx-ink) 7%, transparent) 0 10px,
+    transparent 10px 24px
+  );
+}
+/* triangle teeth rising out of the band's top edge */
+html.theme-maximalism .mx-band.zz-t::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  height: 11px;
+  background-image: conic-gradient(from 135deg at 50% 0%, var(--band-c) 90deg, transparent 90.2deg);
+  background-size: 22px 11px;
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+/* triangle teeth hanging off the band's bottom edge */
+html.theme-maximalism .mx-band.zz-b::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 100%;
+  height: 11px;
+  background-image: conic-gradient(from -45deg at 50% 100%, var(--band-c) 90deg, transparent 90.2deg);
+  background-size: 22px 11px;
+  background-repeat: repeat-x;
+  pointer-events: none;
+}
+
+html.theme-maximalism .mx-band-inner {
+  position: relative;
+  z-index: 1;
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(2.1rem, 5vw, 3.4rem);
+  display: grid;
+  gap: 0.9rem;
+}
+
+html.theme-maximalism .mx-band .mx-meta-chip,
+html.theme-maximalism .mx-band .mx-btn.b-ghost {
+  background: var(--card);
+  color: var(--card-foreground);
+}
+
+html.theme-maximalism .mx-eyebrow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+}
+
+html.theme-maximalism .mx-band-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 0.98;
+  text-transform: uppercase;
+  text-wrap: balance;
+  text-shadow: 0.045em 0.045em 0 var(--background);
+}
+
+html.theme-maximalism .mx-band-serif {
+  margin: 0;
+  max-width: 52rem;
+  font-family: var(--mx-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.05rem, 2.4vw, 1.35rem);
+}
+
+/* corner sparkle furniture — decorative only, hidden on small screens
+   so it can never crowd real content */
+html.theme-maximalism .mx-corner {
+  position: absolute;
+  z-index: 0;
+  width: 2.1rem;
+  height: 2.1rem;
+  color: var(--mx-ink);
+  pointer-events: none;
+  display: none;
+  animation: mx-float 7s ease-in-out infinite;
+}
+html.theme-maximalism .mx-corner.p-a {
+  top: 1rem;
+  left: 1.1rem;
+  rotate: -10deg;
+}
+html.theme-maximalism .mx-corner.p-b {
+  top: 1.2rem;
+  right: 1.3rem;
+  rotate: 14deg;
+  animation-delay: 1.6s;
+}
+html.theme-maximalism .mx-corner.p-c {
+  bottom: 0.9rem;
+  left: 2.6rem;
+  rotate: 6deg;
+  animation-delay: 3s;
+}
+html.theme-maximalism .mx-corner.p-d {
+  bottom: 1rem;
+  right: 1.8rem;
+  rotate: -8deg;
+  animation-delay: 4.4s;
+}
+@media (min-width: 40rem) {
+  html.theme-maximalism .mx-corner {
+    display: block;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Top ribbon (the site-wide marquee)                                   */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-topline {
+  background: var(--mx-red);
+  color: var(--mx-ink);
+  border-block: 2px solid var(--border);
+  overflow: hidden;
+}
+html.theme-maximalism .mx-topline-track {
+  display: flex;
+  width: max-content;
+  animation: mx-scroll 46s linear infinite;
+}
+html.theme-maximalism .mx-topline-run {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  padding-block: 0.32rem;
+  padding-inline-end: 1.2rem;
+  white-space: nowrap;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+html.theme-maximalism .mx-topline-sep {
+  width: 0.8em;
+  height: 0.8em;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Header + nav chips                                                   */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-header-inner {
+  position: relative;
+  z-index: 2;
+  width: min(74rem, 100% - 2rem);
+  margin-inline: auto;
+  padding-block: 1.1rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.8rem 1.1rem;
+}
+
+html.theme-maximalism .mx-logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.2rem 0.85rem;
+  background: var(--mx-red);
+  color: var(--mx-ink);
+  border: 3px solid var(--border);
+  border-radius: 0.7rem;
+  box-shadow:
+    4px 4px 0 var(--border),
+    8px 8px 0 var(--mx-blue);
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  rotate: -1.4deg;
+}
+html.theme-maximalism .mx-logo:hover {
+  animation: mx-wiggle 420ms ease-in-out;
+}
+html.theme-maximalism .mx-logo-spark {
+  width: 0.85em;
+  height: 0.85em;
+}
+
+html.theme-maximalism .mx-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-inline-start: auto;
+}
+
+html.theme-maximalism .mx-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.2rem 0.8rem;
+  color: var(--mx-ink);
+  border: 2px solid var(--border);
+  border-radius: 0.55rem;
+  box-shadow: 3px 3px 0 var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-decoration: none;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+html.theme-maximalism .mx-chip:hover {
+  animation: mx-wiggle 420ms ease-in-out;
+  box-shadow: 4px 5px 0 var(--border);
+}
+html.theme-maximalism .mx-chip:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--border);
+}
+html.theme-maximalism .mx-chip[aria-current="page"] {
+  rotate: -2deg;
+  box-shadow:
+    4px 4px 0 var(--border),
+    8px 8px 0 color-mix(in srgb, var(--mx-ink) 40%, transparent);
+  outline: 2px dashed var(--mx-ink);
+  outline-offset: 3px;
+}
+/* ghost chips keep their light/dark-aware text color even though the
+   .mx-chip base rule appears later in this file */
+html.theme-maximalism .mx-chip.c-card {
+  color: var(--card-foreground);
+}
+
+/* ------------------------------------------------------------------ */
+/* Hero                                                                 */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-hero-inner {
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(2.4rem, 6vw, 4rem) clamp(2.2rem, 5vw, 3.4rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.35rem;
+}
+@media (min-width: 64rem) {
+  html.theme-maximalism .mx-hero-inner {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 3rem;
+  }
+}
+
+html.theme-maximalism .mx-kickers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7rem;
+  margin: 0;
+  animation: mx-pop 260ms ease-out both;
+}
+
+html.theme-maximalism .mx-hero-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 7.5vw, 4.9rem);
+  line-height: 1.02;
+  text-transform: uppercase;
+  text-wrap: balance;
+  /* layered hard shadows — the maximalist headline */
+  text-shadow:
+    0.045em 0.045em 0 var(--mx-yellow),
+    0.095em 0.095em 0 var(--mx-red);
+  animation: mx-pop 300ms ease-out both;
+}
+
+html.theme-maximalism .mx-hero-hl {
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--mx-blue);
+  text-decoration-thickness: 0.08em;
+  text-underline-offset: 0.16em;
+}
+
+html.theme-maximalism .mx-hero-serif {
+  margin: 0;
+  max-width: 44rem;
+  font-family: var(--mx-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+  color: var(--muted-foreground);
+  animation: mx-pop 300ms ease-out 90ms both;
+}
+
+html.theme-maximalism .mx-bio {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 1.06rem;
+  color: var(--foreground);
+  animation: mx-pop 300ms ease-out 140ms both;
+}
+html.theme-maximalism .mx-bio a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--mx-pink);
+}
+html.theme-maximalism .mx-bio a:hover {
+  background: var(--mx-yellow);
+  color: var(--mx-ink);
+  text-decoration-color: var(--mx-ink);
+  border-radius: 0.2rem;
+}
+
+html.theme-maximalism .mx-hand-note {
+  display: inline-block;
+  margin: 0;
+  max-width: 30rem;
+  rotate: -1.6deg;
+  color: var(--muted-foreground);
+  animation: mx-pop 300ms ease-out 190ms both;
+}
+
+html.theme-maximalism .mx-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-block-start: 0.4rem;
+  animation: mx-pop 300ms ease-out 240ms both;
+}
+
+html.theme-maximalism .mx-hero-side {
+  display: grid;
+  place-items: center;
+  padding-block: 0.5rem 1rem;
+}
+@media (min-width: 64rem) {
+  html.theme-maximalism .mx-hero-side {
+    padding: 0;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Starburst + sparkle                                                 */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-starburst {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 9.5rem;
+  height: 9.5rem;
+  color: var(--mx-red);
+}
+html.theme-maximalism .mx-starburst.sm {
+  width: 6.5rem;
+  height: 6.5rem;
+}
+html.theme-maximalism .mx-starburst.lg {
+  width: 12.5rem;
+  height: 12.5rem;
+}
+html.theme-maximalism .mx-starburst-shape {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  animation: mx-spin 30s linear infinite;
+}
+html.theme-maximalism .mx-starburst-text {
+  position: relative;
+  z-index: 1;
+  max-width: 62%;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  color: var(--mx-ink);
+}
+html.theme-maximalism .mx-starburst.lg .mx-starburst-text {
+  font-size: 1.05rem;
+}
+html.theme-maximalism .mx-burst-yellow {
+  color: var(--mx-yellow);
+}
+html.theme-maximalism .mx-burst-violet {
+  color: var(--mx-violet);
+}
+
+html.theme-maximalism .mx-sparkle {
+  width: 1.15em;
+  height: 1.15em;
+  display: inline-block;
+  vertical-align: -0.18em;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ */
+/* Content ticker                                                       */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-ticker {
+  background: var(--mx-green);
+  color: var(--mx-ink);
+  border-block: 3px solid var(--border);
+  overflow: hidden;
+}
+html.theme-maximalism .mx-ticker-track {
+  display: flex;
+  width: max-content;
+  animation: mx-scroll 30s linear infinite;
+}
+html.theme-maximalism .mx-ticker-run {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+  padding-block: 0.6rem;
+  padding-inline-end: 1.4rem;
+  white-space: nowrap;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+html.theme-maximalism .mx-ticker-sep {
+  width: 0.85em;
+  height: 0.85em;
+}
+
+/* ------------------------------------------------------------------ */
+/* Cards, badges, tags, buttons                                         */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-card {
+  position: relative;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 3px solid var(--border);
+  border-radius: 0.9rem;
+  box-shadow:
+    7px 7px 0 var(--mx-sh1, var(--mx-blue)),
+    14px 14px 0 var(--mx-sh2, var(--mx-yellow));
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+html.theme-maximalism .mx-card.mx-hover:hover,
+html.theme-maximalism .mx-card.mx-hover:focus-within {
+  transform: translate(-3px, -3px) rotate(-0.4deg);
+  box-shadow:
+    10px 10px 0 var(--mx-sh1, var(--mx-blue)),
+    18px 18px 0 var(--mx-sh2, var(--mx-yellow));
+}
+
+/* overlapping number badge, riding the card's top-left corner */
+html.theme-maximalism .mx-num {
+  position: absolute;
+  top: -1.05rem;
+  left: 1.1rem;
+  display: inline-grid;
+  place-items: center;
+  min-width: 3.7rem;
+  padding: 0.32rem 0.5rem;
+  background: var(--mx-red);
+  color: var(--mx-ink);
+  border: 3px solid var(--border);
+  border-radius: 0.7rem;
+  box-shadow: 3px 3px 0 var(--border);
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  rotate: -5deg;
+}
+
+html.theme-maximalism .mx-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* exclamation-chips */
+html.theme-maximalism .mx-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.65rem;
+  background: var(--mx-yellow);
+  color: var(--mx-ink);
+  border: 2px solid var(--border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+html.theme-maximalism .mx-tag:nth-child(3n + 1) {
+  background: var(--mx-pink);
+  rotate: -2deg;
+}
+html.theme-maximalism .mx-tag:nth-child(3n + 2) {
+  background: var(--mx-blue);
+  rotate: 1.5deg;
+}
+html.theme-maximalism .mx-tag:nth-child(3n) {
+  rotate: -1deg;
+}
+
+html.theme-maximalism .mx-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-height: 48px;
+  padding: 0.4rem 1.2rem;
+  background: var(--mx-red);
+  color: var(--mx-ink);
+  border: 3px solid var(--border);
+  border-radius: 999px;
+  box-shadow:
+    4px 4px 0 var(--border),
+    8px 8px 0 color-mix(in srgb, var(--mx-ink) 35%, transparent);
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  text-decoration: none;
+  transition:
+    transform 150ms ease,
+    box-shadow 150ms ease;
+}
+html.theme-maximalism .mx-btn:hover {
+  animation: mx-wiggle 460ms ease-in-out;
+  box-shadow:
+    5px 6px 0 var(--border),
+    10px 12px 0 color-mix(in srgb, var(--mx-ink) 35%, transparent);
+}
+html.theme-maximalism .mx-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: 1px 1px 0 var(--border);
+}
+html.theme-maximalism .mx-btn.b-yellow {
+  background: var(--mx-yellow);
+}
+html.theme-maximalism .mx-btn.b-blue {
+  background: var(--mx-blue);
+}
+html.theme-maximalism .mx-btn.b-green {
+  background: var(--mx-green);
+}
+html.theme-maximalism .mx-btn.b-violet {
+  background: var(--mx-violet);
+}
+html.theme-maximalism .mx-btn.b-pink {
+  background: var(--mx-pink);
+}
+html.theme-maximalism .mx-btn.b-ghost {
+  background: var(--card);
+  color: var(--card-foreground);
+}
+
+html.theme-maximalism .mx-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+}
+html.theme-maximalism .mx-meta-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.28rem 0.7rem;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 2px solid var(--border);
+  border-radius: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ------------------------------------------------------------------ */
+/* Home doors                                                           */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-doors {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 2.4rem;
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(2.2rem, 5vw, 3.2rem) 4rem;
+}
+
+html.theme-maximalism .mx-door {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 2.6rem 1.4rem 1.4rem;
+  text-decoration: none;
+  color: inherit;
+}
+html.theme-maximalism .mx-door-name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  text-transform: uppercase;
+}
+html.theme-maximalism .mx-door-desc {
+  margin: 0;
+  font-size: 0.98rem;
+}
+html.theme-maximalism .mx-door-cta {
+  margin-block-start: auto;
+  padding-block-start: 0.7rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  text-decoration-line: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--mx-pink);
+  text-decoration-thickness: 3px;
+  text-underline-offset: 5px;
+}
+
+/* per-door shadow + badge palettes */
+html.theme-maximalism .mx-doors > *:nth-child(1) {
+  --mx-sh1: var(--mx-red);
+  --mx-sh2: var(--mx-yellow);
+}
+html.theme-maximalism .mx-doors > *:nth-child(2) {
+  --mx-sh1: var(--mx-green);
+  --mx-sh2: var(--mx-blue);
+}
+html.theme-maximalism .mx-doors > *:nth-child(3) {
+  --mx-sh1: var(--mx-violet);
+  --mx-sh2: var(--mx-pink);
+}
+html.theme-maximalism .mx-doors > *:nth-child(2) .mx-num {
+  background: var(--mx-green);
+}
+html.theme-maximalism .mx-doors > *:nth-child(3) .mx-num {
+  background: var(--mx-violet);
+}
+
+/* ------------------------------------------------------------------ */
+/* Projects index                                                       */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-projects {
+  display: grid;
+  gap: 2.6rem;
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding: 2.6rem 0 4rem;
+  margin-block: 0;
+  list-style: none;
+}
+@media (min-width: 40rem) {
+  html.theme-maximalism .mx-projects > li:nth-child(odd) .mx-project {
+    rotate: -0.5deg;
+  }
+  html.theme-maximalism .mx-projects > li:nth-child(even) .mx-project {
+    rotate: 0.5deg;
+  }
+}
+html.theme-maximalism .mx-projects > li:nth-child(4n + 2) {
+  --mx-sh1: var(--mx-blue);
+  --mx-sh2: var(--mx-green);
+}
+html.theme-maximalism .mx-projects > li:nth-child(4n + 3) {
+  --mx-sh1: var(--mx-violet);
+  --mx-sh2: var(--mx-pink);
+}
+html.theme-maximalism .mx-projects > li:nth-child(4n) {
+  --mx-sh1: var(--mx-green);
+  --mx-sh2: var(--mx-red);
+}
+html.theme-maximalism .mx-projects > li:nth-child(4n + 2) .mx-num {
+  background: var(--mx-blue);
+}
+html.theme-maximalism .mx-projects > li:nth-child(4n + 3) .mx-num {
+  background: var(--mx-green);
+}
+html.theme-maximalism .mx-projects > li:nth-child(4n) .mx-num {
+  background: var(--mx-violet);
+}
+
+html.theme-maximalism .mx-project {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  padding: 2.5rem 1.4rem 1.4rem;
+}
+html.theme-maximalism .mx-project-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.4vw, 2.1rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+html.theme-maximalism .mx-project-title a {
+  color: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--mx-yellow);
+}
+html.theme-maximalism .mx-project-title a:hover {
+  background: var(--mx-yellow);
+  color: var(--mx-ink);
+  text-decoration-color: var(--mx-ink);
+}
+html.theme-maximalism .mx-project-desc {
+  margin: 0;
+  max-width: 44rem;
+  font-size: 1rem;
+}
+html.theme-maximalism .mx-project-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+  margin-block-start: 0.9rem;
+}
+
+/* ------------------------------------------------------------------ */
+/* Detail articles (Project / Post)                                     */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-article {
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: 2.4rem 4.2rem;
+  display: grid;
+  gap: 1.5rem;
+}
+
+html.theme-maximalism .mx-article-title {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 6vw, 3.8rem);
+  line-height: 1;
+  text-transform: uppercase;
+  text-wrap: balance;
+  text-shadow:
+    0.04em 0.04em 0 var(--mx-yellow),
+    0.085em 0.085em 0 var(--mx-red);
+}
+
+html.theme-maximalism .mx-lede {
+  margin: 0;
+  max-width: 46rem;
+  padding: 1.1rem 1.25rem;
+  background: var(--mx-yellow);
+  color: var(--mx-ink);
+  border: 3px solid var(--border);
+  border-radius: 0.8rem;
+  box-shadow: 6px 6px 0 var(--mx-pink);
+  font-family: var(--mx-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+
+html.theme-maximalism .mx-heroimg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid var(--border);
+  border-radius: 0.9rem;
+  box-shadow: 8px 8px 0 var(--mx-blue);
+}
+
+/* ------------------------------------------------------------------ */
+/* Markdown prose — clashing voices kept readable                       */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-prose {
+  max-width: 46rem;
+  font-size: 1.05rem;
+}
+html.theme-maximalism .mx-prose > :first-child {
+  margin-block-start: 0;
+}
+html.theme-maximalism .mx-prose p {
+  margin-block: 1.05em;
+}
+html.theme-maximalism .mx-prose a {
+  color: inherit;
+  font-weight: 600;
+  text-decoration-line: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--mx-pink);
+}
+html.theme-maximalism .mx-prose a:hover {
+  background: var(--mx-yellow);
+  color: var(--mx-ink);
+  text-decoration-color: var(--mx-ink);
+  border-radius: 0.2rem;
+}
+html.theme-maximalism .mx-prose h2 {
+  width: fit-content;
+  margin: 2.1em 0 0.75em;
+  padding: 0.2em 0.5em;
+  background: var(--mx-violet);
+  color: var(--mx-ink);
+  border: 3px solid var(--border);
+  border-radius: 0.6rem;
+  box-shadow: 4px 4px 0 var(--border);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  line-height: 1.2;
+  text-transform: uppercase;
+  rotate: -0.6deg;
+}
+html.theme-maximalism .mx-prose h2:nth-of-type(even) {
+  background: var(--mx-green);
+  rotate: 0.5deg;
+}
+html.theme-maximalism .mx-prose h3 {
+  margin: 1.8em 0 0.55em;
+  font-family: var(--mx-hand);
+  font-weight: 700;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+html.theme-maximalism .mx-prose ul,
+html.theme-maximalism .mx-prose ol {
+  margin-block: 1.1em;
+  padding-inline-start: 1.5em;
+}
+html.theme-maximalism .mx-prose li::marker {
+  color: var(--mx-pink);
+  font-weight: 700;
+}
+html.theme-maximalism .mx-prose blockquote {
+  margin: 1.6em 0;
+  padding: 1em 1.25em;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 3px solid var(--border);
+  border-inline-start: 10px solid var(--mx-red);
+  border-radius: 0 0.8rem 0.8rem 0;
+  font-family: var(--mx-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.2rem;
+}
+html.theme-maximalism .mx-prose blockquote p {
+  margin: 0.3em 0;
+}
+html.theme-maximalism .mx-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--mx-yellow);
+  color: var(--mx-ink);
+  padding: 0.12em 0.38em;
+  border: 1px solid var(--border);
+  border-radius: 0.35rem;
+}
+html.theme-maximalism .mx-prose pre {
+  margin: 1.6em 0;
+  padding: 1rem 1.2rem;
+  overflow-x: auto;
+  background: var(--mx-code-bg);
+  color: var(--mx-code-fg);
+  border: 3px solid var(--border);
+  border-radius: 0.8rem;
+  box-shadow: 6px 6px 0 var(--mx-blue);
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+html.theme-maximalism .mx-prose pre code {
+  background: transparent;
+  color: inherit;
+  border: 0;
+  padding: 0;
+  font-size: inherit;
+}
+html.theme-maximalism .mx-prose img {
+  max-width: 100%;
+  height: auto;
+  border: 3px solid var(--border);
+  border-radius: 0.7rem;
+  box-shadow: 6px 6px 0 var(--mx-violet);
+}
+/* confetti divider */
+html.theme-maximalism .mx-prose hr {
+  border: 0;
+  height: 14px;
+  margin: 2.2em 0;
+  border-radius: 999px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--mx-red) 0 12px,
+    var(--mx-yellow) 12px 24px,
+    var(--mx-blue) 24px 36px,
+    var(--mx-green) 36px 48px
+  );
+}
+html.theme-maximalism .mx-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 3px solid var(--border);
+}
+html.theme-maximalism .mx-prose th,
+html.theme-maximalism .mx-prose td {
+  border: 2px solid var(--border);
+  padding: 0.45em 0.6em;
+  text-align: left;
+}
+html.theme-maximalism .mx-prose th {
+  background: var(--mx-blue);
+  color: var(--mx-ink);
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ */
+/* Blog — festive empty state + ready-for-posts list                    */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-empty {
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(1.6rem, 5vw, 3rem);
+  display: grid;
+  gap: 1.05rem;
+  justify-items: start;
+  position: relative;
+  z-index: 1;
+}
+html.theme-maximalism .mx-empty-bursts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.6rem;
+  padding-block: 0.6rem;
+}
+html.theme-maximalism .mx-empty-bursts .b-violet {
+  color: var(--mx-violet);
+}
+html.theme-maximalism .mx-empty-bursts .b-yellow {
+  color: var(--mx-yellow);
+}
+html.theme-maximalism .mx-empty-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.9rem, 6.5vw, 4rem);
+  line-height: 0.98;
+  text-transform: uppercase;
+  text-wrap: balance;
+  text-shadow: 0.045em 0.045em 0 var(--mx-yellow);
+}
+html.theme-maximalism .mx-empty-text {
+  margin: 0;
+  max-width: 46rem;
+  font-size: 1.08rem;
+}
+html.theme-maximalism .mx-empty-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-block-start: 0.5rem;
+}
+
+html.theme-maximalism .mx-postlist {
+  display: grid;
+  gap: 2.4rem;
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding: 2.4rem 0 4rem;
+  list-style: none;
+}
+html.theme-maximalism .mx-post {
+  display: grid;
+  gap: 0.55rem;
+  padding: 1.5rem 1.4rem 1.4rem;
+  color: inherit;
+  text-decoration: none;
+}
+html.theme-maximalism .mx-post-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.3rem, 3.2vw, 1.9rem);
+  line-height: 1.05;
+  text-transform: uppercase;
+  text-wrap: balance;
+}
+html.theme-maximalism .mx-post:hover .mx-post-title,
+html.theme-maximalism .mx-post:focus-visible .mx-post-title {
+  text-decoration-line: underline;
+  text-decoration-thickness: 4px;
+  text-underline-offset: 5px;
+  text-decoration-color: var(--mx-pink);
+}
+html.theme-maximalism .mx-post-desc {
+  margin: 0;
+  max-width: 44rem;
+  font-family: var(--mx-serif);
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.05rem;
+}
+html.theme-maximalism .mx-postlist > li:nth-child(2) {
+  --mx-sh1: var(--mx-green);
+  --mx-sh2: var(--mx-blue);
+}
+html.theme-maximalism .mx-postlist > li:nth-child(3) {
+  --mx-sh1: var(--mx-violet);
+  --mx-sh2: var(--mx-red);
+}
+
+/* ------------------------------------------------------------------ */
+/* Gallery                                                              */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-albums {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr));
+  gap: 2.6rem;
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(2.4rem, 5vw, 3.2rem) 4.2rem;
+}
+html.theme-maximalism .mx-album {
+  display: flex;
+  flex-direction: column;
+  color: inherit;
+  text-decoration: none;
+}
+html.theme-maximalism .mx-album-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border-radius: calc(0.9rem - 3px) calc(0.9rem - 3px) 0 0;
+  border-block-end: 3px solid var(--border);
+}
+html.theme-maximalism .mx-album-strip img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+html.theme-maximalism .mx-album-strip > * + * {
+  border-inline-start: 2px solid var(--border);
+}
+html.theme-maximalism .mx-album-info {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.1rem 1.2rem 1.3rem;
+}
+html.theme-maximalism .mx-album-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  text-transform: uppercase;
+}
+html.theme-maximalism .mx-album-note {
+  margin: 0;
+  font-family: var(--mx-hand);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.25;
+}
+html.theme-maximalism .mx-album-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+html.theme-maximalism .mx-albums > li:nth-child(2) {
+  --mx-sh1: var(--mx-green);
+  --mx-sh2: var(--mx-blue);
+}
+html.theme-maximalism .mx-albums > li:nth-child(3) {
+  --mx-sh1: var(--mx-violet);
+  --mx-sh2: var(--mx-pink);
+}
+
+html.theme-maximalism .mx-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 2.2rem 1.7rem;
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(2.2rem, 5vw, 3rem) 4.4rem;
+}
+/* photos on patterned mats, tilting alternately like a carnival wall */
+html.theme-maximalism .mx-photo {
+  margin: 0;
+  padding: 0.65rem;
+  background-color: var(--card);
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--mx-ink) 12%, transparent) 1.4px,
+    transparent 1.5px
+  );
+  background-size: 12px 12px;
+  border: 3px solid var(--border);
+  border-radius: 0.8rem;
+  box-shadow: 7px 7px 0 var(--mx-sh1, var(--mx-pink));
+}
+@media (min-width: 40rem) {
+  html.theme-maximalism .mx-photo:nth-child(odd) {
+    rotate: -0.7deg;
+  }
+  html.theme-maximalism .mx-photo:nth-child(even) {
+    rotate: 0.7deg;
+  }
+  html.theme-maximalism .mx-photo-wide {
+    grid-column: span 2;
+  }
+}
+html.theme-maximalism .mx-photo img {
+  display: block;
+  width: 100%;
+  border: 2px solid var(--border);
+  border-radius: 0.45rem;
+}
+html.theme-maximalism .mx-photo:nth-child(3n + 2) {
+  --mx-sh1: var(--mx-blue);
+}
+html.theme-maximalism .mx-photo:nth-child(3n) {
+  --mx-sh1: var(--mx-violet);
+}
+html.theme-maximalism .mx-photo-cap {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.7rem 0.4rem 0.3rem;
+}
+html.theme-maximalism .mx-photo-title {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+html.theme-maximalism .mx-photo-caption {
+  margin: 0;
+  font-family: var(--mx-hand);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: 1.25;
+  color: var(--muted-foreground);
+}
+
+/* ------------------------------------------------------------------ */
+/* Footer — the violet grand finale                                    */
+/* ------------------------------------------------------------------ */
+
+html.theme-maximalism .mx-footer-inner {
+  position: relative;
+  z-index: 1;
+  width: min(74rem, 100% - 2.5rem);
+  margin-inline: auto;
+  padding-block: clamp(2.2rem, 5vw, 3.4rem);
+  display: grid;
+  gap: 0.9rem;
+  justify-items: center;
+  text-align: center;
+}
+html.theme-maximalism .mx-footer-title {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 4vw, 2.3rem);
+  text-transform: uppercase;
+  text-shadow: 0.045em 0.045em 0 var(--background);
+}
+html.theme-maximalism .mx-footer-copy {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+html.theme-maximalism .mx-footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.7rem;
+}
+html.theme-maximalism .mx-footer-hand {
+  margin: 0.3rem 0 0;
+  max-width: 34rem;
+  rotate: -1deg;
+}
+
+/* ------------------------------------------------------------------ */
+/* Motion — busy but respectful, everything off for reduced motion      */
+/* ------------------------------------------------------------------ */
+
+@keyframes mx-scroll {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes mx-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+@keyframes mx-wiggle {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-1.6deg);
+  }
+  75% {
+    transform: rotate(1.6deg);
+  }
+}
+
+@keyframes mx-pop {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+}
+
+@keyframes mx-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-maximalism .mx-topline-track,
+  html.theme-maximalism .mx-ticker-track,
+  html.theme-maximalism .mx-starburst-shape,
+  html.theme-maximalism .mx-corner,
+  html.theme-maximalism .mx-kickers,
+  html.theme-maximalism .mx-hero-title,
+  html.theme-maximalism .mx-hero-serif,
+  html.theme-maximalism .mx-bio,
+  html.theme-maximalism .mx-hand-note,
+  html.theme-maximalism .mx-hero-actions {
+    animation: none;
+  }
+  html.theme-maximalism .mx-chip,
+  html.theme-maximalism .mx-btn,
+  html.theme-maximalism .mx-card,
+  html.theme-maximalism .mx-logo {
+    transition: none;
+  }
+  html.theme-maximalism .mx-chip:hover,
+  html.theme-maximalism .mx-btn:hover,
+  html.theme-maximalism .mx-logo:hover {
+    animation: none;
+    box-shadow: 3px 3px 0 var(--border);
+  }
+  html.theme-maximalism .mx-btn:hover {
+    box-shadow: 4px 4px 0 var(--border);
+  }
+  html.theme-maximalism .mx-card.mx-hover:hover,
+  html.theme-maximalism .mx-card.mx-hover:focus-within,
+  html.theme-maximalism .mx-chip:active,
+  html.theme-maximalism .mx-btn:active {
+    transform: none;
+  }
+}

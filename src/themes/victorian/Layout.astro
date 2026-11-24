@@ -1,0 +1,87 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import Fleuron from "./Fleuron.astro";
+import { roman } from "./numerals";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" || path === "" : path.startsWith(href));
+
+const nav: { href: string; label: string }[] = [
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
+];
+
+const socials = SOCIALS.map((s) => ({ href: s.href, label: s.label, external: true }));
+const items = [...nav, ...socials];
+---
+
+<html lang="en" class="theme-victorian">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <header class="vic-masthead">
+      <div class="vic-heavyrule" aria-hidden="true"></div>
+      <Fleuron class="vic-orn--mast" />
+      <a class="vic-brand" href="/">jwstn.dev</a>
+      <p class="vic-masthead-sub">
+        A Catalogue of Works &amp; Photographs · Vol. {roman(year)}
+      </p>
+      <div class="vic-thinrule" aria-hidden="true"></div>
+      <nav class="vic-nav" aria-label="Primary">
+        {
+          items.map((item, i) => (
+            <Fragment>
+              {i > 0 && <span class="vic-nav-sep" aria-hidden="true" />}
+              <a
+                class="vic-nav-link"
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+                target={item.external ? "_blank" : undefined}
+                rel={item.external ? "noopener noreferrer" : undefined}
+              >
+                {item.label}
+              </a>
+            </Fragment>
+          ))
+        }
+      </nav>
+      <div class="vic-heavyrule vic-heavyrule--closed" aria-hidden="true"></div>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="vic-imprint">
+      <Fleuron class="vic-orn--imprint" />
+      <p class="vic-imprint-line">Printed &amp; Published at Cologne by JW</p>
+      <p class="vic-imprint-copy">&copy; {year} — jwstn</p>
+      <p class="vic-imprint-socials">
+        {
+          socials.map((s, i) => (
+            <Fragment>
+              {i > 0 && <span class="vic-nav-sep" aria-hidden="true" />}
+              <a href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+              </a>
+            </Fragment>
+          ))
+        }
+      </p>
+      <p class="vic-imprint-colophon">
+        Set in Cormorant Garamond &amp; Inter · All rights reserved
+      </p>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

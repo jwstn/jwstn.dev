@@ -1,0 +1,139 @@
+---
+import { Image } from "astro:assets";
+import { getAlbums, getProjects, SOCIALS } from "#/lib/content";
+import type { HomeProps } from "#/themes/types";
+import Icon from "./Icon.astro";
+import Layout from "./Layout.astro";
+
+Astro.props as HomeProps;
+
+const [albums, projects] = await Promise.all([getAlbums(), getProjects()]);
+const photoCount = albums.reduce((n, album) => n + album.data.photos.length, 0);
+
+// Frame of the day: first photo of the newest album (Japan 2026).
+const newest = albums[0]?.data;
+const frame = newest?.photos[0];
+---
+
+<Layout
+  title="jwstn.dev — JW, full-stack developer in Cologne"
+  description="JW builds web applications with TanStack, experiments with Effect, and takes his camera everywhere — most recently to Japan."
+>
+  <section class="bento-grid" aria-label="Who I am, in cells">
+    <article class="bento-card bento-c2 bento-r2">
+      <p class="bento-kicker">01 · Hello</p>
+      <h1 class="bento-intro-title">Hey, I'm JW — I build web apps in Cologne.</h1>
+      <p class="bento-intro-text">
+        Full-stack developer with a product brain. Most of my days go into web apps with
+        <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — it
+        covers so much of what a modern app needs that
+        <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> and
+        <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> are
+        still waiting their turn on the shelf. What I did get around to is
+        <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> —
+        the most fun I've had relearning how a program can be written. When the laptop closes, the
+        camera comes out: in 2026 it came along to Japan and came home with far too many photos.
+      </p>
+      <div class="bento-btnrow">
+        <a class="bento-btn bento-btn-primary" href="/projects">See the work</a>
+        <a class="bento-btn" href="/gallery">Browse the gallery</a>
+      </div>
+      <p class="bento-pinrow">
+        <Icon name="pin" /> Cologne, DE — 50.938° N, 6.960° E
+      </p>
+    </article>
+
+    {
+      frame && newest && (
+        <a
+          class="bento-card bento-frame bento-lift bento-c2"
+          href={`/gallery/${newest.slug}/`}
+          aria-label={`Open the album ${newest.title}`}
+        >
+          <div class="bento-cover">
+            <Image
+              src={frame.image}
+              alt=""
+              widths={[640, 1024, 1600]}
+              sizes="(min-width: 64rem) 36rem, (min-width: 40rem) 92vw, 92vw"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="bento-bar">
+            <p class="bento-kicker">02 · Frame of the day — {newest.title}</p>
+            <p class="bento-bar-title">{frame.title}</p>
+          </div>
+        </a>
+      )
+    }
+
+    <article class="bento-card bento-c1">
+      <div class="bento-card-top">
+        <span class="bento-ico"><Icon name="code" /></span>
+        <p class="bento-kicker">03 · Stack</p>
+      </div>
+      <ul class="bento-stacklist">
+        <li>TanStack Start · Query · Table</li>
+        <li>Effect</li>
+        <li>Rust · GPUI · Rune</li>
+      </ul>
+      <p class="bento-footnote">Hono &amp; Elysia — on the shelf.</p>
+    </article>
+
+    <article class="bento-card bento-c1">
+      <p class="bento-kicker">04 · Numbers</p>
+      <div class="bento-stats">
+        <div>
+          <p class="bento-stat-n">{projects.length}</p>
+          <p class="bento-stat-l">Projects</p>
+        </div>
+        <div>
+          <p class="bento-stat-n">{albums.length}</p>
+          <p class="bento-stat-l">Albums</p>
+        </div>
+        <div>
+          <p class="bento-stat-n">{photoCount}</p>
+          <p class="bento-stat-l">Photos</p>
+        </div>
+      </div>
+    </article>
+
+    <article class="bento-card bento-c2">
+      <p class="bento-kicker">05 · Elsewhere</p>
+      <div class="bento-socials">
+        {
+          SOCIALS.map((s) => (
+            <a class="bento-social-row" href={s.href} target="_blank" rel="noopener noreferrer">
+              <Icon name={s.label === "GitHub" ? "github" : "bluesky"} />
+              <span>{s.label}</span>
+              <span class="bento-arrow" aria-hidden="true">
+                ↗
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </article>
+
+    <a class="bento-card bento-lift bento-c1" href="/blog">
+      <div class="bento-card-top">
+        <span class="bento-ico"><Icon name="pen" /></span>
+        <p class="bento-kicker">06 · Writing</p>
+      </div>
+      <h2 class="bento-h2">Quiet for now</h2>
+      <p class="bento-cellcopy">No posts yet — the first one is in the oven.</p>
+      <p class="bento-cellmore">Reserved →</p>
+    </a>
+
+    <a class="bento-card bento-lift bento-c1" href="/gallery">
+      <div class="bento-card-top">
+        <span class="bento-ico bento-ico--acc"><Icon name="camera" /></span>
+        <p class="bento-kicker">07 · Light</p>
+      </div>
+      <h2 class="bento-h2">{albums.length} albums, {photoCount} photos</h2>
+      <p class="bento-cellcopy">Japan 2026 and the seasons back home in Germany.</p>
+      <p class="bento-cellmore">Open →</p>
+    </a>
+  </section>
+</Layout>

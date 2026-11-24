@@ -1,0 +1,94 @@
+---
+import Doodle from "./Doodle.astro";
+import Washi from "./Washi.astro";
+import Layout from "./Layout.astro";
+---
+
+<Layout
+  title="jwstn.dev — JW's scrapbook"
+  description="Full-stack developer in Cologne, taping web apps, notes and photos into one scrapbook — built with TanStack, annotated by hand."
+>
+  <article class="sb-home">
+    <!-- the first page of the book: a ruled notebook sheet -->
+    <section class="sb-notebook sb-hero" aria-labelledby="sb-hero-title">
+      <Washi variant={2} class="pos-tl" />
+      <Washi variant={3} class="pos-tr" />
+
+      <p class="sb-stamp">from the desk of jw · cologne, germany</p>
+      <h1 class="sb-hero-title" id="sb-hero-title">
+        Hey — I'm JW.
+        <Doodle name="underline" class="sb-doodle-underline" />
+      </h1>
+      <p class="sb-hero-sub">Full-stack developer. I build web apps, then tape the interesting bits into this book.</p>
+
+      <div class="sb-hero-bio">
+        <p>
+          Most days I'm deep in
+          <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — it hands
+          me most of what a web app needs, server actions and middleware included, which is exactly why
+          <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> and
+          <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> are still
+          sitting on the someday shelf. The backend rabbit hole I <em>did</em> fall down is
+          <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> —
+          amazing fun so far, and a genuinely new way to think about programs.
+        </p>
+        <p class="sb-hand sb-hero-hand">
+          ps — the camera that came home from Japan in 2026 hasn't left my bag since. more on that over in
+          the <a href="/gallery">photo album</a>.
+        </p>
+      </div>
+
+      <Doodle name="arrow" class="sb-hero-arrow" />
+    </section>
+
+    <!-- three taped scraps pointing at the rest of the book -->
+    <section aria-labelledby="sb-inside-title">
+      <h2 class="sb-section-title" id="sb-inside-title">
+        inside the book
+        <Doodle name="underline" class="sb-doodle-underline" />
+      </h2>
+      <ul class="sb-home-cards">
+        <li>
+          <div class="sb-paper sb-home-card">
+            <Washi variant={1} class="pos-top" />
+            <h3><a href="/projects">The project pages</a></h3>
+            <p>
+              Four things worth the tape: a vinyl collection forum, a terminal Spotify client, an app for
+              learning sign language, and one very personal todo list.
+            </p>
+            <a class="sb-cardlink" href="/projects">flip through them</a>
+          </div>
+        </li>
+        <li>
+          <div class="sb-paper sb-home-card">
+            <Washi variant={4} class="pos-tr" />
+            <h3><a href="/blog">The notebook</a></h3>
+            <p>
+              A fresh notebook, spine uncracked. No entries yet — but the pen's warmed up and the pages
+              are ruled and waiting.
+            </p>
+            <a class="sb-cardlink" href="/blog">peek at the blank page</a>
+          </div>
+        </li>
+        <li>
+          <div class="sb-paper sb-home-card">
+            <Washi variant={3} class="pos-tl" />
+            <div class="sb-mini-polaroid" aria-hidden="true">
+              <svg viewBox="0 0 96 72" fill="none" stroke="#5c4a33" stroke-width="2.4" stroke-linecap="round">
+                <circle cx="26" cy="18" r="8"></circle>
+                <path d="M4 62 C 20 44, 34 52, 46 60 C 58 50, 74 42, 92 60"></path>
+                <path d="M4 62 L 92 62" stroke-width="2"></path>
+              </svg>
+            </div>
+            <h3><a href="/gallery">The photo album</a></h3>
+            <p>
+              Polaroids from Cologne walks, spring blossoms and a Japan 2026 trip — each one taped in by
+              hand as the film comes back.
+            </p>
+            <a class="sb-cardlink" href="/gallery">open the album</a>
+          </div>
+        </li>
+      </ul>
+    </section>
+  </article>
+</Layout>

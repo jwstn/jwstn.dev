@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { PostProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Weave from "./Weave.astro";
+
+const { post, Content } = Astro.props as PostProps;
+const { title, description, pubDate, updatedDate, heroImage } = post.data;
+---
+
+<Layout title={`${title} — jwstn.dev`} description={description}>
+  <article class="boh-article">
+    <p class="boh-backrow boh-fade">
+      <a class="boh-back" href="/blog">&larr; The loom room</a>
+    </p>
+
+    <header class="boh-fade">
+      <p class="boh-stamp">A weaving</p>
+      <h1 class="boh-article-title">{title}</h1>
+      <p class="boh-meta">
+        <FormattedDate date={pubDate} />
+        {
+          updatedDate && (
+            <span>
+              <span aria-hidden="true"> &middot; </span>rewoven{" "}
+              <FormattedDate date={updatedDate} />
+            </span>
+          )
+        }
+      </p>
+    </header>
+
+    {
+      heroImage && (
+        <figure class="boh-heroimg boh-fade boh-fade-2">
+          <Image src={heroImage} alt="" width={1024} height={512} />
+        </figure>
+      )
+    }
+
+    <Weave variant="band" class="boh-divider" />
+
+    <div class="boh-prose boh-fade boh-fade-2">
+      <Content />
+    </div>
+
+    <Weave variant="fringe" class="boh-divider" />
+  </article>
+</Layout>

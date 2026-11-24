@@ -1,0 +1,106 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Icon from "./Icon.astro";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+
+// Bento spans for real posts, kept ready: newest = 2×2, then 2×1s, the
+// oldest = full-width flat row card (mirrors the projects index).
+const spanFor = (i: number) =>
+  i === 0 ? "bento-c2 bento-r2" : i === posts.length - 1 ? "bento-c4 bento-rowcard" : "bento-c2";
+---
+
+<Layout
+  title="Blog | jwstn.dev"
+  description="Occasional writing by JW — when something is worth keeping."
+>
+  <section class="bento-pagehead">
+    <p class="bento-kicker">Writing</p>
+    <h1 class="bento-h1">Blog.</h1>
+    <p class="bento-lede">
+      Notes worth keeping — written slowly, and only when something earns its cell.
+    </p>
+  </section>
+
+  {
+    posts.length === 0 ? (
+      <section class="bento-grid" aria-label="No posts yet">
+        <article class="bento-card bento-c2 bento-r2 bento-empty">
+          <p class="bento-kicker">Status · Empty</p>
+          <span class="bento-ico">
+            <Icon name="pen" />
+          </span>
+          <h2 class="bento-empty-title">Nothing published yet.</h2>
+          <p class="bento-empty-text">
+            This cell is reserved for writing that has to exist — notes from the Effect
+            experiments, stories from the Japan trip, the occasional lesson a project taught me
+            the hard way. When the first post ships, it lands here first.
+          </p>
+          <div class="bento-btnrow">
+            <a class="bento-btn bento-btn-primary" href="/projects">
+              See what I'm building
+            </a>
+            <a class="bento-btn" href="/gallery">
+              Browse the gallery instead
+            </a>
+          </div>
+        </article>
+
+        <article class="bento-slot bento-c1">
+          <p class="bento-kicker">Slot 01 · Reserved</p>
+          <span class="bento-ico"><Icon name="spark" /></span>
+          <p class="bento-slot-copy">Effect experiments, written down properly.</p>
+        </article>
+
+        <article class="bento-slot bento-c1">
+          <p class="bento-kicker">Slot 02 · Reserved</p>
+          <span class="bento-ico"><Icon name="camera" /></span>
+          <p class="bento-slot-copy">Japan 2026, with a camera and no regrets.</p>
+        </article>
+
+        <article class="bento-slot bento-c2">
+          <p class="bento-kicker">Slot 03 · Reserved — wide</p>
+          <span class="bento-ico"><Icon name="wrench" /></span>
+          <p class="bento-slot-copy">
+            The first post lands here. Until then, the workbench is on GitHub and the pictures are
+            in the gallery.
+          </p>
+        </article>
+      </section>
+    ) : (
+      <ul class="bento-grid">
+        {posts.map((post, i) => (
+          <li class={`bento-card bento-lift ${spanFor(i)}`}>
+            {post.data.heroImage && (
+              <div class="bento-cardimg">
+                <Image
+                  src={post.data.heroImage}
+                  alt=""
+                  width={1024}
+                  height={480}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <h2 class="bento-card-title">
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </h2>
+            <p class="bento-card-desc">{post.data.description}</p>
+            <p class="bento-card-meta">
+              <FormattedDate date={post.data.pubDate} />
+              {post.data.updatedDate && (
+                <span>
+                  updated <FormattedDate date={post.data.updatedDate} />
+                </span>
+              )}
+            </p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Layout>

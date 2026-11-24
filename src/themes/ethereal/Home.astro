@@ -1,0 +1,64 @@
+---
+import type { HomeProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+Astro.props as HomeProps;
+---
+
+<Layout
+  title="jwstn.dev — JW, full-stack developer in Cologne"
+  description="JW is a full-stack developer in Cologne building web applications with TanStack, occasionally wandering into Effect — and carrying a camera, most recently through Japan."
+>
+  <section class="eth-hero eth-fade">
+    <p class="eth-kicker">JW — Full-Stack Developer — Cologne</p>
+    <h1 class="eth-display">
+      Built quietly,<br />
+      <em>kept like light in the mist.</em>
+    </h1>
+    <p class="eth-lede">
+      I'm JW, a full-stack developer in Cologne. Most of my days go into web applications with
+      <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — it quietly
+      covers so much of what a modern app needs that
+      <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> and
+      <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> are still
+      waiting their turn on the shelf. What I did make room for is
+      <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> — the most
+      fun I've had in a while, and a whole new way to think about writing a program.
+    </p>
+    <p class="eth-lede">
+      When the keyboard rests, the camera comes out. In 2026 it travelled to Japan — and it hasn't
+      really been put away since.
+    </p>
+  </section>
+
+  <div class="eth-mistline eth-fade" aria-hidden="true"></div>
+
+  <section class="eth-doorways eth-fade eth-fade-2" aria-labelledby="eth-doorways-h">
+    <h2 id="eth-doorways-h" class="eth-kicker">Where to wander</h2>
+    <div class="eth-doorway-grid">
+      <a class="eth-panel eth-doorway" href="/projects">
+        <span class="eth-doorway-kicker">Projects</span>
+        <span class="eth-doorway-title">Four small lights, still burning</span>
+        <span class="eth-doorway-note">
+          Works in slow progress — a home for vinyl collections, a terminal that plays music, a way to
+          learn sign-language, and a note app that is entirely mine.
+        </span>
+      </a>
+      <a class="eth-panel eth-doorway" href="/blog">
+        <span class="eth-doorway-kicker">Blog</span>
+        <span class="eth-doorway-title">Nothing has drifted in yet</span>
+        <span class="eth-doorway-note">
+          Words take their time here. Something is gathering — it will arrive when it stops moving.
+        </span>
+      </a>
+      <a class="eth-panel eth-doorway" href="/gallery">
+        <span class="eth-doorway-kicker">Gallery</span>
+        <span class="eth-doorway-title">Photographs, kept soft</span>
+        <span class="eth-doorway-note">
+          Japan 2026, a German summer, and the spring that opened the year — kept like pressed
+          flowers.
+        </span>
+      </a>
+    </div>
+  </section>
+</Layout>

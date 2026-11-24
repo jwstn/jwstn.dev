@@ -1,0 +1,61 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import Layout from "./Layout.astro";
+import type { ProjectsProps } from "#/themes/types";
+
+const { projects } = Astro.props as ProjectsProps;
+
+// Mission-file classification: entries titled "(WIP) …" carry a WIP stamp,
+// everything else is filed ACTIVE. The "(WIP)" prefix is shown as the stamp.
+const classify = (title: string) => (title.startsWith("(WIP)") ? "wip" : "active");
+const fileTitle = (title: string) => title.replace(/^\(WIP\)\s*/, "");
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="The mission archive — things JW has built and is building: TanStack apps, Rust/GPUI experiments, a Spotify TUI and a note app that refuses to die."
+>
+  <section class="cy-pagehead" aria-label="Projects">
+    <p class="cy-kicker cy-reveal">// access granted — declassify on open</p>
+    <h1 class="cy-title cy-bootglitch cy-glitch">Mission archive</h1>
+    <p class="cy-count">{projects.length} files indexed — newest first</p>
+    <div class="cy-tape" aria-hidden="true"></div>
+  </section>
+
+  <div class="cy-stack">
+    {
+      projects.map((project, i) => (
+        <article class="cy-frame cy-reveal" style={`--d: ${0.12 + i * 0.1}s`}>
+          <p class="cy-file-head">
+            <span>
+              file <span class="cy-file-no">{String(i + 1).padStart(2, "0")}</span> — {project.id}
+            </span>
+            <span class={`cy-stamp cy-stamp--${classify(project.data.title)}`}>
+              [{classify(project.data.title) === "wip" ? "WIP" : "ACTIVE"}]
+            </span>
+          </p>
+          <div class="cy-file-body">
+            <h2 class="cy-file-title">
+              <a class="cy-glitch" href={`/projects/${project.id}/`}>{fileTitle(project.data.title)}</a>
+            </h2>
+            <p class="cy-file-desc">{project.data.description}</p>
+            <p class="cy-count">
+              logged <FormattedDate date={project.data.pubDate} />
+            </p>
+            <ul class="cy-chips" aria-label={`Tags for ${fileTitle(project.data.title)}`}>
+              {project.data.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+            <p class="cy-actions">
+              <a class="cy-btn" href={`/projects/${project.id}/`}>open dossier →</a>
+              <a class="cy-btn cy-btn--ghost" href={project.data.href} target="_blank" rel="noopener noreferrer">
+                external link ↗
+              </a>
+            </p>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</Layout>

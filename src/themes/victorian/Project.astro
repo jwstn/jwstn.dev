@@ -1,0 +1,52 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Corners from "./Corners.astro";
+import Fleuron from "./Fleuron.astro";
+import Layout from "./Layout.astro";
+import { catalogueLine } from "./numerals";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} — jwstn.dev`} description={description}>
+  <article class="vic-frame vic-article">
+    <Corners />
+
+    <p class="vic-backrow">
+      <a class="vic-back" href="/projects">&larr; Return to the Catalogue</a>
+    </p>
+
+    <header class="vic-article-head">
+      <p class="vic-label">Catalogue Entry</p>
+      <h1 class="vic-articletitle">{title}</h1>
+      <p class="vic-entry-cat">{catalogueLine(project.id, description)}</p>
+      <p class="vic-entry-meta">
+        Entered
+        <span class="vic-meta-date">
+          <FormattedDate date={pubDate} />
+        </span>
+        <span class="vic-meta-sep" aria-hidden="true">·</span>
+        <a class="vic-work-link" href={href} target="_blank" rel="noopener noreferrer">
+          View the Work
+        </a>
+      </p>
+    </header>
+
+    <div class="vic-prose">
+      <Content />
+    </div>
+
+    {
+      tags.length > 0 && (
+        <p class="vic-entry-tags vic-entry-tags--end">
+          <span class="vic-tags-label">Instruments Employed</span>
+          {tags.join(" · ")}
+        </p>
+      )
+    }
+
+    <Fleuron class="vic-orn--end" />
+  </article>
+</Layout>

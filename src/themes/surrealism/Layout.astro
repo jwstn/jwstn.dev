@@ -1,0 +1,79 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const navItems = [
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Gallery", href: "/gallery" },
+];
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+---
+
+<html lang="en" class="theme-surrealism">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body class="bg-background text-foreground font-body">
+    <a class="sur-skip" href="#sur-main">Skip to content</a>
+
+    <header class="sur-header">
+      <div class="sur-shell sur-bar">
+        <a class="sur-wordmark" href="/" aria-current={path === "/" ? "page" : undefined}>
+          jwstn.dev
+        </a>
+        <nav class="sur-nav" aria-label="Main navigation">
+          {
+            navItems.map((item) => (
+              <a
+                class="sur-link"
+                href={item.href}
+                aria-current={isActive(item.href) ? "page" : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <nav class="sur-nav sur-nav--social" aria-label="Social links">
+          {
+            SOCIALS.map((s) => (
+              <a class="sur-link" href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label} ↗
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </header>
+
+    <main id="sur-main" class="sur-main">
+      <slot />
+    </main>
+
+    <footer class="sur-footer">
+      <div class="sur-shell sur-foot-inner">
+        <p class="sur-foot-copy">&copy; {year} <strong>jwstn</strong> — Cologne, in a light sleep.</p>
+        <p class="sur-foot-sign">The museum closes the moment you stop believing in it.</p>
+        <nav class="sur-foot-socials" aria-label="Social links">
+          {
+            SOCIALS.map((s) => (
+              <a class="sur-foot-link" href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label} ↗
+              </a>
+            ))
+          }
+        </nav>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

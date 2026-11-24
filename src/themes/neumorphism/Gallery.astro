@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { GalleryProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { albums } = Astro.props as GalleryProps;
+
+const photoCount = (n: number) => `${n} photograph${n === 1 ? "" : "s"}`;
+---
+
+<Layout
+  title="Gallery — jwstn.dev"
+  description="Photographs by JW — Japan 2026, a German summer, and the spring at home."
+>
+  <header class="neu-pagehead neu-rise">
+    <p class="neu-kicker">Photographs</p>
+    <h1 class="neu-display">Gallery</h1>
+    <p class="neu-lede">
+      In 2026 the camera travelled to Japan — and never really went back in the bag. Three
+      albums sit here in extruded frames: the Japan trip, a German summer, and the spring that
+      opened the year.
+    </p>
+  </header>
+
+  <div class="neu-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+
+  <ul class="neu-grid neu-grid--albums neu-rise neu-rise-2">
+    {
+      albums.map((album) => (
+        <li>
+          <a class="neu-card" href={`/gallery/${album.data.slug}/`}>
+            {album.data.photos[0] && (
+              <div class="neu-well neu-cover">
+                <Image
+                  src={album.data.photos[0].image}
+                  alt={`Opening photograph of the album ${album.data.title}`}
+                  widths={[480, 800, 1200]}
+                  sizes="(min-width: 41rem) 30rem, calc(100vw - 5rem)"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <h2 class="neu-album-title">{album.data.title}</h2>
+            <div class="neu-card-meta">
+              <span class="neu-chip">
+                <FormattedDate date={album.data.pubDate} />
+              </span>
+              <span class="neu-chip">{photoCount(album.data.photos.length)}</span>
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

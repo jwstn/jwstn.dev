@@ -1,0 +1,47 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+
+<Layout
+  title="Projects | jwstn.dev"
+  description="Things JW has built — web apps, a terminal UI and desktop experiments."
+>
+  <section class="clay-article">
+    <p class="clay-stamp clay-rise clay-d1">workbench</p>
+    <h1 class="clay-h1 clay-rise clay-d2">Projects</h1>
+    <p class="clay-lede clay-rise clay-d3">
+      Four builds, each one kneaded into shape at my desk in Cologne. Some are sturdy, some are still
+      soft — all of them taught me something. Press one to see how it was formed.
+    </p>
+  </section>
+
+  <ul class="clay-grid">
+    {
+      projects.map((project, i) => (
+        <li class="clay clay-card squish clay-rise" class:list={["clay-d1", "clay-d2", "clay-d3", "clay-d4"][i % 4]}>
+          <h2>
+            <a class="clay-card-link" href={`/projects/${project.id}/`}>
+              {project.data.title}
+            </a>
+          </h2>
+          <p class="clay-card-desc">{project.data.description}</p>
+          <p class="clay-meta">
+            <FormattedDate date={project.data.pubDate} />
+            <a href={project.data.href} target="_blank" rel="noopener noreferrer">
+              Visit ↗
+            </a>
+          </p>
+          <ul class="clay-chips">
+            {project.data.tags.map((tag) => (
+              <li class="clay-chip">{tag}</li>
+            ))}
+          </ul>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

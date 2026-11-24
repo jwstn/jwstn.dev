@@ -1,0 +1,104 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import PixelIcon from "./PixelIcon.astro";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
+
+const navItems = [
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Gallery", href: "/gallery" },
+];
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
+
+// Footer XP bar — playful save-file flavor, not a real metric.
+const xpNow = 680;
+const xpNext = 999;
+const xpPct = Math.round((xpNow / xpNext) * 100);
+---
+
+<html lang="en" class="theme-pixel">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+
+  <body>
+    <a class="px-skip" href="#px-main">Skip to content</a>
+
+    <header class="px-topbar">
+      <div class="px-shell px-topbar-inner">
+        <a class="px-brand" href="/" aria-current={path === "/" ? "page" : undefined}>
+          <i class="px-heart px-brand-heart" aria-hidden="true"></i>
+          jwstn.dev
+        </a>
+        <nav class="px-nav" aria-label="Main navigation">
+          {
+            navItems.map((item) => (
+              <a class="px-navlink" href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+                <span class="px-navcursor" aria-hidden="true">
+                  <PixelIcon name="cursor" size={10} />
+                </span>
+                {item.label}
+              </a>
+            ))
+          }
+        </nav>
+        <div class="px-nav-ext">
+          {
+            SOCIALS.map((s) => (
+              <a class="px-navlink px-navlink-ext" href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label}
+                <PixelIcon name="ext" size={10} />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+    </header>
+
+    <main id="px-main" class="px-main">
+      <slot />
+    </main>
+
+    <footer class="px-footer">
+      <div class="px-shell">
+        <div class="px-xp">
+          <div class="px-xp-row">
+            <span class="px-label">LV.26 FULL-STACK DEVELOPER</span>
+            <span class="px-label px-xpnum">
+              <i class="px-coin" aria-hidden="true"></i>
+              {xpNow}/{xpNext} XP
+            </span>
+          </div>
+          <div class="px-bar px-xpbar" aria-hidden="true">
+            <span class="px-bar-fill px-fill-xp" style={`--px-fill:${xpPct}%`}></span>
+          </div>
+          <p class="px-xpnote">
+            CARRYING: TANSTACK &amp; EFFECTTS — HONO AND ELYSIA UNLOCK AT THE NEXT LEVEL.
+          </p>
+        </div>
+        <div class="px-footrow">
+          <p>&copy; {year} jwstn — COLOGNE GUILD</p>
+          <div class="px-foot-socials">
+            {
+              SOCIALS.map((s) => (
+                <a class="px-footlink" href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label}
+                  <PixelIcon name="ext" size={10} />
+                </a>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

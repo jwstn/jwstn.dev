@@ -1,0 +1,20 @@
+---
+// Fleuron divider band — an engraved flourish between two rules.
+// Decorative only; always rendered aria-hidden.
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+---
+
+<div class:list={["vic-orn", className]} aria-hidden="true">
+  <svg viewBox="0 0 120 28" fill="none" stroke="currentColor" aria-hidden="true">
+    <path class="vic-orn-rule" d="M2 14h38"></path>
+    <path class="vic-orn-rule" d="M80 14h38"></path>
+    <path class="vic-orn-swash" d="M40 14c5-10 15-10 20 0c5-10 15-10 20 0"></path>
+    <path
+      class="vic-orn-bud"
+      d="M60 3c2.6 3.4 2.6 8.6 0 12c-2.6-3.4-2.6-8.6 0-12z"></path>
+  </svg>
+</div>

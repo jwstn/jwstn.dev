@@ -1,0 +1,58 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Doodle from "./Doodle.astro";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+---
+<Layout
+  title="Projects | jwstn.dev"
+  description="Concept sheets for four JW builds — a vinyl collection forum, a terminal Spotify client, an ASL & DGS learning app, and one very personal todo list."
+>
+  <article>
+    <header class="sk-page-head">
+      <p class="sk-kicker">sheet 02 · the work</p>
+      <h1 class="sk-title">
+        Concept sheets
+        <Doodle name="underline" draw class="sk-doodle-underline" />
+      </h1>
+      <p class="sk-hand sk-page-hand">
+        four sheets, newest first. every sketch here is a real build — nothing on this board is a mockup.
+      </p>
+    </header>
+
+    <ol class="sk-sheets">
+      {
+        projects.map((project, i) => (
+          <li>
+            <article class="sk-sheet sk-woobble">
+              <div class="sk-sheet-toprow">
+                <p class="sk-sheet-no">SHEET {String(i + 1).padStart(2, "0")}/{String(projects.length).padStart(2, "0")}</p>
+                <p class="sk-meta sk-sheet-date">
+                  <FormattedDate date={project.data.pubDate} />
+                </p>
+              </div>
+              <h2 class="sk-sheet-title">
+                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+              </h2>
+              <p class="sk-sheet-desc">{project.data.description}</p>
+              {project.data.title.includes("(WIP)") && (
+                <p class="sk-sheet-note">pencil's still moving on this one.</p>
+              )}
+              <p class="sk-materials-label">materials</p>
+              <ul class="sk-materials">
+                {project.data.tags.map((tag) => (
+                  <li class="sk-chip">{tag}</li>
+                ))}
+              </ul>
+              <a class="sk-cardlink" href={`/projects/${project.id}/`}>
+                open the sheet
+              </a>
+            </article>
+          </li>
+        ))
+      }
+    </ol>
+  </article>
+</Layout>

@@ -1,0 +1,69 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" || path === "" : path.startsWith(href));
+
+const nav = [
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
+];
+---
+
+<html lang="en" class="theme-bento">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <header class="bento-header">
+      <nav class="bento-nav" aria-label="Primary">
+        <a class="bento-brand" href="/">jwstn.dev</a>
+        <span class="bento-nav-dot" aria-hidden="true"></span>
+        {
+          nav.map((item) => (
+            <a href={item.href} aria-current={isActive(item.href) ? "page" : undefined}>
+              {item.label}
+            </a>
+          ))
+        }
+        <span class="bento-nav-dot" aria-hidden="true"></span>
+        {
+          SOCIALS.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label} ↗
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="bento-footer">
+      <div class="bento-card bento-foot-card">
+        <p>&copy; {year} jwstn — Cologne, Germany</p>
+        <p class="bento-foot-links">
+          {
+            SOCIALS.map((s) => (
+              <a href={s.href} target="_blank" rel="noopener noreferrer">
+                {s.label} ↗
+              </a>
+            ))
+          }
+        </p>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

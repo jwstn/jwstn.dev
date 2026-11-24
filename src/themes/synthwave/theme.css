@@ -1,0 +1,1167 @@
+/* ==========================================================================
+   synthwave — 1984 sunset grid · jwstn.dev
+   dark  : the hero — deep purple sky, magenta→cyan scanline sun, perspective grid
+   light : dayglo 80s daytime — pale pink/lilac sky, the same grid inked in
+   Every rule is scoped under html.theme-synthwave — 11 themes share one bundle.
+   ========================================================================== */
+
+@import "@fontsource/audiowide";
+@import "@fontsource-variable/space-grotesk";
+@import "@fontsource/space-mono/400.css";
+@import "@fontsource/space-mono/700.css";
+
+/* --------------------------------------------------------------------------
+   Dayglo daytime (light) — pale pink/lilac sky, grid in ink
+   -------------------------------------------------------------------------- */
+html.theme-synthwave {
+  --background: #fdf0f7;
+  --foreground: #2b1445;
+  --card: #ffffff;
+  --card-foreground: #2b1445;
+  --primary: #b0109e;
+  --primary-foreground: #ffffff;
+  --secondary: #016b85;
+  --secondary-foreground: #ffffff;
+  --muted: #f4e4f6;
+  --muted-foreground: #5c4a7e;
+  --accent: #b0109e;
+  --accent-foreground: #ffffff;
+  --border: #e5cdea;
+  --ring: #016b85;
+  --radius: 6px;
+
+  --font-display: "Audiowide", "Space Grotesk Variable", sans-serif;
+  --font-body: "Space Grotesk Variable", system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  /* synthwave scenery (decorative — never body-text colors) */
+  --sw-magenta: #c9148f;
+  --sw-cyan: #016b85;
+  --sw-gold: #d98e04;
+  --sw-sky: linear-gradient(to bottom, #ffdcf0 0%, #f2e7ff 52%, #fdf0f7 100%);
+  --sw-sun-grad: linear-gradient(to bottom, #ff9a3d 0%, #ff4fa0 55%, #ff2fd6 100%);
+  --sw-sun-glow: rgb(255 79 160 / 0.38);
+  --sw-grid-line: rgb(43 20 69 / 0.42);
+  --sw-horizon-grad: linear-gradient(90deg, transparent, #c9148f 22%, #d98e04 50%, #016b85 78%, transparent);
+  --sw-edge-grad: linear-gradient(90deg, var(--sw-magenta), var(--sw-cyan));
+  --sw-frame: #3b2566;
+  --sw-frame-hover: #c9148f;
+  --sw-panel-shadow: 0 14px 34px -22px rgb(60 20 90 / 0.35);
+  --sw-panel-glow: 0 12px 30px -14px rgb(201 20 143 / 0.4);
+  --sw-chrome-grad: linear-gradient(to bottom, #c9148f 8%, #7a1fb8 55%, #016b85 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Sunset (dark) — the hero mode
+   -------------------------------------------------------------------------- */
+html.theme-synthwave.dark {
+  --background: #04010e;
+  --foreground: #f2ecff;
+  --card: #150830;
+  --card-foreground: #f2ecff;
+  --primary: #ff2fd6;
+  --primary-foreground: #14032b;
+  --secondary: #29e6ff;
+  --secondary-foreground: #04121c;
+  --muted: #1a0d3c;
+  --muted-foreground: #b7a9e6;
+  --accent: #29e6ff;
+  --accent-foreground: #04121c;
+  --border: #3b2566;
+  --ring: #29e6ff;
+
+  --sw-magenta: #ff2fd6;
+  --sw-cyan: #29e6ff;
+  --sw-gold: #ffd319;
+  --sw-sky: linear-gradient(to bottom, #190736 0%, #0d0224 55%, #04010e 100%);
+  --sw-sun-grad: linear-gradient(to bottom, #ff2fd6 0%, #8b3bff 55%, #29e6ff 100%);
+  --sw-sun-glow: rgb(255 47 214 / 0.42);
+  --sw-grid-line: rgb(255 63 216 / 0.45);
+  --sw-horizon-grad: linear-gradient(90deg, transparent, #ff2fd6 22%, #ffd319 50%, #29e6ff 78%, transparent);
+  --sw-edge-grad: linear-gradient(90deg, var(--sw-magenta), var(--sw-cyan));
+  --sw-frame: #4a2a80;
+  --sw-frame-hover: #ff2fd6;
+  --sw-panel-shadow: 0 18px 40px -26px rgb(0 0 0 / 0.9);
+  --sw-panel-glow:
+    0 0 26px -6px rgb(255 47 214 / 0.5),
+    0 0 18px -12px rgb(41 230 255 / 0.45);
+  --sw-chrome-grad: linear-gradient(to bottom, #ff2fd6 0%, #8b5bff 52%, #29e6ff 100%);
+}
+
+/* --------------------------------------------------------------------------
+   Base — set on <body class="sw-body">, never on bare elements
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-body {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html.theme-synthwave ::selection {
+  background: color-mix(in srgb, var(--primary) 32%, transparent);
+}
+
+html.theme-synthwave :focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Fixed sky — a slow gradient wash with stars (dark) and a faint bottom glow.
+   No grid lines here: mid-scroll text always reads on a smooth sky.
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-sky {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background: var(--sw-sky);
+}
+
+html.theme-synthwave .sw-sky::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(60rem 26rem at 50% 116%, var(--sw-sun-glow), transparent 62%),
+    radial-gradient(40rem 20rem at 12% 108%, rgb(255 47 214 / 0.14), transparent 60%),
+    radial-gradient(40rem 20rem at 88% 108%, rgb(41 230 255 / 0.12), transparent 60%);
+}
+
+html.theme-synthwave.dark .sw-sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.55;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 78%);
+  mask-image: linear-gradient(to bottom, #000 0%, #000 42%, transparent 78%);
+  background-image:
+    radial-gradient(1.2px 1.2px at 18% 22%, rgb(255 255 255 / 0.9), transparent 55%),
+    radial-gradient(1px 1px at 64% 12%, rgb(255 255 255 / 0.75), transparent 55%),
+    radial-gradient(1.4px 1.4px at 82% 34%, rgb(255 255 255 / 0.85), transparent 55%),
+    radial-gradient(1px 1px at 38% 48%, rgb(255 255 255 / 0.6), transparent 55%),
+    radial-gradient(1px 1px at 92% 8%, rgb(255 255 255 / 0.7), transparent 55%),
+    radial-gradient(1.2px 1.2px at 6% 56%, rgb(255 255 255 / 0.55), transparent 55%),
+    radial-gradient(1px 1px at 46% 4%, rgb(255 255 255 / 0.65), transparent 55%);
+  background-size: 340px 300px;
+}
+
+/* --------------------------------------------------------------------------
+   The scene — sun + perspective grid, the last stretch of every page.
+   In-flow (main grows to push it to the viewport bottom on short pages),
+   so the grid can never sit under readable text.
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-scene {
+  --sw-scene-h: clamp(230px, 36vh, 340px);
+  --sw-grid-h: calc(var(--sw-scene-h) * 0.5);
+  --sw-sun-h: calc(var(--sw-scene-h) * 0.62);
+  position: relative;
+  flex: none;
+  height: var(--sw-scene-h);
+  margin-top: clamp(2rem, 8vh, 4rem);
+  pointer-events: none;
+}
+
+html.theme-synthwave .sw-scene-sun {
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--sw-grid-h) - var(--sw-sun-h) * 0.4);
+  width: var(--sw-sun-h);
+  height: var(--sw-sun-h);
+  transform: translateX(-50%);
+  border-radius: 50%;
+  background: var(--sw-sun-grad);
+  filter: drop-shadow(0 0 34px var(--sw-sun-glow));
+  animation: sw-sun-glow 8s ease-in-out infinite alternate;
+}
+
+/* scanline slits across the sun's lower half */
+html.theme-synthwave .sw-scene-sun::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0 12px,
+    var(--background) 12px 30px
+  );
+  -webkit-mask-image: linear-gradient(to bottom, transparent 32%, #000 58%);
+  mask-image: linear-gradient(to bottom, transparent 32%, #000 58%);
+  animation: sw-sunscan 9s linear infinite;
+}
+
+html.theme-synthwave .sw-scene-floor {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: var(--sw-grid-h);
+  overflow: hidden;
+}
+
+/* occluder — hides the sun's below-horizon half, feathers into the page bg */
+html.theme-synthwave .sw-scene-floor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent, var(--background) 15%);
+}
+
+/* the perspective grid plane */
+html.theme-synthwave .sw-plane {
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 340%;
+  transform-origin: 50% 0;
+  transform: perspective(300px) rotateX(62deg);
+  background-image:
+    repeating-linear-gradient(to right, var(--sw-grid-line) 0 2px, transparent 2px 56px),
+    repeating-linear-gradient(to bottom, var(--sw-grid-line) 0 2px, transparent 2px 56px);
+  background-position: 0 0, 0 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 13%, #000 72%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0, #000 13%, #000 72%, transparent 100%);
+  animation: sw-grid-roll 6s linear infinite;
+}
+
+html.theme-synthwave .sw-horizon {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--sw-horizon-grad);
+  box-shadow: 0 0 18px 2px var(--sw-sun-glow);
+}
+
+@keyframes sw-grid-roll {
+  to {
+    background-position: 0 0, 0 56px;
+  }
+}
+
+@keyframes sw-sunscan {
+  to {
+    background-position: 0 30px;
+  }
+}
+
+@keyframes sw-sun-glow {
+  from {
+    opacity: 0.92;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Header / nav
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--background) 78%, transparent);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  box-shadow: 0 10px 30px -24px var(--sw-sun-glow);
+}
+
+html.theme-synthwave .sw-header-inner {
+  max-width: 70rem;
+  margin-inline: auto;
+  padding: 0.25rem clamp(1rem, 4vw, 2.5rem);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem 1rem;
+}
+
+html.theme-synthwave .sw-brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.05rem;
+  letter-spacing: 0.04em;
+  color: var(--foreground);
+  text-decoration: none;
+}
+
+html.theme-synthwave .sw-brand-tld {
+  background-image: var(--sw-chrome-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html.theme-synthwave .sw-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+html.theme-synthwave .sw-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.35rem 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 0.25s ease;
+}
+
+html.theme-synthwave .sw-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0.6rem;
+  right: 0.6rem;
+  bottom: 0.45rem;
+  height: 2px;
+  border-radius: 1px;
+  background: var(--sw-edge-grad);
+  box-shadow: 0 0 8px var(--sw-sun-glow);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+html.theme-synthwave .sw-nav-link:hover,
+html.theme-synthwave .sw-nav-link:focus-visible,
+html.theme-synthwave .sw-nav-link[aria-current="page"] {
+  color: var(--foreground);
+}
+
+html.theme-synthwave .sw-nav-link:hover::after,
+html.theme-synthwave .sw-nav-link:focus-visible::after,
+html.theme-synthwave .sw-nav-link[aria-current="page"]::after {
+  transform: scaleX(1);
+}
+
+html.theme-synthwave .sw-nav-link[aria-current="page"] {
+  color: var(--primary);
+}
+
+html.theme-synthwave .sw-nav-social {
+  margin-left: 0.5rem;
+  color: var(--secondary);
+}
+
+/* --------------------------------------------------------------------------
+   Footer — solid chrome strip, always below the scene
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-footer {
+  flex: none;
+  background: var(--background);
+  border-top: 1px solid var(--border);
+}
+
+html.theme-synthwave .sw-beam {
+  height: 2px;
+  background: var(--sw-horizon-grad);
+  box-shadow: 0 0 14px var(--sw-sun-glow);
+}
+
+html.theme-synthwave .sw-footer .sw-beam {
+  margin-top: -1px;
+}
+
+html.theme-synthwave .sw-footer-inner {
+  max-width: 70rem;
+  margin-inline: auto;
+  padding: 1.4rem clamp(1rem, 4vw, 2.5rem) 1.6rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-footer p {
+  margin: 0;
+}
+
+html.theme-synthwave .sw-footer-links {
+  display: flex;
+  gap: 0.25rem;
+}
+
+html.theme-synthwave .sw-footer a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.5rem;
+  color: var(--secondary);
+  text-decoration: none;
+}
+
+html.theme-synthwave .sw-footer a:hover,
+html.theme-synthwave .sw-footer a:focus-visible {
+  text-shadow: 0 0 10px var(--sw-sun-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Page scaffold — <main class="sw-main"> from every page fragment
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-main {
+  width: 100%;
+  max-width: 70rem;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vh, 3.5rem) clamp(1rem, 4vw, 2.5rem) clamp(2.5rem, 8vh, 4.5rem);
+  flex: 1 0 auto;
+}
+
+html.theme-synthwave .sw-page-head {
+  margin-block: 0.5rem 2.2rem;
+  max-width: 72ch;
+}
+
+html.theme-synthwave .sw-kicker {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 0.6rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--secondary);
+}
+
+html.theme-synthwave .sw-page-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 4.5vw, 2.9rem);
+  line-height: 1.15;
+  letter-spacing: 0.02em;
+  color: var(--foreground);
+  text-wrap: balance;
+  overflow-wrap: anywhere;
+}
+
+html.theme-synthwave .sw-page-lede {
+  margin: -0.4rem 0 0;
+  max-width: 58ch;
+  font-size: clamp(1.02rem, 2vw, 1.2rem);
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-page-head .sw-beam {
+  margin: 1.3rem 0 0;
+}
+
+html.theme-synthwave .sw-back {
+  margin: 0 0 1.6rem;
+}
+
+/* blinking on-air / rec dot — slow, decorative */
+html.theme-synthwave .sw-live {
+  flex: none;
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  border-radius: 2px;
+  background: var(--sw-magenta);
+  box-shadow: 0 0 10px var(--sw-sun-glow);
+  animation: sw-blink 1.6s steps(1, end) infinite;
+}
+
+@keyframes sw-blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0.25;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Chrome text — gradient display type
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-chrome {
+  background-image: var(--sw-chrome-grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+html.theme-synthwave.dark .sw-chrome {
+  filter: drop-shadow(0 0 22px rgb(255 47 214 / 0.28));
+}
+
+/* --------------------------------------------------------------------------
+   Hero (home)
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-hero {
+  padding-block: clamp(1.5rem, 6vh, 4rem) clamp(1.5rem, 5vh, 3rem);
+}
+
+html.theme-synthwave .sw-hero-title {
+  margin: 0 0 1.4rem;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.9rem, 6.5vw, 4rem);
+  line-height: 1.12;
+  letter-spacing: 0.02em;
+  max-width: 18ch;
+}
+
+html.theme-synthwave .sw-hero-title span {
+  display: block;
+}
+
+html.theme-synthwave .sw-hero-sub {
+  margin: 0;
+  max-width: 58ch;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  line-height: 1.7;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-hero-sub a {
+  color: var(--secondary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--secondary) 45%, transparent);
+  text-underline-offset: 3px;
+}
+
+html.theme-synthwave .sw-hero-sub a:hover,
+html.theme-synthwave .sw-hero-sub a:focus-visible {
+  text-decoration-color: var(--secondary);
+  text-shadow: 0 0 12px var(--sw-sun-glow);
+}
+
+html.theme-synthwave .sw-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 1.8rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-status .sw-hot {
+  color: var(--primary);
+}
+
+/* --------------------------------------------------------------------------
+   Panels — chrome-framed cards with neon edge lighting
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-panel {
+  position: relative;
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid var(--sw-frame);
+  border-radius: var(--radius);
+  box-shadow: var(--sw-panel-shadow);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+html.theme-synthwave .sw-panel::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  border-radius: var(--radius) var(--radius) 0 0;
+  background: var(--sw-edge-grad);
+  opacity: 0.55;
+  pointer-events: none;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+html.theme-synthwave .sw-panel:hover {
+  border-color: var(--sw-frame-hover);
+  box-shadow: var(--sw-panel-glow), var(--sw-panel-shadow);
+  transform: translateY(-2px);
+}
+
+html.theme-synthwave .sw-panel:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 14px var(--sw-sun-glow);
+}
+
+html.theme-synthwave a.sw-panel,
+html.theme-synthwave a.sw-panel:hover {
+  display: block;
+  height: 100%;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* --------------------------------------------------------------------------
+   Cards, grids, track lines
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-num {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+  color: var(--primary);
+}
+
+html.theme-synthwave .sw-card-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 1.12rem;
+  line-height: 1.35;
+  letter-spacing: 0.02em;
+  color: var(--foreground);
+  overflow-wrap: anywhere;
+}
+
+html.theme-synthwave .sw-card-blurb {
+  margin: 0;
+  flex-grow: 1;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-cta {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
+html.theme-synthwave .sw-card:hover .sw-cta {
+  text-shadow: 0 0 12px var(--sw-sun-glow);
+}
+
+html.theme-synthwave .sw-trackline {
+  display: flex;
+  align-items: baseline;
+  gap: 0.6rem;
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-leader {
+  flex: 1;
+  border-bottom: 2px dotted color-mix(in srgb, var(--muted-foreground) 55%, transparent);
+  transform: translateY(-4px);
+}
+
+html.theme-synthwave .sw-card-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15.5rem), 1fr));
+  gap: 1rem;
+}
+
+html.theme-synthwave .sw-card-grid a.sw-panel {
+  padding: 1.3rem 1.3rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+/* projects */
+html.theme-synthwave .sw-project-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 21rem), 1fr));
+  gap: 1.1rem;
+}
+
+html.theme-synthwave .sw-project-grid a.sw-panel {
+  padding: 1.4rem 1.4rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+html.theme-synthwave .sw-project-desc {
+  margin: 0;
+  flex-grow: 1;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-chips {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0;
+  padding: 0;
+}
+
+html.theme-synthwave .sw-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.6rem;
+  border-radius: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--secondary);
+  border: 1px solid color-mix(in srgb, var(--secondary) 45%, transparent);
+  background: color-mix(in srgb, var(--secondary) 8%, transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Buttons
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.55rem 1.15rem;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  color: var(--foreground);
+  border: 1px solid var(--sw-frame);
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s ease;
+}
+
+html.theme-synthwave .sw-btn:hover,
+html.theme-synthwave .sw-btn:focus-visible {
+  border-color: var(--sw-frame-hover);
+  box-shadow: 0 0 22px -6px var(--sw-sun-glow);
+  transform: translateY(-1px);
+}
+
+html.theme-synthwave .sw-btn-solid {
+  background-image: var(--sw-edge-grad);
+  border-color: transparent;
+  color: var(--primary-foreground);
+}
+
+html.theme-synthwave .sw-btn-solid:hover,
+html.theme-synthwave .sw-btn-solid:focus-visible {
+  border-color: transparent;
+  box-shadow: 0 0 26px -6px var(--sw-sun-glow);
+}
+
+/* --------------------------------------------------------------------------
+   Blog empty state — transmission archive: no tapes yet
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-archive {
+  position: relative;
+  overflow: hidden;
+  max-width: 46rem;
+  margin-inline: auto;
+  padding: clamp(2.2rem, 7vh, 4rem) clamp(1.2rem, 6vw, 3rem) clamp(1.8rem, 5vh, 2.6rem);
+  text-align: center;
+}
+
+html.theme-synthwave .sw-archive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(to bottom, transparent 0 3px, rgb(128 128 128 / 0.05) 3px 4px);
+}
+
+html.theme-synthwave .sw-cassette {
+  width: min(300px, 78vw);
+  margin-inline: auto;
+  padding: 0.9rem 1rem 1.1rem;
+  border: 2px solid var(--sw-frame);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--card) 92%, var(--muted));
+  box-shadow: var(--sw-panel-shadow);
+}
+
+html.theme-synthwave .sw-cass-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin: 0 0 0.8rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  background: color-mix(in srgb, var(--muted) 72%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-cass-reels {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+html.theme-synthwave .sw-cass-tape {
+  flex: 1;
+  height: 10px;
+  margin: 0 -10px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--sw-frame) 55%, transparent);
+}
+
+html.theme-synthwave .sw-reel {
+  flex: none;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 3px solid var(--sw-frame);
+  background:
+    repeating-conic-gradient(var(--sw-frame) 0deg 14deg, transparent 14deg 45deg),
+    radial-gradient(circle, var(--sw-frame) 0 9px, transparent 10px);
+  animation: sw-spin 5s linear infinite;
+}
+
+html.theme-synthwave .sw-reel:last-child {
+  animation-direction: reverse;
+}
+
+@keyframes sw-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+html.theme-synthwave .sw-standby {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  margin: 1.4rem 0 1rem;
+  font-family: var(--font-mono);
+  font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--primary);
+}
+
+html.theme-synthwave .sw-archive-copy {
+  max-width: 42ch;
+  margin: 0.6rem auto;
+  color: var(--muted-foreground);
+}
+
+html.theme-synthwave .sw-archive-copy a {
+  color: var(--secondary);
+}
+
+/* --------------------------------------------------------------------------
+   Article (project / post) + prose
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-article {
+  padding: clamp(1.4rem, 3.5vw, 2.4rem);
+}
+
+html.theme-synthwave .sw-article .sw-lede {
+  margin: 0 0 1.4rem;
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  line-height: 1.65;
+}
+
+html.theme-synthwave .sw-article > .sw-chips {
+  margin-bottom: 1.4rem;
+}
+
+html.theme-synthwave .sw-article > .sw-btn {
+  margin-bottom: 2rem;
+}
+
+html.theme-synthwave .sw-hero-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-bottom: 1.6rem;
+  border-radius: calc(var(--radius) - 2px);
+  border: 1px solid var(--sw-frame);
+}
+
+html.theme-synthwave .sw-prose {
+  max-width: 68ch;
+  font-size: 1.02rem;
+}
+
+html.theme-synthwave .sw-prose p {
+  margin: 0 0 1.1em;
+}
+
+html.theme-synthwave .sw-prose h2,
+html.theme-synthwave .sw-prose h3,
+html.theme-synthwave .sw-prose h4 {
+  margin: 1.9em 0 0.6em;
+  font-family: var(--font-display);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0.02em;
+}
+
+html.theme-synthwave .sw-prose h2 {
+  font-size: 1.45rem;
+}
+
+html.theme-synthwave .sw-prose h2::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 2px;
+  margin-top: 0.5rem;
+  border-radius: 1px;
+  background: var(--sw-edge-grad);
+  box-shadow: 0 0 8px var(--sw-sun-glow);
+}
+
+html.theme-synthwave .sw-prose h3 {
+  font-size: 1.15rem;
+}
+
+html.theme-synthwave .sw-prose a {
+  color: var(--secondary);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--secondary) 45%, transparent);
+  text-underline-offset: 3px;
+}
+
+html.theme-synthwave .sw-prose a:hover,
+html.theme-synthwave .sw-prose a:focus-visible {
+  text-decoration-color: var(--secondary);
+  text-shadow: 0 0 10px var(--sw-sun-glow);
+}
+
+html.theme-synthwave .sw-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.88em;
+  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 30%, transparent);
+  border-radius: 4px;
+  padding: 0.1em 0.4em;
+}
+
+html.theme-synthwave .sw-prose pre {
+  overflow-x: auto;
+  margin: 0 0 1.3em;
+  padding: 1.1rem 1.25rem;
+  border: 1px solid var(--sw-frame);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--background) 70%, var(--muted));
+}
+
+html.theme-synthwave .sw-prose pre code {
+  padding: 0;
+  background: none;
+  border: none;
+  color: var(--foreground);
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+
+html.theme-synthwave .sw-prose blockquote {
+  margin: 1.4em 0;
+  padding: 0.4em 1.1em;
+  border-left: 3px solid var(--primary);
+  border-radius: 2px 6px 6px 2px;
+  background: color-mix(in srgb, var(--primary) 7%, transparent);
+  font-style: italic;
+}
+
+html.theme-synthwave .sw-prose blockquote p {
+  margin: 0;
+}
+
+html.theme-synthwave .sw-prose ul,
+html.theme-synthwave .sw-prose ol {
+  margin: 0 0 1.1em;
+  padding-left: 1.4em;
+}
+
+html.theme-synthwave .sw-prose li::marker {
+  color: var(--primary);
+}
+
+html.theme-synthwave .sw-prose img {
+  max-width: 100%;
+  border-radius: var(--radius);
+  border: 1px solid var(--sw-frame);
+}
+
+html.theme-synthwave .sw-prose hr {
+  margin: 2.5em 0;
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--sw-frame-hover), transparent);
+}
+
+/* --------------------------------------------------------------------------
+   Gallery + album — photos with the magenta duotone hover
+   -------------------------------------------------------------------------- */
+html.theme-synthwave .sw-album-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: 1.1rem;
+}
+
+html.theme-synthwave .sw-album-body {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1rem 1.1rem 0.9rem;
+}
+
+html.theme-synthwave .sw-album-frame {
+  display: block;
+  overflow: hidden;
+  border-radius: calc(var(--radius) - 2px);
+  border-bottom: 1px solid var(--sw-frame);
+}
+
+html.theme-synthwave .sw-album-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: filter 0.35s ease, transform 0.35s ease;
+}
+
+html.theme-synthwave .sw-album:hover .sw-album-img {
+  filter: grayscale(1) sepia(1) hue-rotate(240deg) saturate(2.4) brightness(1.05);
+  transform: scale(1.03);
+}
+
+html.theme-synthwave .sw-photo-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: 1rem;
+}
+
+html.theme-synthwave .sw-photo {
+  margin: 0;
+  padding: 0.45rem;
+}
+
+html.theme-synthwave .sw-photo-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: calc(var(--radius) - 2px);
+  transition: filter 0.35s ease;
+}
+
+html.theme-synthwave .sw-photo:hover .sw-photo-img {
+  filter: grayscale(1) sepia(1) hue-rotate(240deg) saturate(2.4) brightness(1.05);
+}
+
+html.theme-synthwave .sw-photo-cap {
+  display: grid;
+  gap: 0.15rem;
+  padding: 0.6rem 0.5rem 0.35rem;
+}
+
+html.theme-synthwave .sw-photo-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.06em;
+  color: var(--secondary);
+}
+
+html.theme-synthwave .sw-photo-caption {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+/* --------------------------------------------------------------------------
+   Entrance motion
+   -------------------------------------------------------------------------- */
+@keyframes sw-rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+html.theme-synthwave .sw-rise {
+  animation: sw-rise 0.8s cubic-bezier(0.2, 0.7, 0.3, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+/* --------------------------------------------------------------------------
+   Reduced motion — the tape stops rolling, the signal stays on
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html.theme-synthwave .sw-plane,
+  html.theme-synthwave .sw-scene-sun,
+  html.theme-synthwave .sw-scene-sun::after,
+  html.theme-synthwave .sw-reel,
+  html.theme-synthwave .sw-live,
+  html.theme-synthwave .sw-rise {
+    animation: none;
+  }
+
+  html.theme-synthwave .sw-panel,
+  html.theme-synthwave .sw-panel:hover,
+  html.theme-synthwave .sw-panel::before,
+  html.theme-synthwave .sw-btn,
+  html.theme-synthwave .sw-btn:hover,
+  html.theme-synthwave .sw-nav-link,
+  html.theme-synthwave .sw-nav-link::after,
+  html.theme-synthwave .sw-album-img,
+  html.theme-synthwave .sw-photo-img {
+    transition: none;
+    transform: none;
+  }
+
+  html.theme-synthwave .sw-live {
+    opacity: 1;
+  }
+}

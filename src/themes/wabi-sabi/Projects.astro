@@ -1,0 +1,60 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectsProps } from "#/themes/types";
+import Hanko from "./Hanko.astro";
+import RawEdge from "./RawEdge.astro";
+import Layout from "./Layout.astro";
+
+const { projects } = Astro.props as ProjectsProps;
+
+const marks = ["i.", "ii.", "iii.", "iv.", "v.", "vi.", "vii.", "viii."];
+---
+
+<Layout
+  title="Projects — jwstn.dev"
+  description="Four things kept in progress by JW — vinyl collections, a Spotify terminal, sign language, and a todo app that is his own."
+>
+  <header>
+    <p class="wb-kicker">The workbench</p>
+    <h1 class="wb-display">Projects</h1>
+    <p class="wb-lede">
+      Four things, each a little unfinished. That is not neglect — a tool kept slightly rough is a
+      tool still being used. Take one down; the imperfections are where the story is.
+    </p>
+  </header>
+
+  <RawEdge />
+
+  <ol class="wb-index">
+    {
+      projects.map((project, i) => (
+        <li>
+          <a class="wb-row-link" href={`/projects/${project.id}/`}>
+            <span class="wb-row-num" aria-hidden="true">
+              {marks[i] ?? "·"}
+            </span>
+            <span class="wb-row-main">
+              <span class="wb-row-title">{project.data.title}</span>
+              <span class="wb-row-desc">{project.data.description}</span>
+            </span>
+          </a>
+          <p class="wb-row-meta">
+            <Hanko tilt={-2.5}>
+              <FormattedDate date={project.data.pubDate} />
+            </Hanko>
+            <a class="wb-visit" href={project.data.href} target="_blank" rel="noopener noreferrer">
+              visit ↗
+            </a>
+          </p>
+          {project.data.tags.length > 0 && (
+            <ul class="wb-tags" aria-label="Technologies used">
+              {project.data.tags.map((tag) => (
+                <li>{tag}</li>
+              ))}
+            </ul>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</Layout>

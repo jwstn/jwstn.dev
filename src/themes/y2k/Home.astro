@@ -1,0 +1,68 @@
+---
+import Layout from "./Layout.astro";
+---
+
+<Layout
+  title="jwstn.dev — JW, a Full-Stack Developer from Cologne"
+  description="JW builds shiny things for the web from Cologne, Germany — TanStack experiments, Effect tangents, and a camera headed for Japan."
+>
+  <section class="y2k-hero">
+    <p class="y2k-kicker y2k-pop y2k-pop-1">★ welcome to my homepage ★</p>
+    <h1 class="y2k-hero-title y2k-chrome-text y2k-pop y2k-pop-2">Hey! I'm JW.</h1>
+    <p class="y2k-hero-sub y2k-pop y2k-pop-3">
+      Full-Stack Developer from Cologne, Germany — building shiny things for a brighter web.
+    </p>
+    <div class="y2k-hero-actions y2k-pop y2k-pop-4">
+      <a class="y2k-btn y2k-btn-primary" href="/projects">see my projects →</a>
+      <a class="y2k-btn" href="/gallery">browse the gallery</a>
+    </div>
+  </section>
+
+  <section class="y2k-bio y2k-pop y2k-pop-5" aria-label="About me">
+    <p>
+      Lately I've been focused on building web applications with
+      <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — and honestly, it's a
+      good time to be building. It ships most of what a web app needs out of the box, including the fancy parts like
+      server actions and middleware, so I haven't had a real excuse to spin up backend frameworks like
+      <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> or
+      <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> yet. They're on the list.
+    </p>
+    <p>
+      What I did get around to is <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a
+      >, which has been an absurd amount of fun so far and turned out to be a great excuse to learn a whole new way of
+      thinking about programs.
+    </p>
+  </section>
+
+  <section class="y2k-card y2k-status-panel y2k-pop y2k-pop-5" aria-label="Current status">
+    <h2>system status</h2>
+    <div class="y2k-status-row">
+      <span class="y2k-status-label">location</span>
+      <div class="y2k-bar">
+        <div class="y2k-bar-fill" style="width: 100%"></div>
+      </div>
+      <span class="y2k-status-value">Cologne, DE</span>
+    </div>
+    <div class="y2k-status-row">
+      <span class="y2k-status-label">stack</span>
+      <div class="y2k-bar">
+        <div class="y2k-bar-fill" style="width: 100%"></div>
+      </div>
+      <span class="y2k-status-value">TanStack</span>
+    </div>
+    <div class="y2k-status-row">
+      <span class="y2k-status-label">side quest</span>
+      <div class="y2k-bar">
+        <div class="y2k-bar-fill" style="width: 72%"></div>
+      </div>
+      <span class="y2k-status-value">Effect lab</span>
+    </div>
+    <div class="y2k-status-row">
+      <span class="y2k-status-label">up next</span>
+      <div class="y2k-bar">
+        <div class="y2k-bar-fill" style="width: 18%"></div>
+      </div>
+      <span class="y2k-status-value">Japan 2026 · film rolls: pending</span>
+    </div>
+  </section>
+</Layout>

@@ -1,0 +1,54 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <div class="sur-shell sur-stack">
+    <p class="sur-backrow sur-rise">
+      <a class="sur-btn sur-btn--ghost" href="/projects/">← Leave the wing</a>
+    </p>
+
+    <article class="sur-article">
+      <header class="sur-article-header">
+        <p class="sur-kicker sur-rise">Wing I <em>— one exhibit, removed from its frame for you</em></p>
+        <h1 class="sur-article-title sur-rise sur-rise--2">{title}</h1>
+        <div class="sur-meta-row sur-rise sur-rise--3">
+          <span class="sur-plate">Hung <FormattedDate date={pubDate} /></span>
+          {
+            tags.length > 0 && (
+              <ul class="sur-tags" aria-label="Materials">
+                {tags.map((tag) => (
+                  <li class="sur-tag">{tag}</li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+        {
+          description && (
+            <p class="sur-note sur-rise sur-rise--3">
+              <strong>Curator's note</strong>
+              {description}
+            </p>
+          )
+        }
+      </header>
+
+      <div class="sur-prose sur-rise sur-rise--4">
+        <Content />
+      </div>
+
+      <div class="sur-actions">
+        <a class="sur-btn" href={href} target="_blank" rel="noopener noreferrer">
+          Visit the living thing ↗
+        </a>
+        <a class="sur-btn sur-btn--ghost" href="/projects/">← Back to the exhibits</a>
+      </div>
+    </article>
+  </div>
+</Layout>

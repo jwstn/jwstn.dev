@@ -1,0 +1,78 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import { SOCIALS } from "#/lib/content";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+const github = SOCIALS.find((s) => s.label === "GitHub");
+const bluesky = SOCIALS.find((s) => s.label === "Bluesky");
+---
+
+<Layout title="Blog | jwstn.dev" description="Occasional writing by JW.">
+  <main class="sw-main">
+    <header class="sw-page-head">
+      <p class="sw-kicker sw-rise" style="--d: 0s">SIDE B &middot; TRANSMISSION ARCHIVE</p>
+      <h1 class="sw-page-title sw-rise" style="--d: 0.08s">Blog</h1>
+    </header>
+
+    {
+      posts.length === 0 ? (
+        <section class="sw-panel sw-archive" aria-label="No posts published yet">
+          <div class="sw-cassette" aria-hidden="true">
+            <p class="sw-cass-label">
+              <span>jwstn &middot; archive tape</span>
+              <span>00:00</span>
+            </p>
+            <div class="sw-cass-reels">
+              <div class="sw-reel"></div>
+              <div class="sw-cass-tape"></div>
+              <div class="sw-reel"></div>
+            </div>
+          </div>
+
+          <p class="sw-standby">
+            <span class="sw-live" aria-hidden="true" />
+            STANDBY &middot; NO TAPES YET
+          </p>
+          <p class="sw-archive-copy">
+            The archive shelf is empty &mdash; no transmissions have been recorded yet. The deck is warmed up,
+            the reels are loaded, and the first tape lands here the moment it&rsquo;s cut.
+          </p>
+          <p class="sw-archive-copy">
+            Until then, follow the signal on{" "}
+            {github && (
+              <a href={github.href} target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+            )}{" "}
+            and{" "}
+            {bluesky && (
+              <a href={bluesky.href} target="_blank" rel="noopener noreferrer">
+                Bluesky
+              </a>
+            )}
+            .
+          </p>
+        </section>
+      ) : (
+        <ul class="sw-project-grid">
+          {posts.map((post) => (
+            <li>
+              <a class="sw-panel" href={`/blog/${post.id}/`}>
+                <span class="sw-num">TX</span>
+                <h2 class="sw-card-title">{post.data.title}</h2>
+                <p class="sw-project-desc">{post.data.description}</p>
+                <p class="sw-trackline">
+                  <FormattedDate date={post.data.pubDate} />
+                  <span class="sw-leader" aria-hidden="true" />
+                  <span class="sw-cta">Tune in &rarr;</span>
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </main>
+</Layout>

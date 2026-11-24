@@ -1,0 +1,83 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Sparkle from "./Sparkle.astro";
+import Starburst from "./Starburst.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout
+  title="Blog — jwstn.dev"
+  description="The blog wing of jwstn.dev — currently an empty ballroom, but the chandeliers are already on."
+>
+  <section class="mx-band c-green zz-t zz-b" aria-labelledby="mx-blog-title">
+    <Sparkle class="mx-corner p-a" />
+    <Sparkle class="mx-corner p-b" />
+    <Sparkle class="mx-corner p-c" />
+    <Sparkle class="mx-corner p-d" />
+    <div class="mx-band-inner">
+      <p class="mx-eyebrow">
+        <Sparkle /> The words wing <Sparkle />
+      </p>
+      <h1 id="mx-blog-title" class="mx-band-title">Blog!</h1>
+      {
+        posts.length > 0 ? (
+          <p class="mx-band-serif">
+            — {posts.length} {posts.length === 1 ? "entry" : "entries"}, freshly pressed and extremely readable —
+          </p>
+        ) : (
+          <p class="mx-band-serif">— a grand ballroom, chandeliers blazing, not a single post on the dance floor —</p>
+        )
+      }
+    </div>
+  </section>
+
+  {
+    posts.length === 0 ? (
+      <div class="mx-empty">
+        <div class="mx-empty-bursts" aria-hidden="true">
+          <Starburst class="sm b-violet" />
+          <Starburst text="Soon!" class="b-yellow" />
+        </div>
+        <h2 class="mx-empty-title">Zero posts! (For now!)</h2>
+        <p class="mx-band-serif">— attention, visitors: the ballroom is open, the floor is waxed —</p>
+        <p class="mx-empty-text">
+          There are exactly 0 entries here at the moment. The drafts are still backstage, arguing about their titles
+          and refusing to go on in this order. In the meantime, two other wings of this site are fully stocked and
+          considerably less empty — go be delighted there.
+        </p>
+        <div class="mx-empty-actions">
+          <a class="mx-btn b-red" href="/projects/">
+            Read the projects instead →
+          </a>
+          <a class="mx-btn b-blue" href="/gallery/">
+            Or the photo palace →
+          </a>
+        </div>
+        <p class="mx-hand mx-hand-note">the words are coming. promise! (the chandeliers will still be on.)</p>
+      </div>
+    ) : (
+      <ul class="mx-postlist">
+        {posts.map((post) => (
+          <li>
+            <a class="mx-card mx-hover mx-post" href={`/blog/${post.id}/`}>
+              <p class="mx-meta-row">
+                <span class="mx-meta-chip">
+                  <FormattedDate date={post.data.pubDate} />
+                </span>
+                {post.data.updatedDate && (
+                  <span class="mx-meta-chip">Updated <FormattedDate date={post.data.updatedDate} /></span>
+                )}
+              </p>
+              <h2 class="mx-post-title">{post.data.title}</h2>
+              <p class="mx-post-desc">{post.data.description}</p>
+              <span class="mx-door-cta">Read the whole thing →</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Layout>

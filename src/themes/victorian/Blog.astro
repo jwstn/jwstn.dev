@@ -1,0 +1,97 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Corners from "./Corners.astro";
+import Fleuron from "./Fleuron.astro";
+import Layout from "./Layout.astro";
+import { roman } from "./numerals";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout
+  title="Blog — jwstn.dev"
+  description="The Journal of JW — occasional entries on building with Effect, photographs, and lessons from the workbench. This volume is forthcoming."
+>
+  <header class="vic-pagehead">
+    <p class="vic-label">Second Series</p>
+    <h1 class="vic-display">The Journal</h1>
+    <p class="vic-lede">
+      Occasional entries — written slowly, and only when worth the ink.
+    </p>
+  </header>
+
+  <Fleuron />
+
+  {
+    posts.length === 0 ? (
+      <section class="vic-frame vic-notice" aria-label="No entries published yet">
+        <Corners />
+        <p class="vic-label">Notice</p>
+        <h2 class="vic-notice-title">This Volume is Forthcoming</h2>
+        <p class="vic-lede">
+          Nothing has yet been set in type for the Journal. Notes on building with Effect,
+          photographs from a camera that travelled to Japan in 2026, and a few lessons the
+          workbench taught the hard way are being prepared — written slowly, and only when
+          they are worth keeping.
+        </p>
+        <ol class="vic-inprep">
+          <li>
+            <p class="vic-inprep-row">
+              <span class="vic-inprep-num" aria-hidden="true">
+                I.
+              </span>
+              <span class="vic-inprep-title">
+                On Effect, and the Relearning of How a Program is Written
+              </span>
+              <span class="vic-inprep-note">In preparation</span>
+            </p>
+          </li>
+          <li>
+            <p class="vic-inprep-row">
+              <span class="vic-inprep-num" aria-hidden="true">
+                II.
+              </span>
+              <span class="vic-inprep-title">
+                A Camera in Japan — Anno 2026, and What Came After
+              </span>
+              <span class="vic-inprep-note">In preparation</span>
+            </p>
+          </li>
+        </ol>
+        <p class="vic-notice-note">
+          When an entry is ready, it will be entered here first, and announced nowhere else.
+        </p>
+      </section>
+    ) : (
+      <ol class="vic-entries">
+        {posts.map((post, i) => (
+          <li class="vic-entry">
+            <p class="vic-entry-no">Journal No. {roman(i + 1)}.</p>
+            <h2 class="vic-entry-title">
+              <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+            </h2>
+            <p class="vic-entry-cat">{post.data.description}</p>
+            <p class="vic-entry-meta">
+              Entered
+              <span class="vic-meta-date">
+                <FormattedDate date={post.data.pubDate} />
+              </span>
+              {post.data.updatedDate && (
+                <Fragment>
+                  <span class="vic-meta-sep" aria-hidden="true">
+                    ·
+                  </span>
+                  Revised
+                  <span class="vic-meta-date">
+                    <FormattedDate date={post.data.updatedDate} />
+                  </span>
+                </Fragment>
+              )}
+            </p>
+          </li>
+        ))}
+      </ol>
+    )
+  }
+</Layout>

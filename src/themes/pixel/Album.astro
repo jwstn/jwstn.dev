@@ -1,0 +1,94 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import PixelIcon from "./PixelIcon.astro";
+
+const { album } = Astro.props as AlbumProps;
+const photos = album.data.photos;
+const cover = photos[0];
+---
+
+<Layout
+  title={`${album.data.title} | jwstn.dev`}
+  description={`Item info: ${album.data.title} — ${photos.length} photos collected by JW.`}
+>
+  <div class="px-shell px-stack">
+    <!-- item info header -->
+    <section class="px-window">
+      <div class="px-window-title">
+        <span>ITEM INFO</span>
+        <span class="px-title-right">{album.data.slug.toUpperCase()}</span>
+      </div>
+      <div class="px-window-body">
+        <h1 class="px-h1">{album.data.title}</h1>
+        <div class="px-iteminfo-grid">
+          <span class="px-iteminfo-cover">
+            <Image
+              src={cover.image}
+              widths={[220, 440]}
+              sizes="(min-width: 700px) 226px, 100vw"
+              width={220}
+              height={220}
+              alt={`Cover photo of ${album.data.title}: ${cover.title}`}
+              loading="eager"
+            />
+          </span>
+          <dl class="px-stats">
+            <div><dt>Type</dt><dd>Photo set</dd></div>
+            <div><dt>Contains</dt><dd>{photos.length} photos</dd></div>
+            <div><dt>Obtained</dt><dd><FormattedDate date={album.data.pubDate} /></dd></div>
+            <div><dt>Appraisal</dt><dd>Priceless — camera roll only</dd></div>
+          </dl>
+        </div>
+      </div>
+      <div class="px-window-foot">
+        <a class="px-btn px-btn--ghost" href="/gallery/">
+          <PixelIcon name="back" size={10} />
+          Item bag
+        </a>
+      </div>
+    </section>
+
+    <!-- loot listing -->
+    <section class="px-window" aria-label="Photos">
+      <div class="px-window-title">
+        <span>LOOT LISTING — {photos.length} ITEMS</span>
+      </div>
+      <div class="px-window-body">
+        <div class="px-grid">
+          {
+            photos.map((photo) => {
+              const ratio = photo.image.width / photo.image.height;
+              const isPortrait = ratio < 0.9;
+              const isWide = ratio > 1.6;
+              return (
+                <figure class:list={["px-photo", isWide && "px-span-wide", isPortrait && "px-span-tall"]}>
+                  <Image
+                    transition:name={photo.title}
+                    src={photo.image}
+                    widths={[480, 800, 1200, 1600]}
+                    sizes={
+                      isWide
+                        ? "(min-width: 80rem) 54rem, (min-width: 48rem) 66vw, 100vw"
+                        : "(min-width: 80rem) 27rem, (min-width: 48rem) 33vw, 50vw"
+                    }
+                    loading="lazy"
+                    decoding="async"
+                    alt={photo.title}
+                    class="px-photo-img"
+                  />
+                  <figcaption>
+                    <span class="px-photo-title">{photo.title}</span>
+                    {photo.caption && <span class="px-photo-cap">{photo.caption}</span>}
+                  </figcaption>
+                </figure>
+              );
+            })
+          }
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

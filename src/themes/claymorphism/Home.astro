@@ -1,0 +1,70 @@
+---
+import type { HomeProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+Astro.props as HomeProps;
+
+const links = [
+  {
+    href: "/projects",
+    title: "Projects",
+    desc: "Four builds on the workbench — a vinyl collectors' forum, a terminal Spotify client, a sign-language trainer, and one very personal note app.",
+  },
+  {
+    href: "/blog",
+    title: "Blog",
+    desc: "The blank slab. Nothing published yet — the first notes are still being kneaded into shape.",
+  },
+  {
+    href: "/gallery",
+    title: "Gallery",
+    desc: "Japan 2026, a German summer, and a spring full of blossoms — photographs pressed into puffy clay frames.",
+  },
+];
+---
+
+<Layout
+  title="jwstn.dev — JW, full-stack developer in Cologne"
+  description="JW builds web applications with TanStack, experiments with Effect, and takes his camera everywhere — most recently to Japan."
+>
+  <section class="clay clay-hero clay-rise clay-d1">
+    <span class="clay-pebble clay-pebble-1" aria-hidden="true"></span>
+    <span class="clay-pebble clay-pebble-2" aria-hidden="true"></span>
+
+    <p class="clay-stamp">JW · full-stack developer · Cologne</p>
+    <h1 class="clay-h1">Hi, I'm JW. I squish soft ideas into sturdy apps.</h1>
+    <p class="clay-hero-text">
+      Most of my days go into shaping web applications with
+      <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — it covers
+      so much of what a modern app needs that backend frameworks like
+      <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> and
+      <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> are still
+      waiting their turn on the shelf. What I did get around to is
+      <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> — and it's
+      been the most fun I've had in a while relearning how a program can be written. When the keyboard
+      rests, the camera comes out: in March 2026 I took one to Japan and came home with far too many
+      photographs and no regrets.
+    </p>
+    <div class="clay-actions">
+      <a class="clay-btn clay-btn-primary squish" href="/projects">Squeeze the projects</a>
+      <a class="clay-btn squish" href="/gallery">Peek into the gallery</a>
+    </div>
+  </section>
+
+  <section aria-label="Explore the site">
+    <ul class="clay-grid">
+      {
+        links.map((link, i) => (
+          <li class="clay clay-card squish clay-rise" class:list={["clay-d1", "clay-d2", "clay-d3"][i]}>
+            <h2>
+              <a class="clay-card-link" href={link.href}>
+                {link.title}
+              </a>
+            </h2>
+            <p class="clay-card-desc">{link.desc}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Layout>

@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} snapshots from JW's gallery.`}>
+  <div class="y2k-pagehead">
+    <a class="y2k-backlink" href="/gallery" aria-label="Back to the gallery">← all albums</a>
+    <p class="y2k-kicker y2k-pop y2k-pop-1" style="margin-top: 1.2rem;">✧ album ✧</p>
+    <h1 class="y2k-h1 y2k-chrome-text y2k-pop y2k-pop-2">{title}</h1>
+    <div class="y2k-detail-header y2k-pop y2k-pop-3">
+      <span class="y2k-chip">
+        <FormattedDate date={pubDate} />
+      </span>
+      <span class="y2k-chip">{photos.length} snapshots</span>
+    </div>
+  </div>
+
+  <div class="y2k-photos">
+    {
+      photos.map((photo) => {
+        const ratio = photo.image.width / photo.image.height;
+        const isPortrait = ratio < 0.9;
+        const isWide = ratio > 1.6;
+        return (
+          <figure
+            class:list={["y2k-photo", isWide && "y2k-span-2", isPortrait && "y2k-row-2"]}
+          >
+            <div class="y2k-frame">
+              <Image
+                src={photo.image}
+                widths={[480, 800, 1200, 1600]}
+                sizes={
+                  isWide
+                    ? "(min-width: 960px) 44rem, (min-width: 640px) 100vw, 100vw"
+                    : "(min-width: 960px) 22rem, (min-width: 640px) 46vw, 100vw"
+                }
+                loading="lazy"
+                decoding="async"
+                alt={photo.title}
+              />
+            </div>
+            <figcaption class="y2k-photo-caption">
+              <h3>{photo.title}</h3>
+              {photo.caption && <p>{photo.caption}</p>}
+            </figcaption>
+          </figure>
+        );
+      })
+    }
+  </div>
+</Layout>

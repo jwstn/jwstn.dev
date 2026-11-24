@@ -1,0 +1,53 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Hanko from "./Hanko.astro";
+import RawEdge from "./RawEdge.astro";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, pubDate, photos } = album.data;
+
+const photoCount = `${photos.length} photograph${photos.length === 1 ? "" : "s"}`;
+---
+
+<Layout title={`${title} — jwstn.dev`} description={`Photographs from ${title} — by JW.`}>
+  <p class="wb-backrow">
+    <a class="wb-back" href="/gallery">Back to the gallery</a>
+  </p>
+
+  <header>
+    <p class="wb-kicker">Album</p>
+    <h1 class="wb-display">{title}</h1>
+    <p class="wb-article-meta">
+      <Hanko tilt={-2.5}>
+        <FormattedDate date={pubDate} />
+      </Hanko>
+      <span class="wb-album-count">{photoCount}</span>
+    </p>
+  </header>
+
+  <RawEdge />
+
+  <div class="wb-plates">
+    {
+      photos.map((photo) => (
+        <figure class="wb-plate wb-frame">
+          <Image
+            src={photo.image}
+            alt={photo.title}
+            widths={[480, 800, 1200, 1600]}
+            sizes="(min-width: 62rem) 34rem, (min-width: 40rem) 60vw, calc(100vw - 3rem)"
+            loading="lazy"
+            decoding="async"
+          />
+          <figcaption class="wb-plate-caption">
+            <span class="wb-plate-title">{photo.title}</span>
+            {photo.caption && <span class="wb-plate-note">{photo.caption}</span>}
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+</Layout>

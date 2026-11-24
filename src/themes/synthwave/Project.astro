@@ -1,0 +1,41 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { ProjectProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { project, Content } = Astro.props as ProjectProps;
+const { title, description, pubDate, href, tags } = project.data;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={description}>
+  <main class="sw-main">
+    <p class="sw-back">
+      <a class="sw-btn" href="/projects/">&#9664; REWIND &middot; ALL PROJECTS</a>
+    </p>
+
+    <header class="sw-page-head">
+      <p class="sw-kicker sw-rise" style="--d: 0s">NOW SPINNING</p>
+      <h1 class="sw-page-title sw-rise" style="--d: 0.08s">{title}</h1>
+      <p class="sw-trackline" style="margin-top: 0.8rem;">
+        <FormattedDate date={pubDate} />
+        <span class="sw-leader" aria-hidden="true"></span>
+        <span>STUDIO COLOGNE</span>
+      </p>
+      <div class="sw-beam" aria-hidden="true"></div>
+    </header>
+
+    <article class="sw-panel sw-article">
+      <p class="sw-lede">{description}</p>
+      <ul class="sw-chips">
+        {tags.map((tag) => <li class="sw-chip">{tag}</li>)}
+      </ul>
+      <a class="sw-btn sw-btn-solid" href={href} target="_blank" rel="noopener noreferrer">
+        Play it live &#8599;
+      </a>
+
+      <div class="sw-prose">
+        <Content />
+      </div>
+    </article>
+  </main>
+</Layout>

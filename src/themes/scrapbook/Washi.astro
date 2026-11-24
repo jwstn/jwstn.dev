@@ -1,0 +1,12 @@
+---
+// A strip of washi tape. Purely decorative (aria-hidden) — it never carries
+// text, so its translucency has no contrast requirements.
+interface Props {
+  variant?: 1 | 2 | 3 | 4;
+  class?: string;
+}
+
+const { variant = 1, class: className = "" } = Astro.props;
+---
+
+<span aria-hidden="true" class:list={["sb-tape", `v${variant}`, className]}></span>

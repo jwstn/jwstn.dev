@@ -1,0 +1,56 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { GalleryProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { albums } = Astro.props as GalleryProps;
+
+const photoCount = (n: number) => `${n} photograph${n === 1 ? "" : "s"}`;
+---
+
+<Layout
+  title="Gallery — jwstn.dev"
+  description="Photographs by JW — Japan 2026, a German summer, and the spring that opened the year."
+>
+  <header class="eth-fade">
+    <p class="eth-kicker">Light, kept</p>
+    <h1 class="eth-display">Gallery</h1>
+    <p class="eth-lede">
+      In 2026 a camera travelled with me to Japan — and it never really went back in the bag. Three
+      albums kept like pressed flowers: the Japan trip, a German summer, and the spring that opened
+      the year.
+    </p>
+  </header>
+
+  <ul class="eth-albums eth-fade eth-fade-2">
+    {
+      albums.map((album) => (
+        <li>
+          <a class="eth-album-link" href={`/gallery/${album.data.slug}/`}>
+            {album.data.photos[0] && (
+              <div class="eth-memory">
+                <Image
+                  src={album.data.photos[0].image}
+                  alt={`Opening photograph of the album ${album.data.title}`}
+                  widths={[480, 800, 1200, 1600]}
+                  sizes="(min-width: 61rem) 52rem, (min-width: 40rem) 90vw, calc(100vw - 2.75rem)"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <p class="eth-cover-caption">
+              <span class="eth-cover-title">{album.data.title}</span>
+              <span class="eth-cover-meta">
+                <FormattedDate date={album.data.pubDate} />
+                <span aria-hidden="true"> · </span>
+                {photoCount(album.data.photos.length)}
+              </span>
+            </p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

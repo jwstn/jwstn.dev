@@ -1,0 +1,1220 @@
+/* ─────────────────────────────────────────────────────────────────────────
+   bohemian — desert artisan
+   Sun-bleached desert light / dusk-over-the-desert dark.
+   Woven kilim bands and tassel fringes, a desert sun, arched frames,
+   market-goods cards, a blanket-chest gallery, an empty loom.
+   Fraunces (display, optical sizing) + Inter (body) + Geist Mono (labels).
+   Everything is scoped under html.theme-bohemian (and the .dark variant)
+   so it can never leak into the other themes sharing this bundle.
+   ───────────────────────────────────────────────────────────────────────── */
+
+@import "@fontsource-variable/fraunces";
+@import "@fontsource-variable/inter";
+@import "@fontsource-variable/geist-mono";
+
+/* ── Light: sun-bleached desert ─────────────────────────────────────────── */
+html.theme-bohemian {
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, serif;
+  --font-body: "Inter Variable", "Inter", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", ui-monospace, "SF Mono", monospace;
+
+  --background: #f1e6cf;
+  --foreground: #402f1f;
+  --card: #f9f0da;
+  --card-foreground: #402f1f;
+  --primary: #a4472f;
+  --primary-foreground: #f9f0da;
+  --secondary: #e7d9bb;
+  --secondary-foreground: #402f1f;
+  --muted: #e9dcbf;
+  --muted-foreground: #6e5e48;
+  --accent: #a4472f;
+  --accent-foreground: #f9f0da;
+  --border: #d8c39c;
+  --ring: #a4472f;
+
+  /* desert threads */
+  --boh-sage: #5c6b47;
+  --boh-rose: #b06a5a;
+  --boh-sand-deep: #d9c7a3;
+  --boh-stamp-ink: #a4472f;
+  --boh-tag-ink: #5f513e;
+  --boh-linen: rgba(64, 47, 31, 0.028);
+  --boh-linen-weft: rgba(64, 47, 31, 0.022);
+
+  /* kilim band threads: a = rust stripes, b = sage hairlines,
+     c / d = the two diamond threads */
+  --boh-weave-a: #a4472f;
+  --boh-weave-b: #5c6b47;
+  --boh-weave-c: #f6ecd6;
+  --boh-weave-d: #b06a5a;
+
+  /* desert sun */
+  --boh-sun-disc: #b06a5a;
+  --boh-sun-ray: #a4472f;
+
+  /* the loom */
+  --boh-loom-wood: #6f4d2e;
+  --boh-loom-cloth: #e9d8b4;
+  --boh-loom-thread: #c4a670;
+}
+
+/* ── Dark: dusk over the desert ─────────────────────────────────────────── */
+html.theme-bohemian.dark {
+  --background: #221a12;
+  --foreground: #ece0c6;
+  --card: #2b2115;
+  --card-foreground: #ece0c6;
+  --primary: #d9a062;
+  --primary-foreground: #221a12;
+  --secondary: #33281b;
+  --secondary-foreground: #ece0c6;
+  --muted: #2e2317;
+  --muted-foreground: #b3a184;
+  --accent: #d9a062;
+  --accent-foreground: #221a12;
+  --border: #463626;
+  --ring: #d9a062;
+
+  --boh-sage: #a3b58a;
+  --boh-rose: #c98a72;
+  --boh-sand-deep: #4a3a28;
+  --boh-stamp-ink: #d9a062;
+  --boh-tag-ink: #c9b795;
+  --boh-linen: rgba(236, 224, 198, 0.03);
+  --boh-linen-weft: rgba(236, 224, 198, 0.024);
+
+  --boh-weave-a: #b3613a;
+  --boh-weave-b: #7e8f66;
+  --boh-weave-c: #38291a;
+  --boh-weave-d: #b3714f;
+
+  --boh-sun-disc: #d9a062;
+  --boh-sun-ray: #b3613a;
+
+  --boh-loom-wood: #55402a;
+  --boh-loom-cloth: #2f2418;
+  --boh-loom-thread: #5b462b;
+}
+
+/* ── Foundation ──────────────────────────────────────────────────────────── */
+html.theme-bohemian body {
+  margin: 0;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  /* a barely-there linen weave over the sand, never under-inked text */
+  background:
+    repeating-linear-gradient(0deg, var(--boh-linen) 0 1px, transparent 1px 7px),
+    repeating-linear-gradient(90deg, var(--boh-linen-weft) 0 1px, transparent 1px 7px),
+    var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+html.theme-bohemian ::selection {
+  background: color-mix(in oklab, var(--primary) 26%, transparent);
+}
+
+html.theme-bohemian :is(a, button, select, input, textarea, summary):focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+html.theme-bohemian main {
+  flex: 1;
+  width: min(70rem, 100% - clamp(2.4rem, 8vw, 6rem));
+  margin-inline: auto;
+  padding-block: clamp(3rem, 8vh, 5.5rem) clamp(4rem, 10vh, 7rem);
+}
+
+html.theme-bohemian .boh-skip {
+  position: fixed;
+  top: 0.75rem;
+  left: 0.75rem;
+  z-index: 60;
+  padding: 0.65rem 1rem;
+  background: var(--card);
+  color: var(--foreground);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  text-decoration: none;
+  transform: translateY(-160%);
+}
+
+html.theme-bohemian .boh-skip:focus {
+  transform: none;
+}
+
+/* ── Woven bands: the kilim dividers ────────────────────────────────────── */
+html.theme-bohemian .boh-weave {
+  display: block;
+  height: 1.7rem;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--boh-weave-a) 0 3px,
+      var(--boh-weave-b) 3px 5px,
+      transparent 5px calc(100% - 5px),
+      var(--boh-weave-b) calc(100% - 5px) calc(100% - 3px),
+      var(--boh-weave-a) calc(100% - 3px)
+    ),
+    repeating-conic-gradient(
+      from 45deg,
+      var(--boh-weave-c) 0 25%,
+      var(--boh-weave-d) 0 50%
+    );
+  background-size: 100% 100%, 0.85rem 0.85rem;
+  background-repeat: no-repeat, repeat;
+}
+
+html.theme-bohemian .boh-weave--thin {
+  height: 0.65rem;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--boh-weave-a) 0 2px,
+      transparent 2px calc(100% - 2px),
+      var(--boh-weave-a) calc(100% - 2px)
+    ),
+    repeating-conic-gradient(
+      from 45deg,
+      var(--boh-weave-d) 0 25%,
+      var(--boh-weave-c) 0 50%
+    );
+  background-size: 100% 100%, 0.5rem 0.5rem;
+}
+
+/* a thread with small diamonds hanging from it — the tassel fringe */
+html.theme-bohemian .boh-weave--fringe {
+  height: 0.9rem;
+  background:
+    linear-gradient(to bottom, var(--boh-weave-b) 0 2px, transparent 2px),
+    repeating-conic-gradient(
+      from 45deg,
+      var(--boh-weave-a) 0 25%,
+      transparent 0 50%
+    );
+  background-size: 100% 100%, 0.9rem 0.9rem;
+}
+
+html.theme-bohemian .boh-divider {
+  margin-block: clamp(2.8em, 7vh, 4.5em);
+}
+
+/* ── Header: the stall's awning ──────────────────────────────────────────── */
+html.theme-bohemian .boh-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  padding: 1.15rem clamp(1.1rem, 4vw, 3rem) 1.25rem;
+  border-bottom: 1px solid var(--border);
+}
+
+html.theme-bohemian .boh-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-size: 1.45rem;
+  font-weight: 620;
+  color: var(--foreground);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+html.theme-bohemian .boh-brand::after {
+  content: "";
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--primary);
+  transform: rotate(45deg);
+}
+
+html.theme-bohemian .boh-brand:hover {
+  color: var(--primary);
+}
+
+html.theme-bohemian .boh-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.1rem 0.35rem;
+}
+
+html.theme-bohemian .boh-nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding: 0.55rem 0.7rem;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+/* hover / current underline is a little woven thread of its own */
+html.theme-bohemian .boh-nav-link::after {
+  content: "";
+  position: absolute;
+  right: 0.7rem;
+  bottom: 0.28rem;
+  left: 0.7rem;
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--primary) 0 5px,
+    var(--boh-sage) 5px 10px
+  );
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+html.theme-bohemian .boh-nav-link:hover {
+  color: var(--foreground);
+}
+
+html.theme-bohemian .boh-nav-link:hover::after,
+html.theme-bohemian .boh-nav-link:focus-visible::after {
+  opacity: 1;
+}
+
+html.theme-bohemian .boh-nav-link[aria-current="page"] {
+  color: var(--primary);
+}
+
+html.theme-bohemian .boh-nav-link[aria-current="page"]::after {
+  opacity: 1;
+}
+
+html.theme-bohemian .boh-nav-sep {
+  width: 0.28rem;
+  height: 0.28rem;
+  margin: 0 0.45rem;
+  background: var(--boh-sand-deep);
+  transform: rotate(45deg);
+}
+
+@media (max-width: 30rem) {
+  html.theme-bohemian .boh-nav {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
+@media (pointer: coarse) {
+  html.theme-bohemian .boh-nav-link {
+    min-height: 44px;
+  }
+}
+
+/* ── Footer: band, tassels, imprint ──────────────────────────────────────── */
+html.theme-bohemian .boh-footer {
+  margin-top: auto;
+}
+
+html.theme-bohemian .boh-footer-inner {
+  padding: 1.9rem 1.5rem 2.6rem;
+  text-align: center;
+}
+
+html.theme-bohemian .boh-footer-copy {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 0.2rem 0.7rem;
+  margin: 0.9rem 0 0;
+}
+
+html.theme-bohemian .boh-footer-socials a {
+  padding: 0.4rem 0.2rem;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+html.theme-bohemian .boh-footer-socials a:hover {
+  color: var(--primary);
+}
+
+/* ── Typography: hand-stamped labels ────────────────────────────────────── */
+html.theme-bohemian .boh-stamp {
+  display: inline-block;
+  padding: 0.32rem 0.75rem 0.38rem;
+  border: 1px solid color-mix(in oklab, var(--boh-stamp-ink) 65%, transparent);
+  border-radius: 0.2rem;
+  box-shadow:
+    inset 0 0 0 2px var(--background),
+    inset 0 0 0 3px color-mix(in oklab, var(--boh-stamp-ink) 55%, transparent);
+  transform: rotate(-1.2deg);
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--boh-stamp-ink);
+}
+
+html.theme-bohemian .boh-stamp--alt {
+  transform: rotate(1deg);
+}
+
+html.theme-bohemian .boh-display {
+  margin: 0;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30, "WONK" 1;
+  font-weight: 560;
+  font-size: clamp(2.5rem, 6vw + 0.5rem, 4.3rem);
+  line-height: 1.06;
+  text-align: center;
+  text-wrap: balance;
+}
+
+html.theme-bohemian .boh-display em {
+  font-style: italic;
+  color: var(--primary);
+}
+
+html.theme-bohemian .boh-pagehead {
+  max-width: 42rem;
+  margin-inline: auto;
+  text-align: center;
+}
+
+html.theme-bohemian .boh-pagehead .boh-stamp {
+  margin-bottom: 1.6rem;
+}
+
+html.theme-bohemian .boh-lede {
+  margin: 1.7rem auto 0;
+  max-width: 36em;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-sec-title {
+  margin: 0 0 2.1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  text-align: center;
+}
+
+/* ── Articles ───────────────────────────────────────────────────────────── */
+html.theme-bohemian .boh-article {
+  max-width: 44rem;
+  margin-inline: auto;
+}
+
+html.theme-bohemian .boh-article > header,
+html.theme-bohemian .boh-article-header {
+  text-align: center;
+}
+
+html.theme-bohemian .boh-article-title {
+  margin: 1.4rem 0 0;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30, "WONK" 1;
+  font-weight: 560;
+  font-size: clamp(2.1rem, 4.5vw, 3.3rem);
+  line-height: 1.08;
+  text-wrap: balance;
+}
+
+html.theme-bohemian .boh-meta {
+  margin: 1.2rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-meta a {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  transition: border-color 150ms ease;
+}
+
+html.theme-bohemian .boh-meta a:hover {
+  border-bottom-color: var(--primary);
+}
+
+html.theme-bohemian .boh-backrow {
+  margin: 0 0 2rem;
+  text-align: center;
+}
+
+html.theme-bohemian .boh-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  padding: 0.5rem 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+html.theme-bohemian .boh-back:hover {
+  color: var(--primary);
+}
+
+/* ── Hero: the desert sun ────────────────────────────────────────────────── */
+html.theme-bohemian .boh-hero {
+  text-align: center;
+  padding-top: clamp(1rem, 4vh, 2.5rem);
+}
+
+html.theme-bohemian .boh-sun {
+  position: relative;
+  width: 5.5rem;
+  height: 5.5rem;
+  margin: 0 auto 1.7rem;
+}
+
+html.theme-bohemian .boh-sun::before {
+  content: "";
+  position: absolute;
+  inset: 1.5rem;
+  border-radius: 50%;
+  background: var(--boh-sun-disc);
+}
+
+html.theme-bohemian .boh-sun::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from 3deg,
+    var(--boh-sun-ray) 0 5deg,
+    transparent 5deg 15deg
+  );
+  -webkit-mask: radial-gradient(circle, transparent 1.62rem, #000 1.68rem);
+  mask: radial-gradient(circle, transparent 1.62rem, #000 1.68rem);
+}
+
+html.theme-bohemian .boh-hero .boh-stamp {
+  margin: 0 0 1.4rem;
+}
+
+html.theme-bohemian .boh-hero .boh-display {
+  font-size: clamp(2.5rem, 6.5vw + 0.5rem, 4.6rem);
+}
+
+html.theme-bohemian .boh-hero-copy {
+  margin: 2rem auto 0;
+  max-width: 35em;
+  font-size: 1.04rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-hero-copy a {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  transition: border-color 150ms ease;
+}
+
+html.theme-bohemian .boh-hero-copy a:hover {
+  border-bottom-color: var(--primary);
+}
+
+/* ── Index rows: diamonds, thread leaders ───────────────────────────────── */
+html.theme-bohemian .boh-rows {
+  list-style: none;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  gap: 1rem;
+}
+
+html.theme-bohemian .boh-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  padding: 0.45rem 0.1rem;
+  color: inherit;
+  text-decoration: none;
+}
+
+html.theme-bohemian .boh-row-diamond {
+  flex: none;
+  align-self: center;
+  width: 0.55rem;
+  height: 0.55rem;
+  background: var(--primary);
+  transform: rotate(45deg);
+}
+
+html.theme-bohemian .boh-row-title {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 540;
+  font-size: 1.4rem;
+  line-height: 1.15;
+  transition: color 150ms ease;
+}
+
+html.theme-bohemian a.boh-row:hover .boh-row-title {
+  color: var(--primary);
+}
+
+html.theme-bohemian .boh-row-leader {
+  flex: 1 1 2rem;
+  min-width: 1.5rem;
+  border-bottom: 1px dotted var(--boh-sand-deep);
+}
+
+html.theme-bohemian .boh-row-note {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-row-desc {
+  margin: 0.35rem 0 0;
+  padding-left: 1.35rem;
+  max-width: 40em;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-row-upd {
+  margin: 0.4rem 0 0;
+  padding-left: 1.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 34rem) {
+  html.theme-bohemian .boh-row {
+    flex-wrap: wrap;
+    row-gap: 0.25rem;
+  }
+
+  html.theme-bohemian .boh-row-leader {
+    display: none;
+  }
+
+  html.theme-bohemian .boh-row-note {
+    flex-basis: 100%;
+    padding-left: 1.35rem;
+  }
+}
+
+@media (pointer: coarse) {
+  html.theme-bohemian a.boh-row {
+    min-height: 44px;
+    align-items: center;
+  }
+}
+
+/* ── Market goods: project cards ────────────────────────────────────────── */
+html.theme-bohemian .boh-goods {
+  list-style: none;
+  max-width: 66rem;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+  gap: 1.6rem;
+}
+
+html.theme-bohemian .boh-good {
+  display: flex;
+  flex-direction: column;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.9rem 0.9rem 0.7rem 0.7rem;
+  overflow: hidden;
+  transition: border-color 150ms ease;
+}
+
+html.theme-bohemian .boh-good:hover {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+}
+
+html.theme-bohemian .boh-good-link {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  color: inherit;
+  text-decoration: none;
+}
+
+/* each stall's band uses its own thread colors */
+html.theme-bohemian .boh-goods > li:nth-child(3n + 2) .boh-good-weave {
+  --boh-weave-a: var(--boh-sage);
+  --boh-weave-d: var(--boh-rose);
+}
+
+html.theme-bohemian .boh-goods > li:nth-child(3n + 3) .boh-good-weave {
+  --boh-weave-a: var(--boh-rose);
+  --boh-weave-d: var(--boh-sage);
+}
+
+html.theme-bohemian .boh-good-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1;
+  padding: 1.25rem 1.35rem 1.4rem;
+}
+
+html.theme-bohemian .boh-good-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  margin: 0;
+}
+
+html.theme-bohemian .boh-good-no {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--boh-stamp-ink);
+}
+
+html.theme-bohemian .boh-good-date {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-good-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30, "WONK" 1;
+  font-weight: 560;
+  font-size: 1.45rem;
+  line-height: 1.12;
+  transition: color 150ms ease;
+}
+
+html.theme-bohemian .boh-good-link:hover .boh-good-title,
+html.theme-bohemian .boh-good-link:focus-visible .boh-good-title {
+  color: var(--primary);
+}
+
+html.theme-bohemian .boh-good-desc {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-good-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: auto 0 0;
+  padding-top: 0.4rem;
+}
+
+/* ── Tags: little woven chips ────────────────────────────────────────────── */
+html.theme-bohemian .boh-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.28rem 0.6rem;
+  background: var(--secondary);
+  border: 1px solid var(--border);
+  border-radius: 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.04em;
+  color: var(--boh-tag-ink);
+}
+
+html.theme-bohemian .boh-tag::before {
+  content: "";
+  width: 0.3rem;
+  height: 0.3rem;
+  background: var(--primary);
+  transform: rotate(45deg);
+}
+
+html.theme-bohemian .boh-tags-end {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: center;
+  margin: 3rem 0 0;
+}
+
+/* ── Prose ───────────────────────────────────────────────────────────────── */
+html.theme-bohemian .boh-prose {
+  max-width: 38rem;
+  margin: 2.6rem auto 0;
+  font-size: 1.02rem;
+}
+
+html.theme-bohemian .boh-prose > :first-child {
+  margin-top: 0;
+}
+
+html.theme-bohemian .boh-prose p {
+  margin: 1.4em 0;
+}
+
+html.theme-bohemian .boh-prose strong {
+  font-weight: 600;
+}
+
+html.theme-bohemian .boh-prose h2 {
+  margin: 2.3em 0 0.6em;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 560;
+  font-size: 1.8rem;
+  line-height: 1.15;
+}
+
+html.theme-bohemian .boh-prose h3 {
+  margin: 2em 0 0.5em;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 560;
+  font-size: 1.4rem;
+  line-height: 1.2;
+}
+
+html.theme-bohemian .boh-prose a {
+  color: var(--primary);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--primary) 45%, transparent);
+  transition: border-color 150ms ease;
+}
+
+html.theme-bohemian .boh-prose a:hover {
+  border-bottom-color: var(--primary);
+}
+
+html.theme-bohemian .boh-prose ul,
+html.theme-bohemian .boh-prose ol {
+  margin: 1.4em 0;
+  padding-left: 1.4em;
+}
+
+html.theme-bohemian .boh-prose li + li {
+  margin-top: 0.45em;
+}
+
+html.theme-bohemian .boh-prose blockquote {
+  margin: 2em 0;
+  padding: 0.2em 0 0.2em 1.4em;
+  border-left: 4px solid;
+  border-image: repeating-linear-gradient(
+      to bottom,
+      var(--primary) 0 6px,
+      var(--boh-sage) 6px 12px
+    )
+    1;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.15rem;
+  color: var(--muted-foreground);
+}
+
+html.theme-bohemian .boh-prose blockquote p {
+  margin: 0.3em 0;
+}
+
+html.theme-bohemian .boh-prose code {
+  font-family: var(--font-mono);
+  font-size: 0.85em;
+  padding: 0.12em 0.35em;
+  background: color-mix(in oklab, var(--foreground) 8%, transparent);
+  border-radius: 0.25rem;
+}
+
+html.theme-bohemian .boh-prose pre {
+  margin: 1.8em 0;
+  padding: 1.1em 1.3em;
+  overflow-x: auto;
+  background: color-mix(in oklab, var(--foreground) 5%, var(--background));
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+}
+
+html.theme-bohemian .boh-prose pre code {
+  padding: 0;
+  background: none;
+  font-size: 0.82em;
+}
+
+html.theme-bohemian .boh-prose img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 2em auto;
+  border-radius: 0.6rem;
+}
+
+html.theme-bohemian .boh-prose hr {
+  width: 8rem;
+  margin: 3em auto;
+  border: none;
+  border-top: 1px solid var(--border);
+}
+
+/* ── Essay hero image: an arched window ──────────────────────────────────── */
+html.theme-bohemian .boh-heroimg {
+  margin: 2.8rem auto 0;
+  max-width: 44rem;
+  padding: 0.6rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50% 50% 0.8rem 0.8rem / 22% 22% 0.8rem 0.8rem;
+}
+
+html.theme-bohemian .boh-heroimg img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 50% 50% 0.5rem 0.5rem / 20% 20% 0.5rem 0.5rem;
+}
+
+/* ── The blanket chest: gallery index ────────────────────────────────────── */
+html.theme-bohemian .boh-chest {
+  list-style: none;
+  max-width: 66rem;
+  margin: 0 auto;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+  gap: 2rem;
+}
+
+html.theme-bohemian .boh-blanket-link {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+
+html.theme-bohemian .boh-blanket {
+  margin: 0;
+  padding: 0.85rem 0.85rem 1.1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1.1rem 1.1rem 0.9rem 0.9rem;
+  transition: border-color 150ms ease;
+}
+
+html.theme-bohemian .boh-blanket-link:hover .boh-blanket {
+  border-color: color-mix(in oklab, var(--primary) 45%, var(--border));
+}
+
+html.theme-bohemian .boh-chest > li:nth-child(3n + 2) .boh-blanket {
+  border-color: color-mix(in oklab, var(--boh-sage) 55%, var(--border));
+}
+
+html.theme-bohemian .boh-chest > li:nth-child(3n + 3) .boh-blanket {
+  border-color: color-mix(in oklab, var(--boh-rose) 55%, var(--border));
+}
+
+html.theme-bohemian .boh-blanket-window {
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: 50% 50% 0.7rem 0.7rem / 28% 28% 0.7rem 0.7rem;
+  background: var(--secondary);
+}
+
+html.theme-bohemian .boh-blanket-window img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 150ms ease;
+}
+
+html.theme-bohemian .boh-blanket-link:hover .boh-blanket-window img {
+  opacity: 0.92;
+}
+
+html.theme-bohemian .boh-blanket-caption {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  text-align: center;
+}
+
+html.theme-bohemian .boh-blanket-no {
+  justify-self: center;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--boh-stamp-ink);
+}
+
+html.theme-bohemian .boh-chest > li:nth-child(even) .boh-blanket-no {
+  transform: rotate(1.2deg);
+}
+
+html.theme-bohemian .boh-blanket-title {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 560;
+  font-size: 1.5rem;
+  line-height: 1.1;
+  transition: color 150ms ease;
+}
+
+html.theme-bohemian .boh-blanket-link:hover .boh-blanket-title {
+  color: var(--primary);
+}
+
+html.theme-bohemian .boh-blanket-meta {
+  font-family: var(--font-mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  color: var(--muted-foreground);
+}
+
+/* ── The quilt: album photographs in woven squares ───────────────────────── */
+html.theme-bohemian .boh-quilt {
+  max-width: 66rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+  gap: 1.7rem;
+}
+
+html.theme-bohemian .boh-quilt-square {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+html.theme-bohemian .boh-quilt-window {
+  padding: 0.55rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 50% 50% 0.8rem 0.8rem / 26% 26% 0.8rem 0.8rem;
+}
+
+html.theme-bohemian .boh-quilt > figure:nth-of-type(3n + 2) .boh-quilt-window {
+  border-color: color-mix(in oklab, var(--boh-sage) 55%, var(--border));
+}
+
+html.theme-bohemian .boh-quilt > figure:nth-of-type(3n + 3) .boh-quilt-window {
+  border-color: color-mix(in oklab, var(--boh-rose) 55%, var(--border));
+}
+
+html.theme-bohemian .boh-quilt-window img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: 50% 50% 0.55rem 0.55rem / 24% 24% 0.55rem 0.55rem;
+}
+
+html.theme-bohemian .boh-quilt-caption {
+  display: grid;
+  gap: 0.3rem;
+  padding: 0 0.2rem;
+}
+
+html.theme-bohemian .boh-quilt-title {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-weight: 560;
+  font-size: 1.1rem;
+  line-height: 1.2;
+}
+
+html.theme-bohemian .boh-quilt-note {
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+/* ── The loom room: blog empty state ─────────────────────────────────────── */
+html.theme-bohemian .boh-empty {
+  max-width: 42rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+html.theme-bohemian .boh-empty-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-variation-settings: "SOFT" 30, "WONK" 1;
+  font-weight: 520;
+  font-size: clamp(2.1rem, 5vw, 3.2rem);
+  line-height: 1.1;
+  text-wrap: balance;
+}
+
+/* a strung loom: wooden beams, warp threads, the first rows of weaving */
+html.theme-bohemian .boh-loom {
+  max-width: 21rem;
+  margin: 0 auto 2.2rem;
+}
+
+html.theme-bohemian .boh-loom-beam {
+  height: 0.7rem;
+  background: var(--boh-loom-wood);
+  border-radius: 0.4rem;
+}
+
+html.theme-bohemian .boh-loom-warp {
+  position: relative;
+  height: 9.5rem;
+  margin: 0.45rem 0;
+  border-inline: 0.35rem solid var(--boh-loom-wood);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      var(--boh-loom-thread) 0 2px,
+      transparent 2px 12px
+    ),
+    var(--boh-loom-cloth);
+}
+
+html.theme-bohemian .boh-loom-start {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  height: 1.6rem;
+  background:
+    linear-gradient(
+      to bottom,
+      var(--boh-weave-a) 0 2px,
+      var(--boh-weave-b) 2px 4px,
+      transparent 4px
+    ),
+    repeating-conic-gradient(
+      from 45deg,
+      var(--boh-weave-d) 0 25%,
+      var(--boh-weave-c) 0 50%
+    );
+  background-size: 100% 100%, 0.7rem 0.7rem;
+}
+
+html.theme-bohemian .boh-threads {
+  list-style: none;
+  max-width: 34rem;
+  margin: 2.6rem auto 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+  text-align: left;
+}
+
+html.theme-bohemian .boh-thread {
+  display: flex;
+  align-items: baseline;
+  gap: 0.7rem;
+}
+
+html.theme-bohemian .boh-thread-diamond {
+  flex: none;
+  align-self: center;
+  width: 0.45rem;
+  height: 0.45rem;
+  background: var(--boh-sage);
+  transform: rotate(45deg);
+}
+
+html.theme-bohemian .boh-thread-title {
+  font-family: var(--font-display);
+  font-optical-sizing: auto;
+  font-style: italic;
+  font-weight: 500;
+  font-size: 1.15rem;
+}
+
+html.theme-bohemian .boh-thread-status {
+  margin-left: auto;
+  padding-left: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+@media (max-width: 26rem) {
+  html.theme-bohemian .boh-thread {
+    flex-wrap: wrap;
+    row-gap: 0.2rem;
+  }
+
+  html.theme-bohemian .boh-thread-status {
+    flex-basis: 100%;
+    padding-left: 1.15rem;
+    margin-left: 0;
+  }
+}
+
+html.theme-bohemian .boh-empty-note {
+  margin: 2.4rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  color: var(--muted-foreground);
+}
+
+/* ── Motion: warm 150 ms fades, nothing more ────────────────────────────── */
+@keyframes boh-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+html.theme-bohemian .boh-fade {
+  animation: boh-fade 150ms linear both;
+}
+
+html.theme-bohemian .boh-fade-2 {
+  animation-delay: 90ms;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.theme-bohemian .boh-fade,
+  html.theme-bohemian .boh-fade-2 {
+    animation: none !important;
+  }
+
+  html.theme-bohemian *,
+  html.theme-bohemian *::before,
+  html.theme-bohemian *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}

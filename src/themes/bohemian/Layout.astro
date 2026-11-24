@@ -1,0 +1,83 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import Weave from "./Weave.astro";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" || path === "" : path.startsWith(href));
+
+const nav = [
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
+];
+const socials = SOCIALS.map((s) => ({ href: s.href, label: s.label }));
+---
+
+<html lang="en" class="theme-bohemian">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <a class="boh-skip" href="#boh-main">Skip to content</a>
+
+    <Weave variant="thin" />
+
+    <header class="boh-header">
+      <a class="boh-brand" href="/">jwstn.dev</a>
+      <nav class="boh-nav" aria-label="Primary">
+        {
+          nav.map((item) => (
+            <a
+              class="boh-nav-link"
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+            >
+              {item.label}
+            </a>
+          ))
+        }
+        <span class="boh-nav-sep" aria-hidden="true"></span>
+        {
+          socials.map((s) => (
+            <a class="boh-nav-link" href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label}
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main id="boh-main">
+      <slot />
+    </main>
+
+    <footer class="boh-footer">
+      <Weave variant="band" />
+      <Weave variant="fringe" />
+      <div class="boh-footer-inner">
+        <p class="boh-footer-copy">&copy; {year} jwstn — woven in Cologne</p>
+        <p class="boh-footer-socials">
+          {
+            socials.map((s, i) => (
+              <Fragment>
+                {i > 0 && <span class="boh-nav-sep" aria-hidden="true"></span>}
+                <a href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label}
+                </a>
+              </Fragment>
+            ))
+          }
+        </p>
+      </div>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

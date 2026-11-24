@@ -1,0 +1,83 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout title="Blog | jwstn.dev" description="Occasional writing by JW — pressed into shape only when something is worth keeping.">
+  <section class="clay-article">
+    <p class="clay-stamp clay-rise clay-d1">notes</p>
+    <h1 class="clay-h1 clay-rise clay-d2">Blog</h1>
+    <p class="clay-lede clay-rise clay-d3">
+      Notes from the workbench and the road — written slowly, and pressed into shape only when
+      something is worth keeping.
+    </p>
+  </section>
+
+  {
+    posts.length === 0 ? (
+      <section class="clay clay-empty clay-rise clay-d3" aria-label="No posts yet">
+        <svg class="clay-empty-art" viewBox="0 0 320 180" fill="none" aria-hidden="true">
+          <circle class="clay-art-dot" cx="36" cy="30" r="2.4" />
+          <circle class="clay-art-dot" cx="288" cy="26" r="2" />
+          <circle class="clay-art-dot" cx="70" cy="62" r="1.8" />
+          <circle class="clay-art-dot" cx="252" cy="56" r="2.2" />
+          <ellipse class="clay-art-shadow" cx="160" cy="152" rx="118" ry="13" />
+          <rect class="clay-art-slab" x="58" y="104" width="204" height="40" rx="20" />
+          <ellipse class="clay-art-blob" cx="160" cy="82" rx="30" ry="24" />
+          <ellipse class="clay-art-dimple" cx="160" cy="74" rx="8" ry="4.5" />
+          <path class="clay-art-press" d="M144 46 q 6 -7 14 -7" />
+          <path class="clay-art-press" d="M162 39 q 7 -1 13 4" />
+          <circle class="clay-art-pebble-a" cx="34" cy="138" r="11" />
+          <circle class="clay-art-pebble-b" cx="288" cy="136" r="8" />
+        </svg>
+        <h2>Nothing here yet — this slab is still soft.</h2>
+        <p>
+          No posts have been shaped yet. There are notes in the clay, though: lessons from the Effect
+          experiments, stories from the Japan trip, the occasional project that taught me the hard
+          way. When the first one is pressed and baked, it will land right here.
+        </p>
+        <div class="clay-empty-actions">
+          <a class="clay-btn clay-btn-primary squish" href="/projects">See what I'm building</a>
+          <a class="clay-btn squish" href="/gallery">Browse the gallery instead</a>
+        </div>
+      </section>
+    ) : (
+      <ul class="clay-grid">
+        {posts.map((post, i) => (
+          <li class="clay clay-card squish clay-rise" class:list={["clay-d1", "clay-d2", "clay-d3", "clay-d4"][i % 4]}>
+            {post.data.heroImage && (
+              <div class="clay clay-frame">
+                <Image
+                  src={post.data.heroImage}
+                  alt=""
+                  width={1020}
+                  height={510}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+            )}
+            <h2>
+              <a class="clay-card-link" href={`/blog/${post.id}/`}>
+                {post.data.title}
+              </a>
+            </h2>
+            <p class="clay-card-desc">{post.data.description}</p>
+            <p class="clay-meta">
+              <FormattedDate date={post.data.pubDate} />
+              {post.data.updatedDate && (
+                <span>
+                  updated <FormattedDate date={post.data.updatedDate} />
+                </span>
+              )}
+            </p>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Layout>

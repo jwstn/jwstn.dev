@@ -1,0 +1,84 @@
+---
+import { SOCIALS } from "#/lib/content";
+import MetaTags from "#/themes/shared/MetaTags.astro";
+import ThemeSwitcher from "#/themes/shared/ThemeSwitcher.astro";
+import type { LayoutProps } from "#/themes/types";
+import "./theme.css";
+
+const { title, description } = Astro.props as LayoutProps;
+const year = new Date().getFullYear();
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => (href === "/" ? path === "/" || path === "" : path.startsWith(href));
+
+const nav: { href: string; label: string; external?: boolean }[] = [
+  { href: "/projects", label: "Projects" },
+  { href: "/blog", label: "Blog" },
+  { href: "/gallery", label: "Gallery" },
+  ...SOCIALS.map((s) => ({ href: s.href, label: s.label, external: true })),
+];
+---
+
+<html lang="en" class="theme-ethereal">
+  <head>
+    <MetaTags title={title} description={description} />
+  </head>
+  <body>
+    <!-- The mist: blurred gradient clouds anchored to the page edges.
+         Decorative only, and never dense behind body copy. -->
+    <div class="eth-mist" aria-hidden="true">
+      <span class="eth-cloud eth-c-top"></span>
+      <span class="eth-cloud eth-c-left"></span>
+      <span class="eth-cloud eth-c-right"></span>
+      <span class="eth-cloud eth-c-bottom"></span>
+      <span class="eth-moon"></span>
+    </div>
+
+    <header class="eth-header">
+      <a class="eth-brand" href="/">jwstn.dev</a>
+      <nav class="eth-nav" aria-label="Primary">
+        {
+          nav.map((item) => (
+            <a
+              class="eth-nav-link"
+              href={item.href}
+              aria-current={isActive(item.href) ? "page" : undefined}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noopener noreferrer" : undefined}
+            >
+              <span>
+                {item.label}
+                {item.external && (
+                  <span class="eth-ext" aria-hidden="true">
+                    ↗
+                  </span>
+                )}
+              </span>
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="eth-footer">
+      <div class="eth-mistline" aria-hidden="true"></div>
+      <p class="eth-footer-copy">&copy; {year} jwstn — Cologne</p>
+      <p class="eth-footer-whisper">Everything here was made between two mists.</p>
+      <p class="eth-footer-socials">
+        {
+          SOCIALS.map((s) => (
+            <a href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.label}
+            </a>
+          ))
+        }
+      </p>
+    </footer>
+
+    <ThemeSwitcher />
+  </body>
+</html>

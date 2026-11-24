@@ -1,0 +1,46 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { AlbumProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+
+const { album } = Astro.props as AlbumProps;
+const { title, photos, pubDate } = album.data;
+const count = photos.length;
+---
+
+<Layout title={`${title} | jwstn.dev`} description={`${title} — ${count} photographs by JW.`}>
+  <section class="clay-article">
+    <a class="clay-back squish" href="/gallery" aria-label="Back to the gallery">← Back to the gallery</a>
+
+    <p class="clay-stamp clay-rise clay-d1">album</p>
+    <h1 class="clay-h1 clay-rise clay-d2">{title}</h1>
+    <p class="clay-meta clay-rise clay-d3">
+      <FormattedDate date={pubDate} />
+      <span>{count} photograph{count === 1 ? "" : "s"}, pressed into clay frames</span>
+    </p>
+  </section>
+
+  <ul class="clay-masonry">
+    {
+      photos.map((photo) => (
+        <li>
+          <figure class="clay clay-frame">
+            <Image
+              src={photo.image}
+              alt={photo.title}
+              widths={[480, 800, 1200]}
+              sizes="(min-width: 62rem) 22rem, (min-width: 34rem) 45vw, 92vw"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption>
+              <span class="clay-photo-title">{photo.title}</span>
+              {photo.caption && <span class="clay-photo-caption">{photo.caption}</span>}
+            </figcaption>
+          </figure>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

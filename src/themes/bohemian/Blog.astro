@@ -1,0 +1,81 @@
+---
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { BlogProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Weave from "./Weave.astro";
+
+const { posts } = Astro.props as BlogProps;
+---
+
+<Layout
+  title="Blog — jwstn.dev"
+  description="Notes from the workshop by JW — set down slowly, and only woven when they are worth keeping."
+>
+  <header class="boh-pagehead boh-fade">
+    <p class="boh-stamp">The loom room</p>
+    <h1 class="boh-display">Blog</h1>
+    <p class="boh-lede">
+      Notes from the workshop — set down slowly, and only woven when they are
+      worth keeping.
+    </p>
+  </header>
+
+  <Weave variant="band" class="boh-divider" />
+
+  {
+    posts.length === 0 ? (
+      <section class="boh-empty boh-fade boh-fade-2" aria-label="No posts published yet">
+        <div class="boh-loom" aria-hidden="true">
+          <div class="boh-loom-beam" />
+          <div class="boh-loom-warp">
+            <div class="boh-loom-start" />
+          </div>
+          <div class="boh-loom-beam" />
+        </div>
+        <h2 class="boh-empty-title">The loom is strung.</h2>
+        <p class="boh-lede">
+          The warp threads are up and the shuttle is loaded — notes on building
+          with Effect, photographs from a camera that travelled to Japan, and a
+          few things the workbench taught me the hard way. Nothing is woven yet;
+          the first pieces will hang here when they are.
+        </p>
+        <ul class="boh-threads">
+          <li class="boh-thread">
+            <span class="boh-thread-diamond" aria-hidden="true" />
+            <span class="boh-thread-title">
+              On Effect, and relearning how a program is written
+            </span>
+            <span class="boh-thread-status">on the shuttle</span>
+          </li>
+          <li class="boh-thread">
+            <span class="boh-thread-diamond" aria-hidden="true" />
+            <span class="boh-thread-title">A camera in Japan, 2026</span>
+            <span class="boh-thread-status">on the shuttle</span>
+          </li>
+        </ul>
+        <p class="boh-empty-note">When a piece is woven, it will hang here first.</p>
+      </section>
+    ) : (
+      <ol class="boh-rows boh-fade boh-fade-2">
+        {posts.map((post) => (
+          <li>
+            <a class="boh-row" href={`/blog/${post.id}/`}>
+              <span class="boh-row-diamond" aria-hidden="true" />
+              <span class="boh-row-title">{post.data.title}</span>
+              <span class="boh-row-leader" aria-hidden="true" />
+              <span class="boh-row-note">
+                <FormattedDate date={post.data.pubDate} />
+              </span>
+            </a>
+            <p class="boh-row-desc">{post.data.description}</p>
+            {post.data.updatedDate && (
+              <p class="boh-row-upd">
+                Rewoven <FormattedDate date={post.data.updatedDate} />
+              </p>
+            )}
+          </li>
+        ))}
+      </ol>
+    )
+  }
+</Layout>

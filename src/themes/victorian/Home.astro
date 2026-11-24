@@ -1,0 +1,73 @@
+---
+import type { HomeProps } from "#/themes/types";
+import Corners from "./Corners.astro";
+import Fleuron from "./Fleuron.astro";
+import Layout from "./Layout.astro";
+import { roman } from "./numerals";
+
+Astro.props as HomeProps;
+
+const contents = [
+  {
+    href: "/projects",
+    title: "The Projects",
+    note: "Four works in active construction",
+  },
+  {
+    href: "/blog",
+    title: "The Journal",
+    note: "A volume forthcoming",
+  },
+  {
+    href: "/gallery",
+    title: "The Gallery",
+    note: "Plates of Japan, summer & spring",
+  },
+];
+---
+
+<Layout
+  title="jwstn.dev — JW, full-stack developer in Cologne"
+  description="JW builds web applications with TanStack, experiments with Effect, and takes his camera everywhere — most recently to Japan. A portfolio printed in the letterpress manner."
+>
+  <section class="vic-frame vic-frame--home" aria-labelledby="vic-home-title">
+    <Corners />
+    <p class="vic-label">JW — Full-Stack Developer — Cologne</p>
+    <h1 id="vic-home-title" class="vic-display">
+      A Catalogue of Works &amp; Photographs
+    </h1>
+    <p class="vic-lede">
+      Most of my days are given to web applications built with
+      <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a>
+      — it covers so much of what a modern app needs that
+      <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> and
+      <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a>
+      still wait their turn upon the shelf. What I did make time for is
+      <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a>
+      — the most fun I have had in a good while, relearning how a program may be written.
+      When the keyboard rests, the camera comes out: in 2026 it travelled to Japan, and it
+      has not truly been put down since.
+    </p>
+  </section>
+
+  <Fleuron />
+
+  <section aria-labelledby="vic-contents-title">
+    <h2 id="vic-contents-title" class="vic-label vic-label--block">Table of Contents</h2>
+    <ol class="vic-toc">
+      {
+        contents.map((c, i) => (
+          <li>
+            <a class="vic-toc-row" href={c.href}>
+              <span class="vic-toc-num" aria-hidden="true">
+                {roman(i + 1)}.
+              </span>
+              <span class="vic-toc-title">{c.title}</span>
+              <span class="vic-toc-note">{c.note}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Layout>

@@ -1,0 +1,63 @@
+---
+import { Image } from "astro:assets";
+import FormattedDate from "#/components/FormattedDate.astro";
+import type { GalleryProps } from "#/themes/types";
+import Layout from "./Layout.astro";
+import Weave from "./Weave.astro";
+
+const { albums } = Astro.props as GalleryProps;
+
+const roman = (n: number) => ["I", "II", "III", "IV", "V"][n - 1];
+const photoCount = (n: number) => `${n} photograph${n === 1 ? "" : "s"}`;
+---
+
+<Layout
+  title="Gallery — jwstn.dev"
+  description="Photographs by JW, kept like blankets — the Japan 2026 trip, a German summer, and the spring that opened the year."
+>
+  <header class="boh-pagehead boh-fade">
+    <p class="boh-stamp">The blanket chest</p>
+    <h1 class="boh-display">Gallery</h1>
+    <p class="boh-lede">
+      In 2026 a camera travelled with me to Japan — and never really went back in
+      the bag. Three blankets woven from photographs: the Japan trip, a German
+      summer, and the spring that opened the year.
+    </p>
+  </header>
+
+  <Weave variant="band" class="boh-divider" />
+
+  <ul class="boh-chest boh-fade boh-fade-2">
+    {
+      albums.map((album, i) => (
+        <li>
+          <a class="boh-blanket-link" href={`/gallery/${album.data.slug}/`}>
+            <figure class="boh-blanket">
+              {album.data.photos[0] && (
+                <div class="boh-blanket-window">
+                  <Image
+                    src={album.data.photos[0].image}
+                    alt={`Opening photograph of the album ${album.data.title}`}
+                    widths={[480, 800, 1200]}
+                    sizes="(min-width: 70rem) 20rem, (min-width: 48rem) 30vw, calc(100vw - 3.6rem)"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+              )}
+              <figcaption class="boh-blanket-caption">
+                <span class="boh-blanket-no">Blanket No. {roman(i + 1)}</span>
+                <span class="boh-blanket-title">{album.data.title}</span>
+                <span class="boh-blanket-meta">
+                  <FormattedDate date={album.data.pubDate} />
+                  <span aria-hidden="true"> &middot; </span>
+                  {photoCount(album.data.photos.length)}
+                </span>
+              </figcaption>
+            </figure>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Layout>

@@ -1,0 +1,33 @@
+---
+// A rotated starburst badge (SVG polygon). The spikes slowly rotate; the
+// optional text inside stays put so it never becomes unreadable.
+interface Props {
+  text?: string;
+  class?: string;
+  /** Number of spikes on the burst. */
+  spikes?: number;
+}
+
+const { text, class: className, spikes = 14 } = Astro.props;
+
+const R = 50;
+const r = 37.5;
+const points: string[] = [];
+for (let i = 0; i < spikes * 2; i++) {
+  const radius = i % 2 === 0 ? R : r;
+  const angle = (Math.PI * i) / spikes - Math.PI / 2;
+  points.push(`${(50 + radius * Math.cos(angle)).toFixed(2)},${(50 + radius * Math.sin(angle)).toFixed(2)}`);
+}
+---
+
+<span
+  class:list={["mx-starburst", className]}
+  role={text ? "img" : undefined}
+  aria-label={text}
+  aria-hidden={text ? undefined : "true"}
+>
+  <svg class="mx-starburst-shape" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <polygon points={points.join(" ")} fill="currentColor"></polygon>
+  </svg>
+  {text && <span class="mx-starburst-text">{text}</span>}
+</span>

@@ -1,0 +1,66 @@
+---
+// Pencil doodles: wobbly underlines, arrows, scribbles, stars and the
+// hand-circled highlight. Decorative only: aria-hidden, colored via
+// currentColor. Every path carries pathLength="100" so the .sk-draw
+// class in theme.css can animate stroke-dashoffset uniformly.
+interface Props {
+  name: "underline" | "arrow" | "scribble" | "star" | "circle";
+  /** add to make the doodle draw itself in on page load */
+  draw?: boolean;
+  class?: string;
+}
+
+const { name, draw = false, class: className = "" } = Astro.props;
+
+const viewBoxes: Record<string, string> = {
+  underline: "0 0 200 16",
+  arrow: "0 0 80 56",
+  scribble: "0 0 96 36",
+  star: "0 0 24 24",
+  circle: "0 0 140 70",
+};
+---
+<svg
+  class:list={["sk-doodle", `sk-doodle-${name}`, draw && "sk-draw", className]}
+  aria-hidden="true"
+  viewBox={viewBoxes[name]}
+  preserveAspectRatio={name === "circle" ? "none" : undefined}
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2.4"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  {name === "underline" && (
+    <>
+      <path pathLength="100" d="M4 9 Q 24 3 44 9 T 84 9 T 124 9 T 164 9 T 196 8"></path>
+      <path pathLength="100" class="sk-draw-2" opacity="0.45" d="M8 13 Q 34 8 64 13 T 126 13 T 192 12"></path>
+    </>
+  )}
+  {name === "arrow" && (
+    <>
+      <path pathLength="100" d="M8 48 C 26 42, 46 30, 56 10"></path>
+      <path pathLength="100" d="M44 8 l13 2 -3 13"></path>
+    </>
+  )}
+  {name === "scribble" && (
+    <>
+      <path pathLength="100" d="M6 10 C 24 2, 40 18, 58 8 S 84 12, 92 8"></path>
+      <path pathLength="100" class="sk-draw-2" d="M8 20 C 28 12, 44 26, 62 16 S 88 22, 94 18"></path>
+      <path pathLength="100" d="M10 30 C 30 22, 46 34, 64 24 S 88 30, 92 26"></path>
+    </>
+  )}
+  {name === "star" && (
+    <path
+      pathLength="100"
+      d="M12 3 l2.2 5.6 6 .8 -4.5 4.2 1.2 5.9 -4.9 -3 -4.9 3 1.2 -5.9 -4.5 -4.2 6 -.8z"
+    ></path>
+  )}
+  {name === "circle" && (
+    <path
+      pathLength="100"
+      vector-effect="non-scaling-stroke"
+      d="M64 8 C 34 4, 12 18, 10 32 C 8 48, 34 60, 62 57 C 92 54, 122 40, 118 24 C 114 9, 88 2, 66 7 C 52 10, 36 16, 32 26"
+    ></path>
+  )}
+</svg>

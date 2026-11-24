@@ -1,0 +1,15 @@
+---
+// A small vermillion hanko-style stamp. Rotated slightly, statically —
+// imperfection that never jitters. Wrap any short label or a date.
+interface Props {
+  /** static tilt in degrees — small negative numbers feel most like a hand press */
+  tilt?: number;
+  class?: string;
+}
+
+const { tilt = -2.5, class: cls } = Astro.props as Props;
+---
+
+<span class:list={["wb-hanko", cls]} style={`--wb-tilt: ${tilt}deg;`}>
+  <slot />
+</span>

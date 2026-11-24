@@ -1,0 +1,50 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import Washi from "./Washi.astro";
+
+// The signature element: a photo in a thick polaroid frame, held down by a
+// strip of washi tape, with the caption written by hand underneath.
+// The frame stays light in BOTH modes (the desk lamp hits it), so its ink
+// colors are fixed — AA in light and dark by construction.
+interface Props {
+  image: ImageMetadata;
+  alt: string;
+  /** handwritten title inside the frame */
+  title?: string;
+  /** second handwritten line inside the frame */
+  caption?: string;
+  /** washi tape color 1–4 */
+  tape?: 1 | 2 | 3 | 4;
+  /** tape corner: "pos-tl" | "pos-tr" | "pos-top" */
+  tapeClass?: string;
+  widths?: number[];
+  sizes?: string;
+  loading?: "lazy" | "eager";
+  class?: string;
+}
+
+const {
+  image,
+  alt,
+  title,
+  caption,
+  tape = 1,
+  tapeClass = "pos-tr",
+  widths = [480, 800, 1200],
+  sizes = "(min-width: 72rem) 24rem, (min-width: 48rem) 45vw, 92vw",
+  loading = "lazy",
+  class: className = "",
+} = Astro.props;
+---
+
+<figure class:list={["sb-polaroid", className]}>
+  <Washi variant={tape} class={tapeClass} />
+  <Image src={image} alt={alt} widths={widths} sizes={sizes} loading={loading} decoding="async" />
+  {(title || caption) && (
+    <figcaption class="sb-polaroid-cap">
+      {title && <span class="sb-polaroid-title">{title}</span>}
+      {caption && <span class="sb-polaroid-note">{caption}</span>}
+    </figcaption>
+  )}
+</figure>
