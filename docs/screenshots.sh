@@ -3,7 +3,7 @@
 # Usage: bash docs/screenshots.sh [theme ...]   (no args = all themes)
 set -euo pipefail
 
-BASE="http://localhost:4322"
+BASE="${BASE:-http://localhost:4322}"
 ALL_THEMES=(classic editorial brutalist terminal neon riso sticker aurora luxe retro-os kinetic isometric claymorphism cybercore scrapbook surrealism y2k pixel synthwave neumorphism bento maximalism sketch ethereal bohemian victorian wabi-sabi)
 
 if [ $# -gt 0 ]; then

@@ -1,78 +1,42 @@
 ---
 import type { HomeProps } from "#/themes/types";
+import CassetteScene from "./CassetteScene.astro";
 import Layout from "./Layout.astro";
 
 Astro.props as HomeProps;
 
 const doors = [
-  {
-    href: "/projects/",
-    num: "01",
-    ref: "REF N1\u00b7E01",
-    title: "Projects",
-    desc: "Four assemblies, exploded for inspection \u2014 a vinyl collectors' forum, a terminal Spotify client, a sign-language trainer, and one very personal note app.",
-    cta: "Open assemblies \u2192",
-  },
-  {
-    href: "/blog/",
-    num: "02",
-    ref: "REF N1\u00b7E02",
-    title: "Blog",
-    desc: "The blank sheet. Nothing inked yet \u2014 the drafts are still flat on the table under tracing paper.",
-    cta: "Inspect the sheet \u2192",
-  },
-  {
-    href: "/gallery/",
-    num: "03",
-    ref: "REF N1\u00b7E03",
-    title: "Gallery",
-    desc: "Japan 2026, a German summer, and one spring full of blossoms \u2014 photographs filed as plates.",
-    cta: "View plates \u2192",
-  },
+  { href: "/projects/", num: "01", ref: "REF N1\u00b7E01", title: "Projects", cta: "Open assemblies \u2192" },
+  { href: "/blog/", num: "02", ref: "REF N1\u00b7E02", title: "Blog", cta: "Inspect the sheet \u2192" },
+  { href: "/gallery/", num: "03", ref: "REF N1\u00b7E03", title: "Gallery", cta: "View plates \u2192" },
 ];
 ---
 
 <Layout
   title="jwstn.dev — JW, full-stack developer in Cologne"
-  description="JW drafts web applications with TanStack, plots experiments with Effect, and keeps a camera on the drafting table — most recently carried through Japan."
+  description="This is a personal page, that I use to display recent projects and add a blog post (sometimes)."
 >
   <div class="iso-shell">
     <section class="iso-hero">
-      <div class="iso-cube iso-cube--a iso-rise" aria-hidden="true">
-        <div class="iso-cube-box">
-          <div class="iso-cube-face iso-cube-face--top"></div>
-          <div class="iso-cube-face iso-cube-face--front"></div>
-          <div class="iso-cube-face iso-cube-face--right"></div>
-        </div>
-      </div>
-      <div class="iso-cube iso-cube--b" aria-hidden="true">
-        <div class="iso-cube-box">
-          <div class="iso-cube-face iso-cube-face--top"></div>
-          <div class="iso-cube-face iso-cube-face--front"></div>
-          <div class="iso-cube-face iso-cube-face--right"></div>
-        </div>
-      </div>
-      <div class="iso-cube iso-cube--c iso-cube--accent" aria-hidden="true">
-        <div class="iso-cube-box">
-          <div class="iso-cube-face iso-cube-face--top"></div>
-          <div class="iso-cube-face iso-cube-face--front"></div>
-          <div class="iso-cube-face iso-cube-face--right"></div>
-        </div>
-      </div>
-
       <div class="iso-hero-inner">
         <p class="iso-kicker iso-rise">Portfolio &mdash; DWG №26 &middot; Rev A</p>
-        <h1 class="iso-h1 iso-rise iso-rise--2">Hey, I'm JW. I draft things for the web.</h1>
+        <h1 class="iso-h1 iso-rise iso-rise--2">
+          Hey, I'm <span class="iso-name">JW</span>! a Full-Stack Developer from Cologne, Germany
+        </h1>
         <p class="iso-hero-copy iso-rise iso-rise--3">
-          Full-stack developer from Cologne, Germany. Most of my drawing time goes into web applications with
-          <a href="https://tanstack.com/" target="_blank" rel="noopener noreferrer">TanStack</a> — it covers so
-          much of the blueprint that backend frameworks like
-          <a href="https://hono.dev/" target="_blank" rel="noopener noreferrer">Hono</a> and
-          <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elysia</a> are still waiting
-          their turn on the shelf. The experiment that redrew my map is
-          <a href="https://effect.website/" target="_blank" rel="noopener noreferrer">Effect</a> — the most fun
-          I've had in a while re-planning how a program can be written. When the pencils are down, the camera
-          comes out: in March 2026 I carried one through Japan, and it hasn't left the desk since.
+          I'm focusing on building web applications with <a
+            href="https://tanstack.com/"
+            target="_blank"
+            rel="noopener noreferrer">TanStack</a
+          >. Since it provides most of the features you need to build a web app, even some more complex ones,
+          with server actions or middleware, I didn't get the chance to test out any backend frameworks like <a
+            href="https://hono.dev/"
+            target="_blank"
+            rel="noopener noreferrer">Hono</a
+          > or <a href="https://elysiajs.com/" target="_blank" rel="noopener noreferrer">Elisya</a>. But what I got
+          around to test out is <a href="https://effect.website/" target="_blank" rel="noopener noreferrer"
+            >EffectTs</a
+          >, which has been amazing fun so far and proved as great opportunity to learn a new way of programming.
         </p>
         <div class="iso-actions iso-rise iso-rise--4">
           <a class="iso-btn" href="/projects/">View projects →</a>
@@ -86,6 +50,8 @@ const doors = [
           <span class="iso-dim-arrow iso-dim-arrow--r"></span>
         </p>
       </div>
+
+      <CassetteScene />
     </section>
 
     <section aria-label="Parts list">
@@ -94,7 +60,11 @@ const doors = [
         {
           doors.map((door, i) => (
             <li>
-              <a class="iso-slab iso-door iso-rise" class:list={[i === 1 && "iso-rise--2", i === 2 && "iso-rise--3"]} href={door.href}>
+              <a
+                class="iso-slab iso-door iso-rise"
+                class:list={[i === 1 && "iso-rise--2", i === 2 && "iso-rise--3"]}
+                href={door.href}
+              >
                 <span class="iso-door-tab" aria-hidden="true">
                   {door.num}
                 </span>
@@ -102,7 +72,6 @@ const doors = [
                   {door.ref}
                 </span>
                 <h3 class="iso-door-title">{door.title}</h3>
-                <p class="iso-door-desc">{door.desc}</p>
                 <span class="iso-door-cta">{door.cta}</span>
               </a>
             </li>

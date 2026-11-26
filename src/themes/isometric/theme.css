@@ -320,6 +320,10 @@ html.theme-isometric .iso-keys + .iso-keys {
 
 html.theme-isometric .iso-hero {
   position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(20rem, 42%);
+  gap: clamp(1.5rem, 4vw, 3rem);
+  align-items: center;
   padding-block: clamp(2.5rem, 6vw, 4.5rem) 1rem;
 }
 html.theme-isometric .iso-hero-inner {
@@ -355,6 +359,9 @@ html.theme-isometric .iso-h1 {
   line-height: 1.04;
   letter-spacing: -0.01em;
 }
+html.theme-isometric .iso-h1 .iso-name {
+  color: var(--primary);
+}
 
 html.theme-isometric .iso-hero-copy {
   margin: 1.6rem 0 0;
@@ -380,72 +387,79 @@ html.theme-isometric .iso-actions {
 }
 
 /* ------------------------------------------------------------------ */
-/* Isometric cubes — pure CSS 3D planes, no perspective (orthographic  */
-/* = drafting). Outer wrapper bobs, inner box holds the rotation.      */
+/* Cassette study — JW's three.js walkman + tape shelf, framed like a  */
+/* drafting figure. Scene is transparent; the paper grid shows through. */
 /* ------------------------------------------------------------------ */
 
-html.theme-isometric .iso-cube {
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
+html.theme-isometric .iso-cassette {
+  margin: 0;
+  min-width: 0;
+  border: 1px solid var(--iso-edge);
+  background:
+    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 14px,
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 14px 100%,
+    color-mix(in oklab, var(--card) 55%, transparent);
 }
-html.theme-isometric .iso-cube--a {
-  --e: 72px;
-  top: 1rem;
-  right: 6%;
-  animation: iso-bob 6s ease-in-out infinite;
-}
-html.theme-isometric .iso-cube--b {
-  --e: 42px;
-  top: 7.5rem;
-  right: calc(6% + 5.5rem);
-  animation: iso-bob 7s ease-in-out -2s infinite;
-}
-html.theme-isometric .iso-cube--c {
-  --e: 30px;
-  top: 11rem;
-  right: calc(6% + 0.25rem);
-  animation: iso-bob 5.5s ease-in-out -4s infinite;
-}
-
-html.theme-isometric .iso-cube-box {
+html.theme-isometric .iso-cassette-stage {
   position: relative;
-  width: var(--e);
-  height: var(--e);
-  transform-style: preserve-3d;
-  transform: rotateX(-60deg) rotateZ(-45deg);
+  height: clamp(300px, 30vw, 440px);
+  overflow: hidden;
 }
-html.theme-isometric .iso-cube-face {
+html.theme-isometric .iso-cassette-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  outline: none;
+  cursor: grab;
+}
+html.theme-isometric .iso-cassette-stage canvas:active {
+  cursor: grabbing;
+}
+html.theme-isometric .iso-cassette-fallback {
+  display: none;
   position: absolute;
   inset: 0;
-  border: 1px solid var(--iso-edge);
+  margin: 0;
+  padding: 1rem;
+  place-items: center;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
 }
-html.theme-isometric .iso-cube-face--top {
-  transform: rotateX(90deg) translateZ(calc(var(--e) / 2));
-  background: var(--cube-a-top);
+html.theme-isometric .iso-cassette.is-fallback .iso-cassette-fallback {
+  display: grid;
 }
-html.theme-isometric .iso-cube-face--front {
-  transform: translateZ(calc(var(--e) / -2));
-  background: var(--cube-a-front);
+html.theme-isometric .iso-cassette.is-fallback .iso-cassette-stage canvas {
+  display: none;
 }
-html.theme-isometric .iso-cube-face--right {
-  transform: rotateY(90deg) translateZ(calc(var(--e) / 2));
-  background: var(--cube-a-right);
+html.theme-isometric .iso-cassette-caption {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.5rem 0.75rem;
+  padding: 0.55rem 0.7rem;
+  border-top: 1px dashed var(--iso-edge);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
 }
-/* the accent cube swaps ink for safety orange */
-html.theme-isometric .iso-cube--accent .iso-cube-face--top {
-  background: var(--cube-b-top);
-}
-html.theme-isometric .iso-cube--accent .iso-cube-face--front {
-  background: var(--cube-b-front);
-}
-html.theme-isometric .iso-cube--accent .iso-cube-face--right {
-  background: var(--cube-b-right);
+html.theme-isometric .iso-cassette-caption span[aria-hidden] {
+  color: var(--accent);
+  font-weight: 600;
 }
 
-@media (max-width: 48rem) {
-  html.theme-isometric .iso-cube {
-    display: none;
+@media (max-width: 64rem) {
+  html.theme-isometric .iso-hero {
+    grid-template-columns: 1fr;
+  }
+  html.theme-isometric .iso-cassette {
+    order: 2;
+  }
+  html.theme-isometric .iso-cassette-stage {
+    height: clamp(280px, 55vw, 380px);
   }
 }
 
@@ -1207,15 +1221,6 @@ html.theme-isometric .iso-rise--4 {
   animation-delay: 270ms;
 }
 
-@keyframes iso-bob {
-  from {
-    transform: translateY(-6px);
-  }
-  to {
-    transform: translateY(4px);
-  }
-}
-
 @keyframes iso-rise {
   from {
     opacity: 0;
@@ -1228,9 +1233,6 @@ html.theme-isometric .iso-rise--4 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html.theme-isometric .iso-cube {
-    animation: none;
-  }
   html.theme-isometric .iso-rise {
     animation: none;
   }
@@ -1242,3 +1244,4 @@ html.theme-isometric .iso-rise--4 {
     transition: none;
   }
 }
+

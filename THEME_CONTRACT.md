@@ -287,9 +287,11 @@ Signature ideas are mandatory; everything else is your craft.
   (drafting blue or safety orange).
 - **Signature:** everything sits in space. Cards are extruded 2.5D panels — build cube faces with CSS
   (a top face via `transform: rotateX(60deg) rotateZ(45deg)`-style planes, or skewed pseudo-elements);
-  hero headline flanked by floating isometric cubes (pure CSS, gently bobbing); measurement ticks,
-  dimension lines with arrowheads and coordinate labels (N3 E12 etc.) as decorative furniture;
-  projects as blocks on an exploded-view diagram; nav as a flat "control panel" plate.
+  hero headline beside a **live three.js cassette study** (JW's walkman + tape shelf model, ported to
+  `src/themes/isometric/three/` and framed like a drafting figure — tapes draggable into the deck, space
+  draggable to orbit); measurement ticks, dimension lines with arrowheads and coordinate labels
+  (N3 E12 etc.) as decorative furniture; projects as blocks on an exploded-view diagram; nav as a flat
+  "control panel" plate.
 - **Photos:** place gallery photos onto isometric planes (transform: skew) — a photo wall of tilted
   frames; straighten on hover/focus for viewing.
 - **Motion:** cubes bob (small translateY loops, staggered), panels gain depth on hover
