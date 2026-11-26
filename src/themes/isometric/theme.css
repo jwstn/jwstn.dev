@@ -150,6 +150,11 @@ html.theme-isometric .iso-skip:focus {
 
 html.theme-isometric .iso-main {
   flex: 1;
+  /* Neutralize the classic theme's global `main` rule (max-width + padding)
+     which otherwise insets main content relative to the header/footer shells. */
+  max-width: none;
+  padding: 0;
+  margin: 0;
 }
 
 html.theme-isometric .iso-shell {
