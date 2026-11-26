@@ -28,40 +28,30 @@ const { projects } = Astro.props as ProjectsProps;
       {
         projects.map((project, i) => (
           <article class="iso-slab iso-block iso-rise">
-            <div class="iso-block-tab" aria-hidden="true">
-              <span class="iso-block-idx">B{i + 1}</span>
-              <span class="iso-block-ref">
-                N{i + 1} E12
-                <br />
-                REV A
-              </span>
-            </div>
-            <div class="iso-block-body">
-              <h2 class="iso-block-title">
-                <a href={`/projects/${project.id}/`}>{project.data.title}</a>
-              </h2>
-              <p class="iso-block-date">
-                <FormattedDate date={project.data.pubDate} />
-              </p>
-              <p class="iso-block-desc">{project.data.description}</p>
-              <ul class="iso-stamps" aria-label="Technologies used">
-                {project.data.tags.map((tag) => (
-                  <li class="iso-stamp">{tag}</li>
-                ))}
-              </ul>
-              <div class="iso-block-actions">
-                <a class="iso-btn" href={`/projects/${project.id}/`}>
-                  Drawing →
-                </a>
-                <a
-                  class="iso-btn iso-btn--ghost"
-                  href={project.data.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Live assembly ↗
-                </a>
-              </div>
+            <h2 class="iso-block-title">
+              <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+            </h2>
+            <p class="iso-block-date">
+              <FormattedDate date={project.data.pubDate} />
+            </p>
+            <p class="iso-block-desc">{project.data.description}</p>
+            <ul class="iso-stamps" aria-label="Technologies used">
+              {project.data.tags.map((tag) => (
+                <li class="iso-stamp">{tag}</li>
+              ))}
+            </ul>
+            <div class="iso-block-actions">
+              <a class="iso-btn" href={`/projects/${project.id}/`}>
+                Open →
+              </a>
+              <a
+                class="iso-btn iso-btn--ghost"
+                href={project.data.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Source ↗
+              </a>
             </div>
           </article>
         ))
