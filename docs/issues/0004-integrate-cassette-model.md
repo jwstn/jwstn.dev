@@ -1,6 +1,6 @@
 # 0004 — Integrate the cassette model fluently
 
-**Status:** open · **Scope:** isometric `CassetteScene.astro` + `theme.css`
+**Status:** done · **Scope:** isometric `CassetteScene.astro` + `theme.css`
 
 ## Context
 
@@ -9,10 +9,10 @@ study…"). The box reads like a separate panel; the model should feel part of t
 
 ## Tasks
 
-- [ ] Remove the caption/subtext under the model (the `FIG. 00` line).
-- [ ] Remove the border, background and frame around the scene.
-- [ ] Keep the drafting-paper page showing through; let the model float directly on the page.
-- [ ] Keep sizing, orbit/drag behaviour and the WebGL fallback working; keep the mobile
+- [x] Remove the caption/subtext under the model (the `FIG. 00` line).
+- [x] Remove the border, background and frame around the scene.
+- [x] Keep the drafting-paper page showing through; let the model float directly on the page.
+- [x] Keep sizing, orbit/drag behaviour and the WebGL fallback working; keep the mobile
       static-scene behaviour (no scroll trapping).
 
 ## Acceptance

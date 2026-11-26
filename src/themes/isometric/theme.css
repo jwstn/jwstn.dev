@@ -375,16 +375,11 @@ html.theme-isometric .iso-actions {
 html.theme-isometric .iso-cassette {
   margin: 0;
   min-width: 0;
-  border: 1px solid var(--iso-edge);
-  background:
-    linear-gradient(var(--grid-line) 1px, transparent 1px) 0 0 / 100% 14px,
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) 0 0 / 14px 100%,
-    color-mix(in oklab, var(--card) 55%, transparent);
 }
 html.theme-isometric .iso-cassette-stage {
   position: relative;
-  height: clamp(300px, 30vw, 440px);
-  overflow: hidden;
+  height: clamp(320px, 32vw, 470px);
+  overflow: visible;
 }
 html.theme-isometric .iso-cassette-stage canvas {
   display: block;
@@ -413,23 +408,6 @@ html.theme-isometric .iso-cassette.is-fallback .iso-cassette-fallback {
 }
 html.theme-isometric .iso-cassette.is-fallback .iso-cassette-stage canvas {
   display: none;
-}
-html.theme-isometric .iso-cassette-caption {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.5rem 0.75rem;
-  padding: 0.55rem 0.7rem;
-  border-top: 1px dashed var(--iso-edge);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-html.theme-isometric .iso-cassette-caption span[aria-hidden] {
-  color: var(--accent);
-  font-weight: 600;
 }
 
 @media (max-width: 64rem) {
