@@ -320,6 +320,10 @@ html.theme-isometric .iso-header .iso-slab:hover,
 html.theme-isometric .iso-header .iso-slab:focus-within {
   box-shadow: 10px 10px 0 -1px var(--iso-side);
 }
+/* …but the back bar does move with the menu state itself. */
+html.theme-isometric .iso-header.is-menu-open .iso-plate {
+  box-shadow: 14px 14px 0 -1px var(--iso-side);
+}
 
 html.theme-isometric .iso-burger {
   display: none;

@@ -120,6 +120,8 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
         b.setAttribute("aria-expanded", String(open));
         b.setAttribute("aria-label", open ? "Close menu" : "Open menu");
         b.classList.toggle("is-open", open);
+        // the header plate's back bar follows the menu state (never hover)
+        document.querySelector(".iso-header")?.classList.toggle("is-menu-open", open);
       };
 
       document.addEventListener("click", (event) => {
