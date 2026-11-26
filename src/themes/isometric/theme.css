@@ -1175,67 +1175,20 @@ html.theme-isometric .iso-plate-note {
 }
 
 /* ------------------------------------------------------------------ */
-/* Footer — drafting title block                                       */
+/* Footer — just the copyright line                                    */
 /* ------------------------------------------------------------------ */
 
 html.theme-isometric .iso-footer {
   margin-block-start: 2rem;
-  padding-block: 0.5rem 4.5rem;
+  padding-block: 1rem 2.5rem;
 }
-
-html.theme-isometric .iso-titleblock {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: stretch;
-  background: var(--card);
-  border: 1px solid var(--iso-edge);
-  box-shadow: 8px 8px 0 -1px var(--iso-side);
-}
-html.theme-isometric .iso-tb-cell {
-  display: inline-flex;
-  align-items: center;
+html.theme-isometric .iso-copyright {
   margin: 0;
-  padding: 0.55rem 0.95rem;
   font-family: var(--font-mono);
   font-size: 0.78rem;
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--muted-foreground);
-}
-html.theme-isometric .iso-tb-cell + .iso-tb-cell {
-  border-inline-start: 1px solid var(--iso-edge);
-}
-html.theme-isometric .iso-tb-strong {
-  color: var(--foreground);
-  font-weight: 600;
-}
-html.theme-isometric .iso-tb-socials {
-  margin-inline-start: auto;
-  gap: 0.5rem;
-}
-html.theme-isometric .iso-tb-link {
-  display: inline-flex;
-  align-items: center;
-  min-height: 44px;
-  padding: 0.25rem 0.4rem;
-  color: var(--primary);
-  font-weight: 600;
-  text-decoration: none;
-}
-html.theme-isometric .iso-tb-link:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-@media (max-width: 40rem) {
-  html.theme-isometric .iso-tb-socials {
-    margin-inline-start: 0;
-    border-inline-start: 0;
-    border-block-start: 1px solid var(--iso-edge);
-    flex-basis: 100%;
-  }
-  html.theme-isometric .iso-tb-socials + .iso-tb-cell {
-    border-inline-start: 0;
-  }
 }
 
 /* ------------------------------------------------------------------ */

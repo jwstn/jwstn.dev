@@ -1,6 +1,6 @@
 # 0008 — Simplify the footer to the copyright line
 
-**Status:** open · **Scope:** isometric `Layout.astro` + `theme.css`
+**Status:** done · **Scope:** isometric `Layout.astro` + `theme.css`
 
 ## Context
 
@@ -9,9 +9,9 @@ Cologne · Scale 1:1 · social links`, inside a bordered bar.
 
 ## Tasks
 
-- [ ] Remove the `Sheet 01 — drawn in Cologne` and `Scale 1:1` cells.
-- [ ] Remove the title-block bar itself (border, shadow, cell dividers).
-- [ ] Keep only `© 2026 jwstn`.
+- [x] Remove the `Sheet 01 — drawn in Cologne` and `Scale 1:1` cells.
+- [x] Remove the title-block bar itself (border, shadow, cell dividers).
+- [x] Keep only `© 2026 jwstn`.
 
 ## Acceptance
 

@@ -99,20 +99,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 
     <footer class="iso-footer">
       <div class="iso-shell">
-        <div class="iso-titleblock">
-          <p class="iso-tb-cell iso-tb-strong">&copy; {year} jwstn</p>
-          <p class="iso-tb-cell">Sheet 01 &mdash; drawn in Cologne</p>
-          <p class="iso-tb-cell">Scale 1:1</p>
-          <nav class="iso-tb-cell iso-tb-socials" aria-label="Social links">
-            {
-              SOCIALS.map((s) => (
-                <a class="iso-tb-link" href={s.href} target="_blank" rel="noopener noreferrer">
-                  {s.label} ↗
-                </a>
-              ))
-            }
-          </nav>
-        </div>
+        <p class="iso-copyright">&copy; {year} jwstn</p>
       </div>
     </footer>
 
