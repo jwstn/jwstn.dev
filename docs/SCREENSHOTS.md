@@ -4,8 +4,10 @@ Twenty-seven selectable themes now live on this branch: your current design (**c
 plus twenty-six directions. Every screenshot below was captured from the dev server at full page.
 
 **Browse them live:** run `pnpm astro dev`, then either use the floating picker (bottom-right of every
-page) or deep-link with `?theme=<id>` — e.g. `http://localhost:4322/?theme=retro-os`. The chosen theme
-persists via cookie across visits.
+page) or deep-link with `?theme=<id>` — e.g. `http://localhost:4322/?theme=retro-os`. The picker saves
+your choice in `localStorage` (source of truth) and mirrors it to a cookie so the server can render the
+right structural theme; it survives navigation without any URL parameter. `?theme=` is a preview/share
+link only — the picker removes it when you switch.
 
 **New to these styles?** [`STYLES.md`](STYLES.md) is a field guide to every direction — where each
 style comes from, what defines it, how to recognise it, and when (not) to use it.

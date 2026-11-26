@@ -115,17 +115,59 @@ const current = Astro.locals.theme;
 </style>
 
 <script>
+  // The visitor's theme is stored in localStorage (source of truth). It is
+  // mirrored into a cookie because the server must know the theme *before*
+  // rendering — the 27 themes swap structural markup, so the client cannot
+  // apply them after the fact.
+  //
   // Event delegation on document so listeners survive view-transition DOM swaps.
   const COOKIE = "site-theme";
+  const STORAGE = "site-theme";
   const ONE_YEAR = 60 * 60 * 24 * 365;
+  const SYNC_FLAG = "site-theme-sync";
+
+  const writeCookie = (value) => {
+    document.cookie = `${COOKIE}=${encodeURIComponent(value)}; path=/; max-age=${ONE_YEAR}; samesite=lax`;
+  };
+
+  const currentTheme = () => document.querySelector("#theme-switcher")?.getAttribute("data-current") ?? null;
+
+  // ?theme=<id> is a preview/share link; it is never written by the picker and
+  // is removed on switch so the saved theme wins.
+  const withoutThemeParam = () => {
+    const url = new URL(window.location.href);
+    url.searchParams.delete("theme");
+    return url.toString();
+  };
+
+  // Mirror localStorage into the cookie when they diverge (e.g. cookies were
+  // cleared but localStorage survived). Bounded: at most one reload per page
+  // visit, so blocked cookies can never cause a reload loop.
+  const sync = () => {
+    if (new URL(window.location.href).searchParams.has("theme")) return;
+    const saved = localStorage.getItem(STORAGE);
+    const current = currentTheme();
+    if (!saved || !current || saved === current) {
+      window.sessionStorage.removeItem(SYNC_FLAG);
+      return;
+    }
+    if (window.sessionStorage.getItem(SYNC_FLAG) === "1") {
+      window.sessionStorage.removeItem(SYNC_FLAG);
+      return;
+    }
+    writeCookie(saved);
+    window.sessionStorage.setItem(SYNC_FLAG, "1");
+    window.location.reload();
+  };
 
   document.addEventListener("change", (event) => {
     const target = event.target;
     if (!(target instanceof HTMLSelectElement) || target.id !== "theme-switcher-select") {
       return;
     }
-    document.cookie = `${COOKIE}=${encodeURIComponent(target.value)}; path=/; max-age=${ONE_YEAR}; samesite=lax`;
-    window.location.reload();
+    localStorage.setItem(STORAGE, target.value);
+    writeCookie(target.value);
+    window.location.assign(withoutThemeParam());
   });
 
   document.addEventListener("click", (event) => {
@@ -133,8 +175,10 @@ const current = Astro.locals.theme;
     if (!(target instanceof HTMLElement) || target.id !== "theme-switcher-mode") {
       return;
     }
-    const root = document.documentElement;
-    const dark = root.classList.toggle("dark");
+    const dark = document.documentElement.classList.toggle("dark");
     localStorage.setItem("theme", dark ? "dark" : "light");
   });
+
+  sync();
+  document.addEventListener("astro:page-load", sync);
 </script>

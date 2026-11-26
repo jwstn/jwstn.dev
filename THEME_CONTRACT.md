@@ -16,6 +16,9 @@ Read it fully before writing any code.
 - The visitor switches themes via the shared floating picker (`src/themes/shared/ThemeSwitcher.astro`) and
   light/dark mode via the mode script in `src/themes/shared/MetaTags.astro`. You include both; you never
   reimplement them.
+  - The picker stores the choice in `localStorage` and mirrors it to the `site-theme` cookie (the server
+    needs it because themes are structural). `?theme=<id>` is a preview/share link only; the picker
+    strips it when switching so the saved theme wins.
 - `classic` (`src/themes/classic/`) is the original site design, kept as the default. Do not modify it.
 
 ## Files you create — exactly this shape
