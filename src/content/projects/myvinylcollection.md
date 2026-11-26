@@ -3,7 +3,7 @@ title: '(WIP) MyVinylCollection'
 description: "This is a forum where people can display their vinyl collections and talk about them with other users. Users can also keep track of their collections and newly announced vinyl. This site depends on user input: every vinyl is added by a user."
 pubDate: 'Jul 15 2026'
 href: 'https://jwstn.dev/myvinylcollection'
-tags: ['Tanstack Query','Tanstack Table','Tanstack Start', 'EffectTs', 'Sentry', 'Drizzle']
+tags: ['TanStack Query','TanStack Table','TanStack Start', 'Effect', 'Sentry', 'Drizzle']
 ---
 
 
@@ -13,4 +13,4 @@ It wasn't until shortly after that I started buying my own vinyls. I started wit
 
 My collection has grown quite large by now, and some of my friends have started collecting as well. One evening, we were talking online about our collections and sharing links to items we wanted to buy or announcements we were excited about. After a while, we asked ourselves if there wasn't an easier way to share all of this. We discussed what such a site could look like.
 
-I started working on this project soon after, and have continued to do so ever since. I have wanted to test out some new technologies for a while, and now that Tanstack Start is pretty stable, I set myself the goal of creating a website that everyone who experienced the same conversion as us this one evening could use.
+I started working on this project soon after, and have continued to do so ever since. I have wanted to test out some new technologies for a while, and now that TanStack Start is pretty stable, I set myself the goal of creating a website that everyone who experienced the same conversation as us this one evening could use.

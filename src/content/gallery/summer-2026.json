@@ -5,23 +5,23 @@
   "photos": [
     {
       "image": "../../assets/summer-2026/2.JPG",
-      "title": "Tree in forest while Sunset",
+      "title": "Tree in the forest at sunset",
       "caption": "Went to the forest with one of my dearest friends."
     },
     {
       "image": "../../assets/summer-2026/1.JPG",
-      "title": "Radiotower without a bird but sunshine",
+      "title": "Radio tower without a bird but sunshine",
       "caption": ""
     },
     {
       "image": "../../assets/summer-2026/3.JPG",
-      "title": "Radiotower with a bird but without sunshine",
+      "title": "Radio tower with a bird but without sunshine",
       "caption": ""
     },
     {
       "image": "../../assets/summer-2026/4.JPG",
-      "title": "A bit dark, init?",
-      "caption": "Kinda cool sunset across a typical western german field"
+      "title": "A bit dark, innit?",
+      "caption": "Kinda cool sunset across a typical western German field"
     }
   ]
 }
