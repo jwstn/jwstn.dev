@@ -332,25 +332,6 @@ html.theme-isometric .iso-hero-inner {
   max-width: 46rem;
 }
 
-html.theme-isometric .iso-kicker {
-  display: flex;
-  align-items: center;
-  gap: 0.55rem;
-  margin: 0 0 1.1rem;
-  font-family: var(--font-mono);
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--accent);
-}
-html.theme-isometric .iso-kicker::before {
-  content: "";
-  width: 9px;
-  height: 9px;
-  background: var(--accent);
-}
-
 html.theme-isometric .iso-h1 {
   margin: 0;
   font-family: var(--font-display);
