@@ -16,14 +16,6 @@ const { projects } = Astro.props as ProjectsProps;
       <p class="iso-pagehead-meta">Exploded view &mdash; {projects.length} assemblies</p>
     </div>
 
-    <p class="iso-dim" aria-hidden="true">
-      <span class="iso-dim-arrow iso-dim-arrow--l"></span>
-      <span class="iso-dim-rule"></span>
-      <span>Assembly order: newest first</span>
-      <span class="iso-dim-rule"></span>
-      <span class="iso-dim-arrow iso-dim-arrow--r"></span>
-    </p>
-
     <section class="iso-explode" aria-label="Project list">
       {
         projects.map((project, i) => (
