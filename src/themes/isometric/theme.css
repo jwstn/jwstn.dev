@@ -1132,7 +1132,7 @@ html.theme-isometric .iso-album-cta {
 html.theme-isometric .iso-wall {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr));
-  gap: 2.6rem 1.9rem;
+  gap: 2rem 1.9rem;
   padding: 0;
   margin: 0;
   list-style: none;
