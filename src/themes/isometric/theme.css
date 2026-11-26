@@ -1070,27 +1070,18 @@ html.theme-isometric .iso-album {
   text-decoration: none;
 }
 
-/* the contact strip lies back on the desk; the whole card is the hit area */
+/* the contact strip is one continuous band of images */
 html.theme-isometric .iso-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  border-block-end: 1px solid var(--iso-edge);
   transform: rotateX(30deg);
   transform-origin: 50% 0;
-  transition: transform 280ms ease;
-}
-html.theme-isometric .iso-album:hover .iso-strip,
-html.theme-isometric .iso-album:focus-visible .iso-strip {
-  transform: none;
 }
 html.theme-isometric .iso-strip img {
   display: block;
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-}
-html.theme-isometric .iso-strip img + img {
-  border-inline-start: 1px solid var(--iso-edge);
 }
 
 html.theme-isometric .iso-album-info {

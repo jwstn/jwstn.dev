@@ -1,13 +1,13 @@
 # 0007 — Gallery page: remove the filing-order line and album strip dividers
 
-**Status:** open · **Scope:** isometric `Gallery.astro` + `theme.css`
+**Status:** done · **Scope:** isometric `Gallery.astro` + `theme.css`
 
 ## Tasks
 
-- [ ] Remove the "Filing order: newest first" dimension line at the bottom of the gallery page.
-- [ ] Remove the vertical dividers between the thumbnails inside each album strip
+- [x] Remove the "Filing order: newest first" dimension line at the bottom of the gallery page.
+- [x] Remove the vertical dividers between the thumbnails inside each album strip
       (`img + img` borders).
-- [ ] Remove the rule beneath each album strip (`border-block-end`).
+- [x] Remove the rule beneath each album strip (`border-block-end`).
 
 ## Acceptance
 
