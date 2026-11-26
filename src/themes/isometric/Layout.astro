@@ -129,13 +129,26 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
           setOpen(panel()?.hidden ?? true);
           return;
         }
-        if (target.closest("#iso-mobile-nav a")) setOpen(false);
+        if (panel()?.hidden === false) {
+          if (target.closest("#iso-mobile-nav a")) {
+            setOpen(false);
+            return;
+          }
+          // anywhere outside the open panel closes it
+          if (!target.closest("#iso-mobile-nav")) setOpen(false);
+        }
       });
 
       document.addEventListener("keydown", (event) => {
         if (event.key !== "Escape" || panel()?.hidden !== false) return;
         setOpen(false);
         burger()?.focus();
+      });
+
+      // desktop widths don't use the panel; close it if the viewport grows
+      const desktop = window.matchMedia("(min-width: 48rem)");
+      desktop.addEventListener("change", (event) => {
+        if (event.matches) setOpen(false);
       });
 
       document.addEventListener("astro:page-load", () => setOpen(false));

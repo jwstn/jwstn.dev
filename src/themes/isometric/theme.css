@@ -315,6 +315,12 @@ html.theme-isometric .iso-keys + .iso-keys {
 }
 
 /* Mobile navigation — burger + control-panel panel (<= 48rem) */
+/* The header plate never lifts on hover; the burger carries the open state. */
+html.theme-isometric .iso-header .iso-slab:hover,
+html.theme-isometric .iso-header .iso-slab:focus-within {
+  box-shadow: 10px 10px 0 -1px var(--iso-side);
+}
+
 html.theme-isometric .iso-burger {
   display: none;
   align-items: center;
@@ -328,10 +334,23 @@ html.theme-isometric .iso-burger {
   color: var(--foreground);
   box-shadow: 4px 4px 0 -1px var(--iso-side);
   cursor: pointer;
+  transition: none;
+}
+html.theme-isometric .iso-burger:hover {
+  /* movement is reserved for the open state, never hover */
+  box-shadow: 4px 4px 0 -1px var(--iso-side);
 }
 html.theme-isometric .iso-burger:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
+}
+/* open: the key is pressed into the plate */
+html.theme-isometric .iso-burger.is-open {
+  transform: translate(3px, 3px);
+  box-shadow: 0 0 0 0 var(--iso-side);
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
 }
 html.theme-isometric .iso-burger-icon {
   position: relative;
