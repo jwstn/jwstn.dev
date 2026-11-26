@@ -8,6 +8,10 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Task tracking
+
+- Track tasks and follow-ups as GitHub issues in this repository (`gh issue create`), not as local issue files. Reference issue numbers in commit messages where useful.
+
 ## Documentation
 
 Full documentation: https://docs.astro.build
