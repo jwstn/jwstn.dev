@@ -30,7 +30,19 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
           <a class="iso-key iso-key--logo" href="/" aria-current={path === "/" ? "page" : undefined}>
             jwstn.dev
           </a>
-          <nav class="iso-keys" aria-label="Main navigation">
+
+          <button
+            class="iso-burger"
+            id="iso-burger"
+            type="button"
+            aria-expanded="false"
+            aria-controls="iso-mobile-nav"
+            aria-label="Open menu"
+          >
+            <span class="iso-burger-icon" aria-hidden="true"></span>
+          </button>
+
+          <nav class="iso-keys iso-keys--desktop" aria-label="Main navigation">
             {
               navItems.map((item) => (
                 <a
@@ -43,7 +55,32 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
               ))
             }
           </nav>
-          <nav class="iso-keys" aria-label="Social links">
+          <nav class="iso-keys iso-keys--desktop" aria-label="Social links">
+            {
+              SOCIALS.map((s) => (
+                <a class="iso-key iso-key--ghost" href={s.href} target="_blank" rel="noopener noreferrer">
+                  {s.label} ↗
+                </a>
+              ))
+            }
+          </nav>
+        </div>
+
+        <div class="iso-mobile-panel" id="iso-mobile-nav" hidden>
+          <nav class="iso-mobile-keys" aria-label="Main navigation">
+            {
+              navItems.map((item) => (
+                <a
+                  class="iso-key"
+                  href={item.href}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </a>
+              ))
+            }
+          </nav>
+          <nav class="iso-mobile-keys iso-mobile-keys--social" aria-label="Social links">
             {
               SOCIALS.map((s) => (
                 <a class="iso-key iso-key--ghost" href={s.href} target="_blank" rel="noopener noreferrer">
@@ -80,5 +117,41 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
     </footer>
 
     <ThemeSwitcher />
+
+    <script>
+      // Mobile navigation: a burger on the control-panel plate. Event
+      // delegation keeps it working across view transitions; state resets on
+      // every page load.
+      const panel = () => document.getElementById("iso-mobile-nav");
+      const burger = () => document.getElementById("iso-burger");
+
+      const setOpen = (open: boolean) => {
+        const p = panel();
+        const b = burger();
+        if (!p || !b) return;
+        p.hidden = !open;
+        b.setAttribute("aria-expanded", String(open));
+        b.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+        b.classList.toggle("is-open", open);
+      };
+
+      document.addEventListener("click", (event) => {
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        if (target.closest("#iso-burger")) {
+          setOpen(panel()?.hidden ?? true);
+          return;
+        }
+        if (target.closest("#iso-mobile-nav a")) setOpen(false);
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key !== "Escape" || panel()?.hidden !== false) return;
+        setOpen(false);
+        burger()?.focus();
+      });
+
+      document.addEventListener("astro:page-load", () => setOpen(false));
+    </script>
   </body>
 </html>

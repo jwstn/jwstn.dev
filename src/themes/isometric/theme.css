@@ -314,6 +314,96 @@ html.theme-isometric .iso-keys + .iso-keys {
   border-inline-start: 1px dashed color-mix(in oklab, var(--foreground) 35%, transparent);
 }
 
+/* Mobile navigation — burger + control-panel panel (<= 48rem) */
+html.theme-isometric .iso-burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  min-height: 2.75rem;
+  margin-inline-start: auto;
+  padding: 0;
+  border: 1px solid var(--iso-edge);
+  background: var(--card);
+  color: var(--foreground);
+  box-shadow: 4px 4px 0 -1px var(--iso-side);
+  cursor: pointer;
+}
+html.theme-isometric .iso-burger:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+html.theme-isometric .iso-burger-icon {
+  position: relative;
+  width: 1.15rem;
+  height: 2px;
+  background: currentColor;
+}
+html.theme-isometric .iso-burger-icon::before,
+html.theme-isometric .iso-burger-icon::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: currentColor;
+}
+html.theme-isometric .iso-burger-icon::before {
+  top: -6px;
+}
+html.theme-isometric .iso-burger-icon::after {
+  top: 6px;
+}
+html.theme-isometric .iso-burger.is-open .iso-burger-icon {
+  background: transparent;
+}
+html.theme-isometric .iso-burger.is-open .iso-burger-icon::before {
+  top: 0;
+  transform: rotate(45deg);
+}
+html.theme-isometric .iso-burger.is-open .iso-burger-icon::after {
+  top: 0;
+  transform: rotate(-45deg);
+}
+
+html.theme-isometric .iso-mobile-panel {
+  margin-block-start: 0.55rem;
+  padding: 0.55rem;
+  border: 1px solid var(--iso-edge);
+  background: var(--card);
+  box-shadow: 8px 8px 0 -1px var(--iso-side);
+}
+html.theme-isometric .iso-mobile-panel[hidden] {
+  display: none;
+}
+html.theme-isometric .iso-mobile-keys {
+  display: grid;
+  gap: 0.45rem;
+}
+html.theme-isometric .iso-mobile-keys .iso-key {
+  justify-content: flex-start;
+  width: 100%;
+}
+html.theme-isometric .iso-mobile-keys--social {
+  grid-template-columns: 1fr 1fr;
+  margin-block-start: 0.55rem;
+  padding-block-start: 0.55rem;
+  border-block-start: 1px dashed color-mix(in oklab, var(--foreground) 35%, transparent);
+}
+
+@media (max-width: 48rem) {
+  html.theme-isometric .iso-keys--desktop {
+    display: none;
+  }
+  html.theme-isometric .iso-burger {
+    display: inline-flex;
+  }
+  html.theme-isometric .iso-plate {
+    flex-wrap: nowrap;
+    justify-content: space-between;
+  }
+}
+
 /* ------------------------------------------------------------------ */
 /* Hero — flat readable headline, floating isometric cubes around it   */
 /* ------------------------------------------------------------------ */
@@ -1058,14 +1148,9 @@ html.theme-isometric .iso-platefig {
 html.theme-isometric .iso-plane {
   transform: rotateX(48deg) rotateZ(var(--iso-tilt, -2.5deg));
   transform-origin: 50% 0;
-  transition: transform 280ms ease;
 }
 html.theme-isometric .iso-wall > :nth-child(even) .iso-plane {
   --iso-tilt: 2.5deg;
-}
-html.theme-isometric .iso-plate:hover .iso-plane,
-html.theme-isometric .iso-plate:focus-within .iso-plane {
-  transform: none;
 }
 html.theme-isometric .iso-plane img {
   display: block;
