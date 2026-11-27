@@ -1,9 +1,8 @@
 ---
 import { getPosts } from "#/lib/content";
-import { themeModule } from "#/themes/manifest";
+import Blog from "#/views/Blog.astro";
 
 const posts = await getPosts();
-const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Blog posts={posts} />
+<Blog posts={posts} />

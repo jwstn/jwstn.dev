@@ -1,6 +1,6 @@
 ---
 import { getProject, renderEntry } from "#/lib/content";
-import { themeModule } from "#/themes/manifest";
+import Project from "#/views/Project.astro";
 
 const slug = Astro.params.slug as string;
 const project = await getProject(slug);
@@ -8,7 +8,6 @@ if (!project) {
   return new Response("Not found", { status: 404 });
 }
 const { Content } = await renderEntry(project);
-const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Project project={project} Content={Content} />
+<Project project={project} Content={Content} />

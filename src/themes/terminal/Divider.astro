@@ -1,8 +1,0 @@
----
-// Decorative ASCII divider line. Purely visual — always aria-hidden.
-interface Props {
-  count?: number;
-}
-const { count = 42 } = Astro.props;
----
-<p class="term-divider" aria-hidden="true">{"─".repeat(count)}</p>

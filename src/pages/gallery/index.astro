@@ -1,9 +1,8 @@
 ---
 import { getAlbums } from "#/lib/content";
-import { themeModule } from "#/themes/manifest";
+import Gallery from "#/views/Gallery.astro";
 
 const albums = await getAlbums();
-const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Gallery albums={albums} />
+<Gallery albums={albums} />

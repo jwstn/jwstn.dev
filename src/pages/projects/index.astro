@@ -1,9 +1,8 @@
 ---
 import { getProjects } from "#/lib/content";
-import { themeModule } from "#/themes/manifest";
+import Projects from "#/views/Projects.astro";
 
 const projects = await getProjects();
-const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Projects projects={projects} />
+<Projects projects={projects} />

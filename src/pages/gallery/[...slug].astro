@@ -1,13 +1,12 @@
 ---
 import { getAlbum } from "#/lib/content";
-import { themeModule } from "#/themes/manifest";
+import Album from "#/views/Album.astro";
 
 const slug = Astro.params.slug as string;
 const album = await getAlbum(slug);
 if (!album) {
   return new Response("Not found", { status: 404 });
 }
-const T = themeModule(Astro.locals.theme);
 ---
 
-<T.Album album={album} />
+<Album album={album} />

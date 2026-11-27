@@ -8,6 +8,15 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Design rules
+
+- No page-head bars that repeat the navigation; route names use a visually hidden `<h1>`.
+- Content headings (album/post titles) are plain typography, never boxed.
+- Don't repeat information already on the page (nav labels, counts) in decorative chrome.
+- Isometric primitives use line-drawn depth: face + offset back + three diagonal connectors,
+  with the face sinking on press. Buttons use `IsoButton`.
+- Gallery thumbnails are flat and uncropped on the detail wall; text appears on hover.
+
 ## Task tracking
 
 - Track tasks and follow-ups as GitHub issues in this repository (`gh issue create`), not as local issue files. Reference issue numbers in commit messages where useful.

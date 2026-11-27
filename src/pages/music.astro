@@ -1,10 +1,8 @@
 ---
 import { getRecentTracks, getTopArtists, isLastfmConfigured, lastfmUsername } from "#/lib/lastfm";
 import type { LastfmArtist, LastfmTrack } from "#/lib/lastfm";
-import IsoMusic from "#/themes/isometric/Music.astro";
-import MusicFallback from "#/themes/shared/MusicFallback.astro";
+import Music from "#/views/Music.astro";
 
-const theme = Astro.locals.theme;
 const username = lastfmUsername();
 const configured = isLastfmConfigured();
 
@@ -12,7 +10,7 @@ let artists: LastfmArtist[] = [];
 let tracks: LastfmTrack[] = [];
 let error: string | null = null;
 
-if (theme === "isometric" && configured) {
+if (configured) {
   try {
     [artists, tracks] = await Promise.all([getTopArtists("1month", 3), getRecentTracks(12)]);
   } catch (cause) {
@@ -23,10 +21,4 @@ if (theme === "isometric" && configured) {
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
 ---
 
-{
-  theme === "isometric" ? (
-    <IsoMusic artists={artists} tracks={tracks} username={username} configured={configured} error={error} />
-  ) : (
-    <MusicFallback theme={theme} />
-  )
-}
+<Music artists={artists} tracks={tracks} username={username} configured={configured} error={error} />
