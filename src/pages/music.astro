@@ -1,5 +1,5 @@
 ---
-import Layout from "#/layouts/Layout.astro";
+import Layout from "#/layouts/Layout.astro"
 import {
   getRecentTracks,
   getTopArtists,
@@ -7,26 +7,33 @@ import {
   lastfmUsername,
   type LastfmArtist,
   type LastfmTrack,
-} from "#/lib/lastfm";
+} from "#/lib/lastfm"
 
-const username = lastfmUsername();
-const configured = isLastfmConfigured();
+const username = lastfmUsername()
+const configured = isLastfmConfigured()
 
-let artists: LastfmArtist[] = [];
-let tracks: LastfmTrack[] = [];
-let error: string | null = null;
+let artists: LastfmArtist[] = []
+let tracks: LastfmTrack[] = []
+let error: string | null = null
 
 if (configured) {
   try {
-    [artists, tracks] = await Promise.all([getTopArtists("1month", 3), getRecentTracks(12)]);
+    ;[artists, tracks] = await Promise.all([
+      getTopArtists("1month", 3),
+      getRecentTracks(12),
+    ])
   } catch (cause) {
-    error = cause instanceof Error ? cause.message : "unknown";
+    error = cause instanceof Error ? cause.message : "unknown"
   }
 }
 
-Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
+Astro.response.headers.set(
+  "Cache-Control",
+  "public, s-maxage=300, stale-while-revalidate=600"
+)
 
-const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "true";
+const isNowPlaying = (track: LastfmTrack) =>
+  track["@attr"]?.nowplaying === "true"
 ---
 
 <Layout
@@ -36,85 +43,106 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
   <div class="iso-shell iso-stack">
     <h1 class="sr-only">Music</h1>
 
-    {
-      !configured && (
-        <section class="iso-slab iso-music-empty iso-rise iso-rise--2">
-          <h2 class="iso-music-empty-title">Not connected yet</h2>
-          <p>
-            Listening stats appear once <code>LASTFM_API_KEY</code> is configured on the server.
-          </p>
+    {!configured && (
+      <section class="iso-slab iso-music-empty iso-rise iso-rise--2">
+        <h2 class="iso-music-empty-title">Not connected yet</h2>
+        <p>
+          Listening stats appear once <code>LASTFM_API_KEY</code> is configured
+          on the server.
+        </p>
+      </section>
+    )}
+
+    {configured && error && (
+      <section class="iso-slab iso-music-empty iso-rise iso-rise--2">
+        <h2 class="iso-music-empty-title">Last.fm is out of reach</h2>
+        <p>
+          The stats could not be loaded right now. Try again in a few minutes.
+        </p>
+      </section>
+    )}
+
+    {configured && !error && (
+      <>
+        <section aria-labelledby="iso-top-artists">
+          <h2 id="iso-top-artists" class="iso-sectionlabel">
+            Top artists &mdash; last 30 days
+          </h2>
+          <ul class="iso-artists">
+            {artists.map((artist) => (
+              <li>
+                <a
+                  class="iso-slab iso-artist"
+                  href={artist.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <span class="iso-artist-name">{artist.name}</span>
+                  <span class="iso-artist-plays">{artist.playcount} plays</span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </section>
-      )
-    }
 
-    {
-      configured && error && (
-        <section class="iso-slab iso-music-empty iso-rise iso-rise--2">
-          <h2 class="iso-music-empty-title">Last.fm is out of reach</h2>
-          <p>The stats could not be loaded right now. Try again in a few minutes.</p>
-        </section>
-      )
-    }
-
-    {
-      configured && !error && (
-        <>
-          <section aria-labelledby="iso-top-artists">
-            <h2 id="iso-top-artists" class="iso-sectionlabel">
-              Top artists &mdash; last 30 days
-            </h2>
-            <ul class="iso-artists">
-              {artists.map((artist) => (
-                <li>
-                  <a class="iso-slab iso-artist" href={artist.url} target="_blank" rel="noopener noreferrer">
-                    <span class="iso-artist-name">{artist.name}</span>
-                    <span class="iso-artist-plays">{artist.playcount} plays</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <section aria-labelledby="iso-scrobbles">
-            <h2 id="iso-scrobbles" class="iso-sectionlabel">
-              Recent scrobbles
-            </h2>
-            <ul class="iso-scrobbles">
-              {tracks.map((track) => (
-                <li class:list={["iso-scrobble", isNowPlaying(track) && "iso-scrobble--now"]}>
-                  <span class="iso-scrobble-body">
-                    <span class="iso-scrobble-artist">{track.artist["#text"]}</span>
-                    <span class="iso-scrobble-sep" aria-hidden="true">
-                      &mdash;
-                    </span>
-                    <a href={track.url} target="_blank" rel="noopener noreferrer" class="iso-scrobble-track">
-                      {track.name}
-                    </a>
-                    {track.album?.["#text"] && track.album["#text"] !== track.name && (
-                      <span class="iso-scrobble-album">on {track.album["#text"]}</span>
-                    )}
+        <section aria-labelledby="iso-scrobbles">
+          <h2 id="iso-scrobbles" class="iso-sectionlabel">
+            Recent scrobbles
+          </h2>
+          <ul class="iso-scrobbles">
+            {tracks.map((track) => (
+              <li
+                class:list={[
+                  "iso-scrobble",
+                  isNowPlaying(track) && "iso-scrobble--now",
+                ]}
+              >
+                <span class="iso-scrobble-body">
+                  <span class="iso-scrobble-artist">
+                    {track.artist["#text"]}
                   </span>
-                  {isNowPlaying(track) && (
-                    <span class="iso-eq" aria-label="Now playing">
-                      <span class="iso-eq-bar"></span>
-                      <span class="iso-eq-bar"></span>
-                      <span class="iso-eq-bar"></span>
-                      <span class="iso-eq-bar"></span>
-                    </span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </section>
+                  <span class="iso-scrobble-sep" aria-hidden="true">
+                    &mdash;
+                  </span>
+                  <a
+                    href={track.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="iso-scrobble-track"
+                  >
+                    {track.name}
+                  </a>
+                  {track.album?.["#text"] &&
+                    track.album["#text"] !== track.name && (
+                      <span class="iso-scrobble-album">
+                        on {track.album["#text"]}
+                      </span>
+                    )}
+                </span>
+                {isNowPlaying(track) && (
+                  <span class="iso-eq ml-4" aria-label="Now playing">
+                    <span class="iso-eq-bar"></span>
+                    <span class="iso-eq-bar"></span>
+                    <span class="iso-eq-bar"></span>
+                    <span class="iso-eq-bar"></span>
+                  </span>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
 
-          <p class="iso-attribution">
-            Listening data from{" "}
-            <a href={`https://www.last.fm/user/${username}`} target="_blank" rel="noopener noreferrer">
-              Last.fm
-            </a>
-          </p>
-        </>
-      )
-    }
+        <p class="iso-attribution">
+          Listening data from{" "}
+          <a
+            href={`https://www.last.fm/user/${username}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Last.fm
+          </a>
+        </p>
+      </>
+    )}
   </div>
 </Layout>
