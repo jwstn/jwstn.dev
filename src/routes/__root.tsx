@@ -3,7 +3,7 @@ import "#/styles/theme.css";
 import { createRootRoute, HeadContent, Outlet, Scripts, useRouterState } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ExternalLink } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { StrictMode, useEffect, useRef, useState } from "react";
 import { SITE_DESCRIPTION, SITE_TITLE } from "#/consts";
 
 const THEME_SCRIPT = `(() => {
@@ -118,106 +118,108 @@ function RootComponent() {
   }, [pathname]);
 
   return (
-    <html lang="en" className="theme-isometric">
-      <head>
-        <HeadContent />
-        <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
-      </head>
-      <body className="bg-background text-foreground font-body">
-        <a className="iso-skip" href="#iso-main">
-          Skip to content
-        </a>
+    <StrictMode>
+      <html lang="en" className="theme-isometric" suppressHydrationWarning>
+        <head>
+          <HeadContent />
+          <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
+        </head>
+        <body className="bg-background text-foreground font-body">
+          <a className="iso-skip" href="#iso-main">
+            Skip to content
+          </a>
 
-        <header className={clsx("iso-header", isOpen && "is-menu-open")}>
-          <div className="iso-shell">
-            <div className="iso-plate iso-slab">
-              <a className="iso-key iso-key--logo" href="/" aria-current={path === "/" ? "page" : undefined}>
-                jwstn.dev
-              </a>
+          <header className={clsx("iso-header", isOpen && "is-menu-open")}>
+            <div className="iso-shell">
+              <div className="iso-plate iso-slab">
+                <a className="iso-key iso-key--logo" href="/" aria-current={path === "/" ? "page" : undefined}>
+                  jwstn.dev
+                </a>
 
-              <button
-                ref={burgerRef}
-                className={clsx("iso-burger", isOpen && "is-open")}
-                id="iso-burger"
-                type="button"
-                aria-expanded={isOpen}
-                aria-controls="iso-mobile-nav"
-                aria-label={isOpen ? "Close menu" : "Open menu"}
-                onClick={() => setIsOpen((open) => !open)}
-              >
-                <span className="iso-burger-icon" aria-hidden="true" />
-              </button>
+                <button
+                  ref={burgerRef}
+                  className={clsx("iso-burger", isOpen && "is-open")}
+                  id="iso-burger"
+                  type="button"
+                  aria-expanded={isOpen}
+                  aria-controls="iso-mobile-nav"
+                  aria-label={isOpen ? "Close menu" : "Open menu"}
+                  onClick={() => setIsOpen((open) => !open)}
+                >
+                  <span className="iso-burger-icon" aria-hidden="true" />
+                </button>
 
-              <nav className="iso-keys iso-keys--desktop" aria-label="Main navigation">
-                {NAV_ITEMS.map((item) => (
-                  <a
-                    className="iso-key"
-                    href={item.href}
-                    key={item.href}
-                    aria-current={isActive(item.href) ? "page" : undefined}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
-              <nav className="iso-keys iso-keys--desktop" aria-label="Social links">
-                {SOCIALS.map((social) => (
-                  <a
-                    className="iso-key iso-key--ghost"
-                    href={social.href}
-                    key={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {social.label} <ExternalLink size={12} />
-                  </a>
-                ))}
-              </nav>
+                <nav className="iso-keys iso-keys--desktop" aria-label="Main navigation">
+                  {NAV_ITEMS.map((item) => (
+                    <a
+                      className="iso-key"
+                      href={item.href}
+                      key={item.href}
+                      aria-current={isActive(item.href) ? "page" : undefined}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
+                <nav className="iso-keys iso-keys--desktop" aria-label="Social links">
+                  {SOCIALS.map((social) => (
+                    <a
+                      className="iso-key iso-key--ghost"
+                      href={social.href}
+                      key={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {social.label} <ExternalLink size={12} />
+                    </a>
+                  ))}
+                </nav>
+              </div>
+
+              <div className="iso-mobile-panel" id="iso-mobile-nav" hidden={!isOpen}>
+                <nav className="iso-mobile-keys" aria-label="Main navigation">
+                  {NAV_ITEMS.map((item) => (
+                    <a
+                      className="iso-key"
+                      href={item.href}
+                      key={item.href}
+                      aria-current={isActive(item.href) ? "page" : undefined}
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {item.label}
+                    </a>
+                  ))}
+                </nav>
+                <nav className="iso-mobile-keys iso-mobile-keys--social" aria-label="Social links">
+                  {SOCIALS.map((social) => (
+                    <a
+                      className="iso-key iso-key--ghost"
+                      href={social.href}
+                      key={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {social.label} <ExternalLink size={12} />
+                    </a>
+                  ))}
+                </nav>
+              </div>
             </div>
+          </header>
 
-            <div className="iso-mobile-panel" id="iso-mobile-nav" hidden={!isOpen}>
-              <nav className="iso-mobile-keys" aria-label="Main navigation">
-                {NAV_ITEMS.map((item) => (
-                  <a
-                    className="iso-key"
-                    href={item.href}
-                    key={item.href}
-                    aria-current={isActive(item.href) ? "page" : undefined}
-                    onClick={() => setIsOpen(false)}
-                  >
-                    {item.label}
-                  </a>
-                ))}
-              </nav>
-              <nav className="iso-mobile-keys iso-mobile-keys--social" aria-label="Social links">
-                {SOCIALS.map((social) => (
-                  <a
-                    className="iso-key iso-key--ghost"
-                    href={social.href}
-                    key={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {social.label} <ExternalLink size={12} />
-                  </a>
-                ))}
-              </nav>
+          <main id="iso-main" className="iso-main" tabIndex={-1} ref={mainRef}>
+            <Outlet />
+          </main>
+
+          <footer className="iso-footer">
+            <div className="iso-shell">
+              <p className="iso-copyright">&copy; {year} jwstn</p>
             </div>
-          </div>
-        </header>
+          </footer>
 
-        <main id="iso-main" className="iso-main" tabIndex={-1} ref={mainRef}>
-          <Outlet />
-        </main>
-
-        <footer className="iso-footer">
-          <div className="iso-shell">
-            <p className="iso-copyright">&copy; {year} jwstn</p>
-          </div>
-        </footer>
-
-        <Scripts />
-      </body>
-    </html>
+          <Scripts />
+        </body>
+      </html>
+    </StrictMode>
   );
 }
