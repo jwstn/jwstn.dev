@@ -1166,6 +1166,160 @@ html.theme-isometric .iso-plate-note {
 }
 
 /* ------------------------------------------------------------------ */
+/* Music — Last.fm listening stats                                     */
+/* ------------------------------------------------------------------ */
+
+html.theme-isometric .iso-artists {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.9rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+@media (max-width: 40rem) {
+  html.theme-isometric .iso-artists {
+    grid-template-columns: 1fr;
+  }
+}
+
+html.theme-isometric .iso-artist {
+  display: grid;
+  color: inherit;
+  text-decoration: none;
+}
+html.theme-isometric .iso-artist-img {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: var(--secondary);
+  border-block-end: 1px solid var(--iso-edge);
+}
+html.theme-isometric .iso-artist-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+html.theme-isometric .iso-artist-fallback {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--muted-foreground);
+}
+html.theme-isometric .iso-artist-info {
+  display: grid;
+  gap: 0.25rem;
+  padding: 1rem 1.1rem 1.2rem;
+}
+html.theme-isometric .iso-artist-rank {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+html.theme-isometric .iso-artist-name {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+html.theme-isometric .iso-artist-plays {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+html.theme-isometric .iso-artist:hover .iso-artist-name {
+  text-decoration: underline;
+  text-decoration-thickness: 3px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--accent);
+}
+
+html.theme-isometric .iso-scrobbles {
+  margin: 0;
+  padding-inline-start: 1.4rem;
+  display: grid;
+  gap: 0.15rem;
+}
+html.theme-isometric .iso-scrobble {
+  padding-block: 0.4rem;
+  border-block-end: 1px dashed color-mix(in oklab, var(--foreground) 25%, transparent);
+}
+html.theme-isometric .iso-scrobble:last-child {
+  border-block-end: 0;
+}
+html.theme-isometric .iso-scrobble-time {
+  display: inline-block;
+  min-width: 8.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+html.theme-isometric .iso-scrobble--now .iso-scrobble-time {
+  color: var(--accent);
+  font-weight: 700;
+}
+html.theme-isometric .iso-scrobble-artist {
+  font-weight: 600;
+}
+html.theme-isometric .iso-scrobble-sep,
+html.theme-isometric .iso-scrobble-album {
+  color: var(--muted-foreground);
+}
+html.theme-isometric .iso-scrobble-sep {
+  margin-inline: 0.35rem;
+}
+html.theme-isometric .iso-scrobble-album {
+  margin-inline-start: 0.5rem;
+  font-size: 0.85rem;
+}
+html.theme-isometric .iso-scrobble-track {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+html.theme-isometric .iso-scrobble-track:hover {
+  color: var(--accent);
+}
+@media (max-width: 40rem) {
+  html.theme-isometric .iso-scrobble-time {
+    display: block;
+    min-width: 0;
+  }
+}
+
+html.theme-isometric .iso-attribution {
+  margin: 0.5rem 0 0;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  color: var(--muted-foreground);
+}
+html.theme-isometric .iso-attribution a {
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+html.theme-isometric .iso-music-empty {
+  display: grid;
+  gap: 0.5rem;
+  padding: 1.4rem;
+}
+html.theme-isometric .iso-music-empty-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+/* ------------------------------------------------------------------ */
 /* Footer — just the copyright line                                    */
 /* ------------------------------------------------------------------ */
 

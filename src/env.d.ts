@@ -5,3 +5,8 @@ declare namespace App {
     theme: import("#/themes/registry").ThemeId;
   }
 }
+
+interface ImportMetaEnv {
+  readonly LASTFM_API_KEY?: string;
+  readonly LASTFM_USERNAME?: string;
+}

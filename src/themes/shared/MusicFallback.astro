@@ -1,0 +1,29 @@
+---
+import MetaTags from "#/themes/shared/MetaTags.astro";
+
+interface Props {
+  theme: string;
+}
+
+const { theme } = Astro.props;
+---
+
+<html lang="en" class={`theme-${theme}`}>
+  <head>
+    <MetaTags title="Music | jwstn.dev" description="Listening stats from Last.fm." />
+  </head>
+  <body class="min-h-dvh bg-background text-foreground font-body">
+    <main class="mx-auto flex min-h-dvh w-full max-w-2xl flex-col justify-center gap-5 p-8">
+      <p class="font-mono text-xs uppercase tracking-[0.2em] text-muted-foreground">Music</p>
+      <h1 class="text-3xl font-bold leading-tight">The listening page is designed for the Isometric theme.</h1>
+      <p class="max-w-prose text-muted-foreground">
+        Last.fm stats are shown in the isometric variant of the site. Your saved theme stays untouched — the
+        link below just previews it.
+      </p>
+      <p class="flex flex-wrap gap-5 font-medium">
+        <a class="underline underline-offset-4" href="/music?theme=isometric">Open it in the Isometric theme →</a>
+        <a class="underline underline-offset-4" href="/">Back home</a>
+      </p>
+    </main>
+  </body>
+</html>
