@@ -20,7 +20,7 @@ if (theme === "isometric" && configured) {
   }
 }
 
-Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=900");
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
 ---
 
 {

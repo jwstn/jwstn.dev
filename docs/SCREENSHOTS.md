@@ -843,6 +843,27 @@ Newsreader on unbleached washi: off-center hero with open ma, staggered rows, to
 
 ---
 
+## Music — Last.fm listening stats (`/music`)
+
+Isometric page: the **top three artists of the last 30 days** as typographic tiles (Last.fm's terms
+exclude artwork from the API licence, so no artist images are shown), a **recent-scrobbles bullet
+list** with a now-playing state, and the required Last.fm attribution link. Other themes get a small
+fallback pointing at the isometric version.
+
+| | |
+|---|---|
+| ![music desktop](screenshots/isometric/music-desktop.png) | ![music mobile](screenshots/isometric/music-mobile.png) |
+
+Fallback for other themes:
+
+![music fallback](screenshots/classic/music-desktop.png)
+
+> **Account requirement:** from 1 December 2026 the Last.fm account owning the API key needs
+> Last.fm Pro; without it the read methods stop and the page shows its “Last.fm is out of reach”
+> state. Responses are cached for five minutes and stale data is served during outages.
+
+---
+
 ## Production notes
 
 - Switching: cookie `site-theme` + floating picker on every page; `?theme=<id>` deep links work too.

@@ -74,16 +74,23 @@ async function request<T>(method: string, params: Record<string, string> = {}): 
   const hit = cache.get(cacheKey);
   if (hit && Date.now() - hit.at < CACHE_TTL_MS) return hit.data as T;
 
-  const res = await fetch(url, {
-    headers: { "user-agent": "jwstn.dev music page (https://jwstn.dev)" },
-  });
-  if (!res.ok) throw new Error(`lastfm-http-${res.status}`);
+  try {
+    const res = await fetch(url, {
+      headers: { "user-agent": "jwstn.dev music page (https://jwstn.dev)" },
+    });
+    if (!res.ok) throw new Error(`lastfm-http-${res.status}`);
 
-  const data = (await res.json()) as T & LastfmError;
-  if (data.error) throw new Error(data.message ?? `lastfm-error-${data.error}`);
+    const data = (await res.json()) as T & LastfmError;
+    if (data.error) throw new Error(data.message ?? `lastfm-error-${data.error}`);
 
-  cache.set(cacheKey, { at: Date.now(), data });
-  return data;
+    cache.set(cacheKey, { at: Date.now(), data });
+    return data;
+  } catch (cause) {
+    // Last.fm has had multi-hour read outages; serve the last good response
+    // rather than showing an error page while the cache still holds data.
+    if (hit) return hit.data as T;
+    throw cause;
+  }
 }
 
 export async function getTopArtists(period = "1month", limit = 3): Promise<LastfmArtist[]> {
@@ -105,15 +112,4 @@ export async function getRecentTracks(limit = 12): Promise<LastfmTrack[]> {
   const track = data.recenttracks?.track;
   if (!track) return [];
   return Array.isArray(track) ? track : [track];
-}
-
-/** Largest non-empty image URL for an item. */
-export function imageUrl(images: LastfmImage[] | undefined): string | null {
-  if (!images?.length) return null;
-  const bySize = new Map(images.map((img) => [img.size, img["#text"]]));
-  for (const size of ["mega", "extralarge", "large", "medium", "small"]) {
-    const url = bySize.get(size);
-    if (url) return url;
-  }
-  return images[images.length - 1]?.["#text"] || null;
 }

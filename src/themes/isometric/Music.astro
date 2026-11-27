@@ -12,14 +12,17 @@ interface Props {
 
 const { artists, tracks, username, configured, error } = Astro.props;
 
-const imageUrl = (images: { size: string; "#text": string }[] | undefined) => {
-  if (!images?.length) return null;
-  const bySize = new Map(images.map((img) => [img.size, img["#text"]]));
-  for (const size of ["mega", "extralarge", "large", "medium", "small"]) {
-    const url = bySize.get(size);
-    if (url) return url;
+// Last.fm's API terms (clause 5.1.8) exclude images/artwork from the licence —
+// so the page intentionally shows typographic tiles rather than artist images.
+const initials = (name: string) => {
+  const words = name.split(/\s+/).filter(Boolean);
+  if (words.length >= 2) {
+    return words
+      .slice(0, 2)
+      .map((word) => word[0]!.toUpperCase())
+      .join("");
   }
-  return images[images.length - 1]?.["#text"] || null;
+  return name.slice(0, 2).toUpperCase();
 };
 
 const when = (uts?: string) => {
@@ -75,18 +78,13 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
             </h2>
             <ul class="iso-artists">
               {artists.map((artist, i) => {
-                const image = imageUrl(artist.image);
                 return (
                   <li class="iso-rise" class:list={[i === 1 && "iso-rise--2", i === 2 && "iso-rise--3"]}>
                     <a class="iso-slab iso-artist" href={artist.url} target="_blank" rel="noopener noreferrer">
                       <span class="iso-artist-img">
-                        {image ? (
-                          <img src={image} alt={artist.name} width={300} height={300} loading="lazy" decoding="async" />
-                        ) : (
-                          <span class="iso-artist-fallback" aria-hidden="true">
-                            {artist.name.slice(0, 2).toUpperCase()}
-                          </span>
-                        )}
+                        <span class="iso-artist-fallback" aria-hidden="true">
+                          {initials(artist.name)}
+                        </span>
                       </span>
                       <span class="iso-artist-info">
                         <span class="iso-artist-rank" aria-hidden="true">
@@ -120,7 +118,9 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
                     <a href={track.url} target="_blank" rel="noopener noreferrer" class="iso-scrobble-track">
                       {track.name}
                     </a>
-                    {track.album?.["#text"] && <span class="iso-scrobble-album">{track.album["#text"]}</span>}
+                    {track.album?.["#text"] && track.album["#text"] !== track.name && (
+                      <span class="iso-scrobble-album">{track.album["#text"]}</span>
+                    )}
                   </span>
                 </li>
               ))}
@@ -128,7 +128,7 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
           </section>
 
           <p class="iso-attribution">
-            Data provided by{" "}
+            Listening data from{" "}
             <a href={`https://www.last.fm/user/${username}`} target="_blank" rel="noopener noreferrer">
               Last.fm
             </a>
