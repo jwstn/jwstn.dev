@@ -845,10 +845,10 @@ Newsreader on unbleached washi: off-center hero with open ma, staggered rows, to
 
 ## Music — Last.fm listening stats (`/music`)
 
-Isometric page: the **top three artists of the last 30 days** as a simple ranked list (artist name +
-play count), a **recent-scrobbles bullet list** with a now-playing state, and the required Last.fm
-attribution link. No artwork is shown — Last.fm's terms exclude it from the API licence. Other themes
-get a small fallback pointing at the isometric version.
+Isometric page: the **top three artists of the last 30 days** as boxed cards (artist name + play
+count, no artwork area), a **recent-scrobbles bullet list** with a now-playing state, and the required
+Last.fm attribution link. No artwork is shown — Last.fm's terms exclude it from the API licence.
+Other themes get a small fallback pointing at the isometric version.
 
 | | |
 |---|---|
