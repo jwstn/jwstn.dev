@@ -15,6 +15,9 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 - Always render images through Astro's `<Image>` component (`astro:assets`) — never raw `<img>` —
   so they get optimized formats, responsive srcset and correct dimensions.
 
+- Never use text arrow characters (→, ↗, ←, ↑, ↓) in UI copy. Use the SVG icon components
+  (`ArrowIcon`, `BackIcon`, `ExternalIcon`) from `src/components/isometric/` instead.
+
 - Wrappers that only re-export or rename an existing API (e.g. `getPosts` around
   `getCollection("blog")`) are unnecessary — call the underlying API at the point of use.
 

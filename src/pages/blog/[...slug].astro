@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import FormattedDate from "#/components/FormattedDate.astro";
 import Layout from "#/layouts/Layout.astro";
+import BackIcon from "#/components/isometric/BackIcon.astro";
 import { getCollection, render } from "astro:content";
 
 const slug = Astro.params.slug as string;
@@ -16,7 +17,7 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
 <Layout title={`${title} | jwstn.dev`} description={description}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <a class="iso-backlink" href="/blog/">← All sheets</a>
+      <a class="iso-backlink" href="/blog/"><BackIcon size={14} /> All sheets</a>
     </p>
 
     <article class="iso-article">
@@ -62,7 +63,7 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
       </div>
 
       <div class="iso-block-actions">
-        <a class="iso-backlink" href="/blog/">← Back to the sheets</a>
+        <a class="iso-backlink" href="/blog/"><BackIcon size={14} /> Back to the sheets</a>
       </div>
     </article>
   </div>
