@@ -1,7 +1,7 @@
 ---
 title: "Yet another todo app, but it's mine"
 description: "The story behind a note app tailored to me"
-pubDate: 'Nov 17 2026'
+pubDate: 2026-11-17
 href: 'https://jwstn.dev/myvinylcollection'
 tags: ['Rune', 'Rust', 'GPUI', 'vibe-coded']
 ---

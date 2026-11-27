@@ -8,11 +8,12 @@
   },
   "scripts": {
     "dev": "vite dev",
-    "build": "vite build",
+    "content:build": "content-collections build",
+    "build": "pnpm content:build && vite build",
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
-    "typecheck": "tsc --noEmit",
-    "test": "vitest run",
+    "typecheck": "pnpm content:build && tsc --noEmit",
+    "test": "pnpm content:build && vitest run",
     "test:watch": "vitest",
     "format": "biome format --write",
     "lint": "biome lint --write",
@@ -20,8 +21,13 @@
     "check:ci": "biome check"
   },
   "dependencies": {
+    "@content-collections/cli": "^0.1.9",
+    "@content-collections/core": "0.15.3",
+    "@content-collections/markdown": "0.1.4",
+    "@content-collections/vite": "0.3.1",
     "@fontsource-variable/geist-mono": "^5.2.8",
     "@fontsource-variable/space-grotesk": "^5.3.0",
+    "@shikijs/rehype": "4.6.0",
     "@tailwindcss/vite": "^4.3.1",
     "@tanstack/react-router": "1.170.46",
     "@tanstack/react-start": "1.169.7",
@@ -31,9 +37,11 @@
     "nitro": "3.0.261103-rc",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "sharp": "^0.34.3",
+    "sharp": "^0.35.5",
+    "shiki": "4.6.0",
     "tailwindcss": "^4.3.1",
-    "three": "^0.187.0"
+    "three": "^0.187.0",
+    "vite-imagetools": "12.0.2"
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.5",

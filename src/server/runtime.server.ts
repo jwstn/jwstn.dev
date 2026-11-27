@@ -1,7 +1,8 @@
 import { Layer, Logger, ManagedRuntime } from "effect";
 import { layer as AppConfigLayer } from "./config.server";
+import { layer as ContentLayer } from "./content.server";
 
-const AppLayer = Layer.mergeAll(AppConfigLayer, Logger.layer([Logger.consoleJson]));
+const AppLayer = Layer.mergeAll(AppConfigLayer, ContentLayer, Logger.layer([Logger.consoleJson]));
 
 type AppRuntime = ManagedRuntime.ManagedRuntime<Layer.Success<typeof AppLayer>, Layer.Error<typeof AppLayer>>;
 

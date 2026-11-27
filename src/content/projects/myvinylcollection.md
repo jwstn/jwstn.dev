@@ -1,7 +1,7 @@
 ---
 title: '(WIP) MyVinylCollection'
 description: "This is a forum where people can display their vinyl collections and talk about them with other users. Users can also keep track of their collections and newly announced vinyl. This site depends on user input: every vinyl is added by a user."
-pubDate: 'Jul 15 2026'
+pubDate: 2026-07-15
 href: 'https://jwstn.dev/myvinylcollection'
 tags: ['TanStack Query','TanStack Table','TanStack Start', 'Effect', 'Sentry', 'Drizzle']
 ---

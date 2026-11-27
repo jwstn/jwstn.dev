@@ -1,7 +1,7 @@
 ---
 title: '(WIP) Spotui'
 description: "A Terminal UI for browsing and listening to one's Spotify songs and playlists."
-pubDate: 'Sep 17 2026'
+pubDate: 2026-09-17
 href: 'https://github.com/jwstn/spotui'
 tags: ['TUI','TUI Keymap','React', 'Effect']
 ---

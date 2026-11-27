@@ -1,6 +1,7 @@
 # build output
 dist/
 .output/
+.content-collections/
 # generated types
 .astro/
 

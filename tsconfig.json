@@ -18,10 +18,11 @@
     "isolatedModules": true,
     "verbatimModuleSyntax": false,
     "paths": {
-      "#/*": ["./src/*"]
+      "#/*": ["./src/*"],
+      "content-collections": ["./.content-collections/generated"]
     },
     "types": ["vite/client", "node"]
   },
-  "include": ["src", "vite.config.ts", "vitest.config.ts"],
-  "exclude": ["node_modules", "dist", ".output"]
+  "include": ["src", "vite.config.ts", "vitest.config.ts", "content-collections.ts"],
+  "exclude": ["node_modules", "dist", ".output", ".content-collections"]
 }

@@ -1,7 +1,7 @@
 ---
 title: '(WIP) SignLanguageLearning'
 description: "An App to help me learn ASL & DGS"
-pubDate: 'Nov 17, 2026'
+pubDate: 2026-11-17
 href: 'https://jwstn.dev/myvinylcollection'
 tags: ['Rust', "GPUI", "rune", "vibe-coded"]
 ---
