@@ -1,91 +1,74 @@
 /*
- * isometric — 2.5D drafting table.
- * Everything is scoped under html.theme-isometric (plus .dark) so nothing
- * leaks into the other themes shipped in the same bundle.
- * Fonts: Space Grotesk (display + body), Geist Mono (measurements, labels,
- * axis annotations). Body copy stays flat and readable — skew only ever
- * lands on decorative faces, never on text.
+ * jwstn.dev — isometric layout, Tokyo Night palette.
+ * Dark mode: Tokyo Night · Light mode: Tokyo Night Day (AA-adjusted inks).
+ * Fonts: Space Grotesk (display + body), Geist Mono (measurements, labels).
  */
 
 @import "@fontsource-variable/space-grotesk";
 @import "@fontsource-variable/geist-mono";
 
 /* ------------------------------------------------------------------ */
-/* Design tokens — light: drafting-paper workshop                      */
+/* Design tokens — Tokyo Night Day                                     */
 /* ------------------------------------------------------------------ */
 
 html.theme-isometric {
   color-scheme: light;
 
-  --background: #f6f3ea;
-  --foreground: #252b38;
-  --card: #fffdf6;
-  --card-foreground: #252b38;
-  --primary: #1e56c8;
+  --background: #e1e2e7;
+  --foreground: #3760bf;
+  --card: #f2f3f7;
+  --card-foreground: #3760bf;
+  --primary: #3760bf;
   --primary-foreground: #ffffff;
-  --secondary: #dde6f7;
-  --secondary-foreground: #252b38;
-  --muted: #eae5d7;
-  --muted-foreground: #5c6272;
-  --accent: #b04a0e;
+  --secondary: #d0d5e3;
+  --secondary-foreground: #3760bf;
+  --muted: #d8dbe5;
+  --muted-foreground: #4f5c86;
+  --accent: #8f4a00;
   --accent-foreground: #ffffff;
-  --border: #454e63;
-  --ring: #1e56c8;
+  --border: #9aa3c0;
+  --ring: #3760bf;
   --radius: 0rem;
 
   --font-display: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
   --font-body: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 
-  /* drafting-table customs */
-  --iso-edge: #454e63;
-  --iso-side: #b9b19b;
-  --iso-face-top: #e0e9f9;
-  --grid-line: rgb(31 86 200 / 0.07);
-
-  /* floating cube faces (decorative) */
-  --cube-a-front: #2f6ae0;
-  --cube-a-right: #1b47a8;
-  --cube-a-top: #9dbcf2;
-  --cube-b-front: #c25510;
-  --cube-b-right: #8a3a0a;
-  --cube-b-top: #e7985b;
+  --iso-edge: #6172b0;
+  --iso-side: #c4c9d8;
+  --grid-line: rgb(55 96 191 / 0.08);
 }
 
 /* ------------------------------------------------------------------ */
-/* Dark: night drafting desk — deep blue-black, glowing grid            */
+/* Dark — Tokyo Night                                                  */
 /* ------------------------------------------------------------------ */
 
 html.theme-isometric.dark {
   color-scheme: dark;
 
-  --background: #0c111d;
-  --foreground: #e8ebf4;
-  --card: #131a2a;
-  --card-foreground: #e8ebf4;
-  --primary: #6da4ff;
-  --primary-foreground: #0c111d;
-  --secondary: #1b2438;
-  --secondary-foreground: #e8ebf4;
-  --muted: #182136;
-  --muted-foreground: #a3adc2;
-  --accent: #ff9d4d;
-  --accent-foreground: #1c1206;
-  --border: #3f4a66;
-  --ring: #8ab4ff;
+  --background: #1a1b26;
+  --foreground: #c0caf5;
+  --card: #1f2335;
+  --card-foreground: #c0caf5;
+  --primary: #7aa2f7;
+  --primary-foreground: #1a1b26;
+  --secondary: #292e42;
+  --secondary-foreground: #c0caf5;
+  --muted: #24283b;
+  --muted-foreground: #a9b1d6;
+  --accent: #ff9e64;
+  --accent-foreground: #1a1b26;
+  --border: #3b4261;
+  --ring: #7aa2f7;
   --radius: 0rem;
 
-  --iso-edge: #465273;
-  --iso-side: #222b42;
-  --iso-face-top: #1d2a47;
-  --grid-line: rgb(109 164 255 / 0.09);
+  --font-display: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
+  --font-body: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
+  --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 
-  --cube-a-front: #3d70d8;
-  --cube-a-right: #27489c;
-  --cube-a-top: #8fb4f5;
-  --cube-b-front: #d97a2c;
-  --cube-b-right: #a0521a;
-  --cube-b-top: #f2b285;
+  --iso-edge: #3b4261;
+  --iso-side: #292e42;
+  --grid-line: rgb(122 162 247 / 0.10);
 }
 
 /* ------------------------------------------------------------------ */
