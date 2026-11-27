@@ -35,7 +35,7 @@ html.theme-isometric {
   --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 
   --iso-edge: #6172b0;
-  --iso-side: #c4c9d8;
+  --iso-side: #b9c2d8;
   --grid-line: rgb(55 96 191 / 0.08);
 }
 
@@ -67,7 +67,7 @@ html.theme-isometric.dark {
   --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 
   --iso-edge: #3b4261;
-  --iso-side: #292e42;
+  --iso-side: #323b5c;
   --grid-line: rgb(122 162 247 / 0.10);
 }
 
@@ -119,7 +119,9 @@ html.theme-isometric .iso-skip {
   background: var(--primary);
   color: var(--primary-foreground);
   border: 1px solid var(--iso-edge);
-  box-shadow: 4px 4px 0 -1px var(--iso-side);
+  box-shadow:
+    4px 4px 0 -1px var(--iso-side),
+    4px 4px 0 0 var(--iso-edge);
   padding: 0.5rem 0.9rem;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -200,12 +202,16 @@ html.theme-isometric .iso-slab {
   background: var(--card);
   color: var(--card-foreground);
   border: 1px solid var(--iso-edge);
-  box-shadow: 10px 10px 0 -1px var(--iso-side);
+  box-shadow:
+    10px 10px 0 -1px var(--iso-side),
+    10px 10px 0 0 var(--iso-edge);
   transition: box-shadow 180ms ease;
 }
 html.theme-isometric .iso-slab:hover,
 html.theme-isometric .iso-slab:focus-within {
-  box-shadow: 14px 14px 0 -1px var(--iso-side);
+  box-shadow:
+    14px 14px 0 -1px var(--iso-side),
+    14px 14px 0 0 var(--iso-edge);
 }
 /* top face: parallelogram leaning back-right, purely decorative */
 /* The three connectors of the shared iso-depth pattern, drawn over the
@@ -265,7 +271,9 @@ html.theme-isometric .iso-key {
   background: var(--card);
   color: var(--foreground);
   border: 1px solid var(--iso-edge);
-  box-shadow: 4px 4px 0 -1px var(--iso-side);
+  box-shadow:
+    4px 4px 0 -1px var(--iso-side),
+    4px 4px 0 0 var(--iso-edge);
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 600;
@@ -275,7 +283,9 @@ html.theme-isometric .iso-key {
   transition: box-shadow 160ms ease;
 }
 html.theme-isometric .iso-key:hover {
-  box-shadow: 7px 7px 0 -1px var(--iso-side);
+  box-shadow:
+    7px 7px 0 -1px var(--iso-side),
+    7px 7px 0 0 var(--iso-edge);
 }
 html.theme-isometric .iso-key[aria-current="page"] {
   background: var(--primary);
@@ -326,11 +336,15 @@ html.theme-isometric .iso-keys + .iso-keys {
 /* The header plate never lifts on hover; the burger carries the open state. */
 html.theme-isometric .iso-header .iso-slab:hover,
 html.theme-isometric .iso-header .iso-slab:focus-within {
-  box-shadow: 10px 10px 0 -1px var(--iso-side);
+  box-shadow:
+    10px 10px 0 -1px var(--iso-side),
+    10px 10px 0 0 var(--iso-edge);
 }
 /* …but the back bar does move with the menu state itself. */
 html.theme-isometric .iso-header.is-menu-open .iso-plate {
-  box-shadow: 14px 14px 0 -1px var(--iso-side);
+  box-shadow:
+    14px 14px 0 -1px var(--iso-side),
+    14px 14px 0 0 var(--iso-edge);
 }
 
 html.theme-isometric .iso-burger {
@@ -344,13 +358,17 @@ html.theme-isometric .iso-burger {
   border: 1px solid var(--iso-edge);
   background: var(--card);
   color: var(--foreground);
-  box-shadow: 4px 4px 0 -1px var(--iso-side);
+  box-shadow:
+    4px 4px 0 -1px var(--iso-side),
+    4px 4px 0 0 var(--iso-edge);
   cursor: pointer;
   transition: none;
 }
 html.theme-isometric .iso-burger:hover {
   /* movement is reserved for the open state, never hover */
-  box-shadow: 4px 4px 0 -1px var(--iso-side);
+  box-shadow:
+    4px 4px 0 -1px var(--iso-side),
+    4px 4px 0 0 var(--iso-edge);
 }
 html.theme-isometric .iso-burger:focus-visible {
   outline: 2px solid var(--primary);
@@ -869,7 +887,9 @@ html.theme-isometric .iso-stamp {
   background: var(--secondary);
   color: var(--secondary-foreground);
   border: 1px solid var(--iso-line);
-  box-shadow: 2px 2px 0 -1px var(--iso-side);
+  box-shadow:
+    2px 2px 0 -1px var(--iso-side),
+    2px 2px 0 0 var(--iso-edge);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 600;
@@ -978,8 +998,8 @@ html.theme-isometric .iso-chip {
 html.theme-isometric .iso-note {
   margin: 0;
   padding: 1rem 1.2rem;
-  border-inline-start: 3px solid var(--accent);
-  background: color-mix(in oklab, var(--accent) 7%, var(--card));
+  border-inline-start: 3px solid var(--primary);
+  background: var(--muted);
   font-size: 1.05rem;
 }
 html.theme-isometric .iso-note-label {
@@ -990,7 +1010,7 @@ html.theme-isometric .iso-note-label {
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--primary);
 }
 html.theme-isometric .iso-note--margin {
   margin: 1.3rem 0 0;
@@ -1001,7 +1021,9 @@ html.theme-isometric .iso-heroimg {
   width: 100%;
   height: auto;
   border: 1px solid var(--iso-edge);
-  box-shadow: 10px 10px 0 -1px var(--iso-side);
+  box-shadow:
+    10px 10px 0 -1px var(--iso-side),
+    10px 10px 0 0 var(--iso-edge);
 }
 
 /* ------------------------------------------------------------------ */
@@ -1085,7 +1107,9 @@ html.theme-isometric .iso-prose img {
   max-width: 100%;
   height: auto;
   border: 1px solid var(--iso-edge);
-  box-shadow: 10px 10px 0 -1px var(--iso-side);
+  box-shadow:
+    10px 10px 0 -1px var(--iso-side),
+    10px 10px 0 0 var(--iso-edge);
 }
 html.theme-isometric .iso-prose hr {
   margin: 2.2em 0;
@@ -1419,10 +1443,11 @@ html.theme-isometric .iso-artist:hover .iso-artist-name {
 }
 html.theme-isometric .iso-artist-plays {
   font-family: var(--font-mono);
-  font-size: 0.78rem;
+  font-size: 0.88rem;
+  font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--muted-foreground);
+  color: var(--primary);
 }
 
 html.theme-isometric .iso-scrobbles {

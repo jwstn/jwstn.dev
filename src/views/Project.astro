@@ -16,11 +16,10 @@ const { title, description, pubDate, href, tags } = project.data;
 
     <article class="iso-article">
       <header>
-        <p class="iso-kicker">Project &mdash; DWG {project.id.toUpperCase()}</p>
         <h1 class="iso-article-title">{title}</h1>
         <div class="iso-meta-row">
           <span class="iso-chip">
-            Rev <FormattedDate date={pubDate} />
+            <FormattedDate date={pubDate} />
           </span>
         </div>
         {
