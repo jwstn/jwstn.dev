@@ -1,8 +1,15 @@
 import { Layer, Logger, ManagedRuntime } from "effect";
+import { FetchHttpClient } from "effect/http";
 import { layer as AppConfigLayer } from "./config.server";
 import { layer as ContentLayer } from "./content.server";
+import { layer as LastfmLayer } from "./lastfm.server";
 
-const AppLayer = Layer.mergeAll(AppConfigLayer, ContentLayer, Logger.layer([Logger.consoleJson]));
+const AppLayer = Layer.mergeAll(
+  AppConfigLayer,
+  ContentLayer,
+  LastfmLayer.pipe(Layer.provide(Layer.merge(AppConfigLayer, FetchHttpClient.layer))),
+  Logger.layer([Logger.consoleJson]),
+);
 
 type AppRuntime = ManagedRuntime.ManagedRuntime<Layer.Success<typeof AppLayer>, Layer.Error<typeof AppLayer>>;
 
