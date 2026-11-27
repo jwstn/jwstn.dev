@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { clsx } from "clsx";
 import type { MusicResult } from "#/lib/music";
 import { buildHead } from "#/lib/site";
 import { getMusic } from "#/server/functions";
@@ -17,50 +18,83 @@ function Music() {
 
   return (
     <div className="iso-shell iso-stack">
-      <h1 className="iso-h1">Music</h1>
+      <h1 className="sr-only">Music</h1>
 
       {music.status === "unavailable" && !music.configured && (
-        <p className="iso-hero-copy">
-          Not connected yet. Listening stats appear once <code>LASTFM_API_KEY</code> is configured.
-        </p>
+        <section className="iso-slab iso-music-empty">
+          <h2 className="iso-music-empty-title">Not connected yet</h2>
+          <p>
+            Listening stats appear once <code>LASTFM_API_KEY</code> is configured on the server.
+          </p>
+        </section>
       )}
 
       {music.status === "unavailable" && music.configured && (
-        <p className="iso-hero-copy">Last.fm is out of reach. Try again in a few minutes.</p>
+        <section className="iso-slab iso-music-empty">
+          <h2 className="iso-music-empty-title">Last.fm is out of reach</h2>
+          <p>The stats could not be loaded right now. Try again in a few minutes.</p>
+        </section>
       )}
 
       {music.status !== "unavailable" && (
         <>
-          <section>
-            <h2 className="iso-sectionlabel">Top artists — last 30 days</h2>
+          <section aria-labelledby="iso-top-artists">
+            <h2 id="iso-top-artists" className="iso-sectionlabel">
+              Top artists &mdash; last 30 days
+            </h2>
             <ul className="iso-artists">
               {music.artists.map((artist) => (
-                <li className="iso-slab iso-artist" key={artist.name}>
-                  <span className="iso-artist-name">{artist.name}</span>
-                  <span className="iso-artist-plays">{artist.playcount} plays</span>
+                <li key={artist.name}>
+                  <a className="iso-slab iso-artist" href={artist.url} target="_blank" rel="noopener noreferrer">
+                    <span className="iso-artist-name">{artist.name}</span>
+                    <span className="iso-artist-plays">{artist.playcount} plays</span>
+                  </a>
                 </li>
               ))}
             </ul>
           </section>
 
-          <section>
-            <h2 className="iso-sectionlabel">Recent scrobbles</h2>
+          <section aria-labelledby="iso-scrobbles">
+            <h2 id="iso-scrobbles" className="iso-sectionlabel">
+              Recent scrobbles
+            </h2>
             <ul className="iso-scrobbles">
               {music.tracks.map((track) => (
-                <li className="iso-scrobble" key={`${track.url}-${track.playedAt ?? "now"}`}>
-                  <span className="iso-scrobble-artist">{track.artist}</span>
-                  <span className="iso-scrobble-sep" aria-hidden="true">
-                    &mdash;
+                <li
+                  className={clsx("iso-scrobble", track.nowPlaying && "iso-scrobble--now")}
+                  key={`${track.url}-${track.playedAt ?? "now"}`}
+                >
+                  <span className="iso-scrobble-body">
+                    <span className="iso-scrobble-artist">{track.artist}</span>
+                    <span className="iso-scrobble-sep" aria-hidden="true">
+                      &mdash;
+                    </span>
+                    <a href={track.url} target="_blank" rel="noopener noreferrer" className="iso-scrobble-track">
+                      {track.name}
+                    </a>
+                    {track.album && track.album !== track.name && (
+                      <span className="iso-scrobble-album">on {track.album}</span>
+                    )}
                   </span>
-                  <a href={track.url} target="_blank" rel="noopener noreferrer" className="iso-scrobble-track">
-                    {track.name}
-                  </a>
-                  {track.album && <span className="iso-scrobble-album">on {track.album}</span>}
-                  {track.nowPlaying && <span className="iso-scrobble-album">now playing</span>}
+                  {track.nowPlaying && (
+                    <span className="iso-eq ml-4" role="img" aria-label="Now playing">
+                      <span className="iso-eq-bar"></span>
+                      <span className="iso-eq-bar"></span>
+                      <span className="iso-eq-bar"></span>
+                      <span className="iso-eq-bar"></span>
+                    </span>
+                  )}
                 </li>
               ))}
             </ul>
           </section>
+
+          <p className="iso-attribution">
+            Listening data from{" "}
+            <a href={`https://www.last.fm/user/${music.username}`} target="_blank" rel="noopener noreferrer">
+              Last.fm
+            </a>
+          </p>
         </>
       )}
     </div>

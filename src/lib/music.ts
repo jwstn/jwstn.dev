@@ -16,6 +16,7 @@ export interface MusicTrack {
 export interface MusicResult {
   readonly status: "live" | "stale" | "unavailable";
   readonly configured: boolean;
+  readonly username: string;
   readonly artists: ReadonlyArray<MusicArtist>;
   readonly tracks: ReadonlyArray<MusicTrack>;
 }

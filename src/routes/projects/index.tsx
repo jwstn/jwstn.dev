@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ArrowRight, ExternalLink } from "lucide-react";
+import { FormattedDate } from "#/components/FormattedDate";
+import { IsoButton } from "#/components/IsoButton";
 import { buildHead } from "#/lib/site";
 import { getProjects } from "#/server/functions";
 
@@ -13,13 +16,17 @@ function ProjectsIndex() {
 
   return (
     <div className="iso-shell iso-stack">
-      <h1 className="iso-h1">Projects</h1>
-      <ul className="iso-explode">
+      <h1 className="sr-only">Projects</h1>
+
+      <section className="iso-explode" aria-label="Project list">
         {projects.map((project) => (
-          <li className="iso-slab iso-block" key={project._meta.path}>
+          <article className="iso-slab iso-block" key={project._meta.path}>
             <h2 className="iso-block-title">
               <a href={`/projects/${project._meta.path}/`}>{project.title}</a>
             </h2>
+            <p className="iso-block-date">
+              <FormattedDate date={project.pubDate} />
+            </p>
             <p className="iso-block-desc">{project.description}</p>
             <ul className="iso-stamps" aria-label="Technologies used">
               {project.tags.map((tag) => (
@@ -28,9 +35,17 @@ function ProjectsIndex() {
                 </li>
               ))}
             </ul>
-          </li>
+            <div className="iso-block-actions">
+              <IsoButton href={`/projects/${project._meta.path}/`}>
+                Open <ArrowRight size={16} />
+              </IsoButton>
+              <IsoButton href={project.href} variant="ghost" external>
+                Source <ExternalLink size={16} />
+              </IsoButton>
+            </div>
+          </article>
         ))}
-      </ul>
+      </section>
     </div>
   );
 }

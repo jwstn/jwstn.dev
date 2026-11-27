@@ -1,4 +1,7 @@
 import { createFileRoute, notFound, redirect, useLoaderData } from "@tanstack/react-router";
+import { clsx } from "clsx";
+import { ArrowLeft } from "lucide-react";
+import { FormattedDate } from "#/components/FormattedDate";
 import { ResponsiveImage } from "#/components/ResponsiveImage";
 import { galleryImages } from "#/lib/images";
 import { buildHead } from "#/lib/site";
@@ -28,25 +31,47 @@ function GalleryDetail() {
 
   return (
     <div className="iso-shell iso-stack">
-      <a className="iso-backlink" href="/gallery/">
-        Gallery
-      </a>
-      <h1 className="iso-h1">{album.title}</h1>
-      <ul className="iso-wall">
-        {album.photos.map((photo) => (
-          <li className="iso-plate" key={photo.image.key}>
-            <figure className="iso-platefig">
-              <div className="iso-plane">
-                <ResponsiveImage
-                  image={galleryImages[photo.image.key]}
-                  alt={photo.title}
-                  sizes="(min-width: 80rem) 26rem, (min-width: 48rem) 40vw, 92vw"
-                />
-              </div>
-              <figcaption className="iso-plate-cap">{photo.title}</figcaption>
-            </figure>
-          </li>
-        ))}
+      <p className="iso-backrow">
+        <a className="iso-backlink" href="/gallery/">
+          <ArrowLeft size={14} /> Gallery
+        </a>
+      </p>
+
+      <header className="iso-pagehead">
+        <h1 className="iso-pagehead-title">{album.title}</h1>
+        <p className="iso-pagehead-meta">
+          <FormattedDate date={album.pubDate} /> · {album.photos.length} exposures
+        </p>
+      </header>
+
+      <ul className="iso-wall" aria-label="Photographs">
+        {album.photos.map((photo, index) => {
+          const ratio = photo.image.width / photo.image.height;
+          const isWide = ratio >= 1.6;
+          const isTall = ratio < 0.9;
+
+          return (
+            <li
+              className={clsx("iso-plate", isWide && "iso-plate--wide", isTall && "iso-plate--tall")}
+              key={photo.image.key}
+            >
+              <figure className="iso-platefig">
+                <div className="iso-plane">
+                  <ResponsiveImage
+                    image={galleryImages[photo.image.key]}
+                    alt={photo.title}
+                    sizes="(min-width: 80rem) 26rem, (min-width: 48rem) 40vw, 92vw"
+                  />
+                </div>
+                <figcaption className="iso-plate-cap">
+                  <span className="iso-plate-ref">EXP {String(index + 1).padStart(2, "0")}</span>
+                  <span className="iso-plate-title">{photo.title}</span>
+                  {photo.caption && <span className="iso-plate-note">{photo.caption}</span>}
+                </figcaption>
+              </figure>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

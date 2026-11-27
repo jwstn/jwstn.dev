@@ -40,50 +40,56 @@ export const getMusic = createServerFn({ method: "GET" }).handler(() =>
   runtime.runPromise(
     Effect.gen(function* () {
       const config = yield* AppConfig;
+      const username = config.lastfmUsername;
 
       if (Option.isNone(config.lastfmApiKey)) {
         return {
           status: "unavailable",
           configured: false,
+          username,
           artists: [],
           tracks: [],
         } satisfies MusicResult;
       }
 
-      const [top, recent] = yield* Effect.all(
-        [
-          Effect.flatMap(Lastfm, (lastfm) => lastfm.topArtists("1month", 3)),
-          Effect.flatMap(Lastfm, (lastfm) => lastfm.recentTracks(12)),
-        ],
-        { concurrency: 2 },
-      );
+      return yield* Effect.gen(function* () {
+        const [top, recent] = yield* Effect.all(
+          [
+            Effect.flatMap(Lastfm, (lastfm) => lastfm.topArtists("1month", 3)),
+            Effect.flatMap(Lastfm, (lastfm) => lastfm.recentTracks(12)),
+          ],
+          { concurrency: 2 },
+        );
 
-      return {
-        status: top.stale || recent.stale ? "stale" : "live",
-        configured: true,
-        artists: top.data.map((artist) => ({
-          name: artist.name,
-          playcount: artist.playcount,
-          url: artist.url,
-        })),
-        tracks: recent.data.map((track) => ({
-          name: track.name,
-          artist: track.artist["#text"],
-          album: track.album?.["#text"],
-          url: track.url,
-          nowPlaying: track["@attr"]?.nowplaying === "true",
-          playedAt: track.date?.uts,
-        })),
-      } satisfies MusicResult;
-    }).pipe(
-      Effect.catchEager(() =>
-        Effect.succeed({
-          status: "unavailable",
+        return {
+          status: top.stale || recent.stale ? "stale" : "live",
           configured: true,
-          artists: [],
-          tracks: [],
-        } satisfies MusicResult),
-      ),
-    ),
+          username,
+          artists: top.data.map((artist) => ({
+            name: artist.name,
+            playcount: artist.playcount,
+            url: artist.url,
+          })),
+          tracks: recent.data.map((track) => ({
+            name: track.name,
+            artist: track.artist["#text"],
+            album: track.album?.["#text"],
+            url: track.url,
+            nowPlaying: track["@attr"]?.nowplaying === "true",
+            playedAt: track.date?.uts,
+          })),
+        } satisfies MusicResult;
+      }).pipe(
+        Effect.catchEager(() =>
+          Effect.succeed({
+            status: "unavailable",
+            configured: true,
+            username,
+            artists: [],
+            tracks: [],
+          } satisfies MusicResult),
+        ),
+      );
+    }),
   ),
 );
