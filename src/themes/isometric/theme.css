@@ -1052,8 +1052,6 @@ html.theme-isometric .iso-album {
 html.theme-isometric .iso-strip {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  transform: rotateX(30deg);
-  transform-origin: 50% 0;
 }
 html.theme-isometric .iso-strip img {
   display: block;
@@ -1115,18 +1113,13 @@ html.theme-isometric .iso-platefig {
   margin: 0;
 }
 html.theme-isometric .iso-plane {
-  transform: rotateX(48deg) rotateZ(var(--iso-tilt, -2.5deg));
-  transform-origin: 50% 0;
-}
-html.theme-isometric .iso-wall > :nth-child(even) .iso-plane {
-  --iso-tilt: 2.5deg;
+  transform: none;
 }
 html.theme-isometric .iso-plane img {
   display: block;
   width: 100%;
   height: auto;
   border: 1px solid var(--iso-edge);
-  box-shadow: 0 1.4rem 1rem -1.1rem rgb(0 0 0 / 0.4);
 }
 
 html.theme-isometric .iso-plate-cap {
