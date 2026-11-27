@@ -21,6 +21,16 @@ Read it fully before writing any code.
     strips it when switching so the saved theme wins.
 - `classic` (`src/themes/classic/`) is the original site design, kept as the default. Do not modify it.
 
+## Design rules (site-wide)
+
+- **No page-head bars that repeat the navigation.** A route already named in the header (Projects,
+  Blog, Gallery, Music) must not open with a large boxed title duplicating it — use a visually hidden
+  `<h1>` for semantics.
+- Headings that carry real content (album title, post title) are set as plain typography — never
+  inside a slab/box imitating navigation chrome.
+- Do not add elements whose only job is to repeat information already on the page (nav labels,
+  counts, section names in multiple styles).
+
 ## Files you create — exactly this shape
 
 ```

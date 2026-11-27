@@ -10,11 +10,10 @@ const { albums } = Astro.props as GalleryProps;
   title="Gallery | jwstn.dev"
   description="Photographic plates by JW — Japan 2026, a German summer, and a spring full of blossoms."
 >
-  <div class="iso-shell iso-stack">
-    <div class="iso-pagehead iso-slab iso-rise">
+  <div class="iso-shell iso-stack iso-gallery">
+    <header class="iso-pagehead">
       <h1 class="iso-pagehead-title">Pictures of JW</h1>
-      <p class="iso-pagehead-meta">{albums.length} plate{albums.length === 1 ? "" : "s"} on file</p>
-    </div>
+    </header>
 
     <p class="iso-lede iso-rise iso-rise--2">
       On my trip to Japan in March 2026 I bought a camera since I wanted one for some years now. Here are some

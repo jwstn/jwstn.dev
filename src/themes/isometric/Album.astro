@@ -14,12 +14,12 @@ const { title, photos, pubDate } = album.data;
       <a class="iso-btn iso-btn--ghost" href="/gallery/">← All plates</a>
     </p>
 
-    <div class="iso-pagehead iso-slab iso-rise">
+    <header class="iso-pagehead">
       <h1 class="iso-pagehead-title">{title}</h1>
       <p class="iso-pagehead-meta">
         <FormattedDate date={pubDate} /> · {photos.length} exposures
       </p>
-    </div>
+    </header>
 
     <ul class="iso-wall" aria-label="Photographs">
       {

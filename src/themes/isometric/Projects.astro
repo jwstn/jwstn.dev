@@ -11,10 +11,7 @@ const { projects } = Astro.props as ProjectsProps;
   description="Four assemblies exploded for inspection — web apps drawn with TanStack, Effect and stubborn amounts of care, by JW."
 >
   <div class="iso-shell iso-stack">
-    <div class="iso-pagehead iso-slab iso-rise">
-      <h1 class="iso-pagehead-title">Projects</h1>
-      <p class="iso-pagehead-meta">Exploded view &mdash; {projects.length} assemblies</p>
-    </div>
+    <h1 class="sr-only">Projects</h1>
 
     <section class="iso-explode" aria-label="Project list">
       {

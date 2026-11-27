@@ -11,10 +11,7 @@ const { posts } = Astro.props as BlogProps;
   description="Words by JW, filed as sheets — measured twice, cut once, plotted when ready."
 >
   <div class="iso-shell iso-stack">
-    <div class="iso-pagehead iso-slab iso-rise">
-      <h1 class="iso-pagehead-title">Blog</h1>
-      <p class="iso-pagehead-meta">{posts.length} sheet{posts.length === 1 ? "" : "s"} filed</p>
-    </div>
+    <h1 class="sr-only">Blog</h1>
 
     {
       posts.length === 0 ? (
