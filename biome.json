@@ -7,7 +7,16 @@
     "lineWidth": 120
   },
   "files": {
-    "includes": ["**", "!**/dist", "!**/node_modules", "!**/drizzle/meta", "!**/routeTree.gen.ts", "!**/*.css"]
+    "includes": [
+      "**",
+      "!**/dist",
+      "!**/node_modules",
+      "!**/.output",
+      "!**/.content-collections",
+      "!**/drizzle/meta",
+      "!**/routeTree.gen.ts",
+      "!**/*.css"
+    ]
   },
   "linter": {
     "enabled": true,
@@ -36,6 +45,16 @@
     }
   },
   "overrides": [
+    {
+      "includes": ["src/routes/__root.tsx"],
+      "linter": {
+        "rules": {
+          "security": {
+            "noDangerouslySetInnerHtml": "off"
+          }
+        }
+      }
+    },
     {
       "includes": ["src/themes/**", "src/pages/**"],
       "linter": {

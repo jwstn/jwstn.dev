@@ -299,7 +299,7 @@ export function createCassettePlayer() {
     }
   }
 
-  function update(dt, t) {
+  function update(dt, _t) {
     // lid swing
     const doorTarget = doorOpen ? -1.35 : 0;
     doorAngle += (doorTarget - doorAngle) * Math.min(1, dt * 5);
