@@ -2,6 +2,7 @@
 import FormattedDate from "#/components/FormattedDate.astro";
 import type { ProjectsProps } from "#/themes/types";
 import Layout from "./Layout.astro";
+import IsoButton from "./IsoButton.astro";
 
 const { projects } = Astro.props as ProjectsProps;
 ---
@@ -30,17 +31,8 @@ const { projects } = Astro.props as ProjectsProps;
               ))}
             </ul>
             <div class="iso-block-actions">
-              <a class="iso-btn" href={`/projects/${project.id}/`}>
-                Open →
-              </a>
-              <a
-                class="iso-btn iso-btn--ghost"
-                href={project.data.href}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Source ↗
-              </a>
+              <IsoButton href={`/projects/${project.id}/`}>Open →</IsoButton>
+              <IsoButton href={project.data.href} variant="ghost" external>Source ↗</IsoButton>
             </div>
           </article>
         ))

@@ -213,6 +213,7 @@ html.theme-isometric .iso-dim-arrow--r {
 
 html.theme-isometric .iso-slab {
   position: relative;
+  isolation: isolate;
   --iso-face-h: 10px;
   background: var(--card);
   color: var(--card-foreground);
@@ -225,6 +226,48 @@ html.theme-isometric .iso-slab:focus-within {
   box-shadow: 14px 14px 0 -1px var(--iso-side);
 }
 /* top face: parallelogram leaning back-right, purely decorative */
+/* The three connectors of the shared iso-depth pattern, drawn over the
+   slab's offset side. Adapted from isometric.buildlab.in (MIT). */
+html.theme-isometric .iso-slab::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: -10px;
+  bottom: -10px;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-edge) calc(50% - 0.6px),
+      var(--iso-edge) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-edge) calc(50% - 0.6px),
+      var(--iso-edge) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-edge) calc(50% - 0.6px),
+      var(--iso-edge) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    );
+  background-position:
+    100% 0,
+    100% 100%,
+    0 100%;
+  background-size: 10px 10px;
+  background-repeat: no-repeat;
+}
+
 html.theme-isometric .iso-slab::after {
   content: "";
   position: absolute;
@@ -243,8 +286,7 @@ html.theme-isometric .iso-slab::after {
 /* Keys — flat control-panel buttons (nav, actions)                     */
 /* ------------------------------------------------------------------ */
 
-html.theme-isometric .iso-key,
-html.theme-isometric .iso-btn {
+html.theme-isometric .iso-key {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -262,8 +304,7 @@ html.theme-isometric .iso-btn {
   text-decoration: none;
   transition: box-shadow 160ms ease;
 }
-html.theme-isometric .iso-key:hover,
-html.theme-isometric .iso-btn:hover {
+html.theme-isometric .iso-key:hover {
   box-shadow: 7px 7px 0 -1px var(--iso-side);
 }
 html.theme-isometric .iso-key[aria-current="page"] {
@@ -277,14 +318,6 @@ html.theme-isometric .iso-key--logo {
 html.theme-isometric .iso-key--ghost {
   background: var(--secondary);
   color: var(--secondary-foreground);
-}
-html.theme-isometric .iso-btn {
-  background: var(--primary);
-  color: var(--primary-foreground);
-}
-html.theme-isometric .iso-btn--ghost {
-  background: var(--card);
-  color: var(--foreground);
 }
 html.theme-isometric .iso-btn--accent {
   background: var(--accent);
@@ -663,6 +696,129 @@ html.theme-isometric .iso-pagehead-meta {
   text-transform: uppercase;
   color: var(--accent);
 }
+/* Isometric button primitive (depth pattern adapted from isometric.buildlab.in, MIT) — offset outline, diagonal connectors, and a
+   face that sinks into its depth when pressed (after isometric.buildlab.in). */
+html.theme-isometric .iso-btn {
+  --iso-d: 4px;
+  --iso-line: color-mix(in oklab, var(--foreground) 55%, var(--background));
+  --iso-btn-side: var(--iso-side);
+
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+  text-decoration: none;
+}
+html.theme-isometric .iso-btn-depth {
+  position: absolute;
+  inset: 0;
+  transform: translate(var(--iso-d), var(--iso-d));
+  border: 1px solid var(--iso-line);
+  border-radius: 2px;
+  background: var(--iso-btn-side);
+}
+html.theme-isometric .iso-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: calc(var(--iso-d) * -1);
+  bottom: calc(var(--iso-d) * -1);
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    );
+  background-position:
+    100% 0,
+    100% 100%,
+    0 100%;
+  background-size: var(--iso-d) var(--iso-d);
+  background-repeat: no-repeat;
+  transition: opacity 150ms ease;
+}
+html.theme-isometric .iso-btn-face {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 44px;
+  padding: 0.45rem 0.95rem;
+  border: 1px solid var(--iso-line);
+  border-radius: 2px;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  transition:
+    transform 150ms cubic-bezier(0.2, 0.7, 0.1, 1),
+    background-color 150ms ease;
+}
+html.theme-isometric .iso-btn:hover .iso-btn-face {
+  background: color-mix(in oklab, var(--primary) 88%, var(--foreground));
+}
+html.theme-isometric .iso-btn--ghost {
+  --iso-btn-side: var(--card);
+}
+html.theme-isometric .iso-btn--ghost .iso-btn-face {
+  background: var(--card);
+  color: var(--foreground);
+}
+html.theme-isometric .iso-btn--ghost:hover .iso-btn-face {
+  background: var(--secondary);
+}
+html.theme-isometric .iso-btn--accent {
+  --iso-btn-side: color-mix(in oklab, var(--accent) 76%, var(--background));
+}
+html.theme-isometric .iso-btn--accent .iso-btn-face {
+  background: var(--accent);
+  color: var(--accent-foreground);
+}
+html.theme-isometric .iso-btn--accent:hover .iso-btn-face {
+  background: color-mix(in oklab, var(--accent) 88%, var(--foreground));
+}
+html.theme-isometric .iso-btn:active .iso-btn-face {
+  transform: translate(var(--iso-d), var(--iso-d));
+}
+html.theme-isometric .iso-btn:active::before {
+  opacity: 0;
+}
+html.theme-isometric .iso-btn:focus-visible {
+  outline: none;
+}
+html.theme-isometric .iso-btn:focus-visible .iso-btn-face {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.theme-isometric .iso-btn-face,
+  html.theme-isometric .iso-btn::before {
+    transition: none;
+  }
+}
+
 html.theme-isometric .iso-backrow {
   margin: 0;
 }

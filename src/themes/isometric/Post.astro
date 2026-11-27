@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import FormattedDate from "#/components/FormattedDate.astro";
 import type { PostProps } from "#/themes/types";
 import Layout from "./Layout.astro";
+import IsoButton from "./IsoButton.astro";
 
 const { post, Content } = Astro.props as PostProps;
 const { title, description, pubDate, updatedDate, heroImage } = post.data;
@@ -11,7 +12,7 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
 <Layout title={`${title} | jwstn.dev`} description={description}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <a class="iso-btn iso-btn--ghost" href="/blog/">← All sheets</a>
+      <IsoButton href="/blog/" variant="ghost">← All sheets</IsoButton>
     </p>
 
     <article class="iso-article">
@@ -57,7 +58,7 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
       </div>
 
       <div class="iso-block-actions">
-        <a class="iso-btn iso-btn--ghost" href="/blog/">← Back to the sheets</a>
+        <IsoButton href="/blog/" variant="ghost">← Back to the sheets</IsoButton>
       </div>
     </article>
   </div>

@@ -2,6 +2,7 @@
 import FormattedDate from "#/components/FormattedDate.astro";
 import type { BlogProps } from "#/themes/types";
 import Layout from "./Layout.astro";
+import IsoButton from "./IsoButton.astro";
 
 const { posts } = Astro.props as BlogProps;
 ---
@@ -30,12 +31,8 @@ const { posts } = Astro.props as BlogProps;
             <span class="iso-viewbox-label">No objects in view &mdash; scale 1:1</span>
           </div>
           <div class="iso-actions">
-            <a class="iso-btn" href="/projects/">
-              Inspect the projects →
-            </a>
-            <a class="iso-btn iso-btn--accent" href="/gallery/">
-              View the plates →
-            </a>
+            <IsoButton href="/projects/">Inspect the projects →</IsoButton>
+            <IsoButton href="/gallery/" variant="accent">View the plates →</IsoButton>
           </div>
         </div>
       ) : (

@@ -2,6 +2,7 @@
 import type { HomeProps } from "#/themes/types";
 import CassetteScene from "./CassetteScene.astro";
 import Layout from "./Layout.astro";
+import IsoButton from "./IsoButton.astro";
 
 Astro.props as HomeProps;
 
@@ -38,8 +39,8 @@ const doors = [
           >, which has been amazing fun so far and proved to be a great opportunity to learn a new way of programming.
         </p>
         <div class="iso-actions iso-rise iso-rise--4">
-          <a class="iso-btn" href="/projects/">View projects →</a>
-          <a class="iso-btn iso-btn--ghost" href="/gallery/">Open the gallery →</a>
+          <IsoButton href="/projects/">View projects →</IsoButton>
+          <IsoButton href="/gallery/" variant="ghost">Open the gallery →</IsoButton>
         </div>
       </div>
 

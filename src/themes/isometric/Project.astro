@@ -2,6 +2,7 @@
 import FormattedDate from "#/components/FormattedDate.astro";
 import type { ProjectProps } from "#/themes/types";
 import Layout from "./Layout.astro";
+import IsoButton from "./IsoButton.astro";
 
 const { project, Content } = Astro.props as ProjectProps;
 const { title, description, pubDate, href, tags } = project.data;
@@ -46,12 +47,8 @@ const { title, description, pubDate, href, tags } = project.data;
       </div>
 
       <div class="iso-block-actions">
-        <a class="iso-btn" href={href} target="_blank" rel="noopener noreferrer">
-          View live assembly ↗
-        </a>
-        <a class="iso-btn iso-btn--ghost" href="/projects/">
-          ← Back to the plan
-        </a>
+        <IsoButton href={href} external>View live assembly ↗</IsoButton>
+        <IsoButton href="/projects/" variant="ghost">← Back to the plan</IsoButton>
       </div>
     </article>
   </div>

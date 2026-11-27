@@ -3,6 +3,7 @@ import { Image } from "astro:assets";
 import FormattedDate from "#/components/FormattedDate.astro";
 import type { AlbumProps } from "#/themes/types";
 import Layout from "./Layout.astro";
+import IsoButton from "./IsoButton.astro";
 
 const { album } = Astro.props as AlbumProps;
 const { title, photos, pubDate } = album.data;
@@ -11,7 +12,7 @@ const { title, photos, pubDate } = album.data;
 <Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} photographic plates by JW.`}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <a class="iso-btn iso-btn--ghost" href="/gallery/">← All plates</a>
+      <IsoButton href="/gallery/" variant="ghost">← All plates</IsoButton>
     </p>
 
     <header class="iso-pagehead">
@@ -52,7 +53,7 @@ const { title, photos, pubDate } = album.data;
     </ul>
 
     <p class="iso-backrow">
-      <a class="iso-btn iso-btn--ghost" href="/gallery/">← Back to the filing cabinet</a>
+      <IsoButton href="/gallery/" variant="ghost">← Back to the filing cabinet</IsoButton>
     </p>
   </div>
 </Layout>

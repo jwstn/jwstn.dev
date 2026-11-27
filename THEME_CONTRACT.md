@@ -23,6 +23,11 @@ Read it fully before writing any code.
 
 ## Design rules (site-wide)
 
+- **Isometric primitives use line-drawn depth**: an offset outline plus diagonal connectors, with the
+  face translating into the depth on press (see `IsoButton.astro`, adapted from isometric.buildlab.in,
+  MIT). Buttons must use `IsoButton` rather than hand-rolled `.iso-btn` anchors.
+
+
 - **No page-head bars that repeat the navigation.** A route already named in the header (Projects,
   Blog, Gallery, Music) must not open with a large boxed title duplicating it — use a visually hidden
   `<h1>` for semantics.
