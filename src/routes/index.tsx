@@ -1,12 +1,15 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ResponsiveImage } from "#/components/ResponsiveImage";
 import { galleryImages } from "#/lib/images";
+import { buildHead } from "#/lib/site";
 import { getGalleries, getProjects } from "#/server/functions";
 
 export const Route = createFileRoute("/")({
-  head: () => ({
-    meta: [{ title: "jwstn.dev" }],
-  }),
+  head: ({ match }) =>
+    buildHead({
+      title: "jwstn.dev — JW, full-stack developer in Cologne",
+      pathname: match.pathname,
+    }),
   loader: async () => {
     const [projects, galleries] = await Promise.all([getProjects(), getGalleries()]);
 

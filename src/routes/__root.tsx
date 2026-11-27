@@ -31,7 +31,17 @@ export const Route = createRootRoute({
     ],
   }),
   component: RootComponent,
+  notFoundComponent: NotFound,
 });
+
+function NotFound() {
+  return (
+    <div className="iso-shell iso-stack">
+      <h1 className="iso-h1">Not found</h1>
+      <p className="iso-hero-copy">The page you asked for does not exist.</p>
+    </div>
+  );
+}
 
 function RootComponent() {
   return (

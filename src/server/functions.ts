@@ -1,6 +1,5 @@
 import { createServerFn } from "@tanstack/react-start";
-import { Effect, Option } from "effect";
-import { AppConfig } from "./config.server";
+import { Effect } from "effect";
 import { Content, type ContentShape } from "./content.server";
 import { runtime } from "./runtime.server";
 
@@ -9,19 +8,6 @@ const withContent = <A, E>(use: (content: ContentShape) => Effect.Effect<A, E>) 
     const content = yield* Content;
     return yield* use(content);
   });
-
-export const getScaffoldStatus = createServerFn({ method: "GET" }).handler(() =>
-  runtime.runPromise(
-    Effect.gen(function* () {
-      const config = yield* AppConfig;
-
-      return {
-        lastfmConfigured: Option.isSome(config.lastfmApiKey),
-        node: process.version,
-      };
-    }),
-  ),
-);
 
 export const getPosts = createServerFn({ method: "GET" }).handler(() =>
   runtime.runPromise(withContent((content) => content.posts)),

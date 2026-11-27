@@ -1,9 +1,54 @@
-import { allBlogs, allGalleries, allProjects } from "content-collections";
+import type { Meta } from "@content-collections/core";
+import {
+  allBlogs as generatedBlogs,
+  allGalleries as generatedGalleries,
+  allProjects as generatedProjects,
+} from "content-collections";
 import { Context, Effect, Layer } from "effect";
 
-type BlogPost = (typeof allBlogs)[number];
-type Project = (typeof allProjects)[number];
-type Gallery = (typeof allGalleries)[number];
+export type ImageRef = {
+  readonly key: string;
+  readonly width: number;
+  readonly height: number;
+};
+
+export type BlogPost = {
+  readonly title: string;
+  readonly description: string;
+  readonly pubDate: Date;
+  readonly updatedDate?: Date;
+  readonly heroImage?: ImageRef;
+  readonly html: string;
+  readonly _meta: Meta;
+};
+
+export type Project = {
+  readonly title: string;
+  readonly description: string;
+  readonly pubDate: Date;
+  readonly href: string;
+  readonly tags: ReadonlyArray<string>;
+  readonly html: string;
+  readonly _meta: Meta;
+};
+
+export type GalleryPhoto = {
+  readonly title: string;
+  readonly caption?: string;
+  readonly image: ImageRef;
+};
+
+export type Gallery = {
+  readonly title: string;
+  readonly pubDate: Date;
+  readonly slug: string;
+  readonly photos: ReadonlyArray<GalleryPhoto>;
+  readonly _meta: Meta;
+};
+
+const allBlogs: ReadonlyArray<BlogPost> = generatedBlogs;
+const allProjects: ReadonlyArray<Project> = generatedProjects;
+const allGalleries: ReadonlyArray<Gallery> = generatedGalleries;
 
 export interface ContentShape {
   readonly posts: Effect.Effect<ReadonlyArray<BlogPost>>;

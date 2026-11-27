@@ -47,7 +47,7 @@
   },
   "overrides": [
     {
-      "includes": ["src/routes/__root.tsx"],
+      "includes": ["src/routes/__root.tsx", "src/components/Prose.tsx"],
       "linter": {
         "rules": {
           "security": {

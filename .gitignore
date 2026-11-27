@@ -2,6 +2,7 @@
 dist/
 .output/
 .content-collections/
+public/*.xml
 # generated types
 .astro/
 

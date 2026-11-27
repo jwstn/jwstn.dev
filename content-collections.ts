@@ -1,5 +1,5 @@
 import path from "node:path";
-import { type AnyContent, defineCollection, defineConfig, type Meta, type WriterHook } from "@content-collections/core";
+import { defineCollection, defineConfig, type Meta, type WriterHook } from "@content-collections/core";
 import { compileMarkdown } from "@content-collections/markdown";
 import rehypeShiki from "@shikijs/rehype";
 import { Schema } from "effect";
@@ -124,10 +124,8 @@ const serverOnlyHook: WriterHook = async ({ fileType, content }) => {
   return { content: `import "@tanstack/react-start/server-only";\n\n${content}` };
 };
 
-const content = [blog, projects, gallery] satisfies AnyContent[];
-
 export default defineConfig({
-  content,
+  content: [blog, projects, gallery],
   hooks: {
     writer: [serverOnlyHook],
   },

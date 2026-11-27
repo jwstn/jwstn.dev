@@ -9,7 +9,8 @@
   "scripts": {
     "dev": "vite dev",
     "content:build": "content-collections build",
-    "build": "pnpm content:build && vite build",
+    "feeds:build": "node scripts/build-feeds.mjs",
+    "build": "pnpm content:build && pnpm feeds:build && vite build",
     "start": "node .output/server/index.mjs",
     "preview": "vite preview",
     "typecheck": "pnpm content:build && tsc --noEmit",
