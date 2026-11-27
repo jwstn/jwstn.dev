@@ -1294,6 +1294,52 @@ html.theme-isometric .iso-scrobble-track:hover {
   }
 }
 
+html.theme-isometric .iso-artist-img img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+html.theme-isometric .iso-artist-img.has-photo .iso-artist-fallback {
+  display: none;
+}
+html.theme-isometric .iso-artist-credit {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  line-height: 1.35;
+  letter-spacing: 0.03em;
+  color: var(--muted-foreground);
+}
+html.theme-isometric .iso-artist-credit:empty {
+  display: none;
+}
+html.theme-isometric .iso-artist-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+html.theme-isometric .iso-scrobble-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+html.theme-isometric .iso-scrobble-cover {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  object-fit: cover;
+  border: 1px solid var(--iso-edge);
+}
+@media (max-width: 40rem) {
+  html.theme-isometric .iso-scrobble-row {
+    flex-wrap: wrap;
+  }
+  html.theme-isometric .iso-scrobble-time {
+    width: 100%;
+  }
+}
+
 html.theme-isometric .iso-attribution {
   margin: 0.5rem 0 0;
   font-family: var(--font-mono);

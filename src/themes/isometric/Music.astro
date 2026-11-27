@@ -43,7 +43,7 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
   title="Music | jwstn.dev"
   description="What JW has been listening to lately — top artists of the month and recent scrobbles, via Last.fm."
 >
-  <div class="iso-shell iso-stack">
+  <div class="iso-shell iso-stack" data-music-page>
     <div class="iso-pagehead iso-slab iso-rise">
       <h1 class="iso-pagehead-title">Music</h1>
       <p class="iso-pagehead-meta">Last 30 days &middot; via Last.fm</p>
@@ -81,7 +81,7 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
                 return (
                   <li class="iso-rise" class:list={[i === 1 && "iso-rise--2", i === 2 && "iso-rise--3"]}>
                     <a class="iso-slab iso-artist" href={artist.url} target="_blank" rel="noopener noreferrer">
-                      <span class="iso-artist-img">
+                      <span class="iso-artist-img" data-artist-photo data-artist={artist.name}>
                         <span class="iso-artist-fallback" aria-hidden="true">
                           {initials(artist.name)}
                         </span>
@@ -92,6 +92,7 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
                         </span>
                         <span class="iso-artist-name">{artist.name}</span>
                         <span class="iso-artist-plays">{artist.playcount} plays</span>
+                        <span class="iso-artist-credit" data-artist-credit></span>
                       </span>
                     </a>
                   </li>
@@ -107,6 +108,11 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
             <ul class="iso-scrobbles">
               {tracks.map((track) => (
                 <li class:list={["iso-scrobble", isNowPlaying(track) && "iso-scrobble--now"]}>
+                  <span
+                    class="iso-scrobble-row"
+                    data-cover-artist={track.artist["#text"]}
+                    data-cover-album={track.album?.["#text"] ?? ""}
+                  >
                   <span class="iso-scrobble-time">
                     {isNowPlaying(track) ? "now playing" : when(track.date?.uts)}
                   </span>
@@ -122,6 +128,7 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
                       <span class="iso-scrobble-album">{track.album["#text"]}</span>
                     )}
                   </span>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -131,10 +138,108 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
             Listening data from{" "}
             <a href={`https://www.last.fm/user/${username}`} target="_blank" rel="noopener noreferrer">
               Last.fm
+            </a>{" "}
+            &middot; covers via{" "}
+            <a href="https://coverartarchive.org/" target="_blank" rel="noopener noreferrer">
+              Cover Art Archive
+            </a>{" "}
+            &middot; artist photos via{" "}
+            <a href="https://commons.wikimedia.org/" target="_blank" rel="noopener noreferrer">
+              Wikimedia Commons
             </a>
           </p>
         </>
       )
     }
   </div>
+
+  <script>
+    // Progressive artwork hydration: the page renders instantly, images load
+    // afterwards through /api/artwork (server-side caching + rate limiting).
+    const page = document.querySelector("[data-music-page]");
+    if (page && !page.hasAttribute("data-artwork-ready")) {
+      page.setAttribute("data-artwork-ready", "");
+
+      const requests = new Map<string, Promise<{ artwork: ArtworkResponse | null } | null>>();
+      interface ArtworkResponse {
+        url: string;
+        credit?: { text: string; href: string };
+        source: string;
+      }
+
+      const load = (artist: string, album?: string) => {
+        const key = `${artist}\u0000${album ?? ""}`;
+        let request = requests.get(key);
+        if (!request) {
+          const url = new URL("/api/artwork", location.origin);
+          url.searchParams.set("artist", artist);
+          if (album) url.searchParams.set("album", album);
+          request = fetch(url.toString())
+            .then((response) => (response.ok ? response.json() : null))
+            .catch(() => null);
+          requests.set(key, request);
+        }
+        return request;
+      };
+
+      const hydrateArtists = async () => {
+        const tiles = [...document.querySelectorAll("[data-artist-photo]")] as HTMLElement[];
+        await Promise.all(
+          tiles.map(async (tile) => {
+            const artist = tile.dataset.artist;
+            if (!artist) return;
+            const data = await load(artist);
+            const artwork = data?.artwork;
+            if (!artwork?.url || tile.querySelector("img")) return;
+            const img = new Image();
+            img.src = artwork.url;
+            img.alt = "";
+            img.loading = "lazy";
+            img.decoding = "async";
+            img.width = 600;
+            img.height = 600;
+            tile.classList.add("has-photo");
+            tile.prepend(img);
+            const credit = tile.closest(".iso-artist")?.querySelector("[data-artist-credit]") as HTMLElement | null;
+            if (credit && artwork.credit) {
+              const link = document.createElement("a");
+              link.href = artwork.credit.href;
+              link.target = "_blank";
+              link.rel = "noopener noreferrer";
+              link.textContent = artwork.credit.text;
+              credit.append("Photo: ", link);
+            }
+          }),
+        );
+      };
+
+      const hydrateCovers = async () => {
+        const rows = [...document.querySelectorAll("[data-cover-album]")] as HTMLElement[];
+        let next = 0;
+        const worker = async () => {
+          while (next < rows.length) {
+            const row = rows[next++];
+            if (!row) continue;
+            const album = row.dataset.coverAlbum;
+            const artist = row.dataset.coverArtist;
+            if (!album || !artist) continue;
+            const data = await load(artist, album);
+            const artwork = data?.artwork;
+            if (!artwork?.url || row.querySelector(".iso-scrobble-cover")) continue;
+            const img = new Image();
+            img.src = artwork.url;
+            img.alt = "";
+            img.className = "iso-scrobble-cover";
+            img.loading = "lazy";
+            img.decoding = "async";
+            row.prepend(img);
+          }
+        };
+        await Promise.all([worker(), worker(), worker()]);
+      };
+
+      hydrateArtists();
+      hydrateCovers();
+    }
+  </script>
 </Layout>
