@@ -1,5 +1,5 @@
 ---
-import { Icon } from "@lucide/astro";
+import { ArrowLeft } from "@lucide/astro";
 import { Image } from "astro:assets";
 import FormattedDate from "#/components/FormattedDate.astro";
 import Layout from "#/layouts/Layout.astro";
@@ -17,7 +17,7 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
 <Layout title={`${title} | jwstn.dev`} description={description}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <a class="iso-backlink" href="/blog/"><Icon name="arrow-left" size={14} /> All sheets</a>
+      <a class="iso-backlink" href="/blog/"><ArrowLeft size={14} /> Blog</a>
     </p>
 
     <article class="iso-article">
@@ -48,22 +48,20 @@ const { title, description, pubDate, updatedDate, heroImage } = post.data;
 
       {
         heroImage && (
-          <Image
-            class="iso-heroimg"
-            src={heroImage}
-            alt={`Cover image for ${title}`}
-            widths={[800, 1024, 1280]}
-            sizes="(min-width: 72rem) 46rem, 92vw"
-          />
+          <div class="iso-frame">
+            <Image
+              class="iso-heroimg"
+              src={heroImage}
+              alt={`Cover image for ${title}`}
+              widths={[800, 1024, 1280]}
+              sizes="(min-width: 72rem) 46rem, 92vw"
+            />
+          </div>
         )
       }
 
       <div class="iso-prose">
         <Content />
-      </div>
-
-      <div class="iso-block-actions">
-        <a class="iso-backlink" href="/blog/"><Icon name="arrow-left" size={14} /> Back to the sheets</a>
       </div>
     </article>
   </div>

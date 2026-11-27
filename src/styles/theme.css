@@ -36,6 +36,7 @@ html.theme-isometric {
 
   --iso-edge: #6172b0;
   --iso-side: #b9c2d8;
+  --iso-line: color-mix(in oklab, var(--foreground) 55%, var(--background));
   --grid-line: rgb(55 96 191 / 0.08);
 }
 
@@ -68,6 +69,7 @@ html.theme-isometric.dark {
 
   --iso-edge: #5a6a94;
   --iso-side: #3d4a6e;
+  --iso-line: color-mix(in oklab, var(--foreground) 55%, var(--background));
   --grid-line: rgb(122 162 247 / 0.10);
 }
 
@@ -118,10 +120,8 @@ html.theme-isometric .iso-skip {
   transform: translateY(-300%);
   background: var(--primary);
   color: var(--primary-foreground);
-  border: 1px solid var(--iso-edge);
-  box-shadow:
-    4px 4px 0 -1px var(--iso-side),
-    4px 4px 0 0 var(--iso-edge);
+  --iso-d: 4px;
+  border: 1px solid var(--iso-line);
   padding: 0.5rem 0.9rem;
   font-family: var(--font-mono);
   font-size: 0.85rem;
@@ -197,64 +197,20 @@ html.theme-isometric .iso-dim-arrow--r {
 /* ------------------------------------------------------------------ */
 
 html.theme-isometric .iso-slab {
+  --iso-d: 10px;
+
   position: relative;
   isolation: isolate;
   background: var(--card);
   color: var(--card-foreground);
-  border: 1px solid var(--iso-edge);
-  box-shadow:
-    10px 10px 0 -1px var(--iso-side),
-    10px 10px 0 0 var(--iso-edge);
-  transition: box-shadow 180ms ease;
+  border: 1px solid var(--iso-line);
+  transition: background-color 160ms ease;
 }
 html.theme-isometric .iso-slab:hover,
 html.theme-isometric .iso-slab:focus-within {
-  box-shadow:
-    14px 14px 0 -1px var(--iso-side),
-    14px 14px 0 0 var(--iso-edge);
+  background: color-mix(in oklab, var(--card) 90%, var(--primary));
 }
-/* top face: parallelogram leaning back-right, purely decorative */
-/* The three connectors of the shared iso-depth pattern, drawn over the
-   slab's offset side. Adapted from isometric.buildlab.in (MIT). */
-html.theme-isometric .iso-slab::before {
-  content: "";
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  right: -10px;
-  bottom: -10px;
-  pointer-events: none;
-  opacity: 0.9;
-  background-image:
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.6px),
-      var(--iso-edge) calc(50% - 0.6px),
-      var(--iso-edge) calc(50% + 0.6px),
-      transparent calc(50% + 0.6px)
-    ),
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.6px),
-      var(--iso-edge) calc(50% - 0.6px),
-      var(--iso-edge) calc(50% + 0.6px),
-      transparent calc(50% + 0.6px)
-    ),
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.6px),
-      var(--iso-edge) calc(50% - 0.6px),
-      var(--iso-edge) calc(50% + 0.6px),
-      transparent calc(50% + 0.6px)
-    );
-  background-position:
-    100% 0,
-    100% 100%,
-    0 100%;
-  background-size: 10px 10px;
-  background-repeat: no-repeat;
-}
+
 
 
 
@@ -263,8 +219,7 @@ html.theme-isometric .iso-slab::before {
 /* ------------------------------------------------------------------ */
 
 html.theme-isometric .iso-key {
-  --iso-key-d: 4px;
-  --iso-line: color-mix(in oklab, var(--foreground) 55%, var(--background));
+  --iso-d: 4px;
 
   position: relative;
   isolation: isolate;
@@ -285,61 +240,17 @@ html.theme-isometric .iso-key {
   cursor: pointer;
 }
 /* the depth back face — offset behind the key, visible in the gap */
-html.theme-isometric .iso-key::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  transform: translate(var(--iso-key-d), var(--iso-key-d));
-  background: var(--iso-side);
-  border: 1px solid var(--iso-line);
-}
+
 /* the three diagonal connectors joining face corners to depth corners */
-html.theme-isometric .iso-key::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: calc(var(--iso-key-d) * -1);
-  bottom: calc(var(--iso-key-d) * -1);
-  z-index: -1;
-  pointer-events: none;
-  background-image:
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.6px),
-      var(--iso-line) calc(50% - 0.6px),
-      var(--iso-line) calc(50% + 0.6px),
-      transparent calc(50% + 0.6px)
-    ),
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.6px),
-      var(--iso-line) calc(50% - 0.6px),
-      var(--iso-line) calc(50% + 0.6px),
-      transparent calc(50% + 0.6px)
-    ),
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.6px),
-      var(--iso-line) calc(50% - 0.6px),
-      var(--iso-line) calc(50% + 0.6px),
-      transparent calc(50% + 0.6px)
-    );
-  background-position:
-    100% 0,
-    100% 100%,
-    0 100%;
-  background-size: var(--iso-key-d) var(--iso-key-d);
-  background-repeat: no-repeat;
-}
+
 html.theme-isometric .iso-key:hover {
   background: var(--secondary);
 }
 html.theme-isometric .iso-key:active {
-  transform: translate(var(--iso-key-d), var(--iso-key-d));
+  transform: translate(var(--iso-d), var(--iso-d));
 }
-html.theme-isometric .iso-key:active::before {
+html.theme-isometric .iso-key:active::before,
+html.theme-isometric .iso-key:active::after {
   opacity: 0;
 }
 
@@ -389,42 +300,28 @@ html.theme-isometric .iso-keys + .iso-keys {
 }
 
 /* Mobile navigation — burger + control-panel panel (<= 48rem) */
-/* The header plate never lifts on hover; the burger carries the open state. */
-html.theme-isometric .iso-header .iso-slab:hover,
-html.theme-isometric .iso-header .iso-slab:focus-within {
-  box-shadow:
-    10px 10px 0 -1px var(--iso-side),
-    10px 10px 0 0 var(--iso-edge);
-}
-/* …but the back bar does move with the menu state itself. */
+/* The header plate keeps its depth; the burger carries the open state. */
 html.theme-isometric .iso-header.is-menu-open .iso-plate {
-  box-shadow:
-    14px 14px 0 -1px var(--iso-side),
-    14px 14px 0 0 var(--iso-edge);
+  --iso-d: 14px;
 }
 
 html.theme-isometric .iso-burger {
+  position: relative;
+  isolation: isolate;
   display: none;
   align-items: center;
   justify-content: center;
   width: 2.75rem;
   min-height: 2.75rem;
   margin-inline-start: auto;
+  --iso-d: 4px;
+
   padding: 0;
-  border: 1px solid var(--iso-edge);
+  border: 1px solid var(--iso-line);
   background: var(--card);
   color: var(--foreground);
-  box-shadow:
-    4px 4px 0 -1px var(--iso-side),
-    4px 4px 0 0 var(--iso-edge);
   cursor: pointer;
   transition: none;
-}
-html.theme-isometric .iso-burger:hover {
-  /* movement is reserved for the open state, never hover */
-  box-shadow:
-    4px 4px 0 -1px var(--iso-side),
-    4px 4px 0 0 var(--iso-edge);
 }
 html.theme-isometric .iso-burger:focus-visible {
   outline: 2px solid var(--primary);
@@ -432,11 +329,14 @@ html.theme-isometric .iso-burger:focus-visible {
 }
 /* open: the key is pressed into the plate */
 html.theme-isometric .iso-burger.is-open {
-  transform: translate(3px, 3px);
-  box-shadow: 0 0 0 0 var(--iso-side);
+  transform: translate(var(--iso-d), var(--iso-d));
   background: var(--primary);
   color: var(--primary-foreground);
   border-color: var(--primary);
+}
+html.theme-isometric .iso-burger.is-open::before,
+html.theme-isometric .iso-burger.is-open::after {
+  display: none;
 }
 html.theme-isometric .iso-burger-icon {
   position: relative;
@@ -475,10 +375,11 @@ html.theme-isometric .iso-mobile-panel {
   position: relative;
   z-index: 1;
   margin-block-start: 0.55rem;
+  --iso-d: 8px;
+
   padding: 0.55rem;
-  border: 1px solid var(--iso-edge);
+  border: 1px solid var(--iso-line);
   background: var(--card);
-  box-shadow: 8px 8px 0 -1px var(--iso-side);
 }
 html.theme-isometric .iso-mobile-panel[hidden] {
   display: none;
@@ -694,6 +595,9 @@ html.theme-isometric .iso-door-desc {
   color: var(--muted-foreground);
 }
 html.theme-isometric .iso-door-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   grid-column: 2;
   margin-top: 0.6rem;
   font-family: var(--font-mono);
@@ -869,6 +773,7 @@ html.theme-isometric .iso-backrow {
 html.theme-isometric .iso-backlink {
   display: inline-flex;
   align-items: center;
+  gap: 0.45rem;
   min-height: 44px;
   font-family: var(--font-mono);
   font-size: 0.8rem;
@@ -937,7 +842,6 @@ html.theme-isometric .iso-stamps {
 }
 html.theme-isometric .iso-stamp {
   --iso-d: 2px;
-  --iso-line: color-mix(in oklab, var(--foreground) 55%, var(--background));
 
   position: relative;
   display: inline-flex;
@@ -948,53 +852,13 @@ html.theme-isometric .iso-stamp {
   background: var(--secondary);
   color: var(--secondary-foreground);
   border: 1px solid var(--iso-line);
-  box-shadow:
-    2px 2px 0 -1px var(--iso-side),
-    2px 2px 0 0 var(--iso-edge);
   font-family: var(--font-mono);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
-html.theme-isometric .iso-stamp::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: calc(var(--iso-d) * -1);
-  bottom: calc(var(--iso-d) * -1);
-  pointer-events: none;
-  opacity: 0.55;
-  background-image:
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.5px),
-      var(--iso-line) calc(50% - 0.5px),
-      var(--iso-line) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)
-    ),
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.5px),
-      var(--iso-line) calc(50% - 0.5px),
-      var(--iso-line) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)
-    ),
-    linear-gradient(
-      to top right,
-      transparent calc(50% - 0.5px),
-      var(--iso-line) calc(50% - 0.5px),
-      var(--iso-line) calc(50% + 0.5px),
-      transparent calc(50% + 0.5px)
-    );
-  background-position:
-    100% 0,
-    100% 100%,
-    0 100%;
-  background-size: 2px 2px;
-  background-repeat: no-repeat;
-}
+
 
 html.theme-isometric .iso-block-actions {
   display: flex;
@@ -1077,14 +941,17 @@ html.theme-isometric .iso-note--margin {
   margin: 1.3rem 0 0;
 }
 
+html.theme-isometric .iso-frame {
+  --iso-d: 10px;
+
+  position: relative;
+  isolation: isolate;
+}
 html.theme-isometric .iso-heroimg {
   display: block;
   width: 100%;
   height: auto;
-  border: 1px solid var(--iso-edge);
-  box-shadow:
-    10px 10px 0 -1px var(--iso-side),
-    10px 10px 0 0 var(--iso-edge);
+  border: 1px solid var(--iso-line);
 }
 
 /* ------------------------------------------------------------------ */
@@ -1152,8 +1019,8 @@ html.theme-isometric .iso-prose pre {
   padding: 1rem 1.2rem;
   overflow-x: auto;
   background: var(--secondary);
-  border: 1px solid var(--iso-edge);
-  box-shadow: 8px 8px 0 -1px var(--iso-side);
+  border: 1px solid var(--iso-line);
+  filter: drop-shadow(8px 8px 0 var(--iso-side));
   font-family: var(--font-mono);
   font-size: 0.9rem;
   line-height: 1.6;
@@ -1167,10 +1034,8 @@ html.theme-isometric .iso-prose pre code {
 html.theme-isometric .iso-prose img {
   max-width: 100%;
   height: auto;
-  border: 1px solid var(--iso-edge);
-  box-shadow:
-    10px 10px 0 -1px var(--iso-side),
-    10px 10px 0 0 var(--iso-edge);
+  border: 1px solid var(--iso-line);
+  filter: drop-shadow(10px 10px 0 var(--iso-side));
 }
 html.theme-isometric .iso-prose hr {
   margin: 2.2em 0;
@@ -1301,6 +1166,7 @@ html.theme-isometric .iso-albums {
 }
 
 html.theme-isometric .iso-album {
+  display: block;
   color: inherit;
   text-decoration: none;
 }
@@ -1664,6 +1530,84 @@ html.theme-isometric .iso-copyright {
   letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--muted-foreground);
+}
+
+/* ------------------------------------------------------------------ */
+/* Shared iso-depth — every primitive is a real face standing on an    */
+/* offset back face, joined by three diagonal connectors. Never        */
+/* emulate this with box-shadow: the back plane must be its own solid  */
+/* shape so the depth survives colour changes and hover states.        */
+/* ------------------------------------------------------------------ */
+
+html.theme-isometric .iso-slab::after,
+html.theme-isometric .iso-key::after,
+html.theme-isometric .iso-stamp::after,
+html.theme-isometric .iso-burger::after,
+html.theme-isometric .iso-skip::after,
+html.theme-isometric .iso-mobile-panel::after,
+html.theme-isometric .iso-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  transform: translate(var(--iso-d), var(--iso-d));
+  background: var(--iso-side);
+  border: 1px solid var(--iso-line);
+  /* keep only the side mass; the face hides the rest */
+  clip-path: polygon(
+    calc(100% - var(--iso-d)) 0,
+    100% 0,
+    100% 100%,
+    0 100%,
+    0 calc(100% - var(--iso-d)),
+    calc(100% - var(--iso-d)) calc(100% - var(--iso-d))
+  );
+}
+
+html.theme-isometric .iso-slab::before,
+html.theme-isometric .iso-key::before,
+html.theme-isometric .iso-stamp::before,
+html.theme-isometric .iso-burger::before,
+html.theme-isometric .iso-skip::before,
+html.theme-isometric .iso-mobile-panel::before,
+html.theme-isometric .iso-frame::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: calc(var(--iso-d) * -1);
+  bottom: calc(var(--iso-d) * -1);
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    );
+  background-position:
+    100% 0,
+    100% 100%,
+    0 100%;
+  background-size: var(--iso-d) var(--iso-d);
+  background-repeat: no-repeat;
 }
 
 /* ------------------------------------------------------------------ */

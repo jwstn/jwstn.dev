@@ -26,13 +26,20 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 - No page-head bars that repeat the navigation; route names use a visually hidden `<h1>`.
 - Content headings (album/post titles) are plain typography, never boxed.
 - Don't repeat information already on the page (nav labels, counts) in decorative chrome.
-- Isometric primitives use line-drawn depth: face + offset back + three diagonal connectors,
-  with the face sinking on press. Buttons use `IsoButton`.
+- Isometric depth is built from real planes, **never `box-shadow`**: a face, a solid offset
+  back face (`translate(d, d)`, `--iso-side` fill, `--iso-line` outline) and three diagonal
+  connectors. The face sinks on press. Buttons use `IsoButton`; nav keys, slabs, stamps,
+  panels and frames share the same pseudo-element pattern in `src/styles/theme.css`.
 - Gallery thumbnails are flat and uncropped on the detail wall; text appears on hover.
 
 ## Task tracking
 
-- Track tasks and follow-ups as GitHub issues in this repository (`gh issue create`), not as local issue files. Reference issue numbers in commit messages where useful.
+- Create a GitHub issue **before** starting any change — including a one-line fix or a follow-up
+  requested in the middle of another task. New requests get their own issue immediately so
+  nothing is lost, and it stays open until the change is committed and pushed.
+- Track tasks and follow-ups as GitHub issues in this repository (`gh issue create`), not as
+  local issue files. Reference issue numbers in commit messages where useful.
+- Work through every issue opened in a review burst, even when new requests arrive quickly.
 
 ## Documentation
 

@@ -1,5 +1,5 @@
 ---
-import { Icon } from "@lucide/astro";
+import { ArrowRight } from "@lucide/astro";
 import FormattedDate from "#/components/FormattedDate.astro";
 import IsoButton from "#/components/isometric/IsoButton.astro";
 import Layout from "#/layouts/Layout.astro";
@@ -32,8 +32,8 @@ const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueO
             <span class="iso-viewbox-label">No objects in view &mdash; scale 1:1</span>
           </div>
           <div class="iso-actions">
-            <IsoButton href="/projects/">Inspect the projects <Icon name="arrow-right" size={16} /></IsoButton>
-            <IsoButton href="/gallery/" variant="ghost">View the plates <Icon name="arrow-right" size={16} /></IsoButton>
+            <IsoButton href="/projects/">Inspect the projects <ArrowRight size={16} /></IsoButton>
+            <IsoButton href="/gallery/" variant="ghost">View the plates <ArrowRight size={16} /></IsoButton>
           </div>
         </div>
       ) : (

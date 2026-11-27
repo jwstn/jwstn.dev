@@ -1,13 +1,13 @@
 ---
-import { Icon } from "@lucide/astro";
+import { ArrowRight } from "@lucide/astro";
 import CassetteScene from "#/components/isometric/CassetteScene.astro";
 import IsoButton from "#/components/isometric/IsoButton.astro";
 import Layout from "#/layouts/Layout.astro";
 
 const doors = [
-  { href: "/projects/", num: "01", title: "Projects", cta: "Open assemblies \u2192" },
-  { href: "/blog/", num: "02", title: "Blog", cta: "Inspect the sheet \u2192" },
-  { href: "/gallery/", num: "03", title: "Gallery", cta: "View plates \u2192" },
+  { href: "/projects/", num: "01", title: "Projects", cta: "Open assemblies" },
+  { href: "/blog/", num: "02", title: "Blog", cta: "Inspect the sheet" },
+  { href: "/gallery/", num: "03", title: "Gallery", cta: "View plates" },
 ];
 ---
 
@@ -37,8 +37,8 @@ const doors = [
           >, which has been amazing fun so far and proved to be a great opportunity to learn a new way of programming.
         </p>
         <div class="iso-actions iso-rise iso-rise--4">
-          <IsoButton href="/projects/">View projects <Icon name="arrow-right" size={16} /></IsoButton>
-          <IsoButton href="/gallery/" variant="ghost">Open the gallery <Icon name="arrow-right" size={16} /></IsoButton>
+          <IsoButton href="/projects/">View projects <ArrowRight size={16} /></IsoButton>
+          <IsoButton href="/gallery/" variant="ghost">Open the gallery <ArrowRight size={16} /></IsoButton>
         </div>
       </div>
 
@@ -60,7 +60,7 @@ const doors = [
                   {door.num}
                 </span>
                 <h3 class="iso-door-title">{door.title}</h3>
-                <span class="iso-door-cta">{door.cta}</span>
+                <span class="iso-door-cta">{door.cta} <ArrowRight size={14} /></span>
               </a>
             </li>
           ))

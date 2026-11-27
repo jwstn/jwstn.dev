@@ -1,28 +1,28 @@
 ---
-import { Icon } from "@lucide/astro"
-import MetaTags from "#/components/MetaTags.astro"
-import "#/styles/theme.css"
+import { ExternalLink } from "@lucide/astro";
+import MetaTags from "#/components/MetaTags.astro";
+import "#/styles/theme.css";
 
 interface Props {
-  title: string
-  description?: string
+  title: string;
+  description?: string;
 }
 
-const { title, description } = Astro.props
-const year = new Date().getFullYear()
+const { title, description } = Astro.props;
+const year = new Date().getFullYear();
 const SOCIALS = [
   { label: "GitHub", href: "https://github.com/jwstn" },
   { label: "Bluesky", href: "https://bsky.app/profile/jwstn.bsky.social" },
-] as const
+] as const;
 
-const path = Astro.url.pathname.replace(/\/+$/, "") || "/"
+const path = Astro.url.pathname.replace(/\/+$/, "") || "/";
 
 const navItems = [
   { label: "Projects", href: "/projects" },
   { label: "Gallery", href: "/gallery" },
   { label: "Music", href: "/music" },
-]
-const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
+];
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`);
 ---
 
 <html lang="en" class="theme-isometric">
@@ -75,7 +75,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {s.label} <Icon name="external-link" size={12} />
+                {s.label} <ExternalLink size={12} />
               </a>
             ))}
           </nav>
@@ -104,7 +104,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                {s.label} <Icon name="external-link" size={12} />
+                {s.label} <ExternalLink size={12} />
               </a>
             ))}
           </nav>

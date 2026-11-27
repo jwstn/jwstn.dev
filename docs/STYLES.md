@@ -252,7 +252,16 @@ pleasing illusion of depth on a flat page.
 architecture diagrams, portfolios for engineers. **When not to:** content where text must
 dominate — isometric scenes compete spatially with reading.
 
-**On this site:** `isometric`.
+**On this site:** `isometric`. The depth is always built from real planes, never simulated
+with `box-shadow`. Every primitive is a **face** (own fill and 1px outline); behind it sits a
+solid **offset back face** (`translate(d, d)`, `--iso-side` fill, `--iso-line` outline) and
+**three diagonal connectors** join the face corners to it. On press the face sinks into the
+back face instead of growing a shadow. `IsoButton` is the reference implementation; nav keys,
+slabs, stamps, panels and image frames share the same pseudo-element pattern (`::after` for
+the back face, `::before` for the connectors) in `src/styles/theme.css`. The only exceptions
+are replaced/scrolling elements that cannot host pseudo-elements (`<img>`, `overflow: auto`
+`<pre>`), which use a solid `drop-shadow` or a wrapper `.iso-frame` — still never
+`box-shadow`.
 
 ## Kinetic (typography) — *loud & expressive*
 
