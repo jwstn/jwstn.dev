@@ -91,7 +91,7 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
                       {track.name}
                     </a>
                     {track.album?.["#text"] && track.album["#text"] !== track.name && (
-                      <span class="iso-scrobble-album">{track.album["#text"]}</span>
+                      <span class="iso-scrobble-album">on {track.album["#text"]}</span>
                     )}
                   </span>
                   {isNowPlaying(track) && (

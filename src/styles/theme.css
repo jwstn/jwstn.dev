@@ -263,6 +263,11 @@ html.theme-isometric .iso-slab::before {
 /* ------------------------------------------------------------------ */
 
 html.theme-isometric .iso-key {
+  --iso-key-d: 4px;
+  --iso-line: color-mix(in oklab, var(--foreground) 55%, var(--background));
+
+  position: relative;
+  isolation: isolate;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -270,23 +275,74 @@ html.theme-isometric .iso-key {
   padding: 0.45rem 0.95rem;
   background: var(--card);
   color: var(--foreground);
-  border: 1px solid var(--iso-edge);
-  box-shadow:
-    4px 4px 0 -1px var(--iso-side),
-    4px 4px 0 0 var(--iso-edge);
+  border: 1px solid var(--iso-line);
   font-family: var(--font-mono);
   font-size: 0.85rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   text-decoration: none;
-  transition: box-shadow 160ms ease;
+  cursor: pointer;
+}
+/* the depth back face — offset behind the key, visible in the gap */
+html.theme-isometric .iso-key::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  transform: translate(var(--iso-key-d), var(--iso-key-d));
+  background: var(--iso-side);
+  border: 1px solid var(--iso-line);
+}
+/* the three diagonal connectors joining face corners to depth corners */
+html.theme-isometric .iso-key::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: calc(var(--iso-key-d) * -1);
+  bottom: calc(var(--iso-key-d) * -1);
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.6px),
+      var(--iso-line) calc(50% - 0.6px),
+      var(--iso-line) calc(50% + 0.6px),
+      transparent calc(50% + 0.6px)
+    );
+  background-position:
+    100% 0,
+    100% 100%,
+    0 100%;
+  background-size: var(--iso-key-d) var(--iso-key-d);
+  background-repeat: no-repeat;
 }
 html.theme-isometric .iso-key:hover {
-  box-shadow:
-    7px 7px 0 -1px var(--iso-side),
-    7px 7px 0 0 var(--iso-edge);
+  background: var(--secondary);
 }
+html.theme-isometric .iso-key:active {
+  transform: translate(var(--iso-key-d), var(--iso-key-d));
+}
+html.theme-isometric .iso-key:active::before {
+  opacity: 0;
+}
+
 html.theme-isometric .iso-key[aria-current="page"] {
   background: var(--primary);
   color: var(--primary-foreground);
@@ -1474,7 +1530,7 @@ html.theme-isometric .iso-scrobble:last-child {
   border-block-end: 0;
 }
 html.theme-isometric .iso-scrobble--now {
-  padding-right: 2.2rem;
+  padding-right: 2.8rem;
 }
 html.theme-isometric .iso-scrobble-time {
   display: inline-block;
@@ -1536,22 +1592,26 @@ html.theme-isometric .iso-eq-bar:nth-child(4) {
 }
 
 html.theme-isometric .iso-scrobble-artist {
-  font-weight: 600;
+  font-weight: 700;
+  color: var(--foreground);
 }
 html.theme-isometric .iso-scrobble-sep,
-html.theme-isometric .iso-scrobble-album {
+
+html.theme-isometric .iso-scrobble-sep {
+  margin-inline: 0.45rem;
   color: var(--muted-foreground);
 }
-html.theme-isometric .iso-scrobble-sep {
-  margin-inline: 0.35rem;
-}
 html.theme-isometric .iso-scrobble-album {
-  margin-inline-start: 0.5rem;
-  font-size: 0.85rem;
+  margin-inline-start: 0.6rem;
+  font-size: 0.82rem;
+  font-style: italic;
+  color: var(--muted-foreground);
 }
 html.theme-isometric .iso-scrobble-track {
+  font-weight: 600;
   color: var(--primary);
   text-decoration: underline;
+  text-decoration-thickness: 2px;
   text-underline-offset: 3px;
 }
 html.theme-isometric .iso-scrobble-track:hover {
