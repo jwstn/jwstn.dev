@@ -17,7 +17,7 @@ const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueO
 
     {
       posts.length === 0 ? (
-        <div class="iso-slab iso-empty iso-rise iso-rise--2">
+        <div class="iso-slab iso-empty">
           <ul class="iso-stamps" aria-label="Status">
             <li class="iso-stamp">Status: blank sheet</li>
             <li class="iso-stamp">Ink level: pending</li>
@@ -39,7 +39,7 @@ const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueO
       ) : (
         <ul class="iso-postlist">
           {posts.map((post) => (
-            <li class="iso-slab iso-rise">
+            <li class="iso-slab">
               <a class="iso-postlist-link" href={`/blog/${post.id}/`}>
                 <h2 class="iso-postlist-title">{post.data.title}</h2>
                 <p class="iso-muted">

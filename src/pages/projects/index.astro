@@ -18,7 +18,7 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.pubDate
     <section class="iso-explode" aria-label="Project list">
       {
         projects.map((project) => (
-          <article class="iso-slab iso-block iso-rise">
+          <article class="iso-slab iso-block">
             <h2 class="iso-block-title">
               <a href={`/projects/${project.id}/`}>{project.data.title}</a>
             </h2>

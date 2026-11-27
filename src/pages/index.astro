@@ -18,10 +18,10 @@ const doors = [
   <div class="iso-shell">
     <section class="iso-hero">
       <div class="iso-hero-inner">
-        <h1 class="iso-h1 iso-rise iso-rise--2">
+        <h1 class="iso-h1">
           Hey, I'm <span class="iso-name">JW</span>! a Full-Stack Developer from Cologne, Germany
         </h1>
-        <p class="iso-hero-copy iso-rise iso-rise--3">
+        <p class="iso-hero-copy">
           I'm focusing on building web applications with <a
             href="https://tanstack.com/"
             target="_blank"
@@ -36,7 +36,7 @@ const doors = [
             >Effect</a
           >, which has been amazing fun so far and proved to be a great opportunity to learn a new way of programming.
         </p>
-        <div class="iso-actions iso-rise iso-rise--4">
+        <div class="iso-actions">
           <IsoButton href="/projects/">View projects <ArrowRight size={16} /></IsoButton>
           <IsoButton href="/gallery/" variant="ghost">Open the gallery <ArrowRight size={16} /></IsoButton>
         </div>
@@ -49,11 +49,10 @@ const doors = [
       <h2 class="iso-sectionlabel">Parts list &mdash; where everything is filed</h2>
       <ul class="iso-doors">
         {
-          doors.map((door, i) => (
+          doors.map((door) => (
             <li>
               <a
-                class="iso-slab iso-door iso-rise"
-                class:list={[i === 1 && "iso-rise--2", i === 2 && "iso-rise--3"]}
+                class="iso-slab iso-door"
                 href={door.href}
               >
                 <span class="iso-door-tab" aria-hidden="true">

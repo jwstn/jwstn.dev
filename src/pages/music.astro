@@ -1,5 +1,5 @@
 ---
-import Layout from "#/layouts/Layout.astro"
+import Layout from "#/layouts/Layout.astro";
 import {
   getRecentTracks,
   getTopArtists,
@@ -7,33 +7,26 @@ import {
   lastfmUsername,
   type LastfmArtist,
   type LastfmTrack,
-} from "#/lib/lastfm"
+} from "#/lib/lastfm";
 
-const username = lastfmUsername()
-const configured = isLastfmConfigured()
+const username = lastfmUsername();
+const configured = isLastfmConfigured();
 
-let artists: LastfmArtist[] = []
-let tracks: LastfmTrack[] = []
-let error: string | null = null
+let artists: LastfmArtist[] = [];
+let tracks: LastfmTrack[] = [];
+let error: string | null = null;
 
 if (configured) {
   try {
-    ;[artists, tracks] = await Promise.all([
-      getTopArtists("1month", 3),
-      getRecentTracks(12),
-    ])
+    [artists, tracks] = await Promise.all([getTopArtists("1month", 3), getRecentTracks(12)]);
   } catch (cause) {
-    error = cause instanceof Error ? cause.message : "unknown"
+    error = cause instanceof Error ? cause.message : "unknown";
   }
 }
 
-Astro.response.headers.set(
-  "Cache-Control",
-  "public, s-maxage=300, stale-while-revalidate=600"
-)
+Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
 
-const isNowPlaying = (track: LastfmTrack) =>
-  track["@attr"]?.nowplaying === "true"
+const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "true";
 ---
 
 <Layout
@@ -44,7 +37,7 @@ const isNowPlaying = (track: LastfmTrack) =>
     <h1 class="sr-only">Music</h1>
 
     {!configured && (
-      <section class="iso-slab iso-music-empty iso-rise iso-rise--2">
+      <section class="iso-slab iso-music-empty">
         <h2 class="iso-music-empty-title">Not connected yet</h2>
         <p>
           Listening stats appear once <code>LASTFM_API_KEY</code> is configured
@@ -54,7 +47,7 @@ const isNowPlaying = (track: LastfmTrack) =>
     )}
 
     {configured && error && (
-      <section class="iso-slab iso-music-empty iso-rise iso-rise--2">
+      <section class="iso-slab iso-music-empty">
         <h2 class="iso-music-empty-title">Last.fm is out of reach</h2>
         <p>
           The stats could not be loaded right now. Try again in a few minutes.

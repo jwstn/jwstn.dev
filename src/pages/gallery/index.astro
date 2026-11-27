@@ -17,15 +17,15 @@ const albums = (await getCollection("gallery")).sort((a, b) => b.data.pubDate.va
       <h1 class="iso-pagehead-title">Pictures of JW</h1>
     </header>
 
-    <p class="iso-lede iso-rise iso-rise--2">
+    <p class="iso-lede">
       On my trip to Japan in March 2026 I bought a camera since I wanted one for some years now. Here are some
       pictures I took with it.
     </p>
 
     <ul class="iso-albums" aria-label="Albums">
       {
-        albums.map((album, i) => (
-          <li class="iso-rise" class:list={[i === 1 && "iso-rise--2", i === 2 && "iso-rise--3"]}>
+        albums.map((album) => (
+          <li>
             <a class="iso-slab iso-album" href={`/gallery/${album.data.slug}/`}>
               <div class="iso-strip" aria-hidden="true">
                 {album.data.photos.slice(0, 4).map((photo) => (

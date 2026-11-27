@@ -150,11 +150,7 @@ html.theme-isometric .iso-shell {
 html.theme-isometric .iso-stack {
   display: grid;
   gap: 1.9rem;
-  padding-block: 0.75rem 3rem;
-}
-/* detail pages open with a back link: pull it up under the header */
-html.theme-isometric .iso-stack:has(> .iso-backrow:first-child) {
-  padding-block-start: 0.25rem;
+  padding-block: 1.25rem 3rem;
 }
 
 html.theme-isometric .iso-muted {
@@ -874,15 +870,6 @@ html.theme-isometric .iso-block-actions {
 html.theme-isometric .iso-explode {
   display: grid;
   gap: 1.9rem;
-}
-html.theme-isometric .iso-explode > :nth-child(2).iso-rise {
-  animation-delay: 90ms;
-}
-html.theme-isometric .iso-explode > :nth-child(3).iso-rise {
-  animation-delay: 180ms;
-}
-html.theme-isometric .iso-explode > :nth-child(4).iso-rise {
-  animation-delay: 270ms;
 }
 
 /* ------------------------------------------------------------------ */
@@ -1614,39 +1601,7 @@ html.theme-isometric .iso-frame::before {
   background-repeat: no-repeat;
 }
 
-/* ------------------------------------------------------------------ */
-/* Motion — cubes bob, sheets rise, panels gain depth. All off under    */
-/* prefers-reduced-motion.                                             */
-/* ------------------------------------------------------------------ */
-
-html.theme-isometric .iso-rise {
-  animation: iso-rise 480ms ease-out both;
-}
-html.theme-isometric .iso-rise--2 {
-  animation-delay: 90ms;
-}
-html.theme-isometric .iso-rise--3 {
-  animation-delay: 180ms;
-}
-html.theme-isometric .iso-rise--4 {
-  animation-delay: 270ms;
-}
-
-@keyframes iso-rise {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
-  html.theme-isometric .iso-rise {
-    animation: none;
-  }
   html.theme-isometric .iso-slab,
   html.theme-isometric .iso-key,
   html.theme-isometric .iso-btn,
