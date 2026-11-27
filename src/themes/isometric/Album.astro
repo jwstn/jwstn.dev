@@ -27,8 +27,9 @@ const { title, photos, pubDate } = album.data;
         photos.map((photo, i) => {
           const ratio = photo.image.width / photo.image.height;
           const isWide = ratio >= 1.6;
+          const isTall = ratio < 0.9;
           return (
-            <li class:list={["iso-plate", isWide && "iso-plate--wide"]}>
+            <li class:list={["iso-plate", isWide && "iso-plate--wide", isTall && "iso-plate--tall"]}>
               <figure class="iso-platefig">
                 <div class="iso-plane">
                   <Image
