@@ -1,5 +1,7 @@
 ---
 import FormattedDate from "#/components/FormattedDate.astro";
+import ArrowIcon from "#/components/isometric/ArrowIcon.astro";
+import ExternalIcon from "#/components/isometric/ExternalIcon.astro";
 import IsoButton from "#/components/isometric/IsoButton.astro";
 import Layout from "#/layouts/Layout.astro";
 import { getCollection } from "astro:content";
@@ -31,9 +33,9 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.pubDate
               ))}
             </ul>
             <div class="iso-block-actions">
-              <IsoButton href={`/projects/${project.id}/`}>Open →</IsoButton>
+              <IsoButton href={`/projects/${project.id}/`}>Open <ArrowIcon /></IsoButton>
               <IsoButton href={project.data.href} variant="ghost" external>
-                Source ↗
+                Source <ExternalIcon />
               </IsoButton>
             </div>
           </article>
