@@ -41,3 +41,55 @@ jobs:
 
       - name: Build
         run: pnpm build
+
+      - name: Smoke
+        run: |
+          pnpm start &
+          for _ in $(seq 1 30); do
+            if curl -sf http://localhost:3000/ >/dev/null; then break; fi
+            sleep 1
+          done
+          pnpm smoke
+
+  visual:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build
+
+      - name: Install Playwright
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Screenshots
+        run: |
+          pnpm start &
+          for _ in $(seq 1 30); do
+            if curl -sf http://localhost:3000/ >/dev/null; then break; fi
+            sleep 1
+          done
+          pnpm screenshots
+
+      - name: Visual diff
+        env:
+          MAX_DIFF_RATIO: "0.01"
+        run: pnpm visual:diff
+
+      - name: Core Web Vitals
+        run: pnpm cwv

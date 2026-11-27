@@ -3,9 +3,9 @@
 The Isometric design is now the site's only theme. These captures cover every route in both
 viewports, plus the dark-mode home.
 
-**Browse:** `pnpm astro dev` → <http://localhost:4321>
+**Browse:** `pnpm dev` → <http://localhost:3000>
 
-Regenerate everything with `bash docs/screenshots.sh` (dev server running).
+The `docs/screenshots` baseline was captured from the final Astro site with the dev toolbar disabled. Capture the TanStack port with `pnpm screenshots` (server running on :3000), then compare with `pnpm visual:diff`. `/music` is excluded from the pixel diff because it renders live Last.fm data.
 
 ---
 

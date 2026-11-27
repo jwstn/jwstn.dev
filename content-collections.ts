@@ -21,14 +21,16 @@ async function resolveImage(value: string, meta: Meta, directory: string): Promi
   }
 
   const metadata = await sharp(absolute).metadata();
-  if (!metadata.width || !metadata.height) {
+  const oriented = metadata.autoOrient ?? { width: metadata.width, height: metadata.height };
+
+  if (!oriented.width || !oriented.height) {
     throw new Error(`Image "${value}" in ${meta.filePath} has no intrinsic dimensions`);
   }
 
   return {
     key: `/${path.relative(process.cwd(), absolute).split(path.sep).join("/")}`,
-    width: metadata.width,
-    height: metadata.height,
+    width: oriented.width,
+    height: oriented.height,
   };
 }
 

@@ -3,6 +3,8 @@ dist/
 .output/
 .content-collections/
 public/*.xml
+docs/screenshots-tanstack/
+docs/screenshots-diff/
 # generated types
 .astro/
 
