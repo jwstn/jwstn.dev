@@ -39,7 +39,7 @@ database, prerender optimization, or running Astro and TanStack Start together p
 | `@content-collections/core` | 0.15.3 | pin the 0.x line |
 | `@content-collections/vite` | 0.3.1 | pin |
 | `vite-imagetools` | 12.0.2 | Vite 8, Node 22+ |
-| `sharp` | 0.34.3 | content-transform metadata |
+| `sharp` | ^0.35.3 | content-transform metadata; matches imagetools |
 | `tailwindcss` / `@tailwindcss/vite` | 4.3.1 | unchanged |
 | `@shikijs/rehype` | current | build-time highlighting |
 | `lucide-react` | current | replaces `@lucide/astro` |
@@ -66,7 +66,7 @@ Browser
 Build
   content-collections -> typed collections + Markdown HTML (remark/rehype + Shiki)
   vite-imagetools     -> hashed WebP derivatives
-  feeds/sitemap plugin -> rss.xml, blog.xml, projects.xml, gallery.xml, sitemap-index.xml, sitemap-0.xml
+  build-time feed script -> rss.xml, blog.xml, projects.xml, gallery.xml, sitemap-index.xml, sitemap-0.xml
   Content transform   -> canonical image keys + intrinsic width/height
 
 Client
@@ -96,7 +96,7 @@ src/
     ResponsiveImage.tsx
     Prose.tsx
     isometric/CassetteScene.tsx
-    isometric/three/mount.js
+    isometric/three/mount.ts
     isometric/three/cassette.js
     isometric/three/player.js
     isometric/three/shelf.js
@@ -120,7 +120,7 @@ src/
     gallery/                    # unchanged except japan-2026 slug
   assets/                       # unchanged
 build/
-  feeds-plugin.ts               # build-time XML assets
+  scripts/build-feeds.mjs        # build-time XML assets
 scripts/
   visual-diff.mjs               # pixelmatch gate
 docs/
@@ -252,7 +252,7 @@ export const galleryImages = import.meta.glob(
 
 ## 8. Feeds and sitemap
 
-A build-time Vite plugin emits these into the client output:
+A build-time Node script (`scripts/build-feeds.mjs`) writes these into `public/` for Vite to copy:
 
 - `/rss.xml` and `/blog.xml` — blog posts; channel title/description from `src/consts.ts`, site
   `SITE_URL`, items `title`, `description`, `pubDate`, absolute `/blog/:id/` links. `/blog.xml`
@@ -425,7 +425,7 @@ Two layers inside the `Lastfm` service:
 | --- | --- | --- |
 | 0 | Branch, second Vercel project, dependency/version floor, CI skeleton | hello-world SSR preview deploys |
 | 1 | Content Collections, Effect Schema, dates, blog scaffold, slug fix, Markdown + Shiki, image pipeline, `ResponsiveImage` | content pages render with images; build and typecheck pass |
-| 2 | Routes, head, 404, redirect, `/music` header, feeds/sitemap plugin | route/feed/sitemap smoke passes |
+| 2 | Routes, head, 404, redirect, `/music` header, build-time feed script | route/feed/sitemap smoke passes |
 | 3 | Effect runtime, services, server functions, Last.fm cache | live/stale/unavailable and cache tests pass |
 | 4 | Root shell, header/nav, footer, static pages | pixel diff on static routes within threshold |
 | 5 | Music page and Three.js scene | three music states and scene teardown pass |
@@ -450,7 +450,7 @@ Add:
 
 - `content-collections.ts`, `vite.config.ts`, `src/router.tsx`, `src/routes/**`, the React
   components, `src/server/**`, `src/lib/site.ts`, `src/lib/images.ts`, `src/lib/music.ts`,
-  `build/feeds-plugin.ts`, tests, `scripts/visual-diff.mjs`, the CI workflow, this spec.
+  `scripts/build-feeds.mjs`, `scripts/smoke.mjs`, `scripts/screenshots.mjs`, `scripts/visual-diff.mjs`, `scripts/cwv.mjs`, tests, the CI workflow, this spec.
 
 Update:
 
