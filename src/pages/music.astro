@@ -83,7 +83,12 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
               {tracks.map((track) => (
                 <li class:list={["iso-scrobble", isNowPlaying(track) && "iso-scrobble--now"]}>
                   {isNowPlaying(track) && (
-                    <span class="iso-scrobble-time">now playing</span>
+                    <span class="iso-eq" aria-label="Now playing">
+                      <span class="iso-eq-bar"></span>
+                      <span class="iso-eq-bar"></span>
+                      <span class="iso-eq-bar"></span>
+                      <span class="iso-eq-bar"></span>
+                    </span>
                   )}
                   <span class="iso-scrobble-body">
                     <span class="iso-scrobble-artist">{track.artist["#text"]}</span>
