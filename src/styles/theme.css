@@ -852,9 +852,6 @@ html.theme-isometric .iso-block-title a {
   text-underline-offset: 5px;
   text-decoration-color: var(--primary);
 }
-html.theme-isometric .iso-block-title a:hover {
-  text-decoration-color: var(--accent);
-}
 html.theme-isometric .iso-block-desc {
   margin: 0;
   color: var(--muted-foreground);
