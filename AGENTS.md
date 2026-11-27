@@ -12,6 +12,9 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 - Don't extract code into its own file/function unless it is used in more than one place.
   Route-specific data fetching and markup live directly in the route file that needs them.
+- Always render images through Astro's `<Image>` component (`astro:assets`) — never raw `<img>` —
+  so they get optimized formats, responsive srcset and correct dimensions.
+
 - Wrappers that only re-export or rename an existing API (e.g. `getPosts` around
   `getCollection("blog")`) are unnecessary — call the underlying API at the point of use.
 
