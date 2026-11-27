@@ -11,7 +11,7 @@ const { title, description, pubDate, href, tags } = project.data;
 <Layout title={`${title} | jwstn.dev`} description={description}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <a class="iso-btn iso-btn--ghost" href="/projects/">← All assemblies</a>
+      <a class="iso-backlink" href="/projects/">← All assemblies</a>
     </p>
 
     <article class="iso-article">
@@ -48,7 +48,7 @@ const { title, description, pubDate, href, tags } = project.data;
 
       <div class="iso-block-actions">
         <IsoButton href={href} external>View live assembly ↗</IsoButton>
-        <IsoButton href="/projects/" variant="ghost">← Back to the plan</IsoButton>
+        <a class="iso-backlink" href="/projects/">← Back to the plan</a>
       </div>
     </article>
   </div>

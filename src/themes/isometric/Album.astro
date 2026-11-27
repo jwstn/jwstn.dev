@@ -12,7 +12,7 @@ const { title, photos, pubDate } = album.data;
 <Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} photographic plates by JW.`}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <IsoButton href="/gallery/" variant="ghost">← All plates</IsoButton>
+      <a class="iso-backlink" href="/gallery/">← All plates</a>
     </p>
 
     <header class="iso-pagehead">
@@ -54,7 +54,7 @@ const { title, photos, pubDate } = album.data;
     </ul>
 
     <p class="iso-backrow">
-      <IsoButton href="/gallery/" variant="ghost">← Back to the filing cabinet</IsoButton>
+      <a class="iso-backlink" href="/gallery/">← Back to the filing cabinet</a>
     </p>
   </div>
 </Layout>
