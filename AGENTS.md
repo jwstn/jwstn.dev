@@ -8,6 +8,13 @@ astro dev --background
 
 Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
 
+## Code rules
+
+- Don't extract code into its own file/function unless it is used in more than one place.
+  Route-specific data fetching and markup live directly in the route file that needs them.
+- Wrappers that only re-export or rename an existing API (e.g. `getPosts` around
+  `getCollection("blog")`) are unnecessary — call the underlying API at the point of use.
+
 ## Design rules
 
 - No page-head bars that repeat the navigation; route names use a visually hidden `<h1>`.

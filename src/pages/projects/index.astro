@@ -1,8 +1,44 @@
 ---
-import { getProjects } from "#/lib/content";
-import Projects from "#/views/Projects.astro";
+import FormattedDate from "#/components/FormattedDate.astro";
+import IsoButton from "#/components/isometric/IsoButton.astro";
+import Layout from "#/layouts/Layout.astro";
+import { getCollection } from "astro:content";
 
-const projects = await getProjects();
+const projects = (await getCollection("projects")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<Projects projects={projects} />
+<Layout
+  title="Projects | jwstn.dev"
+  description="Four assemblies exploded for inspection — web apps drawn with TanStack, Effect and stubborn amounts of care, by JW."
+>
+  <div class="iso-shell iso-stack">
+    <h1 class="sr-only">Projects</h1>
+
+    <section class="iso-explode" aria-label="Project list">
+      {
+        projects.map((project) => (
+          <article class="iso-slab iso-block iso-rise">
+            <h2 class="iso-block-title">
+              <a href={`/projects/${project.id}/`}>{project.data.title}</a>
+            </h2>
+            <p class="iso-block-date">
+              <FormattedDate date={project.data.pubDate} />
+            </p>
+            <p class="iso-block-desc">{project.data.description}</p>
+            <ul class="iso-stamps" aria-label="Technologies used">
+              {project.data.tags.map((tag) => (
+                <li class="iso-stamp">{tag}</li>
+              ))}
+            </ul>
+            <div class="iso-block-actions">
+              <IsoButton href={`/projects/${project.id}/`}>Open →</IsoButton>
+              <IsoButton href={project.data.href} variant="ghost" external>
+                Source ↗
+              </IsoButton>
+            </div>
+          </article>
+        ))
+      }
+    </section>
+  </div>
+</Layout>
