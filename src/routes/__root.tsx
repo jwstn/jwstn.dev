@@ -2,7 +2,7 @@ import "#/styles/base.css";
 import "#/styles/theme.css";
 import { createRootRoute, HeadContent, Outlet, Scripts } from "@tanstack/react-router";
 import type { ReactNode } from "react";
-import { SITE_DESCRIPTION, SITE_TITLE } from "#/lib/site";
+import { SITE_DESCRIPTION, SITE_TITLE } from "#/consts";
 
 const themeScript = `(() => {
   const applyMode = (mode) => {
@@ -24,6 +24,10 @@ export const Route = createRootRoute({
       { title: SITE_TITLE },
       { name: "description", content: SITE_DESCRIPTION },
       { name: "supported-color-schemes", content: "light dark" },
+    ],
+    links: [
+      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+      { rel: "icon", href: "/favicon.ico" },
     ],
   }),
   component: RootComponent,

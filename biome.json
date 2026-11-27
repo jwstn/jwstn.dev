@@ -11,6 +11,7 @@
       "**",
       "!**/dist",
       "!**/node_modules",
+      "!**/.zed",
       "!**/.output",
       "!**/.content-collections",
       "!**/drizzle/meta",

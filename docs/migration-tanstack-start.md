@@ -79,7 +79,7 @@ Client
 content-collections.ts          # collections, Effect Schema, transforms
 vite.config.ts                  # tanstackStart, viteReact, tailwind, imagetools, nitro
 src/
-  router.tsx                    # createRouter, trailingSlash, viewTransition, scrollRestoration
+  router.tsx                    # createRouter, trailingSlash, scrollRestoration
   routes/
     __root.tsx                  # document shell, header/nav, footer, theme script
     index.tsx
@@ -244,8 +244,9 @@ export const galleryImages = import.meta.glob(
 - `SITE_URL = "https://www.jwstn.dev"`; canonical is `SITE_URL` plus the request pathname. Absolute
   OG/Twitter URLs use `SITE_URL` (production-parity; local dev differs from the old request origin).
   Drop the Astro generator meta. Use route `head` functions.
-- Enable `viewTransition` and scroll restoration. Focus `<main tabIndex={-1}>` after a forward
-  navigation; do not steal focus on back/forward.
+- Pass `viewTransition` on internal `Link`/`navigate` calls (it is a navigation option, not a
+  router-level default in the installed Router version) and enable scroll restoration. Focus
+  `<main tabIndex={-1}>` after a forward navigation; do not steal focus on back/forward.
 - Avoid a custom `src/start.ts` unless global middleware is needed; if added, include
   `createCsrfMiddleware()`.
 

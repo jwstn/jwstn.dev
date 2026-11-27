@@ -1,22 +1,24 @@
 ## Development
 
-When starting the dev server, use background mode:
+When starting the dev server, run it in the background:
 
 ```
-astro dev --background
+pnpm dev
 ```
 
-Manage the background server with `astro dev stop`, `astro dev status`, and `astro dev logs`.
+Use the harness/terminal background process controls to stop it. Verify production builds with
+`pnpm build` and `pnpm start`.
 
 ## Code rules
 
 - Don't extract code into its own file/function unless it is used in more than one place.
   Route-specific data fetching and markup live directly in the route file that needs them.
-- Always render images through Astro's `<Image>` component (`astro:assets`) — never raw `<img>` —
-  so they get optimized formats, responsive srcset and correct dimensions.
+- Always render images through the shared `ResponsiveImage` component
+  (`src/components/ResponsiveImage.tsx`) — never raw `<img>` — so they get optimized formats,
+  responsive srcset and correct dimensions.
 
-- Never use text arrow characters (→, ↗, ←, ↑, ↓) in UI copy. Use `Icon` from `@lucide/astro`
-  (e.g. `<Icon name="arrow-right" size={16} />`).
+- Never use text arrow characters (→, ↗, ←, ↑, ↓) in UI copy. Use named `lucide-react` icons
+  (e.g. `import { ArrowRight } from "lucide-react"`).
 
 - Wrappers that only re-export or rename an existing API (e.g. `getPosts` around
   `getCollection("blog")`) are unnecessary — call the underlying API at the point of use.
@@ -43,13 +45,14 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Documentation
 
-Full documentation: https://docs.astro.build
+Full documentation: https://tanstack.com/start/latest/docs/framework/react/overview
 
 Consult these guides before working on related tasks:
 
-- [Adding pages, dynamic routes, or middleware](https://docs.astro.build/en/guides/routing/)
-- [Working with Astro components](https://docs.astro.build/en/basics/astro-components/)
-- [Using React, Vue, Svelte, or other framework components](https://docs.astro.build/en/guides/framework-components/)
-- [Adding or managing content](https://docs.astro.build/en/guides/content-collections/)
-- [Adding styles or using Tailwind](https://docs.astro.build/en/guides/styling/)
-- [Supporting multiple languages](https://docs.astro.build/en/guides/internationalization/)
+- [Routing](https://tanstack.com/router/latest/docs/framework/react/guide/routing)
+- [Server functions](https://tanstack.com/start/latest/docs/framework/react/guide/server-functions)
+- [Environment variables](https://tanstack.com/start/latest/docs/framework/react/guide/environment-variables)
+- [Hosting and Vercel](https://tanstack.com/start/latest/docs/framework/react/guide/hosting)
+- [Content Collections](https://www.content-collections.dev/docs)
+- [Effect](https://effect.website/docs)
+- [Tailwind CSS](https://tailwindcss.com/docs)

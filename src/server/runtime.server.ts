@@ -3,17 +3,13 @@ import { layer as AppConfigLayer } from "./config.server";
 
 const AppLayer = Layer.mergeAll(AppConfigLayer, Logger.layer([Logger.consoleJson]));
 
-function makeRuntime() {
-  return ManagedRuntime.make(AppLayer);
-}
-
-type AppRuntime = ReturnType<typeof makeRuntime>;
+type AppRuntime = ManagedRuntime.ManagedRuntime<Layer.Success<typeof AppLayer>, Layer.Error<typeof AppLayer>>;
 
 const globalStore = globalThis as typeof globalThis & {
   __jwstnRuntime?: AppRuntime;
 };
 
-export const runtime: AppRuntime = globalStore.__jwstnRuntime ?? makeRuntime();
+export const runtime: AppRuntime = globalStore.__jwstnRuntime ?? ManagedRuntime.make(AppLayer);
 globalStore.__jwstnRuntime = runtime;
 
 if (import.meta.hot) {

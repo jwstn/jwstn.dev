@@ -9,7 +9,6 @@ export const getScaffoldStatus = createServerFn({ method: "GET" }).handler(() =>
       const config = yield* AppConfig;
 
       return {
-        ok: true as const,
         lastfmConfigured: Option.isSome(config.lastfmApiKey),
         node: process.version,
       };
