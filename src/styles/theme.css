@@ -48,7 +48,7 @@ html.theme-isometric.dark {
 
   --background: #1a1b26;
   --foreground: #c0caf5;
-  --card: #1f2335;
+  --card: #232840;
   --card-foreground: #c0caf5;
   --primary: #7aa2f7;
   --primary-foreground: #1a1b26;
@@ -66,8 +66,8 @@ html.theme-isometric.dark {
   --font-body: "Space Grotesk Variable", "Space Grotesk", system-ui, sans-serif;
   --font-mono: "Geist Mono Variable", "Geist Mono", ui-monospace, monospace;
 
-  --iso-edge: #3b4261;
-  --iso-side: #323b5c;
+  --iso-edge: #5a6a94;
+  --iso-side: #3d4a6e;
   --grid-line: rgb(122 162 247 / 0.10);
 }
 
@@ -225,7 +225,7 @@ html.theme-isometric .iso-slab::before {
   right: -10px;
   bottom: -10px;
   pointer-events: none;
-  opacity: 0.65;
+  opacity: 0.9;
   background-image:
     linear-gradient(
       to top right,
@@ -1437,6 +1437,19 @@ html.theme-isometric .iso-artist:hover .iso-artist-name {
   text-underline-offset: 4px;
   text-decoration-color: var(--accent);
 }
+html.theme-isometric .iso-album-cta {
+  margin-block-start: 0.3rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--primary);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
 html.theme-isometric .iso-artist-plays {
   font-family: var(--font-mono);
   font-size: 0.88rem;
