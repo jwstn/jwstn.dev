@@ -26,17 +26,6 @@ if (configured) {
 
 Astro.response.headers.set("Cache-Control", "public, s-maxage=300, stale-while-revalidate=600");
 
-const when = (uts?: string) => {
-  if (!uts) return "";
-  const date = new Date(Number(uts) * 1000);
-  return new Intl.DateTimeFormat("en-GB", {
-    month: "short",
-    day: "numeric",
-    hour: "2-digit",
-    minute: "2-digit",
-  }).format(date);
-};
-
 const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "true";
 ---
 
@@ -93,9 +82,9 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
             <ul class="iso-scrobbles">
               {tracks.map((track) => (
                 <li class:list={["iso-scrobble", isNowPlaying(track) && "iso-scrobble--now"]}>
-                  <span class="iso-scrobble-time">
-                    {isNowPlaying(track) ? "now playing" : when(track.date?.uts)}
-                  </span>
+                  {isNowPlaying(track) && (
+                    <span class="iso-scrobble-time">now playing</span>
+                  )}
                   <span class="iso-scrobble-body">
                     <span class="iso-scrobble-artist">{track.artist["#text"]}</span>
                     <span class="iso-scrobble-sep" aria-hidden="true">

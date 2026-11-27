@@ -33,7 +33,7 @@ const posts = (await getCollection("blog")).sort((a, b) => b.data.pubDate.valueO
           </div>
           <div class="iso-actions">
             <IsoButton href="/projects/">Inspect the projects <Icon name="arrow-right" size={16} /></IsoButton>
-            <IsoButton href="/gallery/" variant="accent">View the plates <Icon name="arrow-right" size={16} /></IsoButton>
+            <IsoButton href="/gallery/" variant="ghost">View the plates <Icon name="arrow-right" size={16} /></IsoButton>
           </div>
         </div>
       ) : (

@@ -792,6 +792,11 @@ html.theme-isometric .iso-btn:focus-visible .iso-btn-face {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
 }
+html.theme-isometric .iso-btn-face svg.lucide {
+  flex-shrink: 0;
+  width: 1em;
+  height: 1em;
+}
 @media (prefers-reduced-motion: reduce) {
   html.theme-isometric .iso-btn-face,
   html.theme-isometric .iso-btn::before {
@@ -1281,15 +1286,6 @@ html.theme-isometric .iso-album-meta {
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
-html.theme-isometric .iso-album-cta {
-  margin-block-start: 0.3rem;
-  font-family: var(--font-mono);
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--primary);
-}
 
 /* The photo wall: a tight mosaic where photos crop to fill their tile, with
    captions revealed on hover/focus (the classic gallery behaviour). */
@@ -1397,11 +1393,11 @@ html.theme-isometric .iso-plate-note {
 /* Gallery — a roomier vertical rhythm on phones */
 @media (max-width: 48rem) {
   html.theme-isometric .iso-gallery.iso-stack {
-    gap: 2.8rem;
-    padding-block: 2.25rem 4rem;
+    gap: 1.4rem;
+    padding-block: 1.75rem 3rem;
   }
   html.theme-isometric .iso-gallery .iso-albums {
-    gap: 2.8rem;
+    gap: 1.4rem;
   }
 }
 

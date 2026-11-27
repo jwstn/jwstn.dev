@@ -2,6 +2,7 @@
 import { Icon } from "@lucide/astro";
 import { Image } from "astro:assets";
 import FormattedDate from "#/components/FormattedDate.astro";
+import IsoButton from "#/components/isometric/IsoButton.astro";
 import Layout from "#/layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
@@ -44,7 +45,7 @@ const albums = (await getCollection("gallery")).sort((a, b) => b.data.pubDate.va
                 <p class="iso-album-meta">
                   <FormattedDate date={album.data.pubDate} /> · {album.data.photos.length} exposures
                 </p>
-                <span class="iso-album-cta">Open plate <Icon name="arrow-right" size={12} /></span>
+                <IsoButton href={`/gallery/${album.data.slug}/`} variant="ghost" class="iso-album-cta-btn">Open plate <Icon name="arrow-right" size={14} /></IsoButton>
               </div>
             </a>
           </li>
