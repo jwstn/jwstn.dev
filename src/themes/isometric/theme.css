@@ -395,6 +395,8 @@ html.theme-isometric .iso-burger.is-open .iso-burger-icon::after {
 }
 
 html.theme-isometric .iso-mobile-panel {
+  position: relative;
+  z-index: 1;
   margin-block-start: 0.55rem;
   padding: 0.55rem;
   border: 1px solid var(--iso-edge);
