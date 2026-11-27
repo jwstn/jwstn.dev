@@ -7,9 +7,9 @@ import IsoButton from "./IsoButton.astro";
 Astro.props as HomeProps;
 
 const doors = [
-  { href: "/projects/", num: "01", ref: "REF N1\u00b7E01", title: "Projects", cta: "Open assemblies \u2192" },
-  { href: "/blog/", num: "02", ref: "REF N1\u00b7E02", title: "Blog", cta: "Inspect the sheet \u2192" },
-  { href: "/gallery/", num: "03", ref: "REF N1\u00b7E03", title: "Gallery", cta: "View plates \u2192" },
+  { href: "/projects/", num: "01", title: "Projects", cta: "Open assemblies \u2192" },
+  { href: "/blog/", num: "02", title: "Blog", cta: "Inspect the sheet \u2192" },
+  { href: "/gallery/", num: "03", title: "Gallery", cta: "View plates \u2192" },
 ];
 ---
 
@@ -60,9 +60,6 @@ const doors = [
               >
                 <span class="iso-door-tab" aria-hidden="true">
                   {door.num}
-                </span>
-                <span class="iso-door-ref" aria-hidden="true">
-                  {door.ref}
                 </span>
                 <h3 class="iso-door-title">{door.title}</h3>
                 <span class="iso-door-cta">{door.cta}</span>

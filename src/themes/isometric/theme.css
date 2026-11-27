@@ -214,7 +214,6 @@ html.theme-isometric .iso-dim-arrow--r {
 html.theme-isometric .iso-slab {
   position: relative;
   isolation: isolate;
-  --iso-face-h: 10px;
   background: var(--card);
   color: var(--card-foreground);
   border: 1px solid var(--iso-edge);
@@ -237,7 +236,7 @@ html.theme-isometric .iso-slab::before {
   right: -10px;
   bottom: -10px;
   pointer-events: none;
-  opacity: 0.5;
+  opacity: 0.65;
   background-image:
     linear-gradient(
       to top right,
@@ -268,19 +267,7 @@ html.theme-isometric .iso-slab::before {
   background-repeat: no-repeat;
 }
 
-html.theme-isometric .iso-slab::after {
-  content: "";
-  position: absolute;
-  left: -1px;
-  top: calc(-1 * var(--iso-face-h));
-  width: calc(100% + 1px);
-  height: var(--iso-face-h);
-  background: var(--iso-face-top);
-  border: 1px solid var(--iso-edge);
-  transform-origin: 0 100%;
-  transform: skewX(-45deg);
-  pointer-events: none;
-}
+
 
 /* ------------------------------------------------------------------ */
 /* Keys — flat control-panel buttons (nav, actions)                     */
@@ -628,15 +615,7 @@ html.theme-isometric .iso-door-tab {
   font-size: 1.3rem;
   font-weight: 600;
 }
-html.theme-isometric .iso-door-ref {
-  justify-self: end;
-  align-self: start;
-  grid-column: 2;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  letter-spacing: 0.08em;
-  color: var(--muted-foreground);
-}
+
 html.theme-isometric .iso-door-title {
   grid-column: 2;
   margin: 0;
