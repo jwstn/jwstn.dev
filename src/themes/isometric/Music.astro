@@ -31,10 +31,7 @@ const isNowPlaying = (track: LastfmTrack) => track["@attr"]?.nowplaying === "tru
   description="What JW has been listening to lately — top artists of the month and recent scrobbles, via Last.fm."
 >
   <div class="iso-shell iso-stack">
-    <div class="iso-pagehead iso-slab iso-rise">
-      <h1 class="iso-pagehead-title">Music</h1>
-      <p class="iso-pagehead-meta">Last 30 days &middot; via Last.fm</p>
-    </div>
+    <h1 class="sr-only">Music</h1>
 
     {
       !configured && (
