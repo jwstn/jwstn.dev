@@ -1,8 +1,8 @@
 ---
+import { Icon } from "@lucide/astro";
 import { Image } from "astro:assets";
 import FormattedDate from "#/components/FormattedDate.astro";
 import Layout from "#/layouts/Layout.astro";
-import BackIcon from "#/components/isometric/BackIcon.astro";
 import { getCollection } from "astro:content";
 
 const slug = Astro.params.slug as string;
@@ -16,7 +16,7 @@ const { title, photos, pubDate } = album.data;
 <Layout title={`${title} | jwstn.dev`} description={`${title} — ${photos.length} photographic plates by JW.`}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <a class="iso-backlink" href="/gallery/"><BackIcon size={14} /> All plates</a>
+      <a class="iso-backlink" href="/gallery/"><Icon name="arrow-left" size={14} /> All plates</a>
     </p>
 
     <header class="iso-pagehead">
@@ -58,7 +58,7 @@ const { title, photos, pubDate } = album.data;
     </ul>
 
     <p class="iso-backrow">
-      <a class="iso-backlink" href="/gallery/"><BackIcon size={14} /> Back to the filing cabinet</a>
+      <a class="iso-backlink" href="/gallery/"><Icon name="arrow-left" size={14} /> Back to the filing cabinet</a>
     </p>
   </div>
 </Layout>

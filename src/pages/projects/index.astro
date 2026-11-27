@@ -1,7 +1,6 @@
 ---
+import { Icon } from "@lucide/astro";
 import FormattedDate from "#/components/FormattedDate.astro";
-import ArrowIcon from "#/components/isometric/ArrowIcon.astro";
-import ExternalIcon from "#/components/isometric/ExternalIcon.astro";
 import IsoButton from "#/components/isometric/IsoButton.astro";
 import Layout from "#/layouts/Layout.astro";
 import { getCollection } from "astro:content";
@@ -33,9 +32,9 @@ const projects = (await getCollection("projects")).sort((a, b) => b.data.pubDate
               ))}
             </ul>
             <div class="iso-block-actions">
-              <IsoButton href={`/projects/${project.id}/`}>Open <ArrowIcon /></IsoButton>
+              <IsoButton href={`/projects/${project.id}/`}>Open <Icon name="arrow-right" size={16} /></IsoButton>
               <IsoButton href={project.data.href} variant="ghost" external>
-                Source <ExternalIcon />
+                Source <Icon name="external-link" size={16} />
               </IsoButton>
             </div>
           </article>

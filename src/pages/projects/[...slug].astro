@@ -1,8 +1,6 @@
 ---
+import { Icon } from "@lucide/astro";
 import FormattedDate from "#/components/FormattedDate.astro";
-import ArrowIcon from "#/components/isometric/ArrowIcon.astro";
-import BackIcon from "#/components/isometric/BackIcon.astro";
-import ExternalIcon from "#/components/isometric/ExternalIcon.astro";
 import IsoButton from "#/components/isometric/IsoButton.astro";
 import Layout from "#/layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
@@ -19,7 +17,7 @@ const { title, description, pubDate, href, tags } = project.data;
 <Layout title={`${title} | jwstn.dev`} description={description}>
   <div class="iso-shell iso-stack">
     <p class="iso-backrow">
-      <a class="iso-backlink" href="/projects/"><BackIcon size={14} /> All assemblies</a>
+      <a class="iso-backlink" href="/projects/"><Icon name="arrow-left" size={14} /> All assemblies</a>
     </p>
 
     <article class="iso-article">
@@ -54,8 +52,8 @@ const { title, description, pubDate, href, tags } = project.data;
       </div>
 
       <div class="iso-block-actions">
-        <IsoButton href={href} external>View live assembly <ExternalIcon /></IsoButton>
-        <a class="iso-backlink" href="/projects/"><BackIcon size={14} /> Back to the plan</a>
+        <IsoButton href={href} external>View live assembly <Icon name="external-link" size={16} /></IsoButton>
+        <a class="iso-backlink" href="/projects/"><Icon name="arrow-left" size={14} /> Back to the plan</a>
       </div>
     </article>
   </div>

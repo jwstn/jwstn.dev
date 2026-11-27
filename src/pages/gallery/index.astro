@@ -1,8 +1,8 @@
 ---
+import { Icon } from "@lucide/astro";
 import { Image } from "astro:assets";
 import FormattedDate from "#/components/FormattedDate.astro";
 import Layout from "#/layouts/Layout.astro";
-import ArrowIcon from "#/components/isometric/ArrowIcon.astro";
 import { getCollection } from "astro:content";
 
 const albums = (await getCollection("gallery")).sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
@@ -44,7 +44,7 @@ const albums = (await getCollection("gallery")).sort((a, b) => b.data.pubDate.va
                 <p class="iso-album-meta">
                   <FormattedDate date={album.data.pubDate} /> · {album.data.photos.length} exposures
                 </p>
-                <span class="iso-album-cta">Open plate <ArrowIcon size={12} /></span>
+                <span class="iso-album-cta">Open plate <Icon name="arrow-right" size={12} /></span>
               </div>
             </a>
           </li>
