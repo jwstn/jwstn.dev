@@ -150,7 +150,11 @@ html.theme-isometric .iso-shell {
 html.theme-isometric .iso-stack {
   display: grid;
   gap: 1.9rem;
-  padding-block: 2.5rem 3.5rem;
+  padding-block: 0.75rem 3rem;
+}
+/* detail pages open with a back link: pull it up under the header */
+html.theme-isometric .iso-stack:has(> .iso-backrow:first-child) {
+  padding-block-start: 0.25rem;
 }
 
 html.theme-isometric .iso-muted {
@@ -524,6 +528,9 @@ html.theme-isometric .iso-cassette.is-fallback .iso-cassette-stage canvas {
 /* Home — parts list doors                                             */
 /* ------------------------------------------------------------------ */
 
+html.theme-isometric .iso-stack > section:first-of-type .iso-sectionlabel {
+  margin-top: 0;
+}
 html.theme-isometric .iso-sectionlabel {
   display: flex;
   align-items: center;
@@ -766,9 +773,6 @@ html.theme-isometric .iso-btn-face svg.lucide {
 
 html.theme-isometric .iso-backrow {
   margin: 0;
-}
-html.theme-isometric .iso-backrow {
-  margin-top: 1.4rem;
 }
 html.theme-isometric .iso-backlink {
   display: inline-flex;
