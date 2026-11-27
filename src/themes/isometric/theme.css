@@ -1235,8 +1235,8 @@ html.theme-isometric .iso-album-cta {
 /* the photo wall on an album page */
 html.theme-isometric .iso-wall {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr));
-  gap: 2rem 1.9rem;
+  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+  gap: 2.6rem 2.2rem;
   padding: 0;
   margin: 0;
   list-style: none;
