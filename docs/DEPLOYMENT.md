@@ -59,6 +59,13 @@ Repository secrets:
 - `VERCEL_TOKEN`
 - `VERCEL_AUTOMATION_BYPASS_SECRET` (optional, needed when Preview deployments are protected)
 
+The three `VERCEL_*` secrets are required for the CLI workflows. The Vercel GitHub integration
+is not a substitute: it cannot be gated on a GitHub Release.
+
+GitHub:
+
+- Protect `main` with pull requests and the checks you want to require.
+
 Vercel dashboard:
 
 - Disable automatic Git deployments for the project. The workflows deploy both Preview and
@@ -72,16 +79,16 @@ Vercel dashboard:
 
 ## Smoke checks
 
-The workflows run `scripts/smoke.mjs` when the checked-out app provides it (TanStack Start),
-then run `scripts/deploy-smoke.mjs` for the routes common to Astro and TanStack Start, the
-blog, RSS and sitemap. `deploy-smoke.mjs` accepts:
+The workflows run `scripts/run-deploy-smoke.sh`. It runs `scripts/smoke.mjs` when the
+checked-out app provides it (TanStack Start), then `scripts/deploy-smoke.mjs` for the routes
+common to Astro and TanStack Start, the blog, RSS and sitemap. `deploy-smoke.mjs` accepts:
 
 - `BASE_URL` — deployment URL to check.
 - `VERCEL_AUTOMATION_BYPASS_SECRET` — sent as `x-vercel-protection-bypass`.
-- `EXPECTED_COMMIT` — optional commit SHA. When the app exposes a `x-build-commit` response
-  header or a `build-commit` meta tag, the smoke script verifies it; otherwise it reports that
-  the marker is not exposed and continues. Set `REQUIRE_BUILD_MARKER=true` to make a missing
-  marker fail once the app exposes one.
+- `EXPECTED_COMMIT` — optional full commit SHA. When the app exposes a `x-build-commit`
+  response header or a `build-commit` meta tag, the smoke script requires an exact match;
+  otherwise it reports that the marker is not exposed and continues. Set
+  `REQUIRE_BUILD_MARKER=true` to make a missing marker fail once the app exposes one.
 
 `scripts/release-plan.mjs` is the release decision: it validates the tag and SHAs and writes
 the plan, GitHub outputs and job summary. Its tests run with:
@@ -89,3 +96,12 @@ the plan, GitHub outputs and job summary. Its tests run with:
 ```sh
 node --test scripts/release-plan.test.mjs
 ```
+
+## Follow-ups
+
+- Expose the deployed commit as a `x-build-commit` header or `build-commit` meta tag in the
+  app, then set `REQUIRE_BUILD_MARKER=true` in the workflows.
+- Make the site URL environment-aware so staging canonicals, feeds and sitemap use the Preview
+  URL instead of `https://www.jwstn.dev`.
+- Run visual parity and Core Web Vitals against staging, and Core Web Vitals after Production.
+- Add a `workflow_dispatch` rollback input that promotes a chosen Production deployment.

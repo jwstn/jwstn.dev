@@ -15,13 +15,10 @@ export function parseReleaseTag(tag) {
   return {
     tag: value,
     version: value.replace(/^v/, ""),
-    major: Number(match[1]),
-    minor: Number(match[2]),
-    patch: Number(match[3]),
   };
 }
 
-export function createReleasePlan({ tag, tagSha, mainSha, dryRun = false, project = "jwstn.dev" }) {
+export function createReleasePlan({ tag, tagSha, mainSha, dryRun = false, project = "personal-website" }) {
   const errors = [];
   const parsedTag = parseReleaseTag(tag);
 
@@ -44,7 +41,7 @@ export function createReleasePlan({ tag, tagSha, mainSha, dryRun = false, projec
   }
 
   const valid = errors.length === 0;
-  const deploy = valid && !dryRun;
+  const willDeploy = valid && !dryRun;
 
   const steps = valid
     ? [
@@ -67,12 +64,12 @@ export function createReleasePlan({ tag, tagSha, mainSha, dryRun = false, projec
     project,
     staging: {
       environment: "preview",
-      deploy,
+      willDeploy,
     },
     production: {
       environment: "production",
       url: "https://www.jwstn.dev",
-      deploy,
+      willDeploy,
     },
     steps,
   };
@@ -98,6 +95,7 @@ export function toMarkdown(plan) {
     `- **main:** ${plan.main ? `\`${plan.main}\`` : "_missing_"}`,
     `- **Vercel project:** \`${plan.project}\``,
     `- **Mode:** ${plan.dryRun ? "dry run" : "release"}`,
+    `- **Target:** ${plan.dryRun ? "Preview only (dry run)" : "Preview, then Production"}`,
     "",
   ];
 
@@ -139,7 +137,7 @@ Options:
   --tag <tag>              GitHub Release tag (for example v1.2.3)
   --tag-sha <sha>          Commit the tag points at
   --main-sha <sha>         Current main HEAD commit
-  --project <name>         Vercel project name for the summary
+  --project <name>         Vercel project name or ID for the summary
   --dry-run                Validate and plan without deploying
   --github-output <path>   Append step outputs, normally $GITHUB_OUTPUT
   --summary <path>         Append a Markdown summary, normally $GITHUB_STEP_SUMMARY`);

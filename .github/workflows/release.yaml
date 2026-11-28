@@ -50,7 +50,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version-file: .nvmrc
 
       - name: Resolve tag and main
         id: resolve
@@ -100,10 +100,8 @@ jobs:
   staging:
     name: Deploy staging Preview
     needs: plan
-    if: needs.plan.outputs.dry_run != 'true'
+    if: needs.plan.outputs.valid == 'true' && needs.plan.outputs.dry_run != 'true'
     runs-on: ubuntu-latest
-    outputs:
-      url: ${{ steps.deploy.outputs.url }}
     env:
       PUBLIC_VERSION: ${{ needs.plan.outputs.commit }}
       PUBLIC_RELEASE_VERSION: ${{ needs.plan.outputs.tag }}
@@ -121,7 +119,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: pnpm
 
       - name: Install
@@ -156,16 +154,12 @@ jobs:
           BASE_URL: ${{ steps.deploy.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
           EXPECTED_COMMIT: ${{ needs.plan.outputs.commit }}
-        run: |
-          if [ -f scripts/smoke.mjs ]; then
-            BASE="$BASE_URL" node scripts/smoke.mjs
-          fi
-          node scripts/deploy-smoke.mjs
+        run: bash scripts/run-deploy-smoke.sh
 
   production:
     name: Deploy Production
     needs: [plan, staging]
-    if: needs.plan.outputs.dry_run != 'true'
+    if: needs.plan.outputs.valid == 'true' && needs.plan.outputs.dry_run != 'true'
     runs-on: ubuntu-latest
     env:
       PUBLIC_VERSION: ${{ needs.plan.outputs.commit }}
@@ -184,7 +178,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version-file: .nvmrc
           cache: pnpm
 
       - name: Install
@@ -220,21 +214,13 @@ jobs:
           BASE_URL: ${{ steps.deploy.outputs.url }}
           VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
           EXPECTED_COMMIT: ${{ needs.plan.outputs.commit }}
-        run: |
-          if [ -f scripts/smoke.mjs ]; then
-            BASE="$BASE_URL" node scripts/smoke.mjs
-          fi
-          node scripts/deploy-smoke.mjs
+        run: bash scripts/run-deploy-smoke.sh
 
       - name: Smoke-test Production domain
         env:
           BASE_URL: https://www.jwstn.dev
           EXPECTED_COMMIT: ${{ needs.plan.outputs.commit }}
-        run: |
-          if [ -f scripts/smoke.mjs ]; then
-            BASE="$BASE_URL" node scripts/smoke.mjs
-          fi
-          node scripts/deploy-smoke.mjs
+        run: bash scripts/run-deploy-smoke.sh
 
       - name: Summarise Release
         if: always()

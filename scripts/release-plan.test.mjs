@@ -9,9 +9,6 @@ test("parseReleaseTag accepts v-prefixed and bare semver tags", () => {
   assert.deepEqual(parseReleaseTag("v1.2.3"), {
     tag: "v1.2.3",
     version: "1.2.3",
-    major: 1,
-    minor: 2,
-    patch: 3,
   });
   assert.equal(parseReleaseTag("2026.11.28").version, "2026.11.28");
   assert.equal(parseReleaseTag("v1.2.3-rc.1").version, "1.2.3-rc.1");
@@ -29,8 +26,8 @@ test("a tag at main HEAD plans a staging Preview and a Production release", () =
 
   assert.equal(plan.valid, true);
   assert.deepEqual(plan.errors, []);
-  assert.equal(plan.staging.deploy, true);
-  assert.equal(plan.production.deploy, true);
+  assert.equal(plan.staging.willDeploy, true);
+  assert.equal(plan.production.willDeploy, true);
   assert.equal(plan.production.url, "https://www.jwstn.dev");
   assert.ok(plan.steps.some((step) => step.includes("Preview")));
   assert.ok(plan.steps.some((step) => step.includes("Production")));
@@ -41,8 +38,8 @@ test("a dry run deploys neither staging nor Production", () => {
 
   assert.equal(plan.valid, true);
   assert.equal(plan.dryRun, true);
-  assert.equal(plan.staging.deploy, false);
-  assert.equal(plan.production.deploy, false);
+  assert.equal(plan.staging.willDeploy, false);
+  assert.equal(plan.production.willDeploy, false);
   assert.ok(plan.steps.some((step) => step.includes("Dry run")));
   assert.ok(!plan.steps.some((step) => step.startsWith("Deploy") && step.includes("Production")));
 });
@@ -52,8 +49,8 @@ test("a tag that is not at main HEAD cannot be released", () => {
   const plan = createReleasePlan({ tag: "v1.2.3", tagSha: COMMIT, mainSha });
 
   assert.equal(plan.valid, false);
-  assert.equal(plan.staging.deploy, false);
-  assert.equal(plan.production.deploy, false);
+  assert.equal(plan.staging.willDeploy, false);
+  assert.equal(plan.production.willDeploy, false);
   assert.match(plan.errors.join("\n"), /points at 0123456789abcdef/);
   assert.match(plan.errors.join("\n"), /main is at fedcba9876543210/);
 });
@@ -62,7 +59,7 @@ test("a malformed tag is rejected even when the SHAs match", () => {
   const plan = createReleasePlan({ tag: "release-1", tagSha: COMMIT, mainSha: COMMIT });
 
   assert.equal(plan.valid, false);
-  assert.equal(plan.production.deploy, false);
+  assert.equal(plan.production.willDeploy, false);
   assert.match(plan.errors.join("\n"), /must look like v1\.2\.3/);
 });
 
@@ -70,7 +67,7 @@ test("missing SHAs are reported instead of being treated as valid", () => {
   const plan = createReleasePlan({ tag: "v1.2.3", tagSha: "", mainSha: "" });
 
   assert.equal(plan.valid, false);
-  assert.equal(plan.production.deploy, false);
+  assert.equal(plan.production.willDeploy, false);
   assert.match(plan.errors.join("\n"), /tag commit SHA is missing/);
   assert.match(plan.errors.join("\n"), /main branch commit SHA is missing/);
 });

@@ -17,8 +17,6 @@ if (protectionBypass) {
   headers["x-vercel-protection-bypass"] = protectionBypass;
 }
 
-const sleep = (milliseconds) => new Promise((resolve) => setTimeout(resolve, milliseconds));
-
 async function request(path) {
   const url = new URL(path, base);
   let lastError;
@@ -32,18 +30,10 @@ async function request(path) {
       lastError = error;
     }
 
-    if (attempt < 3) await sleep(2000);
+    if (attempt < 3) await new Promise((resolve) => setTimeout(resolve, 2000));
   }
 
   throw lastError;
-}
-
-function protectionHint(status) {
-  if ((status === 401 || status === 403) && !protectionBypass) {
-    return " (Preview deployment is protected; set VERCEL_AUTOMATION_BYPASS_SECRET)";
-  }
-
-  return "";
 }
 
 const checks = [
@@ -78,9 +68,11 @@ for (const check of checks) {
       if (!ok) fail(`${check.path}: response did not include ${JSON.stringify(check.bodyIncludes)}`);
     }
 
-    console.log(
-      `${ok ? "ok  " : "FAIL"} ${check.path} -> ${response.status}${ok ? "" : protectionHint(response.status)}`,
-    );
+    const hint =
+      !ok && (response.status === 401 || response.status === 403) && !protectionBypass
+        ? " (Preview deployment is protected; set VERCEL_AUTOMATION_BYPASS_SECRET)"
+        : "";
+    console.log(`${ok ? "ok  " : "FAIL"} ${check.path} -> ${response.status}${hint}`);
     if (!ok) failed = true;
   } catch (error) {
     fail(`${check.path}: ${error.message}`);
@@ -101,14 +93,10 @@ if (expectedCommit) {
       } else {
         console.log(`skip build marker: not exposed (expected ${expectedCommit})`);
       }
+    } else if (marker === expectedCommit) {
+      console.log(`ok   build marker -> ${marker}`);
     } else {
-      const matches =
-        marker === expectedCommit || expectedCommit.startsWith(marker) || marker.startsWith(expectedCommit);
-      if (matches) {
-        console.log(`ok   build marker -> ${marker}`);
-      } else {
-        fail(`build marker ${marker} does not match ${expectedCommit}`);
-      }
+      fail(`build marker ${marker} does not match ${expectedCommit}`);
     }
   } catch (error) {
     fail(`build marker: ${error.message}`);
