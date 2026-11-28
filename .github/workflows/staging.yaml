@@ -1,0 +1,86 @@
+name: Staging Preview
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  NODE_ENV: production
+  NO_COLOR: 1
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  PUBLIC_VERSION: ${{ github.sha }}
+  PUBLIC_RELEASE_VERSION: staging-${{ github.sha }}
+
+concurrency:
+  group: staging-preview-main
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy staging Preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel
+
+      - name: Pull Vercel Preview Environment
+        run: vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+
+      - name: Build Preview
+        run: vercel build --token="$VERCEL_TOKEN"
+
+      - name: Deploy Preview
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN" | grep -Eo 'https://[^[:space:]]+' | tail -n 1)
+          if [ -z "$url" ]; then
+            echo "Could not read the Preview deployment URL from vercel deploy." >&2
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "### Staging Preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Commit: \`$GITHUB_SHA\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Preview: $url" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke-test Staging
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          EXPECTED_COMMIT: ${{ github.sha }}
+        run: |
+          if [ -f scripts/smoke.mjs ]; then
+            BASE="$BASE_URL" node scripts/smoke.mjs
+          fi
+          node scripts/deploy-smoke.mjs
+
+      - name: Summarise Staging
+        if: always()
+        run: |
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Staging smoke checks passed." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "" >> "$GITHUB_STEP_SUMMARY"
+            echo "Staging deployment or smoke checks failed." >> "$GITHUB_STEP_SUMMARY"
+          fi
