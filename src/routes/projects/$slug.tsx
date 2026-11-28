@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, useLoaderData } from "@tanstack/react-router";
 import { ArrowLeft, ExternalLink } from "lucide-react";
+import { AppLink } from "#/components/AppLink";
 import { FormattedDate } from "#/components/FormattedDate";
 import { IsoButton } from "#/components/IsoButton";
 import { Prose } from "#/components/Prose";
@@ -27,9 +28,9 @@ function ProjectDetail() {
   return (
     <div className="iso-shell iso-stack">
       <p className="iso-backrow">
-        <a className="iso-backlink" href="/projects/">
+        <AppLink className="iso-backlink" href="/projects/">
           <ArrowLeft size={14} /> Projects
-        </a>
+        </AppLink>
       </p>
 
       <article className="iso-article">

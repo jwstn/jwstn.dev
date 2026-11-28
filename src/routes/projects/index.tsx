@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight, ExternalLink } from "lucide-react";
+import { AppLink } from "#/components/AppLink";
 import { FormattedDate } from "#/components/FormattedDate";
 import { IsoButton } from "#/components/IsoButton";
 import { buildHead } from "#/lib/site";
@@ -22,7 +23,7 @@ function ProjectsIndex() {
         {projects.map((project) => (
           <article className="iso-slab iso-block" key={project._meta.path}>
             <h2 className="iso-block-title">
-              <a href={`/projects/${project._meta.path}/`}>{project.title}</a>
+              <AppLink href={`/projects/${project._meta.path}/`}>{project.title}</AppLink>
             </h2>
             <p className="iso-block-date">
               <FormattedDate date={project.pubDate} />

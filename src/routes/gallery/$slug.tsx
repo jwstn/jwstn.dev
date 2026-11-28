@@ -1,6 +1,7 @@
 import { createFileRoute, notFound, redirect, useLoaderData } from "@tanstack/react-router";
 import { clsx } from "clsx";
 import { ArrowLeft } from "lucide-react";
+import { AppLink } from "#/components/AppLink";
 import { FormattedDate } from "#/components/FormattedDate";
 import { ResponsiveImage } from "#/components/ResponsiveImage";
 import { galleryImages } from "#/lib/images";
@@ -12,7 +13,7 @@ export const Route = createFileRoute("/gallery/$slug")({
   head: ({ match }) => buildHead({ title: "Gallery | jwstn.dev", pathname: match.pathname }),
   loader: async ({ params }): Promise<GalleryData> => {
     if (params.slug === "fall-2026") {
-      throw redirect({ href: "/gallery/japan-2026/", statusCode: 301 });
+      throw redirect({ to: "/gallery/$slug/", params: { slug: "japan-2026" }, statusCode: 301 });
     }
 
     const album = await getGallery({ data: params.slug });
@@ -32,9 +33,9 @@ function GalleryDetail() {
   return (
     <div className="iso-shell iso-stack">
       <p className="iso-backrow">
-        <a className="iso-backlink" href="/gallery/">
+        <AppLink className="iso-backlink" href="/gallery/">
           <ArrowLeft size={14} /> Gallery
-        </a>
+        </AppLink>
       </p>
 
       <header className="iso-pagehead">

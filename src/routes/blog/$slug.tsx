@@ -1,5 +1,6 @@
 import { createFileRoute, notFound, useLoaderData } from "@tanstack/react-router";
 import { ArrowLeft } from "lucide-react";
+import { AppLink } from "#/components/AppLink";
 import { FormattedDate } from "#/components/FormattedDate";
 import { Prose } from "#/components/Prose";
 import { ResponsiveImage } from "#/components/ResponsiveImage";
@@ -28,9 +29,9 @@ function BlogPost() {
   return (
     <div className="iso-shell iso-stack">
       <p className="iso-backrow">
-        <a className="iso-backlink" href="/blog/">
+        <AppLink className="iso-backlink" href="/blog/">
           <ArrowLeft size={14} /> Blog
-        </a>
+        </AppLink>
       </p>
 
       <article className="iso-article">

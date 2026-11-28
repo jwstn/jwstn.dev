@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { AppLink } from "#/components/AppLink";
 import { FormattedDate } from "#/components/FormattedDate";
 import { ResponsiveImage } from "#/components/ResponsiveImage";
 import { galleryImages } from "#/lib/images";
@@ -29,7 +30,7 @@ function GalleryIndex() {
       <ul className="iso-albums" aria-label="Albums">
         {albums.map((album) => (
           <li key={album.slug}>
-            <a className="iso-slab iso-album" href={`/gallery/${album.slug}/`}>
+            <AppLink className="iso-slab iso-album" href={`/gallery/${album.slug}/`}>
               <div className="iso-strip" aria-hidden="true">
                 {album.photos.slice(0, 4).map((photo) => (
                   <ResponsiveImage
@@ -49,7 +50,7 @@ function GalleryIndex() {
                   Open plate <ArrowRight size={12} />
                 </span>
               </div>
-            </a>
+            </AppLink>
           </li>
         ))}
       </ul>

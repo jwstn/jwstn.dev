@@ -4,6 +4,7 @@ import { createRootRoute, HeadContent, Outlet, Scripts, useRouterState } from "@
 import { clsx } from "clsx";
 import { ExternalLink } from "lucide-react";
 import { StrictMode, useEffect, useRef, useState } from "react";
+import { AppLink } from "#/components/AppLink";
 import { SITE_DESCRIPTION, SITE_TITLE } from "#/consts";
 
 const THEME_SCRIPT = `(() => {
@@ -132,9 +133,9 @@ function RootComponent() {
           <header className={clsx("iso-header", isOpen && "is-menu-open")}>
             <div className="iso-shell">
               <div className="iso-plate iso-slab">
-                <a className="iso-key iso-key--logo" href="/" aria-current={path === "/" ? "page" : undefined}>
+                <AppLink className="iso-key iso-key--logo" href="/" aria-current={path === "/" ? "page" : undefined}>
                   jwstn.dev
-                </a>
+                </AppLink>
 
                 <button
                   ref={burgerRef}
@@ -151,19 +152,19 @@ function RootComponent() {
 
                 <nav className="iso-keys iso-keys--desktop" aria-label="Main navigation">
                   {NAV_ITEMS.map((item) => (
-                    <a
+                    <AppLink
                       className="iso-key"
                       href={item.href}
                       key={item.href}
                       aria-current={isActive(item.href) ? "page" : undefined}
                     >
                       {item.label}
-                    </a>
+                    </AppLink>
                   ))}
                 </nav>
                 <nav className="iso-keys iso-keys--desktop" aria-label="Social links">
                   {SOCIALS.map((social) => (
-                    <a
+                    <AppLink
                       className="iso-key iso-key--ghost"
                       href={social.href}
                       key={social.href}
@@ -171,7 +172,7 @@ function RootComponent() {
                       rel="noopener noreferrer"
                     >
                       {social.label} <ExternalLink size={12} />
-                    </a>
+                    </AppLink>
                   ))}
                 </nav>
               </div>
@@ -179,7 +180,7 @@ function RootComponent() {
               <div className="iso-mobile-panel" id="iso-mobile-nav" hidden={!isOpen}>
                 <nav className="iso-mobile-keys" aria-label="Main navigation">
                   {NAV_ITEMS.map((item) => (
-                    <a
+                    <AppLink
                       className="iso-key"
                       href={item.href}
                       key={item.href}
@@ -187,12 +188,12 @@ function RootComponent() {
                       onClick={() => setIsOpen(false)}
                     >
                       {item.label}
-                    </a>
+                    </AppLink>
                   ))}
                 </nav>
                 <nav className="iso-mobile-keys iso-mobile-keys--social" aria-label="Social links">
                   {SOCIALS.map((social) => (
-                    <a
+                    <AppLink
                       className="iso-key iso-key--ghost"
                       href={social.href}
                       key={social.href}
@@ -200,7 +201,7 @@ function RootComponent() {
                       rel="noopener noreferrer"
                     >
                       {social.label} <ExternalLink size={12} />
-                    </a>
+                    </AppLink>
                   ))}
                 </nav>
               </div>

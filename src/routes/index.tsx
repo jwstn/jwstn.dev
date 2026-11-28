@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { AppLink } from "#/components/AppLink";
 import { IsoButton } from "#/components/IsoButton";
 import { CassetteScene } from "#/components/isometric/CassetteScene";
 import { buildHead } from "#/lib/site";
@@ -65,7 +66,7 @@ function Home() {
         <ul className="iso-doors">
           {DOORS.map((door) => (
             <li key={door.href}>
-              <a className="iso-slab iso-door" href={door.href}>
+              <AppLink className="iso-slab iso-door" href={door.href}>
                 <span className="iso-door-tab" aria-hidden="true">
                   {door.num}
                 </span>
@@ -73,7 +74,7 @@ function Home() {
                 <span className="iso-door-cta">
                   {door.cta} <ArrowRight size={14} />
                 </span>
-              </a>
+              </AppLink>
             </li>
           ))}
         </ul>

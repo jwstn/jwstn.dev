@@ -6,13 +6,13 @@ const OUT = process.env.OUT ?? "docs/screenshots-tanstack";
 
 const ROUTES = [
   { name: "home", path: "" },
-  { name: "projects", path: "projects" },
-  { name: "project", path: "projects/spotui" },
-  { name: "project-signlanguage", path: "projects/signlanguage" },
-  { name: "blog", path: "blog" },
-  { name: "gallery", path: "gallery" },
-  { name: "album", path: "gallery/spring-2026" },
-  { name: "music", path: "music" },
+  { name: "projects", path: "projects/" },
+  { name: "project", path: "projects/spotui/" },
+  { name: "project-signlanguage", path: "projects/signlanguage/" },
+  { name: "blog", path: "blog/" },
+  { name: "gallery", path: "gallery/" },
+  { name: "album", path: "gallery/spring-2026/" },
+  { name: "music", path: "music/" },
 ];
 
 const VIEWPORTS = [

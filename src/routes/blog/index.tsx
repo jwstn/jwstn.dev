@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
+import { AppLink } from "#/components/AppLink";
 import { FormattedDate } from "#/components/FormattedDate";
 import { IsoButton } from "#/components/IsoButton";
 import { buildHead } from "#/lib/site";
@@ -46,12 +47,12 @@ function BlogIndex() {
         <ul className="iso-postlist">
           {posts.map((post) => (
             <li className="iso-slab" key={post._meta.path}>
-              <a className="iso-postlist-link" href={`/blog/${post._meta.path}/`}>
+              <AppLink className="iso-postlist-link" href={`/blog/${post._meta.path}/`}>
                 <h2 className="iso-postlist-title">{post.title}</h2>
                 <p className="iso-muted">
                   <FormattedDate date={post.pubDate} /> — {post.description}
                 </p>
-              </a>
+              </AppLink>
             </li>
           ))}
         </ul>

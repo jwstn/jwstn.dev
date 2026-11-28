@@ -233,8 +233,9 @@ export const galleryImages = import.meta.glob(
 | `/gallery/:slug` | `gallery/$slug.tsx` | `getGallery` |
 | `/music/` | `music.tsx` | `getMusic` |
 
-- `trailingSlash: "preserve"` matches Astro's `"ignore"`: `/music` and `/music/` both resolve and
-  the canonical keeps the requested form. Internal links keep their current forms.
+- `trailingSlash: "always"`: page URLs canonically end in `/` and internal `Link` navigation keeps
+  that shape. `/music` 307s to `/music/`; the sitemap already used slash forms. This replaced the
+  earlier `preserve` decision so TanStack `Link` and `viewTransition` can preserve the URL shapes.
 - Every page is SSR (`ssr: true`, the default). No prerender in this migration.
 - Unknown slugs throw `notFound()`; a minimal `notFoundComponent` returns status 404 with a plain
   "Not found" message. Unmatched routes use the same component.

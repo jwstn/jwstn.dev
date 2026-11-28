@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type { AnchorHTMLAttributes, ReactNode } from "react";
+import { AppLink } from "./AppLink";
 
 interface IsoButtonProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, "href"> {
   href: string;
@@ -17,7 +18,7 @@ export function IsoButton({
   ...props
 }: IsoButtonProps) {
   return (
-    <a
+    <AppLink
       className={clsx("iso-btn", `iso-btn--${variant}`, className)}
       href={href}
       target={external ? "_blank" : undefined}
@@ -26,6 +27,6 @@ export function IsoButton({
     >
       <span className="iso-btn-depth" aria-hidden="true" />
       <span className="iso-btn-face">{children}</span>
-    </a>
+    </AppLink>
   );
 }

@@ -29,10 +29,11 @@ await check("/projects/spotui/", 200, async (response) => (await text(response))
 await check("/gallery/", 200, async (response) => (await text(response)).includes("Pictures of JW"));
 await check("/gallery/japan-2026/", 200, async (response) => (await text(response)).includes("iso-plate"));
 await check(
-  "/music",
+  "/music/",
   200,
   async (response) => header(response, "cache-control") === "public, s-maxage=300, stale-while-revalidate=600",
 );
+await check("/music", 307, async (response) => header(response, "location") === "/music/");
 await check("/projects/nope/", 404);
 await check("/gallery/fall-2026/", 301, async (response) => header(response, "location") === "/gallery/japan-2026/");
 

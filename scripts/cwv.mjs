@@ -1,7 +1,7 @@
 import { chromium } from "playwright";
 
 const BASE = process.env.BASE ?? "http://localhost:3000";
-const ROUTES = ["/", "/blog/", "/projects/", "/projects/spotui/", "/gallery/", "/gallery/spring-2026/", "/music"];
+const ROUTES = ["/", "/blog/", "/projects/", "/projects/spotui/", "/gallery/", "/gallery/spring-2026/", "/music/"];
 const LCP_LIMIT = Number(process.env.LCP_LIMIT ?? "2500");
 const CLS_LIMIT = Number(process.env.CLS_LIMIT ?? "0.1");
 

@@ -5,7 +5,7 @@ export function getRouter() {
   return createRouter({
     routeTree,
     scrollRestoration: true,
-    trailingSlash: "preserve",
+    trailingSlash: "always",
   });
 }
 
