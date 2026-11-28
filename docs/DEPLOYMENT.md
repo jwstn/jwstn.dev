@@ -68,9 +68,10 @@ GitHub:
 
 Vercel dashboard:
 
-- Disable automatic Git deployments for the project. The workflows deploy both Preview and
-  Production, so a Vercel Git integration would only create duplicate deployments and could
-  bypass the release gate.
+- `vercel.json` sets `git.deploymentEnabled: false`, so the Vercel Git integration does not
+  deploy automatically. The workflows are the only deployment path. If the Vercel app still
+  deploys the commit that adds this file, disable automatic deployments once in the project's
+  Git settings.
 - Create a Protection Bypass for Automation secret and store it as
   `VERCEL_AUTOMATION_BYPASS_SECRET` if Preview deployments require authentication.
 - Set the project framework preset to Astro for the current app. Before the TanStack Start
