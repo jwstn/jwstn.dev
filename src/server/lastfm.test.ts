@@ -126,6 +126,30 @@ it.effect("deduplicates concurrent lookups for the same key", () => {
   });
 });
 
+it.effect("falls back to stale data when Last.fm returns a 200 error body", () => {
+  return Effect.gen(function* () {
+    const calls = yield* Ref.make(0);
+    let apiError = false;
+    const layer = testLayer(
+      () => (apiError ? body({ error: 10, message: "Invalid API key" }) : body(topArtists)),
+      calls,
+      { LASTFM_API_KEY: "test" },
+    );
+
+    yield* Effect.gen(function* () {
+      const lastfm = yield* Lastfm;
+      const first = yield* lastfm.topArtists("1month", 3);
+
+      apiError = true;
+      yield* TestClock.adjust("5 minutes");
+      const stale = yield* lastfm.topArtists("1month", 3);
+
+      expect(stale.stale).toBe(true);
+      expect(stale.data).toEqual(first.data);
+    }).pipe(Effect.provide(layer));
+  });
+});
+
 it.effect("falls back to stale data when decoding fails", () => {
   return Effect.gen(function* () {
     const calls = yield* Ref.make(0);

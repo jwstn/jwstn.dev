@@ -38,6 +38,11 @@ const RecentTracksResponse = Schema.Struct({
   ),
 });
 
+const ErrorResponse = Schema.Struct({
+  error: Schema.optionalKey(Schema.Number),
+  message: Schema.optionalKey(Schema.String),
+});
+
 export type LastfmArtist = Schema.Schema.Type<typeof ArtistSchema>;
 export type LastfmTrack = Schema.Schema.Type<typeof TrackSchema>;
 
@@ -63,6 +68,51 @@ const program: Effect.Effect<LastfmShape, never, AppConfig | HttpClient.HttpClie
   const staleTop = yield* Ref.make(HashMap.empty<string, ReadonlyArray<LastfmArtist>>());
   const staleRecent = yield* Ref.make(HashMap.empty<string, ReadonlyArray<LastfmTrack>>());
 
+  const fetchJson = Effect.fn("LastFM.fetchJson")(function* <S extends Schema.ConstraintDecoder<unknown>>(
+    operation: string,
+    url: URL,
+    schema: S,
+  ) {
+    const response = yield* HttpClient.get(url, {
+      headers: { "User-Agent": "jwstn.dev music page (https://jwstn.dev)" },
+    }).pipe(
+      Effect.flatMap(HttpClientResponse.filterStatusOk),
+      Effect.timeout(REQUEST_TIMEOUT),
+      Effect.mapError((cause) => new LastfmError({ operation, cause })),
+    );
+
+    const web = HttpClientResponse.toWeb(response);
+    if (Option.isNone(web)) {
+      return yield* Effect.fail(new LastfmError({ operation }));
+    }
+
+    const body = yield* Effect.tryPromise({
+      try: () => web.value.json() as Promise<unknown>,
+      catch: (cause) => new LastfmError({ operation, cause }),
+    });
+
+    const error = yield* Effect.try({
+      try: () => Schema.decodeUnknownSync(ErrorResponse)(body),
+      catch: (cause) => new LastfmError({ operation, cause }),
+    });
+
+    // Last.fm reports some failures with HTTP 200 and an error body. Treat
+    // those as failures so the cache keeps its last good value.
+    if (error.error) {
+      return yield* Effect.fail(
+        new LastfmError({
+          operation,
+          cause: new Error(`Last.fm API error ${error.error}: ${error.message ?? "unknown"}`),
+        }),
+      );
+    }
+
+    return yield* Effect.try({
+      try: () => Schema.decodeUnknownSync(schema)(body),
+      catch: (cause) => new LastfmError({ operation, cause }),
+    });
+  });
+
   const request = <S extends Schema.ConstraintDecoder<unknown>>(
     operation: string,
     params: Record<string, string>,
@@ -84,48 +134,27 @@ const program: Effect.Effect<LastfmShape, never, AppConfig | HttpClient.HttpClie
         url.searchParams.set(key, value);
       }
 
-      const response = yield* HttpClient.get(url).pipe(
-        Effect.flatMap(HttpClientResponse.filterStatusOk),
-        Effect.timeout(REQUEST_TIMEOUT),
-        Effect.mapError((cause) => new LastfmError({ operation, cause })),
-      );
-
-      const web = HttpClientResponse.toWeb(response);
-      if (Option.isNone(web)) {
-        return yield* Effect.fail(new LastfmError({ operation }));
-      }
-
-      const body = yield* Effect.tryPromise({
-        try: () => web.value.json() as Promise<unknown>,
-        catch: (cause) => new LastfmError({ operation, cause }),
-      });
-
-      return yield* Effect.try({
-        try: () => Schema.decodeUnknownSync(schema)(body),
-        catch: (cause) => new LastfmError({ operation, cause }),
-      });
+      return yield* fetchJson(operation, url, schema);
     });
 
-  const fetchTop = (key: string): Effect.Effect<ReadonlyArray<LastfmArtist>, LastfmError, HttpClient.HttpClient> =>
-    Effect.gen(function* () {
-      const [period, limit] = key.split("|");
-      const response = yield* request("user.getTopArtists", { period, limit }, TopArtistsResponse);
-      const artist = response.topartists?.artist;
-      const data = !artist ? [] : Array.isArray(artist) ? artist : [artist];
+  const fetchTop = Effect.fn("LastFM.fetchTopArtists")(function* (key: string) {
+    const [period, limit] = key.split("|");
+    const response = yield* request("user.getTopArtists", { period, limit }, TopArtistsResponse);
+    const artist = response.topartists?.artist;
+    const data = !artist ? [] : Array.isArray(artist) ? artist : [artist];
 
-      yield* Ref.update(staleTop, (stale) => HashMap.set(stale, key, data));
-      return data;
-    });
+    yield* Ref.update(staleTop, (stale) => HashMap.set(stale, key, data));
+    return data;
+  });
 
-  const fetchRecent = (key: string): Effect.Effect<ReadonlyArray<LastfmTrack>, LastfmError, HttpClient.HttpClient> =>
-    Effect.gen(function* () {
-      const response = yield* request("user.getRecentTracks", { limit: key }, RecentTracksResponse);
-      const track = response.recenttracks?.track;
-      const data = !track ? [] : Array.isArray(track) ? track : [track];
+  const fetchRecent = Effect.fn("LastFM.fetchRecentTracks")(function* (key: string) {
+    const response = yield* request("user.getRecentTracks", { limit: key }, RecentTracksResponse);
+    const track = response.recenttracks?.track;
+    const data = !track ? [] : Array.isArray(track) ? track : [track];
 
-      yield* Ref.update(staleRecent, (stale) => HashMap.set(stale, key, data));
-      return data;
-    });
+    yield* Ref.update(staleRecent, (stale) => HashMap.set(stale, key, data));
+    return data;
+  });
 
   const topCache = yield* Cache.makeWith(fetchTop, {
     capacity: CACHE_CAPACITY,
@@ -137,10 +166,10 @@ const program: Effect.Effect<LastfmShape, never, AppConfig | HttpClient.HttpClie
     timeToLive: (exit) => (Exit.isSuccess(exit) ? CACHE_TTL : Duration.zero),
   });
 
-  const topArtists = (period: string, limit: number) => {
+  const topArtists = Effect.fn("LastFM.topArtists")(function* (period: string, limit: number) {
     const key = `${period}|${limit}`;
 
-    return Cache.get(topCache, key).pipe(
+    return yield* Cache.get(topCache, key).pipe(
       Effect.map((data) => ({ data, stale: false })),
       Effect.catchEager((error) =>
         Ref.get(staleTop).pipe(
@@ -153,12 +182,12 @@ const program: Effect.Effect<LastfmShape, never, AppConfig | HttpClient.HttpClie
         ),
       ),
     );
-  };
+  });
 
-  const recentTracks = (limit: number) => {
+  const recentTracks = Effect.fn("LastFM.recentTracks")(function* (limit: number) {
     const key = String(limit);
 
-    return Cache.get(recentCache, key).pipe(
+    return yield* Cache.get(recentCache, key).pipe(
       Effect.map((data) => ({ data, stale: false })),
       Effect.catchEager((error) =>
         Ref.get(staleRecent).pipe(
@@ -171,7 +200,7 @@ const program: Effect.Effect<LastfmShape, never, AppConfig | HttpClient.HttpClie
         ),
       ),
     );
-  };
+  });
 
   return Lastfm.of({ topArtists, recentTracks });
 });
