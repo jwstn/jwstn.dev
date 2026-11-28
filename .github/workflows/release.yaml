@@ -1,0 +1,233 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to deploy (must match main HEAD)"
+        required: true
+        type: string
+      dry_run:
+        description: "Validate the release without deploying"
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+env:
+  NODE_ENV: production
+  NO_COLOR: 1
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+  RELEASE_TAG: ${{ github.event.release.tag_name || inputs.tag }}
+  DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run || false }}
+
+concurrency:
+  group: release-production
+  cancel-in-progress: false
+
+jobs:
+  plan:
+    name: Plan release
+    runs-on: ubuntu-latest
+    outputs:
+      valid: ${{ steps.plan.outputs.valid }}
+      dry_run: ${{ steps.plan.outputs.dry_run }}
+      tag: ${{ steps.plan.outputs.tag }}
+      commit: ${{ steps.plan.outputs.commit }}
+      project: ${{ steps.plan.outputs.project }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Resolve tag and main
+        id: resolve
+        run: |
+          set -euo pipefail
+          tag="$RELEASE_TAG"
+          if [ -z "$tag" ]; then
+            echo "No release tag provided." >&2
+            exit 1
+          fi
+
+          git fetch --force --tags origin
+          git fetch --force origin main
+
+          if ! tag_sha=$(git rev-parse "refs/tags/$tag^{commit}" 2>/dev/null); then
+            echo "Release tag $tag was not found." >&2
+            exit 1
+          fi
+
+          main_sha=$(git rev-parse origin/main)
+          echo "tag_sha=$tag_sha" >> "$GITHUB_OUTPUT"
+          echo "main_sha=$main_sha" >> "$GITHUB_OUTPUT"
+
+      - name: Test release plan
+        run: node --test scripts/release-plan.test.mjs
+
+      - name: Plan release
+        id: plan
+        env:
+          TAG_SHA: ${{ steps.resolve.outputs.tag_sha }}
+          MAIN_SHA: ${{ steps.resolve.outputs.main_sha }}
+        run: |
+          set -euo pipefail
+          args=(
+            --tag "$RELEASE_TAG"
+            --tag-sha "$TAG_SHA"
+            --main-sha "$MAIN_SHA"
+            --project "$VERCEL_PROJECT_ID"
+            --github-output "$GITHUB_OUTPUT"
+            --summary "$GITHUB_STEP_SUMMARY"
+          )
+          if [ "$DRY_RUN" = "true" ]; then
+            args+=(--dry-run)
+          fi
+          node scripts/release-plan.mjs "${args[@]}"
+
+  staging:
+    name: Deploy staging Preview
+    needs: plan
+    if: needs.plan.outputs.valid == 'true' && needs.plan.outputs.dry_run != 'true'
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_VERSION: ${{ needs.plan.outputs.commit }}
+      PUBLIC_RELEASE_VERSION: ${{ needs.plan.outputs.tag }}
+    steps:
+      - name: Checkout release commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.plan.outputs.commit }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel
+
+      - name: Pull Vercel Preview Environment
+        run: vercel pull --yes --environment=preview --token="$VERCEL_TOKEN"
+
+      - name: Build Preview
+        run: vercel build --token="$VERCEL_TOKEN"
+
+      - name: Deploy Preview
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --token="$VERCEL_TOKEN" | grep -Eo 'https://[^[:space:]]+' | tail -n 1)
+          if [ -z "$url" ]; then
+            echo "Could not read the Preview deployment URL from vercel deploy." >&2
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "### Staging Preview" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Tag: \`$RELEASE_TAG\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Commit: \`${{ needs.plan.outputs.commit }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Preview: $url" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke-test Staging
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          EXPECTED_COMMIT: ${{ needs.plan.outputs.commit }}
+        run: bash scripts/run-deploy-smoke.sh
+
+  production:
+    name: Deploy Production
+    needs: [plan, staging]
+    if: needs.plan.outputs.valid == 'true' && needs.plan.outputs.dry_run != 'true'
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_VERSION: ${{ needs.plan.outputs.commit }}
+      PUBLIC_RELEASE_VERSION: ${{ needs.plan.outputs.tag }}
+    steps:
+      - name: Checkout release commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.plan.outputs.commit }}
+
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel
+
+      - name: Pull Vercel Production Environment
+        run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+
+      - name: Build Production
+        run: vercel build --prod --token="$VERCEL_TOKEN"
+
+      - name: Deploy Production
+        id: deploy
+        run: |
+          url=$(vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN" | grep -Eo 'https://[^[:space:]]+' | tail -n 1)
+          if [ -z "$url" ]; then
+            echo "Could not read the Production deployment URL from vercel deploy." >&2
+            exit 1
+          fi
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "### Production" >> "$GITHUB_STEP_SUMMARY"
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Tag: \`$RELEASE_TAG\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Commit: \`${{ needs.plan.outputs.commit }}\`" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Deployment: $url" >> "$GITHUB_STEP_SUMMARY"
+          echo "- Domain: https://www.jwstn.dev" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Smoke-test Production deployment
+        env:
+          BASE_URL: ${{ steps.deploy.outputs.url }}
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+          EXPECTED_COMMIT: ${{ needs.plan.outputs.commit }}
+        run: bash scripts/run-deploy-smoke.sh
+
+      - name: Smoke-test Production domain
+        env:
+          BASE_URL: https://www.jwstn.dev
+          EXPECTED_COMMIT: ${{ needs.plan.outputs.commit }}
+        run: bash scripts/run-deploy-smoke.sh
+
+      - name: Summarise Release
+        if: always()
+        run: |
+          echo "" >> "$GITHUB_STEP_SUMMARY"
+          if [ "${{ job.status }}" = "success" ]; then
+            echo "Production smoke checks passed. \`$RELEASE_TAG\` is live." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "Production deployment or smoke checks failed. \`$RELEASE_TAG\` was not verified." >> "$GITHUB_STEP_SUMMARY"
+          fi
